@@ -52,6 +52,118 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
+        /// <summary> Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime. </summary>
+        /// <param name="collectionId"> Collection Id to be searched. Available Values are: Sentinel_2_L2A, Sentinel_2_L1C. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeaturesAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> SearchFeaturesAsync(string collectionId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Scenes.SearchFeatures");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSearchFeaturesRequest(collectionId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Search for STAC features by collection id, bbox, intersecting geometry, start and end datetime. </summary>
+        /// <param name="collectionId"> Collection Id to be searched. Available Values are: Sentinel_2_L2A, Sentinel_2_L1C. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='SearchFeatures(String,RequestContent,RequestContext)']/*" />
+        public virtual Response SearchFeatures(string collectionId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Scenes.SearchFeatures");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSearchFeaturesRequest(collectionId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id. </summary>
+        /// <param name="collectionId"> Collection Id to be fetched. Available Values are: Sentinel_2_L2A, Sentinel_2_L1C. </param>
+        /// <param name="featureId"> Feature Id to be fetched. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeatureAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));
+
+            using var scope = ClientDiagnostics.CreateScope("Scenes.GetStacFeature");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetStacFeatureRequest(collectionId, featureId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get a feature(SpatioTemporal Asset Catalog (STAC) Item) for given collection and feature id. </summary>
+        /// <param name="collectionId"> Collection Id to be fetched. Available Values are: Sentinel_2_L2A, Sentinel_2_L1C. </param>
+        /// <param name="featureId"> Feature Id to be fetched. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="featureId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeature(String,String,RequestContext)']/*" />
+        public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));
+
+            using var scope = ClientDiagnostics.CreateScope("Scenes.GetStacFeature");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetStacFeatureRequest(collectionId, featureId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Downloads and returns file Stream as response for the given input filePath. </summary>
         /// <param name="filePath"> cloud storage path of scene file. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -156,9 +268,9 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a paginated list of scene resources. </summary>
         /// <param name="provider"> Provider name of scene data. </param>
-        /// <param name="farmerId"> FarmerId. </param>
+        /// <param name="partyId"> PartyId. </param>
         /// <param name="boundaryId"> BoundaryId. </param>
-        /// <param name="source"> Source name of scene data, default value Sentinel_2_L2A (Sentinel 2 L2A). </param>
+        /// <param name="source"> Source name of scene data, Available Values: Sentinel_2_L2A, Sentinel_2_L1C. </param>
         /// <param name="startDateTime"> Scene start UTC datetime (inclusive), sample format: yyyy-MM-ddThh:mm:ssZ. </param>
         /// <param name="endDateTime"> Scene end UTC datetime (inclusive), sample format: yyyy-MM-dThh:mm:ssZ. </param>
         /// <param name="maxCloudCoveragePercentage"> Filter scenes with cloud coverage percentage less than max value. Range [0 to 100.0]. </param>
@@ -172,20 +284,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="partyId"/>, <paramref name="boundaryId"/> or <paramref name="source"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenesAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetScenesAsync(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetScenesAsync(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+            Argument.AssertNotNull(source, nameof(source));
 
-            return GetScenesImplementationAsync("Scenes.GetScenes", provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            return GetScenesImplementationAsync("Scenes.GetScenes", provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetScenesImplementationAsync(string diagnosticsScopeName, string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetScenesImplementationAsync(string diagnosticsScopeName, string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -193,8 +306,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context)
-                        : CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+                        ? CreateGetScenesRequest(provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context)
+                        : CreateGetScenesNextPageRequest(nextLink, provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -204,9 +317,9 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a paginated list of scene resources. </summary>
         /// <param name="provider"> Provider name of scene data. </param>
-        /// <param name="farmerId"> FarmerId. </param>
+        /// <param name="partyId"> PartyId. </param>
         /// <param name="boundaryId"> BoundaryId. </param>
-        /// <param name="source"> Source name of scene data, default value Sentinel_2_L2A (Sentinel 2 L2A). </param>
+        /// <param name="source"> Source name of scene data, Available Values: Sentinel_2_L2A, Sentinel_2_L1C. </param>
         /// <param name="startDateTime"> Scene start UTC datetime (inclusive), sample format: yyyy-MM-ddThh:mm:ssZ. </param>
         /// <param name="endDateTime"> Scene end UTC datetime (inclusive), sample format: yyyy-MM-dThh:mm:ssZ. </param>
         /// <param name="maxCloudCoveragePercentage"> Filter scenes with cloud coverage percentage less than max value. Range [0 to 100.0]. </param>
@@ -220,20 +333,21 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="farmerId"/> or <paramref name="boundaryId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provider"/>, <paramref name="partyId"/>, <paramref name="boundaryId"/> or <paramref name="source"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetScenes(String,String,String,String,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetScenes(string provider, string farmerId, string boundaryId, string source = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetScenes(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, double? maxCloudCoveragePercentage = null, double? maxDarkPixelCoveragePercentage = null, IEnumerable<string> imageNames = null, IEnumerable<double> imageResolutions = null, IEnumerable<string> imageFormats = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNull(provider, nameof(provider));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+            Argument.AssertNotNull(source, nameof(source));
 
-            return GetScenesImplementation("Scenes.GetScenes", provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+            return GetScenesImplementation("Scenes.GetScenes", provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetScenesImplementation(string diagnosticsScopeName, string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetScenesImplementation(string diagnosticsScopeName, string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -241,8 +355,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetScenesRequest(provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context)
-                        : CreateGetScenesNextPageRequest(nextLink, provider, farmerId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
+                        ? CreateGetScenesRequest(provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context)
+                        : CreateGetScenesNextPageRequest(nextLink, provider, partyId, boundaryId, source, startDateTime, endDateTime, maxCloudCoveragePercentage, maxDarkPixelCoveragePercentage, imageNames, imageResolutions, imageFormats, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -308,7 +422,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetScenesRequest(string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetScenesRequest(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -317,12 +431,9 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.Reset(_endpoint);
             uri.AppendPath("/scenes", false);
             uri.AppendQuery("provider", provider, true);
-            uri.AppendQuery("farmerId", farmerId, true);
+            uri.AppendQuery("partyId", partyId, true);
             uri.AppendQuery("boundaryId", boundaryId, true);
-            if (source != null)
-            {
-                uri.AppendQuery("source", source, true);
-            }
+            uri.AppendQuery("source", source, true);
             if (startDateTime != null)
             {
                 uri.AppendQuery("startDateTime", startDateTime.Value, "O", true);
@@ -362,12 +473,47 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateSearchFeaturesRequest(string collectionId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/scenes/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath(":search", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetStacFeatureRequest(string collectionId, string featureId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/scenes/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/features/", false);
+            uri.AppendPath(featureId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -421,7 +567,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetScenesNextPageRequest(string nextLink, string provider, string farmerId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetScenesNextPageRequest(string nextLink, string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

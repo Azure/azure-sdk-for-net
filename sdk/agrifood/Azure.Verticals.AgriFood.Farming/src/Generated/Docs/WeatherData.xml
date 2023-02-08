@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetWeatherDataAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetWeatherDataAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetWeatherDataClient(<2022-11-01-preview>);
+
+var data = new {
+    providerApiKey = "<providerApiKey>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    units = "<units>",
+};
+
+Response response = await client.GetWeatherDataAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+]]></code>
+This sample shows how to call GetWeatherDataAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetWeatherDataClient(<2022-11-01-preview>);
+
+var data = new {
+    locations = new[] {
+        new {
+            type = "LatLong",
+            value = "<value>",
+        }
+    },
+    providerAppId = "<providerAppId>",
+    providerApiKey = "<providerApiKey>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    language = "<language>",
+    startTimeHours = 1234,
+    endTimeHours = 1234,
+    duration = 1234,
+    units = "<units>",
+    additionalParams = new {
+        iconResolution = "<iconResolution>",
+        details = true,
+    },
+};
+
+Response response = await client.GetWeatherDataAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("language").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("startTimeHours").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("endTimeHours").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("duration").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("additionalParams").GetProperty("iconResolution").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("additionalParams").GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("requestCompletionTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("lastRefreshedDateTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("cloudCover").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("cloudCover").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("dayOfWeek").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("dayOrNight").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("expirationTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("iconCode").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("iconCodeExtend").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("hasPrecipitation").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("pressureMeanSeaLevel").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("pressureMeanSeaLevel").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperature").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureDewPoint").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureDewPoint").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureFeelsLike").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureFeelsLike").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureHeatIndex").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureHeatIndex").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureWindChill").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureWindChill").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("uvDescription").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("uvIndex").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("validTimeLocal").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("validTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("visibility").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("visibility").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windDirection").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windDirection").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windGust").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windGust").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windSpeed").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windSpeed").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wxPhraseLong").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wxPhraseShort").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("additionalAttributes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("retryable").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>WeatherDataProviderRequest</c>:
+<code>{
+  locations: [
+    {
+      type: &quot;LatLong&quot; | &quot;IataCode&quot; | &quot;IcaoCode&quot; | &quot;PlaceId&quot; | &quot;PostalKey&quot;, # Required. Location Type eg. LatLong/IataCode/IcaoCode/Placeid/PostalKey.
+      value: string, # Required. Location Value eg. &quot;10,-25&quot; for LocationType Type &quot;LatLong&quot;.
+    }
+  ], # Optional. List of locations for which weather data need to be fetched from the provider.
+  providerAppId: string, # Optional. App id of the weather data provider.
+  providerApiKey: string, # Required. Api key of the weather data provider.
+  extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
+  extensionApiName: string, # Required. Extension api name to which request is to be made.
+  language: string, # Optional. Language (IETF BCP 47 language tag) in which search results should be returned by the data provider. Examples: &apos;en-US&apos;, &apos;es&apos;, &apos;es-MX&apos;, &apos;fr-FR&apos;.
+  startTimeHours: number, # Optional. Start of time range. Hour 0 represents the current hour. (Only applicable for DTN.ClearAg extension.)
+  endTimeHours: number, # Optional. End of time range. Supported ranges are from 0 to 240. (Only applicable for DTN.ClearAg extension.)
+  duration: number, # Optional. Specifies for how many days the daily forecast responses are returned. Available values are 1, 5, 10, 25 and 45. (Only applicable for Azure Weather Maps extension.)
+  units: string, # Required. Units for which request to data provider is to be sent. Supported values are &apos;e&apos; for English units, &apos;m&apos; for Metric units, &apos;h&apos; for Hybrid units (UK) and &apos;s&apos; for Metric SI units.
+  additionalParams: {
+    iconResolution: string, # Optional. Icon Resolution (Only applicable for AzureWeatherMaps).
+    details: boolean, # Optional. Details (Only applicable for AzureWeatherMaps).
+  }, # Optional. Schema of additional parameters for weather data provider request.
+}
+</code>
+
+Response Body:
+
+Schema for <c>WeatherDataProviderResponse</c>:
+<code>{
+  weatherMetadata: {
+    extensionVersion: string, # Required. Version of the weather data extension.
+    weatherDataType: string, # Required. Type of weather data (forecast/historical).
+    extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
+    extensionApiName: string, # Required. Extension api name to which request is to be made.
+    language: string, # Optional. Language (IETF BCP 47 language tag) in which search results should be returned by the data provider. Examples: &apos;en-US&apos;, &apos;es&apos;, &apos;es-MX&apos;, &apos;fr-FR&apos;.
+    startTimeHours: number, # Optional. Start of time range. Hour 0 represents the current hour. (Only applicable for DTN.ClearAg extension.)
+    endTimeHours: number, # Optional. End of time range. (Only applicable for DTN.ClearAg extension.)
+    duration: number, # Optional. Specifies for how many days the daily forecast responses are returned. Available values are 1, 5, 10, 25 and 45. (Only applicable for Azure Weather Maps extension.)
+    units: string, # Required. Units for which request to data provider is to be sent. Supported values are &apos;e&apos; for English units, &apos;m&apos; for Metric units, &apos;h&apos; for Hybrid units (UK) and &apos;s&apos; for Metric SI units.
+    additionalParams: {
+      iconResolution: string, # Optional. Icon Resolution (Only applicable for AzureWeatherMaps).
+      details: boolean, # Optional. Details (Only applicable for AzureWeatherMaps).
+    }, # Optional. Schema of additional parameters for weather data provider request.
+  }, # Required. Schema of Weather Metadata.
+  status: &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;PartiallySucceeded&quot;, # Optional. Indicates a Succeeded, Failed, or PartiallySucceeded response.
+  locations: [
+    {
+      location: {
+        type: &quot;LatLong&quot; | &quot;IataCode&quot; | &quot;IcaoCode&quot; | &quot;PlaceId&quot; | &quot;PostalKey&quot;, # Required. Location Type eg. LatLong/IataCode/IcaoCode/Placeid/PostalKey.
+        value: string, # Required. Location Value eg. &quot;10,-25&quot; for LocationType Type &quot;LatLong&quot;.
+      }, # Optional. Schema of Location data.
+      requestCompletionTime: string, # Optional. Request Completion Time in Utc of the location.
+      lastRefreshedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last requested, sample format: yyyy-MM-ddTHH:mm:ssZ.
+      data: [
+        {
+          wetBulbTemperature: {
+            unit: string, # Optional. Data unit.
+            value: number, # Optional. Data value.
+          }, # Optional. Schema for storing measurement reading and unit.
+          cloudCover: Measure, # Optional. Schema for storing measurement reading and unit.
+          dayOfWeek: string, # Optional. Day of week.
+          dayOrNight: string, # Optional. This data field indicates whether it is daytime or nighttime based on the Local Apparent Time of the location.
+          expirationTime: string, # Optional. Expiration time in Utc format.
+          iconCode: string, # Optional. This number is the key to the weather icon lookup. The data field shows the icon number that is matched to represent the observed weather conditions.
+          iconCodeExtend: string, # Optional. Code representing full set sensible weather.
+          hasPrecipitation: boolean, # Optional. Indicates whether there is precipitation or not.
+          pressureMeanSeaLevel: Measure, # Optional. Schema for storing measurement reading and unit.
+          relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperature: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperatureDewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperatureFeelsLike: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperatureHeatIndex: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperatureWindChill: Measure, # Optional. Schema for storing measurement reading and unit.
+          uvDescription: string, # Optional. The UV Index Description which complements the UV Index value by providing an associated level of risk of skin damage due to exposure (-2 = Not Available, -1 = No Report, 0 to 2 = Low, 3 to 5 = Moderate, 6 to 7 = High, 8 to 10 = Very High, 11 to 16 = Extreme).
+          uvIndex: string, # Optional. Hourly maximum UV index.
+          validTimeLocal: string, # Optional. Time forecast is valid in local apparent time.
+          validTime: string, # Optional. Time forecast is valid in Utc format.
+          visibility: Measure, # Optional. Schema for storing measurement reading and unit.
+          windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
+          windGust: Measure, # Optional. Schema for storing measurement reading and unit.
+          windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
+          wxPhraseLong: string, # Optional. Hourly sensible weather phrase containing longer description.
+          wxPhraseShort: string, # Optional. Hourly sensible weather phrase containing short description.
+          additionalAttributes: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
+        }
+      ], # Optional. List of Weather Data returned by the provider.
+    }
+  ], # Optional. List of locations along with corresponding weather data.
+  errors: {
+    locations: [
+      {
+        location: WeatherLocation, # Optional. Schema of Location data.
+        code: number, # Optional. Status code returned by data provider.
+        description: string, # Optional. Description of the error.
+        retryable: boolean, # Optional. Flag suggesting if retry attempt with same request body should be made to fetch required data.
+      }
+    ], # Optional. List of errors encountered for all failed locations.
+  }, # Optional. Model for errors encountered for all failed locations.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetWeatherData(RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetWeatherData with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetWeatherDataClient(<2022-11-01-preview>);
+
+var data = new {
+    providerApiKey = "<providerApiKey>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    units = "<units>",
+};
+
+Response response = client.GetWeatherData(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+]]></code>
+This sample shows how to call GetWeatherData with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetWeatherDataClient(<2022-11-01-preview>);
+
+var data = new {
+    locations = new[] {
+        new {
+            type = "LatLong",
+            value = "<value>",
+        }
+    },
+    providerAppId = "<providerAppId>",
+    providerApiKey = "<providerApiKey>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    language = "<language>",
+    startTimeHours = 1234,
+    endTimeHours = 1234,
+    duration = 1234,
+    units = "<units>",
+    additionalParams = new {
+        iconResolution = "<iconResolution>",
+        details = true,
+    },
+};
+
+Response response = client.GetWeatherData(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("language").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("startTimeHours").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("endTimeHours").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("duration").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("additionalParams").GetProperty("iconResolution").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("additionalParams").GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("requestCompletionTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("lastRefreshedDateTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("cloudCover").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("cloudCover").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("dayOfWeek").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("dayOrNight").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("expirationTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("iconCode").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("iconCodeExtend").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("hasPrecipitation").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("pressureMeanSeaLevel").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("pressureMeanSeaLevel").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperature").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureDewPoint").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureDewPoint").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureFeelsLike").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureFeelsLike").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureHeatIndex").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureHeatIndex").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureWindChill").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureWindChill").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("uvDescription").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("uvIndex").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("validTimeLocal").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("validTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("visibility").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("visibility").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windDirection").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windDirection").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windGust").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windGust").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windSpeed").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windSpeed").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wxPhraseLong").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wxPhraseShort").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("additionalAttributes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("retryable").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>WeatherDataProviderRequest</c>:
+<code>{
+  locations: [
+    {
+      type: &quot;LatLong&quot; | &quot;IataCode&quot; | &quot;IcaoCode&quot; | &quot;PlaceId&quot; | &quot;PostalKey&quot;, # Required. Location Type eg. LatLong/IataCode/IcaoCode/Placeid/PostalKey.
+      value: string, # Required. Location Value eg. &quot;10,-25&quot; for LocationType Type &quot;LatLong&quot;.
+    }
+  ], # Optional. List of locations for which weather data need to be fetched from the provider.
+  providerAppId: string, # Optional. App id of the weather data provider.
+  providerApiKey: string, # Required. Api key of the weather data provider.
+  extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
+  extensionApiName: string, # Required. Extension api name to which request is to be made.
+  language: string, # Optional. Language (IETF BCP 47 language tag) in which search results should be returned by the data provider. Examples: &apos;en-US&apos;, &apos;es&apos;, &apos;es-MX&apos;, &apos;fr-FR&apos;.
+  startTimeHours: number, # Optional. Start of time range. Hour 0 represents the current hour. (Only applicable for DTN.ClearAg extension.)
+  endTimeHours: number, # Optional. End of time range. Supported ranges are from 0 to 240. (Only applicable for DTN.ClearAg extension.)
+  duration: number, # Optional. Specifies for how many days the daily forecast responses are returned. Available values are 1, 5, 10, 25 and 45. (Only applicable for Azure Weather Maps extension.)
+  units: string, # Required. Units for which request to data provider is to be sent. Supported values are &apos;e&apos; for English units, &apos;m&apos; for Metric units, &apos;h&apos; for Hybrid units (UK) and &apos;s&apos; for Metric SI units.
+  additionalParams: {
+    iconResolution: string, # Optional. Icon Resolution (Only applicable for AzureWeatherMaps).
+    details: boolean, # Optional. Details (Only applicable for AzureWeatherMaps).
+  }, # Optional. Schema of additional parameters for weather data provider request.
+}
+</code>
+
+Response Body:
+
+Schema for <c>WeatherDataProviderResponse</c>:
+<code>{
+  weatherMetadata: {
+    extensionVersion: string, # Required. Version of the weather data extension.
+    weatherDataType: string, # Required. Type of weather data (forecast/historical).
+    extensionId: string, # Required. Id of the extension to be used for the providerInput. eg. DTN.ClearAg.
+    extensionApiName: string, # Required. Extension api name to which request is to be made.
+    language: string, # Optional. Language (IETF BCP 47 language tag) in which search results should be returned by the data provider. Examples: &apos;en-US&apos;, &apos;es&apos;, &apos;es-MX&apos;, &apos;fr-FR&apos;.
+    startTimeHours: number, # Optional. Start of time range. Hour 0 represents the current hour. (Only applicable for DTN.ClearAg extension.)
+    endTimeHours: number, # Optional. End of time range. (Only applicable for DTN.ClearAg extension.)
+    duration: number, # Optional. Specifies for how many days the daily forecast responses are returned. Available values are 1, 5, 10, 25 and 45. (Only applicable for Azure Weather Maps extension.)
+    units: string, # Required. Units for which request to data provider is to be sent. Supported values are &apos;e&apos; for English units, &apos;m&apos; for Metric units, &apos;h&apos; for Hybrid units (UK) and &apos;s&apos; for Metric SI units.
+    additionalParams: {
+      iconResolution: string, # Optional. Icon Resolution (Only applicable for AzureWeatherMaps).
+      details: boolean, # Optional. Details (Only applicable for AzureWeatherMaps).
+    }, # Optional. Schema of additional parameters for weather data provider request.
+  }, # Required. Schema of Weather Metadata.
+  status: &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;PartiallySucceeded&quot;, # Optional. Indicates a Succeeded, Failed, or PartiallySucceeded response.
+  locations: [
+    {
+      location: {
+        type: &quot;LatLong&quot; | &quot;IataCode&quot; | &quot;IcaoCode&quot; | &quot;PlaceId&quot; | &quot;PostalKey&quot;, # Required. Location Type eg. LatLong/IataCode/IcaoCode/Placeid/PostalKey.
+        value: string, # Required. Location Value eg. &quot;10,-25&quot; for LocationType Type &quot;LatLong&quot;.
+      }, # Optional. Schema of Location data.
+      requestCompletionTime: string, # Optional. Request Completion Time in Utc of the location.
+      lastRefreshedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last requested, sample format: yyyy-MM-ddTHH:mm:ssZ.
+      data: [
+        {
+          wetBulbTemperature: {
+            unit: string, # Optional. Data unit.
+            value: number, # Optional. Data value.
+          }, # Optional. Schema for storing measurement reading and unit.
+          cloudCover: Measure, # Optional. Schema for storing measurement reading and unit.
+          dayOfWeek: string, # Optional. Day of week.
+          dayOrNight: string, # Optional. This data field indicates whether it is daytime or nighttime based on the Local Apparent Time of the location.
+          expirationTime: string, # Optional. Expiration time in Utc format.
+          iconCode: string, # Optional. This number is the key to the weather icon lookup. The data field shows the icon number that is matched to represent the observed weather conditions.
+          iconCodeExtend: string, # Optional. Code representing full set sensible weather.
+          hasPrecipitation: boolean, # Optional. Indicates whether there is precipitation or not.
+          pressureMeanSeaLevel: Measure, # Optional. Schema for storing measurement reading and unit.
+          relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperature: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperatureDewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperatureFeelsLike: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperatureHeatIndex: Measure, # Optional. Schema for storing measurement reading and unit.
+          temperatureWindChill: Measure, # Optional. Schema for storing measurement reading and unit.
+          uvDescription: string, # Optional. The UV Index Description which complements the UV Index value by providing an associated level of risk of skin damage due to exposure (-2 = Not Available, -1 = No Report, 0 to 2 = Low, 3 to 5 = Moderate, 6 to 7 = High, 8 to 10 = Very High, 11 to 16 = Extreme).
+          uvIndex: string, # Optional. Hourly maximum UV index.
+          validTimeLocal: string, # Optional. Time forecast is valid in local apparent time.
+          validTime: string, # Optional. Time forecast is valid in Utc format.
+          visibility: Measure, # Optional. Schema for storing measurement reading and unit.
+          windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
+          windGust: Measure, # Optional. Schema for storing measurement reading and unit.
+          windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
+          wxPhraseLong: string, # Optional. Hourly sensible weather phrase containing longer description.
+          wxPhraseShort: string, # Optional. Hourly sensible weather phrase containing short description.
+          additionalAttributes: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
+        }
+      ], # Optional. List of Weather Data returned by the provider.
+    }
+  ], # Optional. List of locations along with corresponding weather data.
+  errors: {
+    locations: [
+      {
+        location: WeatherLocation, # Optional. Schema of Location data.
+        code: number, # Optional. Status code returned by data provider.
+        description: string, # Optional. Description of the error.
+        retryable: boolean, # Optional. Flag suggesting if retry attempt with same request body should be made to fetch required data.
+      }
+    ], # Optional. List of errors encountered for all failed locations.
+  }, # Optional. Model for errors encountered for all failed locations.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

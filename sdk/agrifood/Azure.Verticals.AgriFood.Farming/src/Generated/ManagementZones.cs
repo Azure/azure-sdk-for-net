@@ -52,178 +52,6 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets a specified management zone resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="managementZoneId"> Id of the management zone. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZoneAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetManagementZoneAsync(string farmerId, string managementZoneId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
-
-            using var scope = ClientDiagnostics.CreateScope("ManagementZones.GetManagementZone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetManagementZoneRequest(farmerId, managementZoneId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a specified management zone resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="managementZoneId"> Id of the management zone. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZone(String,String,RequestContext)']/*" />
-        public virtual Response GetManagementZone(string farmerId, string managementZoneId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
-
-            using var scope = ClientDiagnostics.CreateScope("ManagementZones.GetManagementZone");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetManagementZoneRequest(farmerId, managementZoneId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a management zone resource. </summary>
-        /// <param name="farmerId"> Id of the farmer resource. </param>
-        /// <param name="managementZoneId"> Id of the management zone resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="managementZoneId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string managementZoneId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ManagementZones.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, managementZoneId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates a management zone resource. </summary>
-        /// <param name="farmerId"> Id of the farmer resource. </param>
-        /// <param name="managementZoneId"> Id of the management zone resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="managementZoneId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string farmerId, string managementZoneId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ManagementZones.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, managementZoneId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a specified management zone resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
-        /// <param name="managementZoneId"> Id of the management zone. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string farmerId, string managementZoneId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
-
-            using var scope = ClientDiagnostics.CreateScope("ManagementZones.Delete");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteRequest(farmerId, managementZoneId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a specified management zone resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
-        /// <param name="managementZoneId"> Id of the management zone. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
-        public virtual Response Delete(string farmerId, string managementZoneId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
-
-            using var scope = ClientDiagnostics.CreateScope("ManagementZones.Delete");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteRequest(farmerId, managementZoneId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get a cascade delete job for specified job id. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -276,113 +104,179 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of management zone resources under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="types"> Types of the ManagementZone. </param>
-        /// <param name="cropIds"> CropIds of the ManagementZone. </param>
-        /// <param name="seasonIds"> SeasonIds of the ManagementZone. </param>
-        /// <param name="fieldIds"> FieldIds of the ManagementZone. </param>
-        /// <param name="sources"> Sources of the ManagementZone. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <summary> Gets a specified management zone resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="managementZoneId"> Id of the management zone. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZonesByFarmerIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetManagementZonesByFarmerIdAsync(string farmerId, IEnumerable<string> types = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZoneAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetManagementZoneAsync(string partyId, string managementZoneId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
 
-            return GetManagementZonesByFarmerIdImplementationAsync("ManagementZones.GetManagementZonesByFarmerId", farmerId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetManagementZonesByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            using var scope = ClientDiagnostics.CreateScope("ManagementZones.GetManagementZone");
+            scope.Start();
+            try
             {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetManagementZonesByFarmerIdRequest(farmerId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetManagementZonesByFarmerIdNextPageRequest(nextLink, farmerId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
+                using HttpMessage message = CreateGetManagementZoneRequest(partyId, managementZoneId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns a paginated list of management zone resources under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="types"> Types of the ManagementZone. </param>
-        /// <param name="cropIds"> CropIds of the ManagementZone. </param>
-        /// <param name="seasonIds"> SeasonIds of the ManagementZone. </param>
-        /// <param name="fieldIds"> FieldIds of the ManagementZone. </param>
-        /// <param name="sources"> Sources of the ManagementZone. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <summary> Gets a specified management zone resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="managementZoneId"> Id of the management zone. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZonesByFarmerId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetManagementZonesByFarmerId(string farmerId, IEnumerable<string> types = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZone(String,String,RequestContext)']/*" />
+        public virtual Response GetManagementZone(string partyId, string managementZoneId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
 
-            return GetManagementZonesByFarmerIdImplementation("ManagementZones.GetManagementZonesByFarmerId", farmerId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetManagementZonesByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            using var scope = ClientDiagnostics.CreateScope("ManagementZones.GetManagementZone");
+            scope.Start();
+            try
             {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetManagementZonesByFarmerIdRequest(farmerId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetManagementZonesByFarmerIdNextPageRequest(nextLink, farmerId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
+                using HttpMessage message = CreateGetManagementZoneRequest(partyId, managementZoneId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns a paginated list of management zone resources across all farmers. </summary>
+        /// <summary> Creates or updates a management zone resource. </summary>
+        /// <param name="partyId"> Id of the party resource. </param>
+        /// <param name="managementZoneId"> Id of the management zone resource. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="managementZoneId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string managementZoneId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ManagementZones.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, managementZoneId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a management zone resource. </summary>
+        /// <param name="partyId"> Id of the party resource. </param>
+        /// <param name="managementZoneId"> Id of the management zone resource. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="managementZoneId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdate(string partyId, string managementZoneId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ManagementZones.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, managementZoneId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a specified management zone resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the party. </param>
+        /// <param name="managementZoneId"> Id of the management zone. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(string partyId, string managementZoneId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
+
+            using var scope = ClientDiagnostics.CreateScope("ManagementZones.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(partyId, managementZoneId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a specified management zone resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the party. </param>
+        /// <param name="managementZoneId"> Id of the management zone. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="managementZoneId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
+        public virtual Response Delete(string partyId, string managementZoneId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(managementZoneId, nameof(managementZoneId));
+
+            using var scope = ClientDiagnostics.CreateScope("ManagementZones.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(partyId, managementZoneId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns a paginated list of management zone resources across all parties. </summary>
         /// <param name="types"> Types of the ManagementZone. </param>
         /// <param name="cropIds"> CropIds of the ManagementZone. </param>
         /// <param name="seasonIds"> SeasonIds of the ManagementZone. </param>
@@ -430,7 +324,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of management zone resources across all farmers. </summary>
+        /// <summary> Returns a paginated list of management zone resources across all parties. </summary>
         /// <param name="types"> Types of the ManagementZone. </param>
         /// <param name="cropIds"> CropIds of the ManagementZone. </param>
         /// <param name="seasonIds"> SeasonIds of the ManagementZone. </param>
@@ -478,28 +372,134 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        /// <summary> Returns a paginated list of management zone resources under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="types"> Types of the ManagementZone. </param>
+        /// <param name="cropIds"> CropIds of the ManagementZone. </param>
+        /// <param name="seasonIds"> SeasonIds of the ManagementZone. </param>
+        /// <param name="fieldIds"> FieldIds of the ManagementZone. </param>
+        /// <param name="sources"> Sources of the ManagementZone. </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZonesByPartyIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetManagementZonesByPartyIdAsync(string partyId, IEnumerable<string> types = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+
+            return GetManagementZonesByPartyIdImplementationAsync("ManagementZones.GetManagementZonesByPartyId", partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+        }
+
+        private AsyncPageable<BinaryData> GetManagementZonesByPartyIdImplementationAsync(string diagnosticsScopeName, string partyId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetManagementZonesByPartyIdRequest(partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetManagementZonesByPartyIdNextPageRequest(nextLink, partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of management zone resources under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="types"> Types of the ManagementZone. </param>
+        /// <param name="cropIds"> CropIds of the ManagementZone. </param>
+        /// <param name="seasonIds"> SeasonIds of the ManagementZone. </param>
+        /// <param name="fieldIds"> FieldIds of the ManagementZone. </param>
+        /// <param name="sources"> Sources of the ManagementZone. </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='GetManagementZonesByPartyId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetManagementZonesByPartyId(string partyId, IEnumerable<string> types = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> sources = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+
+            return GetManagementZonesByPartyIdImplementation("ManagementZones.GetManagementZonesByPartyId", partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+        }
+
+        private Pageable<BinaryData> GetManagementZonesByPartyIdImplementation(string diagnosticsScopeName, string partyId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetManagementZonesByPartyIdRequest(partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetManagementZonesByPartyIdNextPageRequest(nextLink, partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
         /// <summary> Create a cascade delete job for specified management zone. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="managementZoneId"> ID of the management zone to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="managementZoneId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, string managementZoneId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string managementZoneId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(managementZoneId, nameof(managementZoneId));
 
             using var scope = ClientDiagnostics.CreateScope("ManagementZones.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, managementZoneId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, managementZoneId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ManagementZones.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -512,25 +512,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a cascade delete job for specified management zone. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="managementZoneId"> ID of the management zone to be deleted. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="managementZoneId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="managementZoneId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/ManagementZones.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,String,String,String,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, string managementZoneId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string managementZoneId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(managementZoneId, nameof(managementZoneId));
 
             using var scope = ClientDiagnostics.CreateScope("ManagementZones.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, managementZoneId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, managementZoneId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ManagementZones.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -538,162 +538,6 @@ namespace Azure.Verticals.AgriFood.Farming
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateGetManagementZonesByFarmerIdRequest(string farmerId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/management-zones", false);
-            if (types != null)
-            {
-                foreach (var param in types)
-                {
-                    uri.AppendQuery("types", param, true);
-                }
-            }
-            if (cropIds != null)
-            {
-                foreach (var param in cropIds)
-                {
-                    uri.AppendQuery("cropIds", param, true);
-                }
-            }
-            if (seasonIds != null)
-            {
-                foreach (var param in seasonIds)
-                {
-                    uri.AppendQuery("seasonIds", param, true);
-                }
-            }
-            if (fieldIds != null)
-            {
-                foreach (var param in fieldIds)
-                {
-                    uri.AppendQuery("fieldIds", param, true);
-                }
-            }
-            if (sources != null)
-            {
-                foreach (var param in sources)
-                {
-                    uri.AppendQuery("sources", param, true);
-                }
-            }
-            if (ids != null)
-            {
-                foreach (var param in ids)
-                {
-                    uri.AppendQuery("ids", param, true);
-                }
-            }
-            if (names != null)
-            {
-                foreach (var param in names)
-                {
-                    uri.AppendQuery("names", param, true);
-                }
-            }
-            if (propertyFilters != null)
-            {
-                foreach (var param in propertyFilters)
-                {
-                    uri.AppendQuery("propertyFilters", param, true);
-                }
-            }
-            if (statuses != null)
-            {
-                foreach (var param in statuses)
-                {
-                    uri.AppendQuery("statuses", param, true);
-                }
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetManagementZoneRequest(string farmerId, string managementZoneId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/management-zones/", false);
-            uri.AppendPath(managementZoneId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string managementZoneId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/management-zones/", false);
-            uri.AppendPath(managementZoneId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string farmerId, string managementZoneId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/management-zones/", false);
-            uri.AppendPath(managementZoneId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         internal HttpMessage CreateGetManagementZonesRequest(IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -785,11 +629,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -812,7 +656,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string managementZoneId, RequestContext context)
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string partyId, string managementZoneId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -821,7 +665,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.Reset(_endpoint);
             uri.AppendPath("/management-zones/cascade-delete/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("farmerId", farmerId, true);
+            uri.AppendQuery("partyId", partyId, true);
             uri.AppendQuery("managementZoneId", managementZoneId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -829,14 +673,157 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetManagementZonesByFarmerIdNextPageRequest(string nextLink, string farmerId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetManagementZonesByPartyIdRequest(string partyId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/management-zones", false);
+            if (types != null)
+            {
+                foreach (var param in types)
+                {
+                    uri.AppendQuery("types", param, true);
+                }
+            }
+            if (cropIds != null)
+            {
+                foreach (var param in cropIds)
+                {
+                    uri.AppendQuery("cropIds", param, true);
+                }
+            }
+            if (seasonIds != null)
+            {
+                foreach (var param in seasonIds)
+                {
+                    uri.AppendQuery("seasonIds", param, true);
+                }
+            }
+            if (fieldIds != null)
+            {
+                foreach (var param in fieldIds)
+                {
+                    uri.AppendQuery("fieldIds", param, true);
+                }
+            }
+            if (sources != null)
+            {
+                foreach (var param in sources)
+                {
+                    uri.AppendQuery("sources", param, true);
+                }
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetManagementZoneRequest(string partyId, string managementZoneId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/management-zones/", false);
+            uri.AppendPath(managementZoneId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string managementZoneId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/management-zones/", false);
+            uri.AppendPath(managementZoneId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string partyId, string managementZoneId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/management-zones/", false);
+            uri.AppendPath(managementZoneId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -855,13 +842,26 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal HttpMessage CreateGetManagementZonesByPartyIdNextPageRequest(string nextLink, string partyId, IEnumerable<string> types, IEnumerable<string> cropIds, IEnumerable<string> seasonIds, IEnumerable<string> fieldIds, IEnumerable<string> sources, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200201;
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

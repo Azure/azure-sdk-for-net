@@ -52,25 +52,25 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets a specified nutrient analysis resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <summary> Gets a specified nutrient analysis resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysisAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetNutrientAnalysisAsync(string farmerId, string nutrientAnalysisId, RequestContext context = null)
+        public virtual async Task<Response> GetNutrientAnalysisAsync(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.GetNutrientAnalysis");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNutrientAnalysisRequest(farmerId, nutrientAnalysisId, context);
+                using HttpMessage message = CreateGetNutrientAnalysisRequest(partyId, nutrientAnalysisId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -80,25 +80,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Gets a specified nutrient analysis resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <summary> Gets a specified nutrient analysis resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysis(String,String,RequestContext)']/*" />
-        public virtual Response GetNutrientAnalysis(string farmerId, string nutrientAnalysisId, RequestContext context = null)
+        public virtual Response GetNutrientAnalysis(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.GetNutrientAnalysis");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetNutrientAnalysisRequest(farmerId, nutrientAnalysisId, context);
+                using HttpMessage message = CreateGetNutrientAnalysisRequest(partyId, nutrientAnalysisId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -109,18 +109,18 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates a nutrient analysis resource. </summary>
-        /// <param name="farmerId"> Id of the farmer resource. </param>
+        /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="nutrientAnalysisId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="nutrientAnalysisId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
             Argument.AssertNotNull(content, nameof(content));
 
@@ -128,7 +128,7 @@ namespace Azure.Verticals.AgriFood.Farming
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, nutrientAnalysisId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, nutrientAnalysisId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -139,18 +139,18 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Creates or updates a nutrient analysis resource. </summary>
-        /// <param name="farmerId"> Id of the farmer resource. </param>
+        /// <param name="partyId"> Id of the party resource. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="nutrientAnalysisId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="nutrientAnalysisId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string farmerId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdate(string partyId, string nutrientAnalysisId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
             Argument.AssertNotNull(content, nameof(content));
 
@@ -158,7 +158,7 @@ namespace Azure.Verticals.AgriFood.Farming
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, nutrientAnalysisId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, nutrientAnalysisId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -168,25 +168,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified nutrient analysis resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <summary> Deletes a specified nutrient analysis resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string farmerId, string nutrientAnalysisId, RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(farmerId, nutrientAnalysisId, context);
+                using HttpMessage message = CreateDeleteRequest(partyId, nutrientAnalysisId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -196,25 +196,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified nutrient analysis resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <summary> Deletes a specified nutrient analysis resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the party. </param>
         /// <param name="nutrientAnalysisId"> Id of the nutrient analysis. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="nutrientAnalysisId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
-        public virtual Response Delete(string farmerId, string nutrientAnalysisId, RequestContext context = null)
+        public virtual Response Delete(string partyId, string nutrientAnalysisId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(nutrientAnalysisId, nameof(nutrientAnalysisId));
 
             using var scope = ClientDiagnostics.CreateScope("NutrientAnalyses.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(farmerId, nutrientAnalysisId, context);
+                using HttpMessage message = CreateDeleteRequest(partyId, nutrientAnalysisId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -224,115 +224,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of nutrient analysis resources under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="parentType">
-        /// Type of the parent it belongs to.
-        /// i.e. PlantTissueAnalysis.
-        /// </param>
-        /// <param name="parentIds"> Parent ids of the resource. </param>
-        /// <param name="classifications"> Classifications for nutrient analyses. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByFarmerIdAsync(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetNutrientAnalysesByFarmerIdAsync(string farmerId, string parentType = null, IEnumerable<string> parentIds = null, IEnumerable<string> classifications = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-
-            return GetNutrientAnalysesByFarmerIdImplementationAsync("NutrientAnalyses.GetNutrientAnalysesByFarmerId", farmerId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetNutrientAnalysesByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetNutrientAnalysesByFarmerIdRequest(farmerId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetNutrientAnalysesByFarmerIdNextPageRequest(nextLink, farmerId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Returns a paginated list of nutrient analysis resources under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="parentType">
-        /// Type of the parent it belongs to.
-        /// i.e. PlantTissueAnalysis.
-        /// </param>
-        /// <param name="parentIds"> Parent ids of the resource. </param>
-        /// <param name="classifications"> Classifications for nutrient analyses. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByFarmerId(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetNutrientAnalysesByFarmerId(string farmerId, string parentType = null, IEnumerable<string> parentIds = null, IEnumerable<string> classifications = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-
-            return GetNutrientAnalysesByFarmerIdImplementation("NutrientAnalyses.GetNutrientAnalysesByFarmerId", farmerId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetNutrientAnalysesByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetNutrientAnalysesByFarmerIdRequest(farmerId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetNutrientAnalysesByFarmerIdNextPageRequest(nextLink, farmerId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
-        }
-
-        /// <summary> Returns a paginated list of nutrient analysis resources across all farmers. </summary>
+        /// <summary> Returns a paginated list of nutrient analysis resources across all parties. </summary>
         /// <param name="parentType">
         /// Type of the parent it belongs to.
         /// i.e. PlantTissueAnalysis.
@@ -381,7 +273,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of nutrient analysis resources across all farmers. </summary>
+        /// <summary> Returns a paginated list of nutrient analysis resources across all parties. </summary>
         /// <param name="parentType">
         /// Type of the parent it belongs to.
         /// i.e. PlantTissueAnalysis.
@@ -430,143 +322,112 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetNutrientAnalysesByFarmerIdRequest(string farmerId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        /// <summary> Returns a paginated list of nutrient analysis resources under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="parentType">
+        /// Type of the parent it belongs to.
+        /// i.e. PlantTissueAnalysis.
+        /// </param>
+        /// <param name="parentIds"> Parent ids of the resource. </param>
+        /// <param name="classifications"> Classifications for nutrient analyses. </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByPartyIdAsync(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetNutrientAnalysesByPartyIdAsync(string partyId, string parentType = null, IEnumerable<string> parentIds = null, IEnumerable<string> classifications = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/nutrient-analyses", false);
-            if (parentType != null)
-            {
-                uri.AppendQuery("parentType", parentType, true);
-            }
-            if (parentIds != null)
-            {
-                foreach (var param in parentIds)
-                {
-                    uri.AppendQuery("parentIds", param, true);
-                }
-            }
-            if (classifications != null)
-            {
-                foreach (var param in classifications)
-                {
-                    uri.AppendQuery("classifications", param, true);
-                }
-            }
-            if (ids != null)
-            {
-                foreach (var param in ids)
-                {
-                    uri.AppendQuery("ids", param, true);
-                }
-            }
-            if (names != null)
-            {
-                foreach (var param in names)
-                {
-                    uri.AppendQuery("names", param, true);
-                }
-            }
-            if (propertyFilters != null)
-            {
-                foreach (var param in propertyFilters)
-                {
-                    uri.AppendQuery("propertyFilters", param, true);
-                }
-            }
-            if (statuses != null)
-            {
-                foreach (var param in statuses)
-                {
-                    uri.AppendQuery("statuses", param, true);
-                }
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+
+            return GetNutrientAnalysesByPartyIdImplementationAsync("NutrientAnalyses.GetNutrientAnalysesByPartyId", partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        internal HttpMessage CreateGetNutrientAnalysisRequest(string farmerId, string nutrientAnalysisId, RequestContext context)
+        private AsyncPageable<BinaryData> GetNutrientAnalysesByPartyIdImplementationAsync(string diagnosticsScopeName, string partyId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/nutrient-analyses/", false);
-            uri.AppendPath(nutrientAnalysisId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetNutrientAnalysesByPartyIdRequest(partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetNutrientAnalysesByPartyIdNextPageRequest(nextLink, partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string nutrientAnalysisId, RequestContent content, RequestContext context)
+        /// <summary> Returns a paginated list of nutrient analysis resources under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="parentType">
+        /// Type of the parent it belongs to.
+        /// i.e. PlantTissueAnalysis.
+        /// </param>
+        /// <param name="parentIds"> Parent ids of the resource. </param>
+        /// <param name="classifications"> Classifications for nutrient analyses. </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/NutrientAnalyses.xml" path="doc/members/member[@name='GetNutrientAnalysesByPartyId(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetNutrientAnalysesByPartyId(string partyId, string parentType = null, IEnumerable<string> parentIds = null, IEnumerable<string> classifications = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/nutrient-analyses/", false);
-            uri.AppendPath(nutrientAnalysisId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+
+            return GetNutrientAnalysesByPartyIdImplementation("NutrientAnalyses.GetNutrientAnalysesByPartyId", partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        internal HttpMessage CreateDeleteRequest(string farmerId, string nutrientAnalysisId, RequestContext context)
+        private Pageable<BinaryData> GetNutrientAnalysesByPartyIdImplementation(string diagnosticsScopeName, string partyId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/nutrient-analyses/", false);
-            uri.AppendPath(nutrientAnalysisId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetNutrientAnalysesByPartyIdRequest(partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetNutrientAnalysesByPartyIdNextPageRequest(nextLink, partyId, parentType, parentIds, classifications, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
         }
 
         internal HttpMessage CreateGetNutrientAnalysesRequest(string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -641,11 +502,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -653,7 +514,146 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetNutrientAnalysesByFarmerIdNextPageRequest(string nextLink, string farmerId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetNutrientAnalysesByPartyIdRequest(string partyId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/nutrient-analyses", false);
+            if (parentType != null)
+            {
+                uri.AppendQuery("parentType", parentType, true);
+            }
+            if (parentIds != null)
+            {
+                foreach (var param in parentIds)
+                {
+                    uri.AppendQuery("parentIds", param, true);
+                }
+            }
+            if (classifications != null)
+            {
+                foreach (var param in classifications)
+                {
+                    uri.AppendQuery("classifications", param, true);
+                }
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetNutrientAnalysisRequest(string partyId, string nutrientAnalysisId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/nutrient-analyses/", false);
+            uri.AppendPath(nutrientAnalysisId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string nutrientAnalysisId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/nutrient-analyses/", false);
+            uri.AppendPath(nutrientAnalysisId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string partyId, string nutrientAnalysisId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/nutrient-analyses/", false);
+            uri.AppendPath(nutrientAnalysisId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetNutrientAnalysesNextPageRequest(string nextLink, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -666,7 +666,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetNutrientAnalysesNextPageRequest(string nextLink, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetNutrientAnalysesByPartyIdNextPageRequest(string nextLink, string partyId, string parentType, IEnumerable<string> parentIds, IEnumerable<string> classifications, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

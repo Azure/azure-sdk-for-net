@@ -6,15 +6,15 @@
 This sample shows how to call GetAttachmentAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-Response response = await client.GetAttachmentAsync("<farmerId>", "<attachmentId>");
+Response response = await client.GetAttachmentAsync("<partyId>", "<attachmentId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("originalFileName").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -22,6 +22,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code>
 </example>
@@ -33,9 +35,9 @@ Response Body:
 Schema for <c>Attachment</c>:
 <code>{
   resourceId: string, # Optional. Associated Resource id for this attachment.
-  resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
   originalFileName: string, # Optional. Original File Name for this attachment.
-  farmerId: string, # Optional. Farmer id for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
   id: string, # Optional. Unique id.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
@@ -43,6 +45,8 @@ Schema for <c>Attachment</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
 }
 </code>
@@ -54,15 +58,15 @@ Schema for <c>Attachment</c>:
 This sample shows how to call GetAttachment with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-Response response = client.GetAttachment("<farmerId>", "<attachmentId>");
+Response response = client.GetAttachment("<partyId>", "<attachmentId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("originalFileName").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -70,6 +74,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code>
 </example>
@@ -81,9 +87,9 @@ Response Body:
 Schema for <c>Attachment</c>:
 <code>{
   resourceId: string, # Optional. Associated Resource id for this attachment.
-  resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
   originalFileName: string, # Optional. Original File Name for this attachment.
-  farmerId: string, # Optional. Farmer id for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
   id: string, # Optional. Unique id.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
@@ -91,6 +97,8 @@ Schema for <c>Attachment</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
 }
 </code>
@@ -102,17 +110,17 @@ Schema for <c>Attachment</c>:
 This sample shows how to call CreateOrUpdateAsync with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<attachmentId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("originalFileName").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -120,6 +128,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code>
 </example>
@@ -131,9 +141,9 @@ Response Body:
 Schema for <c>Attachment</c>:
 <code>{
   resourceId: string, # Optional. Associated Resource id for this attachment.
-  resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
   originalFileName: string, # Optional. Original File Name for this attachment.
-  farmerId: string, # Optional. Farmer id for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
   id: string, # Optional. Unique id.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
@@ -141,6 +151,8 @@ Schema for <c>Attachment</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
 }
 </code>
@@ -152,17 +164,17 @@ Schema for <c>Attachment</c>:
 This sample shows how to call CreateOrUpdate with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
 var data = File.OpenRead("<filePath>");
 
-Response response = client.CreateOrUpdate("<farmerId>", "<attachmentId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("originalFileName").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -170,6 +182,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code>
 </example>
@@ -181,9 +195,9 @@ Response Body:
 Schema for <c>Attachment</c>:
 <code>{
   resourceId: string, # Optional. Associated Resource id for this attachment.
-  resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
   originalFileName: string, # Optional. Original File Name for this attachment.
-  farmerId: string, # Optional. Farmer id for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
   id: string, # Optional. Unique id.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
@@ -191,6 +205,8 @@ Schema for <c>Attachment</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
 }
 </code>
@@ -202,9 +218,9 @@ Schema for <c>Attachment</c>:
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-Response response = await client.DeleteAsync("<farmerId>", "<attachmentId>");
+Response response = await client.DeleteAsync("<partyId>", "<attachmentId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -214,9 +230,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-Response response = client.Delete("<farmerId>", "<attachmentId>");
+Response response = client.Delete("<partyId>", "<attachmentId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -226,9 +242,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call DownloadAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-Response response = await client.DownloadAsync("<farmerId>", "<attachmentId>");
+Response response = await client.DownloadAsync("<partyId>", "<attachmentId>");
 if (response.ContentStream != null)
 {
     using(Stream outFileStream = File.OpenWrite("<filePath>")
@@ -244,9 +260,9 @@ if (response.ContentStream != null)
 This sample shows how to call Download with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-Response response = client.Download("<farmerId>", "<attachmentId>");
+Response response = client.Download("<partyId>", "<attachmentId>");
 if (response.ContentStream != null)
 {
     using(Stream outFileStream = File.OpenWrite("<filePath>")
@@ -257,31 +273,31 @@ if (response.ContentStream != null)
 ]]></code>
 </example>
     </member>
-    <member name="GetAttachmentsByFarmerIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAttachmentsByPartyIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetAttachmentsByFarmerIdAsync with required parameters and parse the result.
+This sample shows how to call GetAttachmentsByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetAttachmentsByFarmerIdAsync("<farmerId>"))
+await foreach (var data in client.GetAttachmentsByPartyIdAsync("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetAttachmentsByFarmerIdAsync with all parameters, and how to parse the result.
+This sample shows how to call GetAttachmentsByPartyIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetAttachmentsByFarmerIdAsync("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<attachmentIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetAttachmentsByPartyIdAsync("<partyId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("resourceId").ToString());
     Console.WriteLine(result.GetProperty("resourceType").ToString());
     Console.WriteLine(result.GetProperty("originalFileName").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -289,6 +305,8 @@ await foreach (var data in client.GetAttachmentsByFarmerIdAsync("<farmerId>", ne
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
 }
 ]]></code>
@@ -301,9 +319,9 @@ Response Body:
 Schema for <c>AttachmentListResponseValue</c>:
 <code>{
   resourceId: string, # Optional. Associated Resource id for this attachment.
-  resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
   originalFileName: string, # Optional. Original File Name for this attachment.
-  farmerId: string, # Optional. Farmer id for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
   id: string, # Optional. Unique id.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
@@ -311,37 +329,39 @@ Schema for <c>AttachmentListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetAttachmentsByFarmerId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAttachmentsByPartyId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetAttachmentsByFarmerId with required parameters and parse the result.
+This sample shows how to call GetAttachmentsByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetAttachmentsByFarmerId("<farmerId>"))
+foreach (var data in client.GetAttachmentsByPartyId("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetAttachmentsByFarmerId with all parameters, and how to parse the result.
+This sample shows how to call GetAttachmentsByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetAttachmentsClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetAttachmentsByFarmerId("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<attachmentIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetAttachmentsByPartyId("<partyId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("resourceId").ToString());
     Console.WriteLine(result.GetProperty("resourceType").ToString());
     Console.WriteLine(result.GetProperty("originalFileName").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
@@ -349,6 +369,8 @@ foreach (var data in client.GetAttachmentsByFarmerId("<farmerId>", new String[]{
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
 }
 ]]></code>
@@ -361,9 +383,9 @@ Response Body:
 Schema for <c>AttachmentListResponseValue</c>:
 <code>{
   resourceId: string, # Optional. Associated Resource id for this attachment.
-  resourceType: &quot;Farmer&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
+  resourceType: &quot;Party&quot; | &quot;Farm&quot; | &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Boundary&quot; | &quot;ApplicationData&quot; | &quot;HarvestData&quot; | &quot;TillageData&quot; | &quot;PlantingData&quot; | &quot;PlantTissueAnalysis&quot;, # Optional. Associated Resource type for this attachment.
   originalFileName: string, # Optional. Original File Name for this attachment.
-  farmerId: string, # Optional. Farmer id for this attachment.
+  partyId: string, # Optional. PartyId id for this attachment.
   id: string, # Optional. Unique id.
   status: string, # Optional. Status of the resource.
   createdDateTime: string (ISO 8601 Format), # Optional. Date when resource was created.
@@ -371,6 +393,8 @@ Schema for <c>AttachmentListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
 }
 </code>

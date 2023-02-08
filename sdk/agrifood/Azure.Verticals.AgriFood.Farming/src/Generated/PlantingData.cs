@@ -52,25 +52,25 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Get a specified planting data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <summary> Get a specified planting data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='GetPlantingDataAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetPlantingDataAsync(string farmerId, string plantingDataId, RequestContext context = null)
+        public virtual async Task<Response> GetPlantingDataAsync(string partyId, string plantingDataId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(plantingDataId, nameof(plantingDataId));
 
             using var scope = ClientDiagnostics.CreateScope("PlantingData.GetPlantingData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPlantingDataRequest(farmerId, plantingDataId, context);
+                using HttpMessage message = CreateGetPlantingDataRequest(partyId, plantingDataId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -80,25 +80,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Get a specified planting data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <summary> Get a specified planting data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='GetPlantingData(String,String,RequestContext)']/*" />
-        public virtual Response GetPlantingData(string farmerId, string plantingDataId, RequestContext context = null)
+        public virtual Response GetPlantingData(string partyId, string plantingDataId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(plantingDataId, nameof(plantingDataId));
 
             using var scope = ClientDiagnostics.CreateScope("PlantingData.GetPlantingData");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPlantingDataRequest(farmerId, plantingDataId, context);
+                using HttpMessage message = CreateGetPlantingDataRequest(partyId, plantingDataId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -108,19 +108,19 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates an planting data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <summary> Creates or updates an planting data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="plantingDataId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="plantingDataId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string plantingDataId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string plantingDataId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(plantingDataId, nameof(plantingDataId));
             Argument.AssertNotNull(content, nameof(content));
 
@@ -128,7 +128,7 @@ namespace Azure.Verticals.AgriFood.Farming
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, plantingDataId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, plantingDataId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -138,19 +138,19 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates an planting data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <summary> Creates or updates an planting data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="plantingDataId"> ID of the planting data resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="plantingDataId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="plantingDataId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string farmerId, string plantingDataId, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdate(string partyId, string plantingDataId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(plantingDataId, nameof(plantingDataId));
             Argument.AssertNotNull(content, nameof(content));
 
@@ -158,7 +158,7 @@ namespace Azure.Verticals.AgriFood.Farming
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, plantingDataId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, plantingDataId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -168,25 +168,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified planting data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <summary> Deletes a specified planting data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="plantingDataId"> ID of the planting data. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string farmerId, string plantingDataId, RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(string partyId, string plantingDataId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(plantingDataId, nameof(plantingDataId));
 
             using var scope = ClientDiagnostics.CreateScope("PlantingData.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(farmerId, plantingDataId, context);
+                using HttpMessage message = CreateDeleteRequest(partyId, plantingDataId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -196,25 +196,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified planting data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
+        /// <summary> Deletes a specified planting data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party resource. </param>
         /// <param name="plantingDataId"> ID of the planting data. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="plantingDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
-        public virtual Response Delete(string farmerId, string plantingDataId, RequestContext context = null)
+        public virtual Response Delete(string partyId, string plantingDataId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(plantingDataId, nameof(plantingDataId));
 
             using var scope = ClientDiagnostics.CreateScope("PlantingData.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(farmerId, plantingDataId, context);
+                using HttpMessage message = CreateDeleteRequest(partyId, plantingDataId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -276,8 +276,8 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of planting data resources under a particular farm. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <summary> Returns a paginated list of planting data resources under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum TotalMaterial value(inclusive). </param>
@@ -294,7 +294,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
         /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
         /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="plantingDataIds"> Ids of the resource. </param>
+        /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -311,19 +311,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='GetAllPlantingDataByFarmerIdAsync(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllPlantingDataByFarmerIdAsync(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> plantingDataIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='GetAllPlantingDataByPartyIdAsync(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllPlantingDataByPartyIdAsync(string partyId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
-            return GetAllPlantingDataByFarmerIdImplementationAsync("PlantingData.GetAllPlantingDataByFarmerId", farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, plantingDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetAllPlantingDataByPartyIdImplementationAsync("PlantingData.GetAllPlantingDataByPartyId", partyId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetAllPlantingDataByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> plantingDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetAllPlantingDataByPartyIdImplementationAsync(string diagnosticsScopeName, string partyId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -331,8 +331,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllPlantingDataByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, plantingDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllPlantingDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, plantingDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetAllPlantingDataByPartyIdRequest(partyId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAllPlantingDataByPartyIdNextPageRequest(nextLink, partyId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -340,8 +340,8 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of planting data resources under a particular farm. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <summary> Returns a paginated list of planting data resources under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum TotalMaterial value(inclusive). </param>
@@ -358,7 +358,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
         /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
         /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="plantingDataIds"> Ids of the resource. </param>
+        /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -375,19 +375,19 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='GetAllPlantingDataByFarmerId(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllPlantingDataByFarmerId(string farmerId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> plantingDataIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='GetAllPlantingDataByPartyId(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllPlantingDataByPartyId(string partyId, double? minAvgPlantingRate = null, double? maxAvgPlantingRate = null, double? minTotalMaterial = null, double? maxTotalMaterial = null, double? minAvgMaterial = null, double? maxAvgMaterial = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
-            return GetAllPlantingDataByFarmerIdImplementation("PlantingData.GetAllPlantingDataByFarmerId", farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, plantingDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetAllPlantingDataByPartyIdImplementation("PlantingData.GetAllPlantingDataByPartyId", partyId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetAllPlantingDataByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> plantingDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetAllPlantingDataByPartyIdImplementation(string diagnosticsScopeName, string partyId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -395,8 +395,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllPlantingDataByFarmerIdRequest(farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, plantingDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllPlantingDataByFarmerIdNextPageRequest(nextLink, farmerId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, plantingDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetAllPlantingDataByPartyIdRequest(partyId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAllPlantingDataByPartyIdNextPageRequest(nextLink, partyId, minAvgPlantingRate, maxAvgPlantingRate, minTotalMaterial, maxTotalMaterial, minAvgMaterial, maxAvgMaterial, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -404,7 +404,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of planting data resources across all farmers. </summary>
+        /// <summary> Returns a paginated list of planting data resources across all parties. </summary>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum TotalMaterial value(inclusive). </param>
@@ -463,7 +463,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of planting data resources across all farmers. </summary>
+        /// <summary> Returns a paginated list of planting data resources across all parties. </summary>
         /// <param name="minAvgPlantingRate"> Minimum AvgPlantingRate value(inclusive). </param>
         /// <param name="maxAvgPlantingRate"> Maximum AvgPlantingRate value (inclusive). </param>
         /// <param name="minTotalMaterial"> Minimum TotalMaterial value(inclusive). </param>
@@ -525,25 +525,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create cascade delete job for planting data resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job Id supplied by end user. </param>
-        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="partyId"> Id of the party. </param>
         /// <param name="plantingDataId"> Id of the planting data. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="plantingDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, string plantingDataId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string plantingDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(plantingDataId, nameof(plantingDataId));
 
             using var scope = ClientDiagnostics.CreateScope("PlantingData.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, plantingDataId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, plantingDataId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PlantingData.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -556,25 +556,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create cascade delete job for planting data resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job Id supplied by end user. </param>
-        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="partyId"> Id of the party. </param>
         /// <param name="plantingDataId"> Id of the planting data. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="plantingDataId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="plantingDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/PlantingData.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,String,String,String,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, string plantingDataId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string plantingDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(plantingDataId, nameof(plantingDataId));
 
             using var scope = ClientDiagnostics.CreateScope("PlantingData.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, plantingDataId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, plantingDataId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PlantingData.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -584,15 +584,15 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetAllPlantingDataByFarmerIdRequest(string farmerId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> plantingDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetAllPlantingDataByPartyIdRequest(string partyId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
             uri.AppendPath("/planting-data", false);
             if (minAvgPlantingRate != null)
             {
@@ -664,9 +664,9 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxArea", maxArea.Value, true);
             }
-            if (plantingDataIds != null)
+            if (ids != null)
             {
-                foreach (var param in plantingDataIds)
+                foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
@@ -710,11 +710,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -722,15 +722,15 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetPlantingDataRequest(string farmerId, string plantingDataId, RequestContext context)
+        internal HttpMessage CreateGetPlantingDataRequest(string partyId, string plantingDataId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
             uri.AppendPath("/planting-data/", false);
             uri.AppendPath(plantingDataId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -739,15 +739,15 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string plantingDataId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string plantingDataId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
             uri.AppendPath("/planting-data/", false);
             uri.AppendPath(plantingDataId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -758,15 +758,15 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string farmerId, string plantingDataId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string partyId, string plantingDataId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
             uri.AppendPath("/planting-data/", false);
             uri.AppendPath(plantingDataId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -899,11 +899,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -911,7 +911,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string plantingDataId, RequestContext context)
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string partyId, string plantingDataId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -920,7 +920,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.Reset(_endpoint);
             uri.AppendPath("/planting-data/cascade-delete/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("farmerId", farmerId, true);
+            uri.AppendQuery("partyId", partyId, true);
             uri.AppendQuery("plantingDataId", plantingDataId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -943,7 +943,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetAllPlantingDataByFarmerIdNextPageRequest(string nextLink, string farmerId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> plantingDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetAllPlantingDataByPartyIdNextPageRequest(string nextLink, string partyId, double? minAvgPlantingRate, double? maxAvgPlantingRate, double? minTotalMaterial, double? maxTotalMaterial, double? minAvgMaterial, double? maxAvgMaterial, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

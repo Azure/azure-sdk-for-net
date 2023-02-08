@@ -215,7 +215,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Returns a paginated list of sensor mapping resources. </summary>
         /// <param name="sensorIds"> Id of the sensors. </param>
         /// <param name="sensorPartnerIds"> Id of the sensor partners. </param>
-        /// <param name="farmerIds"> Id of the farmers. </param>
+        /// <param name="partyIds"> Id of the parties. </param>
         /// <param name="boundaryIds"> Id of the boundaries. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
@@ -237,12 +237,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMappingsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSensorMappingsAsync(IEnumerable<string> sensorIds = null, IEnumerable<string> sensorPartnerIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSensorMappingsAsync(IEnumerable<string> sensorIds = null, IEnumerable<string> sensorPartnerIds = null, IEnumerable<string> partyIds = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetSensorMappingsImplementationAsync("SensorMappings.GetSensorMappings", sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSensorMappingsImplementationAsync("SensorMappings.GetSensorMappings", sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetSensorMappingsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> farmerIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetSensorMappingsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> partyIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -250,8 +250,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSensorMappingsRequest(sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetSensorMappingsNextPageRequest(nextLink, sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSensorMappingsRequest(sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSensorMappingsNextPageRequest(nextLink, sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -262,7 +262,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Returns a paginated list of sensor mapping resources. </summary>
         /// <param name="sensorIds"> Id of the sensors. </param>
         /// <param name="sensorPartnerIds"> Id of the sensor partners. </param>
-        /// <param name="farmerIds"> Id of the farmers. </param>
+        /// <param name="partyIds"> Id of the parties. </param>
         /// <param name="boundaryIds"> Id of the boundaries. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
@@ -284,12 +284,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMappings(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSensorMappings(IEnumerable<string> sensorIds = null, IEnumerable<string> sensorPartnerIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSensorMappings(IEnumerable<string> sensorIds = null, IEnumerable<string> sensorPartnerIds = null, IEnumerable<string> partyIds = null, IEnumerable<string> boundaryIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetSensorMappingsImplementation("SensorMappings.GetSensorMappings", sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSensorMappingsImplementation("SensorMappings.GetSensorMappings", sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetSensorMappingsImplementation(string diagnosticsScopeName, IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> farmerIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetSensorMappingsImplementation(string diagnosticsScopeName, IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> partyIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -297,8 +297,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSensorMappingsRequest(sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetSensorMappingsNextPageRequest(nextLink, sensorIds, sensorPartnerIds, farmerIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSensorMappingsRequest(sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSensorMappingsNextPageRequest(nextLink, sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -306,7 +306,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetSensorMappingsRequest(IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> farmerIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetSensorMappingsRequest(IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> partyIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -328,11 +328,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     uri.AppendQuery("sensorPartnerIds", param, true);
                 }
             }
-            if (farmerIds != null)
+            if (partyIds != null)
             {
-                foreach (var param in farmerIds)
+                foreach (var param in partyIds)
                 {
-                    uri.AppendQuery("farmerIds", param, true);
+                    uri.AppendQuery("partyIds", param, true);
                 }
             }
             if (boundaryIds != null)
@@ -388,11 +388,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -447,7 +447,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetSensorMappingsNextPageRequest(string nextLink, IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> farmerIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetSensorMappingsNextPageRequest(string nextLink, IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> partyIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

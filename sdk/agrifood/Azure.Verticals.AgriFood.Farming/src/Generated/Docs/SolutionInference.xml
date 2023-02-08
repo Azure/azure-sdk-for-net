@@ -6,7 +6,7 @@
 This sample shows how to call CancelAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -20,7 +20,7 @@ Console.WriteLine(result.GetProperty("<test>").ToString());
 This sample shows how to call CancelAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -56,7 +56,7 @@ Not following this format may result into validation errors.
 This sample shows how to call Cancel with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -70,7 +70,7 @@ Console.WriteLine(result.GetProperty("<test>").ToString());
 This sample shows how to call Cancel with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -106,7 +106,7 @@ Not following this format may result into validation errors.
 This sample shows how to call FetchAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -120,7 +120,7 @@ Console.WriteLine(result.GetProperty("<test>").ToString());
 This sample shows how to call FetchAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -156,7 +156,7 @@ Not following this format may result into validation errors.
 This sample shows how to call Fetch with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -170,7 +170,7 @@ Console.WriteLine(result.GetProperty("<test>").ToString());
 This sample shows how to call Fetch with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -206,7 +206,7 @@ Not following this format may result into validation errors.
 This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -221,7 +221,7 @@ Console.WriteLine(result.GetProperty("<test>").ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -258,7 +258,7 @@ Not following this format may result into validation errors.
 This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",
@@ -273,7 +273,7 @@ Console.WriteLine(result.GetProperty("<test>").ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSolutionInferenceClient(<2022-11-01-preview>);
 
 var data = new {
     requestPath = "<requestPath>",

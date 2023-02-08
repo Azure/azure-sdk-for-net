@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This client library enables working with the Microsoft Azure FarmBeats service</Description>
     <AssemblyTitle>Azure FarmBeats SDK</AssemblyTitle>
-    <Version>1.1.0-beta.2</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure FarmBeats</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012;AZC0007;AZC0006</NoWarn>

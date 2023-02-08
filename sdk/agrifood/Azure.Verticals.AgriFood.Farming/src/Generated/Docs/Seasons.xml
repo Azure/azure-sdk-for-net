@@ -6,7 +6,7 @@
 This sample shows how to call GetSeasonAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 Response response = await client.GetSeasonAsync("<seasonId>");
 
@@ -14,6 +14,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("year").ToString());
+Console.WriteLine(result.GetProperty("geographicIdentifier").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -22,6 +23,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -35,6 +38,7 @@ Schema for <c>Season</c>:
   startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   year: number, # Optional. Season year.
+  geographicIdentifier: string, # Optional. Geographic Identifier.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -43,6 +47,8 @@ Schema for <c>Season</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -58,7 +64,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSeason with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 Response response = client.GetSeason("<seasonId>");
 
@@ -66,6 +72,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("year").ToString());
+Console.WriteLine(result.GetProperty("geographicIdentifier").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -74,6 +81,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -87,6 +96,7 @@ Schema for <c>Season</c>:
   startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   year: number, # Optional. Season year.
+  geographicIdentifier: string, # Optional. Geographic Identifier.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -95,6 +105,8 @@ Schema for <c>Season</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -110,7 +122,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -122,12 +134,13 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 var data = new {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     year = 1234,
+    geographicIdentifier = "<geographicIdentifier>",
     status = "<status>",
     source = "<source>",
     name = "<name>",
@@ -143,6 +156,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("year").ToString());
+Console.WriteLine(result.GetProperty("geographicIdentifier").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -151,6 +165,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -164,6 +180,7 @@ Schema for <c>Season</c>:
   startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   year: number, # Optional. Season year.
+  geographicIdentifier: string, # Optional. Geographic Identifier.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -172,6 +189,8 @@ Schema for <c>Season</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -187,6 +206,7 @@ Schema for <c>Season</c>:
   startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   year: number, # Optional. Season year.
+  geographicIdentifier: string, # Optional. Geographic Identifier.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -195,6 +215,8 @@ Schema for <c>Season</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -210,7 +232,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -222,12 +244,13 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 var data = new {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     year = 1234,
+    geographicIdentifier = "<geographicIdentifier>",
     status = "<status>",
     source = "<source>",
     name = "<name>",
@@ -243,6 +266,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("year").ToString());
+Console.WriteLine(result.GetProperty("geographicIdentifier").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -251,6 +275,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -264,6 +290,7 @@ Schema for <c>Season</c>:
   startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   year: number, # Optional. Season year.
+  geographicIdentifier: string, # Optional. Geographic Identifier.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -272,6 +299,8 @@ Schema for <c>Season</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -287,6 +316,7 @@ Schema for <c>Season</c>:
   startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   year: number, # Optional. Season year.
+  geographicIdentifier: string, # Optional. Geographic Identifier.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -295,6 +325,8 @@ Schema for <c>Season</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -310,7 +342,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 Response response = await client.DeleteAsync("<seasonId>");
 Console.WriteLine(response.Status);
@@ -322,7 +354,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 Response response = client.Delete("<seasonId>");
 Console.WriteLine(response.Status);
@@ -334,7 +366,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetSeasonsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetSeasonsAsync())
 {
@@ -345,7 +377,7 @@ await foreach (var data in client.GetSeasonsAsync())
 This sample shows how to call GetSeasonsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<seasonIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
@@ -353,6 +385,7 @@ await foreach (var data in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTim
     Console.WriteLine(result.GetProperty("startDateTime").ToString());
     Console.WriteLine(result.GetProperty("endDateTime").ToString());
     Console.WriteLine(result.GetProperty("year").ToString());
+    Console.WriteLine(result.GetProperty("geographicIdentifier").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -361,6 +394,8 @@ await foreach (var data in client.GetSeasonsAsync(DateTimeOffset.UtcNow, DateTim
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -375,6 +410,7 @@ Schema for <c>SeasonListResponseValue</c>:
   startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   year: number, # Optional. Season year.
+  geographicIdentifier: string, # Optional. Geographic Identifier.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -383,6 +419,8 @@ Schema for <c>SeasonListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -398,7 +436,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSeasons and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetSeasons())
 {
@@ -409,7 +447,7 @@ foreach (var data in client.GetSeasons())
 This sample shows how to call GetSeasons with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonsClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new Int32[]{1234}, new String[]{"<seasonIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
@@ -417,6 +455,7 @@ foreach (var data in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.Utc
     Console.WriteLine(result.GetProperty("startDateTime").ToString());
     Console.WriteLine(result.GetProperty("endDateTime").ToString());
     Console.WriteLine(result.GetProperty("year").ToString());
+    Console.WriteLine(result.GetProperty("geographicIdentifier").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -425,6 +464,8 @@ foreach (var data in client.GetSeasons(DateTimeOffset.UtcNow, DateTimeOffset.Utc
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -439,6 +480,7 @@ Schema for <c>SeasonListResponseValue</c>:
   startDateTime: string (ISO 8601 Format), # Optional. Season start datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   endDateTime: string (ISO 8601 Format), # Optional. Season end datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   year: number, # Optional. Season year.
+  geographicIdentifier: string, # Optional. Geographic Identifier.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -447,6 +489,8 @@ Schema for <c>SeasonListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.

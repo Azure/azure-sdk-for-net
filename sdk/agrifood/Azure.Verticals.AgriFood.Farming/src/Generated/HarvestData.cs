@@ -52,178 +52,6 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Get a specified harvest data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetHarvestDataAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetHarvestDataAsync(string farmerId, string harvestDataId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
-
-            using var scope = ClientDiagnostics.CreateScope("HarvestData.GetHarvestData");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetHarvestDataRequest(farmerId, harvestDataId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get a specified harvest data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetHarvestData(String,String,RequestContext)']/*" />
-        public virtual Response GetHarvestData(string farmerId, string harvestDataId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
-
-            using var scope = ClientDiagnostics.CreateScope("HarvestData.GetHarvestData");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetHarvestDataRequest(farmerId, harvestDataId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates harvest data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="harvestDataId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string harvestDataId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("HarvestData.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, harvestDataId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates harvest data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the farmer. </param>
-        /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="harvestDataId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string farmerId, string harvestDataId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("HarvestData.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, harvestDataId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a specified harvest data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="harvestDataId"> ID of the harvest data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string farmerId, string harvestDataId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
-
-            using var scope = ClientDiagnostics.CreateScope("HarvestData.Delete");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteRequest(farmerId, harvestDataId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a specified harvest data resource under a particular farmer. </summary>
-        /// <param name="farmerId"> ID of the associated farmer resource. </param>
-        /// <param name="harvestDataId"> ID of the harvest data. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
-        public virtual Response Delete(string farmerId, string harvestDataId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
-
-            using var scope = ClientDiagnostics.CreateScope("HarvestData.Delete");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteRequest(farmerId, harvestDataId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get cascade delete job for harvest data resource. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -276,147 +104,179 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of harvest data resources under a particular farm. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="minTotalYield"> Minimum Yield value(inclusive). </param>
-        /// <param name="maxTotalYield"> Maximum Yield value (inclusive). </param>
-        /// <param name="minAvgYield"> Minimum AvgYield value(inclusive). </param>
-        /// <param name="maxAvgYield"> Maximum AvgYield value (inclusive). </param>
-        /// <param name="minTotalWetMass"> Minimum Total WetMass value(inclusive). </param>
-        /// <param name="maxTotalWetMass"> Maximum Total WetMass value (inclusive). </param>
-        /// <param name="minAvgWetMass"> Minimum AvgWetMass value(inclusive). </param>
-        /// <param name="maxAvgWetMass"> Maximum AvgWetMass value (inclusive). </param>
-        /// <param name="minAvgMoisture"> Minimum AvgMoisture value(inclusive). </param>
-        /// <param name="maxAvgMoisture"> Maximum AvgMoisture value (inclusive). </param>
-        /// <param name="minAvgSpeed"> Minimum AvgSpeed value(inclusive). </param>
-        /// <param name="maxAvgSpeed"> Maximum AvgSpeed value (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="harvestDataIds"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <summary> Get a specified harvest data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party resource. </param>
+        /// <param name="harvestDataId"> ID of the harvest data resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetAllHarvestDataByFarmerIdAsync(String,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllHarvestDataByFarmerIdAsync(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> harvestDataIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetHarvestDataAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetHarvestDataAsync(string partyId, string harvestDataId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
 
-            return GetAllHarvestDataByFarmerIdImplementationAsync("HarvestData.GetAllHarvestDataByFarmerId", farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllHarvestDataByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            using var scope = ClientDiagnostics.CreateScope("HarvestData.GetHarvestData");
+            scope.Start();
+            try
             {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllHarvestDataByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllHarvestDataByFarmerIdNextPageRequest(nextLink, farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
+                using HttpMessage message = CreateGetHarvestDataRequest(partyId, harvestDataId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns a paginated list of harvest data resources under a particular farm. </summary>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
-        /// <param name="minTotalYield"> Minimum Yield value(inclusive). </param>
-        /// <param name="maxTotalYield"> Maximum Yield value (inclusive). </param>
-        /// <param name="minAvgYield"> Minimum AvgYield value(inclusive). </param>
-        /// <param name="maxAvgYield"> Maximum AvgYield value (inclusive). </param>
-        /// <param name="minTotalWetMass"> Minimum Total WetMass value(inclusive). </param>
-        /// <param name="maxTotalWetMass"> Maximum Total WetMass value (inclusive). </param>
-        /// <param name="minAvgWetMass"> Minimum AvgWetMass value(inclusive). </param>
-        /// <param name="maxAvgWetMass"> Maximum AvgWetMass value (inclusive). </param>
-        /// <param name="minAvgMoisture"> Minimum AvgMoisture value(inclusive). </param>
-        /// <param name="maxAvgMoisture"> Maximum AvgMoisture value (inclusive). </param>
-        /// <param name="minAvgSpeed"> Minimum AvgSpeed value(inclusive). </param>
-        /// <param name="maxAvgSpeed"> Maximum AvgSpeed value (inclusive). </param>
-        /// <param name="sources"> Sources of the operation data. </param>
-        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
-        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
-        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
-        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
-        /// <param name="harvestDataIds"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <summary> Get a specified harvest data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party resource. </param>
+        /// <param name="harvestDataId"> ID of the harvest data resource. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetAllHarvestDataByFarmerId(String,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllHarvestDataByFarmerId(string farmerId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> harvestDataIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetHarvestData(String,String,RequestContext)']/*" />
+        public virtual Response GetHarvestData(string partyId, string harvestDataId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
 
-            return GetAllHarvestDataByFarmerIdImplementation("HarvestData.GetAllHarvestDataByFarmerId", farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAllHarvestDataByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            using var scope = ClientDiagnostics.CreateScope("HarvestData.GetHarvestData");
+            scope.Start();
+            try
             {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllHarvestDataByFarmerIdRequest(farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllHarvestDataByFarmerIdNextPageRequest(nextLink, farmerId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
+                using HttpMessage message = CreateGetHarvestDataRequest(partyId, harvestDataId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Returns a paginated list of harvest data resources across all farmers. </summary>
+        /// <summary> Creates or updates harvest data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the party. </param>
+        /// <param name="harvestDataId"> ID of the harvest data resource. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="harvestDataId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string harvestDataId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("HarvestData.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, harvestDataId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates harvest data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the party. </param>
+        /// <param name="harvestDataId"> ID of the harvest data resource. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="harvestDataId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdate(string partyId, string harvestDataId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("HarvestData.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, harvestDataId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a specified harvest data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party resource. </param>
+        /// <param name="harvestDataId"> ID of the harvest data. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(string partyId, string harvestDataId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
+
+            using var scope = ClientDiagnostics.CreateScope("HarvestData.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(partyId, harvestDataId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a specified harvest data resource under a particular party. </summary>
+        /// <param name="partyId"> ID of the associated party resource. </param>
+        /// <param name="harvestDataId"> ID of the harvest data. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
+        public virtual Response Delete(string partyId, string harvestDataId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
+
+            using var scope = ClientDiagnostics.CreateScope("HarvestData.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(partyId, harvestDataId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns a paginated list of harvest data resources across all parties. </summary>
         /// <param name="minTotalYield"> Minimum Yield value(inclusive). </param>
         /// <param name="maxTotalYield"> Maximum Yield value (inclusive). </param>
         /// <param name="minAvgYield"> Minimum AvgYield value(inclusive). </param>
@@ -481,7 +341,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of harvest data resources across all farmers. </summary>
+        /// <summary> Returns a paginated list of harvest data resources across all parties. </summary>
         /// <param name="minTotalYield"> Minimum Yield value(inclusive). </param>
         /// <param name="maxTotalYield"> Maximum Yield value (inclusive). </param>
         /// <param name="minAvgYield"> Minimum AvgYield value(inclusive). </param>
@@ -546,28 +406,168 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        /// <summary> Returns a paginated list of harvest data resources under a particular farm. </summary>
+        /// <param name="partyId"> ID of the associated party. </param>
+        /// <param name="minTotalYield"> Minimum Yield value(inclusive). </param>
+        /// <param name="maxTotalYield"> Maximum Yield value (inclusive). </param>
+        /// <param name="minAvgYield"> Minimum AvgYield value(inclusive). </param>
+        /// <param name="maxAvgYield"> Maximum AvgYield value (inclusive). </param>
+        /// <param name="minTotalWetMass"> Minimum Total WetMass value(inclusive). </param>
+        /// <param name="maxTotalWetMass"> Maximum Total WetMass value (inclusive). </param>
+        /// <param name="minAvgWetMass"> Minimum AvgWetMass value(inclusive). </param>
+        /// <param name="maxAvgWetMass"> Maximum AvgWetMass value (inclusive). </param>
+        /// <param name="minAvgMoisture"> Minimum AvgMoisture value(inclusive). </param>
+        /// <param name="maxAvgMoisture"> Maximum AvgMoisture value (inclusive). </param>
+        /// <param name="minAvgSpeed"> Minimum AvgSpeed value(inclusive). </param>
+        /// <param name="maxAvgSpeed"> Maximum AvgSpeed value (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetAllHarvestDataByPartyIdAsync(String,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllHarvestDataByPartyIdAsync(string partyId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+
+            return GetAllHarvestDataByPartyIdImplementationAsync("HarvestData.GetAllHarvestDataByPartyId", partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+        }
+
+        private AsyncPageable<BinaryData> GetAllHarvestDataByPartyIdImplementationAsync(string diagnosticsScopeName, string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetAllHarvestDataByPartyIdRequest(partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAllHarvestDataByPartyIdNextPageRequest(nextLink, partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
+        /// <summary> Returns a paginated list of harvest data resources under a particular farm. </summary>
+        /// <param name="partyId"> ID of the associated party. </param>
+        /// <param name="minTotalYield"> Minimum Yield value(inclusive). </param>
+        /// <param name="maxTotalYield"> Maximum Yield value (inclusive). </param>
+        /// <param name="minAvgYield"> Minimum AvgYield value(inclusive). </param>
+        /// <param name="maxAvgYield"> Maximum AvgYield value (inclusive). </param>
+        /// <param name="minTotalWetMass"> Minimum Total WetMass value(inclusive). </param>
+        /// <param name="maxTotalWetMass"> Maximum Total WetMass value (inclusive). </param>
+        /// <param name="minAvgWetMass"> Minimum AvgWetMass value(inclusive). </param>
+        /// <param name="maxAvgWetMass"> Maximum AvgWetMass value (inclusive). </param>
+        /// <param name="minAvgMoisture"> Minimum AvgMoisture value(inclusive). </param>
+        /// <param name="maxAvgMoisture"> Maximum AvgMoisture value (inclusive). </param>
+        /// <param name="minAvgSpeed"> Minimum AvgSpeed value(inclusive). </param>
+        /// <param name="maxAvgSpeed"> Maximum AvgSpeed value (inclusive). </param>
+        /// <param name="sources"> Sources of the operation data. </param>
+        /// <param name="associatedBoundaryIds"> Boundary IDs associated with operation data. </param>
+        /// <param name="minOperationStartDateTime"> Minimum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationStartDateTime"> Maximum start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationEndDateTime"> Minimum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationEndDateTime"> Maximum end date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minOperationModifiedDateTime"> Minimum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="maxOperationModifiedDateTime"> Maximum modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ (inclusive). </param>
+        /// <param name="minArea"> Minimum area for which operation was applied (inclusive). </param>
+        /// <param name="maxArea"> Maximum area for which operation was applied (inclusive). </param>
+        /// <param name="ids"> Ids of the resource. </param>
+        /// <param name="names"> Names of the resource. </param>
+        /// <param name="propertyFilters">
+        /// Filters on key-value pairs within the Properties object.
+        /// eg. &quot;{testKey} eq {testValue}&quot;.
+        /// </param>
+        /// <param name="statuses"> Statuses of the resource. </param>
+        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
+        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
+        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
+        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
+        /// <param name="maxPageSize">
+        /// Maximum number of items needed (inclusive).
+        /// Minimum = 10, Maximum = 1000, Default value = 50.
+        /// </param>
+        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetAllHarvestDataByPartyId(String,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllHarvestDataByPartyId(string partyId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+
+            return GetAllHarvestDataByPartyIdImplementation("HarvestData.GetAllHarvestDataByPartyId", partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+        }
+
+        private Pageable<BinaryData> GetAllHarvestDataByPartyIdImplementation(string diagnosticsScopeName, string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
+            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
+            {
+                do
+                {
+                    var message = string.IsNullOrEmpty(nextLink)
+                        ? CreateGetAllHarvestDataByPartyIdRequest(partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAllHarvestDataByPartyIdNextPageRequest(nextLink, partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                } while (!string.IsNullOrEmpty(nextLink));
+            }
+        }
+
         /// <summary> Create cascade delete job for harvest data resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job Id supplied by end user. </param>
-        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="partyId"> Id of the party. </param>
         /// <param name="harvestDataId"> Id of the harvest data. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="harvestDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, string harvestDataId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string harvestDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
 
             using var scope = ClientDiagnostics.CreateScope("HarvestData.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, harvestDataId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, harvestDataId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "HarvestData.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -580,25 +580,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create cascade delete job for harvest data resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job Id supplied by end user. </param>
-        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="partyId"> Id of the party. </param>
         /// <param name="harvestDataId"> Id of the harvest data. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="harvestDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,String,String,String,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, string harvestDataId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string harvestDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(harvestDataId, nameof(harvestDataId));
 
             using var scope = ClientDiagnostics.CreateScope("HarvestData.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, harvestDataId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, harvestDataId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "HarvestData.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -606,221 +606,6 @@ namespace Azure.Verticals.AgriFood.Farming
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateGetAllHarvestDataByFarmerIdRequest(string farmerId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/harvest-data", false);
-            if (minTotalYield != null)
-            {
-                uri.AppendQuery("minTotalYield", minTotalYield.Value, true);
-            }
-            if (maxTotalYield != null)
-            {
-                uri.AppendQuery("maxTotalYield", maxTotalYield.Value, true);
-            }
-            if (minAvgYield != null)
-            {
-                uri.AppendQuery("minAvgYield", minAvgYield.Value, true);
-            }
-            if (maxAvgYield != null)
-            {
-                uri.AppendQuery("maxAvgYield", maxAvgYield.Value, true);
-            }
-            if (minTotalWetMass != null)
-            {
-                uri.AppendQuery("minTotalWetMass", minTotalWetMass.Value, true);
-            }
-            if (maxTotalWetMass != null)
-            {
-                uri.AppendQuery("maxTotalWetMass", maxTotalWetMass.Value, true);
-            }
-            if (minAvgWetMass != null)
-            {
-                uri.AppendQuery("minAvgWetMass", minAvgWetMass.Value, true);
-            }
-            if (maxAvgWetMass != null)
-            {
-                uri.AppendQuery("maxAvgWetMass", maxAvgWetMass.Value, true);
-            }
-            if (minAvgMoisture != null)
-            {
-                uri.AppendQuery("minAvgMoisture", minAvgMoisture.Value, true);
-            }
-            if (maxAvgMoisture != null)
-            {
-                uri.AppendQuery("maxAvgMoisture", maxAvgMoisture.Value, true);
-            }
-            if (minAvgSpeed != null)
-            {
-                uri.AppendQuery("minAvgSpeed", minAvgSpeed.Value, true);
-            }
-            if (maxAvgSpeed != null)
-            {
-                uri.AppendQuery("maxAvgSpeed", maxAvgSpeed.Value, true);
-            }
-            if (sources != null)
-            {
-                foreach (var param in sources)
-                {
-                    uri.AppendQuery("sources", param, true);
-                }
-            }
-            if (associatedBoundaryIds != null)
-            {
-                foreach (var param in associatedBoundaryIds)
-                {
-                    uri.AppendQuery("associatedBoundaryIds", param, true);
-                }
-            }
-            if (minOperationStartDateTime != null)
-            {
-                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
-            }
-            if (maxOperationStartDateTime != null)
-            {
-                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
-            }
-            if (minOperationEndDateTime != null)
-            {
-                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
-            }
-            if (maxOperationEndDateTime != null)
-            {
-                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
-            }
-            if (minOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
-            }
-            if (maxOperationModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
-            }
-            if (minArea != null)
-            {
-                uri.AppendQuery("minArea", minArea.Value, true);
-            }
-            if (maxArea != null)
-            {
-                uri.AppendQuery("maxArea", maxArea.Value, true);
-            }
-            if (harvestDataIds != null)
-            {
-                foreach (var param in harvestDataIds)
-                {
-                    uri.AppendQuery("ids", param, true);
-                }
-            }
-            if (names != null)
-            {
-                foreach (var param in names)
-                {
-                    uri.AppendQuery("names", param, true);
-                }
-            }
-            if (propertyFilters != null)
-            {
-                foreach (var param in propertyFilters)
-                {
-                    uri.AppendQuery("propertyFilters", param, true);
-                }
-            }
-            if (statuses != null)
-            {
-                foreach (var param in statuses)
-                {
-                    uri.AppendQuery("statuses", param, true);
-                }
-            }
-            if (minCreatedDateTime != null)
-            {
-                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
-            }
-            if (maxCreatedDateTime != null)
-            {
-                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
-            }
-            if (minLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxLastModifiedDateTime != null)
-            {
-                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
-            }
-            if (skipToken != null)
-            {
-                uri.AppendQuery("$skipToken", skipToken, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetHarvestDataRequest(string farmerId, string harvestDataId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/harvest-data/", false);
-            uri.AppendPath(harvestDataId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string harvestDataId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/harvest-data/", false);
-            uri.AppendPath(harvestDataId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/merge-patch+json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string farmerId, string harvestDataId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
-            uri.AppendPath("/harvest-data/", false);
-            uri.AppendPath(harvestDataId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
 
         internal HttpMessage CreateGetAllHarvestDataRequest(double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -971,11 +756,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -983,7 +768,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string harvestDataId, RequestContext context)
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string partyId, string harvestDataId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -992,7 +777,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.Reset(_endpoint);
             uri.AppendPath("/harvest-data/cascade-delete/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("farmerId", farmerId, true);
+            uri.AppendQuery("partyId", partyId, true);
             uri.AppendQuery("harvestDataId", harvestDataId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1015,14 +800,216 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetAllHarvestDataByFarmerIdNextPageRequest(string nextLink, string farmerId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetAllHarvestDataByPartyIdRequest(string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/harvest-data", false);
+            if (minTotalYield != null)
+            {
+                uri.AppendQuery("minTotalYield", minTotalYield.Value, true);
+            }
+            if (maxTotalYield != null)
+            {
+                uri.AppendQuery("maxTotalYield", maxTotalYield.Value, true);
+            }
+            if (minAvgYield != null)
+            {
+                uri.AppendQuery("minAvgYield", minAvgYield.Value, true);
+            }
+            if (maxAvgYield != null)
+            {
+                uri.AppendQuery("maxAvgYield", maxAvgYield.Value, true);
+            }
+            if (minTotalWetMass != null)
+            {
+                uri.AppendQuery("minTotalWetMass", minTotalWetMass.Value, true);
+            }
+            if (maxTotalWetMass != null)
+            {
+                uri.AppendQuery("maxTotalWetMass", maxTotalWetMass.Value, true);
+            }
+            if (minAvgWetMass != null)
+            {
+                uri.AppendQuery("minAvgWetMass", minAvgWetMass.Value, true);
+            }
+            if (maxAvgWetMass != null)
+            {
+                uri.AppendQuery("maxAvgWetMass", maxAvgWetMass.Value, true);
+            }
+            if (minAvgMoisture != null)
+            {
+                uri.AppendQuery("minAvgMoisture", minAvgMoisture.Value, true);
+            }
+            if (maxAvgMoisture != null)
+            {
+                uri.AppendQuery("maxAvgMoisture", maxAvgMoisture.Value, true);
+            }
+            if (minAvgSpeed != null)
+            {
+                uri.AppendQuery("minAvgSpeed", minAvgSpeed.Value, true);
+            }
+            if (maxAvgSpeed != null)
+            {
+                uri.AppendQuery("maxAvgSpeed", maxAvgSpeed.Value, true);
+            }
+            if (sources != null)
+            {
+                foreach (var param in sources)
+                {
+                    uri.AppendQuery("sources", param, true);
+                }
+            }
+            if (associatedBoundaryIds != null)
+            {
+                foreach (var param in associatedBoundaryIds)
+                {
+                    uri.AppendQuery("associatedBoundaryIds", param, true);
+                }
+            }
+            if (minOperationStartDateTime != null)
+            {
+                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
+            }
+            if (maxOperationStartDateTime != null)
+            {
+                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
+            }
+            if (minOperationEndDateTime != null)
+            {
+                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
+            }
+            if (maxOperationEndDateTime != null)
+            {
+                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
+            }
+            if (minOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
+            }
+            if (maxOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
+            }
+            if (minArea != null)
+            {
+                uri.AppendQuery("minArea", minArea.Value, true);
+            }
+            if (maxArea != null)
+            {
+                uri.AppendQuery("maxArea", maxArea.Value, true);
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null)
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null)
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null)
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetHarvestDataRequest(string partyId, string harvestDataId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/harvest-data/", false);
+            uri.AppendPath(harvestDataId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string harvestDataId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/harvest-data/", false);
+            uri.AppendPath(harvestDataId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string partyId, string harvestDataId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/harvest-data/", false);
+            uri.AppendPath(harvestDataId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1041,13 +1028,26 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal HttpMessage CreateGetAllHarvestDataByPartyIdNextPageRequest(string nextLink, string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200201;
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

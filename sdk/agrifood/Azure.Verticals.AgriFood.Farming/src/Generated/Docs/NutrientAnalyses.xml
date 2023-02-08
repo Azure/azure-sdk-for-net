@@ -6,12 +6,12 @@
 This sample shows how to call GetNutrientAnalysisAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
-Response response = await client.GetNutrientAnalysisAsync("<farmerId>", "<nutrientAnalysisId>");
+Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("parentId").ToString());
 Console.WriteLine(result.GetProperty("parentType").ToString());
 Console.WriteLine(result.GetProperty("unit").ToString());
@@ -31,6 +31,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -41,7 +43,7 @@ Response Body:
 
 Schema for <c>NutrientAnalysis</c>:
 <code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
+  partyId: string, # Optional. Party id for this nutrient analysis.
   parentId: string, # Optional. Parent id for this nutrient analysis.
   parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
 i.e. PlantTissueAnalysis.
@@ -66,6 +68,8 @@ i.e. PlantTissueAnalysis.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -81,12 +85,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetNutrientAnalysis with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
-Response response = client.GetNutrientAnalysis("<farmerId>", "<nutrientAnalysisId>");
+Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("parentId").ToString());
 Console.WriteLine(result.GetProperty("parentType").ToString());
 Console.WriteLine(result.GetProperty("unit").ToString());
@@ -106,6 +110,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -116,7 +122,7 @@ Response Body:
 
 Schema for <c>NutrientAnalysis</c>:
 <code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
+  partyId: string, # Optional. Party id for this nutrient analysis.
   parentId: string, # Optional. Parent id for this nutrient analysis.
   parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
 i.e. PlantTissueAnalysis.
@@ -141,6 +147,8 @@ i.e. PlantTissueAnalysis.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -156,11 +164,11 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<nutrientAnalysisId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -168,7 +176,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
 var data = new {
     parentId = "<parentId>",
@@ -195,10 +203,10 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<nutrientAnalysisId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("parentId").ToString());
 Console.WriteLine(result.GetProperty("parentType").ToString());
 Console.WriteLine(result.GetProperty("unit").ToString());
@@ -218,6 +226,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -228,7 +238,7 @@ Request Body:
 
 Schema for <c>NutrientAnalysis</c>:
 <code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
+  partyId: string, # Optional. Party id for this nutrient analysis.
   parentId: string, # Optional. Parent id for this nutrient analysis.
   parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
 i.e. PlantTissueAnalysis.
@@ -253,6 +263,8 @@ i.e. PlantTissueAnalysis.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -265,7 +277,7 @@ Response Body:
 
 Schema for <c>NutrientAnalysis</c>:
 <code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
+  partyId: string, # Optional. Party id for this nutrient analysis.
   parentId: string, # Optional. Parent id for this nutrient analysis.
   parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
 i.e. PlantTissueAnalysis.
@@ -290,6 +302,8 @@ i.e. PlantTissueAnalysis.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -305,11 +319,11 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = client.CreateOrUpdate("<farmerId>", "<nutrientAnalysisId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -317,7 +331,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
 var data = new {
     parentId = "<parentId>",
@@ -344,10 +358,10 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<farmerId>", "<nutrientAnalysisId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<nutrientAnalysisId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("parentId").ToString());
 Console.WriteLine(result.GetProperty("parentType").ToString());
 Console.WriteLine(result.GetProperty("unit").ToString());
@@ -367,6 +381,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -377,7 +393,7 @@ Request Body:
 
 Schema for <c>NutrientAnalysis</c>:
 <code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
+  partyId: string, # Optional. Party id for this nutrient analysis.
   parentId: string, # Optional. Parent id for this nutrient analysis.
   parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
 i.e. PlantTissueAnalysis.
@@ -402,6 +418,8 @@ i.e. PlantTissueAnalysis.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -414,7 +432,7 @@ Response Body:
 
 Schema for <c>NutrientAnalysis</c>:
 <code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
+  partyId: string, # Optional. Party id for this nutrient analysis.
   parentId: string, # Optional. Parent id for this nutrient analysis.
   parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
 i.e. PlantTissueAnalysis.
@@ -439,6 +457,8 @@ i.e. PlantTissueAnalysis.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -454,9 +474,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
-Response response = await client.DeleteAsync("<farmerId>", "<nutrientAnalysisId>");
+Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -466,193 +486,19 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
-Response response = client.Delete("<farmerId>", "<nutrientAnalysisId>");
+Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
-    </member>
-    <member name="GetNutrientAnalysesByFarmerIdAsync(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
-<example>
-This sample shows how to call GetNutrientAnalysesByFarmerIdAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
-
-await foreach (var data in client.GetNutrientAnalysesByFarmerIdAsync("<farmerId>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetNutrientAnalysesByFarmerIdAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
-
-await foreach (var data in client.GetNutrientAnalysesByFarmerIdAsync("<farmerId>", "<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
-    Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("parentType").ToString());
-    Console.WriteLine(result.GetProperty("unit").ToString());
-    Console.WriteLine(result.GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("referenceValueLow").ToString());
-    Console.WriteLine(result.GetProperty("referenceValueHigh").ToString());
-    Console.WriteLine(result.GetProperty("classification").ToString());
-    Console.WriteLine(result.GetProperty("recommendation").ToString());
-    Console.WriteLine(result.GetProperty("products")[0].GetProperty("rate").ToString());
-    Console.WriteLine(result.GetProperty("products")[0].GetProperty("instruction").ToString());
-    Console.WriteLine(result.GetProperty("products")[0].GetProperty("product").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("eTag").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("source").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-}
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>NutrientAnalysisListResponseValue</c>:
-<code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
-  parentId: string, # Optional. Parent id for this nutrient analysis.
-  parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
-i.e. PlantTissueAnalysis.
-  unit: string, # Optional. Unit for this nutrient analysis.
-  value: number, # Optional. Value for this nutrient analysis.
-  referenceValueLow: number, # Optional. Reference value low for this nutrient analysis.
-  referenceValueHigh: number, # Optional. Reference value high for this nutrient analysis.
-  classification: string, # Optional. Classification for this nutrient analysis.
-  recommendation: string, # Optional. Recommendation for this nutrient analysis.
-  products: [
-    {
-      rate: string, # Optional. Rate of the product.
-      instruction: string, # Optional. Instruction of the resource.
-      product: string, # Optional. Product of the resource.
-    }
-  ], # Optional. Products for this nutrient analysis.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetNutrientAnalysesByFarmerId(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
-<example>
-This sample shows how to call GetNutrientAnalysesByFarmerId with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
-
-foreach (var data in client.GetNutrientAnalysesByFarmerId("<farmerId>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetNutrientAnalysesByFarmerId with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
-
-foreach (var data in client.GetNutrientAnalysesByFarmerId("<farmerId>", "<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
-    Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("parentType").ToString());
-    Console.WriteLine(result.GetProperty("unit").ToString());
-    Console.WriteLine(result.GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("referenceValueLow").ToString());
-    Console.WriteLine(result.GetProperty("referenceValueHigh").ToString());
-    Console.WriteLine(result.GetProperty("classification").ToString());
-    Console.WriteLine(result.GetProperty("recommendation").ToString());
-    Console.WriteLine(result.GetProperty("products")[0].GetProperty("rate").ToString());
-    Console.WriteLine(result.GetProperty("products")[0].GetProperty("instruction").ToString());
-    Console.WriteLine(result.GetProperty("products")[0].GetProperty("product").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("eTag").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-    Console.WriteLine(result.GetProperty("source").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-}
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>NutrientAnalysisListResponseValue</c>:
-<code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
-  parentId: string, # Optional. Parent id for this nutrient analysis.
-  parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
-i.e. PlantTissueAnalysis.
-  unit: string, # Optional. Unit for this nutrient analysis.
-  value: number, # Optional. Value for this nutrient analysis.
-  referenceValueLow: number, # Optional. Reference value low for this nutrient analysis.
-  referenceValueHigh: number, # Optional. Reference value high for this nutrient analysis.
-  classification: string, # Optional. Classification for this nutrient analysis.
-  recommendation: string, # Optional. Recommendation for this nutrient analysis.
-  products: [
-    {
-      rate: string, # Optional. Rate of the product.
-      instruction: string, # Optional. Instruction of the resource.
-      product: string, # Optional. Product of the resource.
-    }
-  ], # Optional. Products for this nutrient analysis.
-  id: string, # Optional. Unique resource ID.
-  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-  status: string, # Optional. Status of the resource.
-  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-  source: string, # Optional. Source of the resource.
-  name: string, # Optional. Name to identify resource.
-  description: string, # Optional. Textual description of the resource.
-  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-Each pair must not have a key greater than 50 characters
-and must not have a value greater than 150 characters.
-Note: A maximum of 25 key value pairs can be provided for a resource and only string,
-numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
-}
-</code>
-
-</remarks>
     </member>
     <member name="GetNutrientAnalysesAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetNutrientAnalysesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetNutrientAnalysesAsync())
 {
@@ -663,12 +509,12 @@ await foreach (var data in client.GetNutrientAnalysesAsync())
 This sample shows how to call GetNutrientAnalysesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetNutrientAnalysesAsync("<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
     Console.WriteLine(result.GetProperty("unit").ToString());
@@ -688,6 +534,8 @@ await foreach (var data in client.GetNutrientAnalysesAsync("<parentType>", new S
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -699,7 +547,7 @@ Response Body:
 
 Schema for <c>NutrientAnalysisListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
+  partyId: string, # Optional. Party id for this nutrient analysis.
   parentId: string, # Optional. Parent id for this nutrient analysis.
   parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
 i.e. PlantTissueAnalysis.
@@ -724,6 +572,8 @@ i.e. PlantTissueAnalysis.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -739,7 +589,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetNutrientAnalyses and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetNutrientAnalyses())
 {
@@ -750,12 +600,12 @@ foreach (var data in client.GetNutrientAnalyses())
 This sample shows how to call GetNutrientAnalyses with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetNutrientAnalyses("<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
     Console.WriteLine(result.GetProperty("unit").ToString());
@@ -775,6 +625,8 @@ foreach (var data in client.GetNutrientAnalyses("<parentType>", new String[]{"<p
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -786,7 +638,7 @@ Response Body:
 
 Schema for <c>NutrientAnalysisListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer id for this nutrient analysis.
+  partyId: string, # Optional. Party id for this nutrient analysis.
   parentId: string, # Optional. Parent id for this nutrient analysis.
   parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
 i.e. PlantTissueAnalysis.
@@ -811,6 +663,190 @@ i.e. PlantTissueAnalysis.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetNutrientAnalysesByPartyIdAsync(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+<example>
+This sample shows how to call GetNutrientAnalysesByPartyIdAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
+
+await foreach (var data in client.GetNutrientAnalysesByPartyIdAsync("<partyId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetNutrientAnalysesByPartyIdAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
+
+await foreach (var data in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", "<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("parentId").ToString());
+    Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("referenceValueLow").ToString());
+    Console.WriteLine(result.GetProperty("referenceValueHigh").ToString());
+    Console.WriteLine(result.GetProperty("classification").ToString());
+    Console.WriteLine(result.GetProperty("recommendation").ToString());
+    Console.WriteLine(result.GetProperty("products")[0].GetProperty("rate").ToString());
+    Console.WriteLine(result.GetProperty("products")[0].GetProperty("instruction").ToString());
+    Console.WriteLine(result.GetProperty("products")[0].GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>NutrientAnalysisListResponseValue</c>:
+<code>{
+  partyId: string, # Optional. Party id for this nutrient analysis.
+  parentId: string, # Optional. Parent id for this nutrient analysis.
+  parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
+i.e. PlantTissueAnalysis.
+  unit: string, # Optional. Unit for this nutrient analysis.
+  value: number, # Optional. Value for this nutrient analysis.
+  referenceValueLow: number, # Optional. Reference value low for this nutrient analysis.
+  referenceValueHigh: number, # Optional. Reference value high for this nutrient analysis.
+  classification: string, # Optional. Classification for this nutrient analysis.
+  recommendation: string, # Optional. Recommendation for this nutrient analysis.
+  products: [
+    {
+      rate: string, # Optional. Rate of the product.
+      instruction: string, # Optional. Instruction of the resource.
+      product: string, # Optional. Product of the resource.
+    }
+  ], # Optional. Products for this nutrient analysis.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetNutrientAnalysesByPartyId(String,String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+<example>
+This sample shows how to call GetNutrientAnalysesByPartyId with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
+
+foreach (var data in client.GetNutrientAnalysesByPartyId("<partyId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetNutrientAnalysesByPartyId with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetNutrientAnalysesClient(<2022-11-01-preview>);
+
+foreach (var data in client.GetNutrientAnalysesByPartyId("<partyId>", "<parentType>", new String[]{"<parentIds>"}, new String[]{"<classifications>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("parentId").ToString());
+    Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("referenceValueLow").ToString());
+    Console.WriteLine(result.GetProperty("referenceValueHigh").ToString());
+    Console.WriteLine(result.GetProperty("classification").ToString());
+    Console.WriteLine(result.GetProperty("recommendation").ToString());
+    Console.WriteLine(result.GetProperty("products")[0].GetProperty("rate").ToString());
+    Console.WriteLine(result.GetProperty("products")[0].GetProperty("instruction").ToString());
+    Console.WriteLine(result.GetProperty("products")[0].GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>NutrientAnalysisListResponseValue</c>:
+<code>{
+  partyId: string, # Optional. Party id for this nutrient analysis.
+  parentId: string, # Optional. Parent id for this nutrient analysis.
+  parentType: &quot;PlantTissueAnalysis&quot;, # Optional. Parent type for this nutrient analysis.
+i.e. PlantTissueAnalysis.
+  unit: string, # Optional. Unit for this nutrient analysis.
+  value: number, # Optional. Value for this nutrient analysis.
+  referenceValueLow: number, # Optional. Reference value low for this nutrient analysis.
+  referenceValueHigh: number, # Optional. Reference value high for this nutrient analysis.
+  classification: string, # Optional. Classification for this nutrient analysis.
+  recommendation: string, # Optional. Recommendation for this nutrient analysis.
+  products: [
+    {
+      rate: string, # Optional. Rate of the product.
+      instruction: string, # Optional. Instruction of the resource.
+      product: string, # Optional. Product of the resource.
+    }
+  ], # Optional. Products for this nutrient analysis.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  source: string, # Optional. Source of the resource.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.

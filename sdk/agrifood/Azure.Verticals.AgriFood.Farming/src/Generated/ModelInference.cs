@@ -101,6 +101,58 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        /// <summary> Get Sensor Placement Model job&apos;s details. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJobAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetSensorPlacementModelJobAsync(string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ModelInference.GetSensorPlacementModelJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSensorPlacementModelJobRequest(jobId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get Sensor Placement Model job&apos;s details. </summary>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='GetSensorPlacementModelJob(String,RequestContext)']/*" />
+        public virtual Response GetSensorPlacementModelJob(string jobId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
+            using var scope = ClientDiagnostics.CreateScope("ModelInference.GetSensorPlacementModelJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSensorPlacementModelJobRequest(jobId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Get SoilMoisture Model job&apos;s details. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -211,6 +263,64 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        /// <summary> Create a Sensor Placement Model job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> JobId provided by user. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSensorPlacementModelJobAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> CreateSensorPlacementModelJobAsync(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ModelInference.CreateSensorPlacementModelJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateSensorPlacementModelJobRequest(jobId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ModelInference.CreateSensorPlacementModelJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create a Sensor Placement Model job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> JobId provided by user. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <include file="Docs/ModelInference.xml" path="doc/members/member[@name='CreateSensorPlacementModelJob(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> CreateSensorPlacementModelJob(WaitUntil waitUntil, string jobId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ModelInference.CreateSensorPlacementModelJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateSensorPlacementModelJobRequest(jobId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ModelInference.CreateSensorPlacementModelJob", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Create a SoilMoisture Model job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> JobId provided by user. </param>
@@ -294,6 +404,38 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/model-inference/models/microsoft-biomass/infer-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateSensorPlacementModelJobRequest(string jobId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/model-inference/models/microsoft-sensor-placement/infer-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetSensorPlacementModelJobRequest(string jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/model-inference/models/microsoft-sensor-placement/infer-data/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

@@ -6,7 +6,7 @@
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -18,7 +18,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 var data = new {
     deviceDataModelId = "<deviceDataModelId>",
@@ -58,6 +58,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -86,6 +88,8 @@ Schema for <c>Device</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -116,6 +120,8 @@ Schema for <c>Device</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -131,7 +137,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -143,7 +149,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 var data = new {
     deviceDataModelId = "<deviceDataModelId>",
@@ -183,6 +189,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -211,6 +219,8 @@ Schema for <c>Device</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -241,6 +251,8 @@ Schema for <c>Device</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -256,7 +268,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetDeviceAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 Response response = await client.GetDeviceAsync("<sensorPartnerId>", "<deviceId>");
 
@@ -277,6 +289,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -305,6 +319,8 @@ Schema for <c>Device</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -320,7 +336,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetDevice with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 Response response = client.GetDevice("<sensorPartnerId>", "<deviceId>");
 
@@ -341,6 +357,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -369,6 +387,8 @@ Schema for <c>Device</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -384,7 +404,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 Response response = await client.DeleteAsync("<sensorPartnerId>", "<deviceId>");
 Console.WriteLine(response.Status);
@@ -396,7 +416,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 Response response = client.Delete("<sensorPartnerId>", "<deviceId>");
 Console.WriteLine(response.Status);
@@ -408,7 +428,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetDevicesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetDevicesAsync("<sensorPartnerId>"))
 {
@@ -419,7 +439,7 @@ await foreach (var data in client.GetDevicesAsync("<sensorPartnerId>"))
 This sample shows how to call GetDevicesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetDevicesAsync("<sensorPartnerId>", new String[]{"<parentDeviceIds>"}, new String[]{"<deviceDataModelIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
@@ -440,6 +460,8 @@ await foreach (var data in client.GetDevicesAsync("<sensorPartnerId>", new Strin
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -469,6 +491,8 @@ Schema for <c>DeviceListResponseValue</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -484,7 +508,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetDevices with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetDevices("<sensorPartnerId>"))
 {
@@ -495,7 +519,7 @@ foreach (var data in client.GetDevices("<sensorPartnerId>"))
 This sample shows how to call GetDevices with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetDevicesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetDevicesClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetDevices("<sensorPartnerId>", new String[]{"<parentDeviceIds>"}, new String[]{"<deviceDataModelIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
@@ -516,6 +540,8 @@ foreach (var data in client.GetDevices("<sensorPartnerId>", new String[]{"<paren
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -545,6 +571,8 @@ Schema for <c>DeviceListResponseValue</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.

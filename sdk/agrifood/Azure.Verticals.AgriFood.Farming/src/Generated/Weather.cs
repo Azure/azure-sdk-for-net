@@ -157,7 +157,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of weather data. </summary>
-        /// <param name="farmerId"> Farmer ID. </param>
+        /// <param name="partyId"> Party ID. </param>
         /// <param name="boundaryId"> Boundary ID. </param>
         /// <param name="extensionId"> ID of the weather extension. </param>
         /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
@@ -170,22 +170,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Weather.xml" path="doc/members/member[@name='GetWeathersAsync(String,String,String,String,String,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetWeathersAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetWeathersAsync(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
             Argument.AssertNotNull(extensionId, nameof(extensionId));
             Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
             Argument.AssertNotNull(granularity, nameof(granularity));
 
-            return GetWeathersImplementationAsync("Weather.GetWeathers", farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+            return GetWeathersImplementationAsync("Weather.GetWeathers", partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetWeathersImplementationAsync(string diagnosticsScopeName, string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetWeathersImplementationAsync(string diagnosticsScopeName, string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -193,8 +193,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetWeathersRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context)
-                        : CreateGetWeathersNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetWeathersRequest(partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context)
+                        : CreateGetWeathersNextPageRequest(nextLink, partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -203,7 +203,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of weather data. </summary>
-        /// <param name="farmerId"> Farmer ID. </param>
+        /// <param name="partyId"> Party ID. </param>
         /// <param name="boundaryId"> Boundary ID. </param>
         /// <param name="extensionId"> ID of the weather extension. </param>
         /// <param name="weatherDataType"> Type of weather data (forecast/historical). </param>
@@ -216,22 +216,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Weather.xml" path="doc/members/member[@name='GetWeathers(String,String,String,String,String,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetWeathers(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetWeathers(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
             Argument.AssertNotNull(extensionId, nameof(extensionId));
             Argument.AssertNotNull(weatherDataType, nameof(weatherDataType));
             Argument.AssertNotNull(granularity, nameof(granularity));
 
-            return GetWeathersImplementation("Weather.GetWeathers", farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+            return GetWeathersImplementation("Weather.GetWeathers", partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetWeathersImplementation(string diagnosticsScopeName, string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetWeathersImplementation(string diagnosticsScopeName, string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -239,8 +239,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetWeathersRequest(farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context)
-                        : CreateGetWeathersNextPageRequest(nextLink, farmerId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetWeathersRequest(partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context)
+                        : CreateGetWeathersNextPageRequest(nextLink, partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -364,7 +364,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetWeathersRequest(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetWeathersRequest(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -372,7 +372,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/weather", false);
-            uri.AppendQuery("farmerId", farmerId, true);
+            uri.AppendQuery("partyId", partyId, true);
             uri.AppendQuery("boundaryId", boundaryId, true);
             uri.AppendQuery("extensionId", extensionId, true);
             uri.AppendQuery("weatherDataType", weatherDataType, true);
@@ -387,11 +387,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -463,7 +463,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetWeathersNextPageRequest(string nextLink, string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetWeathersNextPageRequest(string nextLink, string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

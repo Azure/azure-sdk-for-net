@@ -6,18 +6,19 @@
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -31,7 +32,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -39,6 +40,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -53,18 +55,19 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -78,7 +81,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -86,6 +89,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -100,11 +104,11 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<boundaryId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<boundaryId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -112,14 +116,24 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {
     geometry = new {
         type = "MultiPolygon",
     },
+    type = "<type>",
+    centroid = new {
+        type = "MultiPolygon",
+    },
+    bbox = new {
+        type = "MultiPolygon",
+    },
     parentId = "<parentId>",
-    isPrimary = true,
+    area = new {
+        unit = "<unit>",
+        value = 123.45d,
+    },
     parentType = "Field",
     status = "<status>",
     source = "<source>",
@@ -130,14 +144,18 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<boundaryId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<boundaryId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("crs").ToString());
+Console.WriteLine(result.GetProperty("centroid").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("bbox").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("parentId").ToString());
-Console.WriteLine(result.GetProperty("isPrimary").ToString());
-Console.WriteLine(result.GetProperty("acreage").ToString());
+Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("parentType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -147,6 +165,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -160,10 +180,16 @@ Schema for <c>Boundary</c>:
   geometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Indicates the type of boundary belonging to a parent.
+  crs: string, # Optional. Coordinate  Reference System.
+  centroid: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
 i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
   id: string, # Optional. Unique resource ID.
@@ -174,6 +200,8 @@ i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationD
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -189,10 +217,16 @@ Schema for <c>Boundary</c>:
   geometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Indicates the type of boundary belonging to a parent.
+  crs: string, # Optional. Coordinate  Reference System.
+  centroid: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
 i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
   id: string, # Optional. Unique resource ID.
@@ -203,6 +237,8 @@ i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationD
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -218,11 +254,11 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = client.CreateOrUpdate("<farmerId>", "<boundaryId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<boundaryId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -230,14 +266,24 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {
     geometry = new {
         type = "MultiPolygon",
     },
+    type = "<type>",
+    centroid = new {
+        type = "MultiPolygon",
+    },
+    bbox = new {
+        type = "MultiPolygon",
+    },
     parentId = "<parentId>",
-    isPrimary = true,
+    area = new {
+        unit = "<unit>",
+        value = 123.45d,
+    },
     parentType = "Field",
     status = "<status>",
     source = "<source>",
@@ -248,14 +294,18 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<farmerId>", "<boundaryId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<boundaryId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("crs").ToString());
+Console.WriteLine(result.GetProperty("centroid").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("bbox").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("parentId").ToString());
-Console.WriteLine(result.GetProperty("isPrimary").ToString());
-Console.WriteLine(result.GetProperty("acreage").ToString());
+Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("parentType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -265,6 +315,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -278,10 +330,16 @@ Schema for <c>Boundary</c>:
   geometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Indicates the type of boundary belonging to a parent.
+  crs: string, # Optional. Coordinate  Reference System.
+  centroid: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
 i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
   id: string, # Optional. Unique resource ID.
@@ -292,6 +350,8 @@ i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationD
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -307,10 +367,16 @@ Schema for <c>Boundary</c>:
   geometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Indicates the type of boundary belonging to a parent.
+  crs: string, # Optional. Coordinate  Reference System.
+  centroid: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
 i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
   id: string, # Optional. Unique resource ID.
@@ -321,6 +387,8 @@ i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationD
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -336,16 +404,20 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetBoundaryAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-Response response = await client.GetBoundaryAsync("<farmerId>", "<boundaryId>");
+Response response = await client.GetBoundaryAsync("<partyId>", "<boundaryId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("crs").ToString());
+Console.WriteLine(result.GetProperty("centroid").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("bbox").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("parentId").ToString());
-Console.WriteLine(result.GetProperty("isPrimary").ToString());
-Console.WriteLine(result.GetProperty("acreage").ToString());
+Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("parentType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -355,6 +427,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -368,10 +442,16 @@ Schema for <c>Boundary</c>:
   geometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Indicates the type of boundary belonging to a parent.
+  crs: string, # Optional. Coordinate  Reference System.
+  centroid: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
 i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
   id: string, # Optional. Unique resource ID.
@@ -382,6 +462,8 @@ i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationD
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -397,16 +479,20 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetBoundary with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-Response response = client.GetBoundary("<farmerId>", "<boundaryId>");
+Response response = client.GetBoundary("<partyId>", "<boundaryId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("geometry").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("crs").ToString());
+Console.WriteLine(result.GetProperty("centroid").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("bbox").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("parentId").ToString());
-Console.WriteLine(result.GetProperty("isPrimary").ToString());
-Console.WriteLine(result.GetProperty("acreage").ToString());
+Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("parentType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -416,6 +502,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -429,10 +517,16 @@ Schema for <c>Boundary</c>:
   geometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  farmerId: string, # Optional. Farmer Id.
+  type: string, # Optional. Indicates the type of boundary belonging to a parent.
+  crs: string, # Optional. Coordinate  Reference System.
+  centroid: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: GeoJsonObject, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
 i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationData, HarvestData, TillageData, PlantingData.
   id: string, # Optional. Unique resource ID.
@@ -443,6 +537,8 @@ i.e. Field, SeasonalField, Zone, Prescription, PlantTissueAnalysis, ApplicationD
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -458,9 +554,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-Response response = await client.DeleteAsync("<farmerId>", "<boundaryId>");
+Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -470,9 +566,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-Response response = client.Delete("<farmerId>", "<boundaryId>");
+Response response = client.Delete("<partyId>", "<boundaryId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -482,14 +578,14 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetOverlapAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-Response response = await client.GetOverlapAsync("<farmerId>", "<boundaryId>", "<otherFarmerId>", "<otherBoundaryId>");
+Response response = await client.GetOverlapAsync("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("boundaryAcreage").ToString());
-Console.WriteLine(result.GetProperty("otherBoundaryAcreage").ToString());
-Console.WriteLine(result.GetProperty("intersectingAcreage").ToString());
+Console.WriteLine(result.GetProperty("boundaryArea").ToString());
+Console.WriteLine(result.GetProperty("otherBoundaryArea").ToString());
+Console.WriteLine(result.GetProperty("intersectingArea").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -499,9 +595,9 @@ Response Body:
 
 Schema for <c>BoundaryOverlapResponse</c>:
 <code>{
-  boundaryAcreage: number, # Optional. Acreage of Main boundary.
-  otherBoundaryAcreage: number, # Optional. Acreage of other boundary.
-  intersectingAcreage: number, # Optional. Acreage of intersecting boundary.
+  boundaryArea: number, # Optional. Acreage of Main boundary.
+  otherBoundaryArea: number, # Optional. Acreage of other boundary.
+  intersectingArea: number, # Optional. Acreage of intersecting boundary.
 }
 </code>
 
@@ -512,14 +608,14 @@ Schema for <c>BoundaryOverlapResponse</c>:
 This sample shows how to call GetOverlap with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-Response response = client.GetOverlap("<farmerId>", "<boundaryId>", "<otherFarmerId>", "<otherBoundaryId>");
+Response response = client.GetOverlap("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("boundaryAcreage").ToString());
-Console.WriteLine(result.GetProperty("otherBoundaryAcreage").ToString());
-Console.WriteLine(result.GetProperty("intersectingAcreage").ToString());
+Console.WriteLine(result.GetProperty("boundaryArea").ToString());
+Console.WriteLine(result.GetProperty("otherBoundaryArea").ToString());
+Console.WriteLine(result.GetProperty("intersectingArea").ToString());
 ]]></code>
 </example>
 <remarks>
@@ -529,20 +625,20 @@ Response Body:
 
 Schema for <c>BoundaryOverlapResponse</c>:
 <code>{
-  boundaryAcreage: number, # Optional. Acreage of Main boundary.
-  otherBoundaryAcreage: number, # Optional. Acreage of other boundary.
-  intersectingAcreage: number, # Optional. Acreage of intersecting boundary.
+  boundaryArea: number, # Optional. Acreage of Main boundary.
+  otherBoundaryArea: number, # Optional. Acreage of other boundary.
+  intersectingArea: number, # Optional. Acreage of intersecting boundary.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetBoundariesAsync(Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetBoundariesAsync(String,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetBoundariesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetBoundariesAsync())
 {
@@ -553,16 +649,17 @@ await foreach (var data in client.GetBoundariesAsync())
 This sample shows how to call GetBoundariesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetBoundariesAsync(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetBoundariesAsync("<parentType>", "<type>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("isPrimary").ToString());
-    Console.WriteLine(result.GetProperty("acreage").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -571,6 +668,8 @@ await foreach (var data in client.GetBoundariesAsync(true, "<parentType>", new S
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -582,11 +681,14 @@ Response Body:
 
 Schema for <c>BoundaryMetadataListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -595,6 +697,8 @@ Schema for <c>BoundaryMetadataListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -605,12 +709,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetBoundaries(Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetBoundaries(String,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetBoundaries and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetBoundaries())
 {
@@ -621,16 +725,17 @@ foreach (var data in client.GetBoundaries())
 This sample shows how to call GetBoundaries with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetBoundaries(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetBoundaries("<parentType>", "<type>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("isPrimary").ToString());
-    Console.WriteLine(result.GetProperty("acreage").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -639,6 +744,8 @@ foreach (var data in client.GetBoundaries(true, "<parentType>", new String[]{"<p
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -650,11 +757,14 @@ Response Body:
 
 Schema for <c>BoundaryMetadataListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -663,6 +773,8 @@ Schema for <c>BoundaryMetadataListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -678,7 +790,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call SearchAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -691,7 +803,7 @@ await foreach (var data in client.SearchAsync(RequestContent.Create(data)))
 This sample shows how to call SearchAsync with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {
     ids = new[] {
@@ -710,15 +822,15 @@ var data = new {
     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-    $maxPageSize = 1234,
-    $skipToken = "<$skipToken>",
-    isPrimary = true,
+    maxPageSize = 1234,
+    skipToken = "<skipToken>",
     parentType = "Field",
+    type = "<type>",
     parentIds = new[] {
         "<String>"
     },
-    minAcreage = 123.45d,
-    maxAcreage = 123.45d,
+    minArea = 123.45d,
+    maxArea = 123.45d,
     intersectsWithGeometry = new {
         type = "MultiPolygon",
     },
@@ -727,11 +839,12 @@ var data = new {
 await foreach (var data in client.SearchAsync(RequestContent.Create(data)))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("isPrimary").ToString());
-    Console.WriteLine(result.GetProperty("acreage").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -740,6 +853,8 @@ await foreach (var data in client.SearchAsync(RequestContent.Create(data)))
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -760,14 +875,14 @@ e.g. &quot;{testKey} eq {testValue}&quot;.
   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
-  $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+  maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
 Minimum = 10, Maximum = 1000, Default value = 50.
-  $skipToken: string, # Optional. Skip token for getting next set of results.
-  isPrimary: boolean, # Optional. Is the boundary primary.
+  skipToken: string, # Optional. Skip token for getting next set of results.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   parentIds: [string], # Optional. Parent Ids of the resource.
-  minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
-  maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
+  minArea: number, # Optional. Minimum acreage of the boundary (inclusive).
+  maxArea: number, # Optional. Maximum acreage of the boundary (inclusive).
   intersectsWithGeometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
@@ -778,11 +893,14 @@ Response Body:
 
 Schema for <c>BoundaryMetadataListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -791,6 +909,8 @@ Schema for <c>BoundaryMetadataListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -806,7 +926,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call Search and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -819,7 +939,7 @@ foreach (var data in client.Search(RequestContent.Create(data)))
 This sample shows how to call Search with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {
     ids = new[] {
@@ -838,15 +958,15 @@ var data = new {
     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-    $maxPageSize = 1234,
-    $skipToken = "<$skipToken>",
-    isPrimary = true,
+    maxPageSize = 1234,
+    skipToken = "<skipToken>",
     parentType = "Field",
+    type = "<type>",
     parentIds = new[] {
         "<String>"
     },
-    minAcreage = 123.45d,
-    maxAcreage = 123.45d,
+    minArea = 123.45d,
+    maxArea = 123.45d,
     intersectsWithGeometry = new {
         type = "MultiPolygon",
     },
@@ -855,11 +975,12 @@ var data = new {
 foreach (var data in client.Search(RequestContent.Create(data)))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("isPrimary").ToString());
-    Console.WriteLine(result.GetProperty("acreage").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -868,6 +989,8 @@ foreach (var data in client.Search(RequestContent.Create(data)))
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -888,14 +1011,14 @@ e.g. &quot;{testKey} eq {testValue}&quot;.
   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
-  $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+  maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
 Minimum = 10, Maximum = 1000, Default value = 50.
-  $skipToken: string, # Optional. Skip token for getting next set of results.
-  isPrimary: boolean, # Optional. Is the boundary primary.
+  skipToken: string, # Optional. Skip token for getting next set of results.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   parentIds: [string], # Optional. Parent Ids of the resource.
-  minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
-  maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
+  minArea: number, # Optional. Minimum acreage of the boundary (inclusive).
+  maxArea: number, # Optional. Maximum acreage of the boundary (inclusive).
   intersectsWithGeometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
@@ -906,11 +1029,14 @@ Response Body:
 
 Schema for <c>BoundaryMetadataListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -919,6 +1045,8 @@ Schema for <c>BoundaryMetadataListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -929,32 +1057,33 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetBoundariesByFarmerIdAsync(String,Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetBoundariesByPartyIdAsync(String,String,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetBoundariesByFarmerIdAsync with required parameters and parse the result.
+This sample shows how to call GetBoundariesByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>"))
+await foreach (var data in client.GetBoundariesByPartyIdAsync("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetBoundariesByFarmerIdAsync with all parameters, and how to parse the result.
+This sample shows how to call GetBoundariesByPartyIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetBoundariesByPartyIdAsync("<partyId>", "<parentType>", "<type>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("isPrimary").ToString());
-    Console.WriteLine(result.GetProperty("acreage").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -963,6 +1092,8 @@ await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>", tru
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -974,11 +1105,14 @@ Response Body:
 
 Schema for <c>BoundaryMetadataListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -987,6 +1121,8 @@ Schema for <c>BoundaryMetadataListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -997,32 +1133,33 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetBoundariesByFarmerId(String,Boolean,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetBoundariesByPartyId(String,String,String,IEnumerable,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetBoundariesByFarmerId with required parameters and parse the result.
+This sample shows how to call GetBoundariesByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetBoundariesByFarmerId("<farmerId>"))
+foreach (var data in client.GetBoundariesByPartyId("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetBoundariesByFarmerId with all parameters, and how to parse the result.
+This sample shows how to call GetBoundariesByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetBoundariesByFarmerId("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<boundaryIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetBoundariesByPartyId("<partyId>", "<parentType>", "<type>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("isPrimary").ToString());
-    Console.WriteLine(result.GetProperty("acreage").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -1031,6 +1168,8 @@ foreach (var data in client.GetBoundariesByFarmerId("<farmerId>", true, "<parent
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -1042,11 +1181,14 @@ Response Body:
 
 Schema for <c>BoundaryMetadataListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -1055,6 +1197,8 @@ Schema for <c>BoundaryMetadataListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -1065,25 +1209,25 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="SearchByFarmerIdAsync(String,RequestContent,RequestContext)">
+    <member name="SearchByPartyIdAsync(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call SearchByFarmerIdAsync with required parameters and parse the result.
+This sample shows how to call SearchByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {};
 
-await foreach (var data in client.SearchByFarmerIdAsync("<farmerId>", RequestContent.Create(data)))
+await foreach (var data in client.SearchByPartyIdAsync("<partyId>", RequestContent.Create(data)))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call SearchByFarmerIdAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call SearchByPartyIdAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {
     ids = new[] {
@@ -1102,28 +1246,29 @@ var data = new {
     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-    $maxPageSize = 1234,
-    $skipToken = "<$skipToken>",
-    isPrimary = true,
+    maxPageSize = 1234,
+    skipToken = "<skipToken>",
     parentType = "Field",
+    type = "<type>",
     parentIds = new[] {
         "<String>"
     },
-    minAcreage = 123.45d,
-    maxAcreage = 123.45d,
+    minArea = 123.45d,
+    maxArea = 123.45d,
     intersectsWithGeometry = new {
         type = "MultiPolygon",
     },
 };
 
-await foreach (var data in client.SearchByFarmerIdAsync("<farmerId>", RequestContent.Create(data)))
+await foreach (var data in client.SearchByPartyIdAsync("<partyId>", RequestContent.Create(data)))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("isPrimary").ToString());
-    Console.WriteLine(result.GetProperty("acreage").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -1132,6 +1277,8 @@ await foreach (var data in client.SearchByFarmerIdAsync("<farmerId>", RequestCon
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -1152,14 +1299,14 @@ e.g. &quot;{testKey} eq {testValue}&quot;.
   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
-  $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+  maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
 Minimum = 10, Maximum = 1000, Default value = 50.
-  $skipToken: string, # Optional. Skip token for getting next set of results.
-  isPrimary: boolean, # Optional. Is the boundary primary.
+  skipToken: string, # Optional. Skip token for getting next set of results.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   parentIds: [string], # Optional. Parent Ids of the resource.
-  minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
-  maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
+  minArea: number, # Optional. Minimum acreage of the boundary (inclusive).
+  maxArea: number, # Optional. Maximum acreage of the boundary (inclusive).
   intersectsWithGeometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
@@ -1170,11 +1317,14 @@ Response Body:
 
 Schema for <c>BoundaryMetadataListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -1183,6 +1333,8 @@ Schema for <c>BoundaryMetadataListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -1193,25 +1345,25 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="SearchByFarmerId(String,RequestContent,RequestContext)">
+    <member name="SearchByPartyId(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call SearchByFarmerId with required parameters and parse the result.
+This sample shows how to call SearchByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {};
 
-foreach (var data in client.SearchByFarmerId("<farmerId>", RequestContent.Create(data)))
+foreach (var data in client.SearchByPartyId("<partyId>", RequestContent.Create(data)))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call SearchByFarmerId with all parameters and request content, and how to parse the result.
+This sample shows how to call SearchByPartyId with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
 var data = new {
     ids = new[] {
@@ -1230,28 +1382,29 @@ var data = new {
     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-    $maxPageSize = 1234,
-    $skipToken = "<$skipToken>",
-    isPrimary = true,
+    maxPageSize = 1234,
+    skipToken = "<skipToken>",
     parentType = "Field",
+    type = "<type>",
     parentIds = new[] {
         "<String>"
     },
-    minAcreage = 123.45d,
-    maxAcreage = 123.45d,
+    minArea = 123.45d,
+    maxArea = 123.45d,
     intersectsWithGeometry = new {
         type = "MultiPolygon",
     },
 };
 
-foreach (var data in client.SearchByFarmerId("<farmerId>", RequestContent.Create(data)))
+foreach (var data in client.SearchByPartyId("<partyId>", RequestContent.Create(data)))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("parentId").ToString());
-    Console.WriteLine(result.GetProperty("isPrimary").ToString());
-    Console.WriteLine(result.GetProperty("acreage").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("parentType").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -1260,6 +1413,8 @@ foreach (var data in client.SearchByFarmerId("<farmerId>", RequestContent.Create
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -1280,14 +1435,14 @@ e.g. &quot;{testKey} eq {testValue}&quot;.
   maxCreatedDateTime: string (ISO 8601 Format), # Optional. Maximum creation date of resource (inclusive).
   minLastModifiedDateTime: string (ISO 8601 Format), # Optional. Minimum last modified date of resource (inclusive).
   maxLastModifiedDateTime: string (ISO 8601 Format), # Optional. Maximum last modified date of resource (inclusive).
-  $maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
+  maxPageSize: number, # Optional. Maximum number of items needed (inclusive).
 Minimum = 10, Maximum = 1000, Default value = 50.
-  $skipToken: string, # Optional. Skip token for getting next set of results.
-  isPrimary: boolean, # Optional. Is the boundary primary.
+  skipToken: string, # Optional. Skip token for getting next set of results.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   parentIds: [string], # Optional. Parent Ids of the resource.
-  minAcreage: number, # Optional. Minimum acreage of the boundary (inclusive).
-  maxAcreage: number, # Optional. Maximum acreage of the boundary (inclusive).
+  minArea: number, # Optional. Minimum acreage of the boundary (inclusive).
+  maxArea: number, # Optional. Maximum acreage of the boundary (inclusive).
   intersectsWithGeometry: {
     type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
   }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
@@ -1298,11 +1453,14 @@ Response Body:
 
 Schema for <c>BoundaryMetadataListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   parentId: string, # Optional. Id of the parent it belongs to.
-  isPrimary: boolean, # Optional. Is the boundary primary.
-  acreage: number, # Optional. Boundary area in acres.
+  area: {
+    unit: string, # Optional. Data unit.
+    value: number, # Optional. Data value.
+  }, # Optional. Schema for storing measurement reading and unit.
   parentType: &quot;Field&quot; | &quot;SeasonalField&quot; | &quot;Zone&quot; | &quot;Prescription&quot; | &quot;PlantTissueAnalysis&quot; | &quot;ApplicationData&quot; | &quot;PlantingData&quot; | &quot;TillageData&quot; | &quot;HarvestData&quot;, # Optional. Type of the parent it belongs to.
+  type: string, # Optional. Type it belongs to.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -1311,6 +1469,8 @@ Schema for <c>BoundaryMetadataListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -1326,19 +1486,20 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<boundaryId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -1352,7 +1513,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -1360,6 +1521,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -1374,19 +1536,20 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetBoundariesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-preview>);
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<boundaryId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -1400,7 +1563,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -1408,6 +1571,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.

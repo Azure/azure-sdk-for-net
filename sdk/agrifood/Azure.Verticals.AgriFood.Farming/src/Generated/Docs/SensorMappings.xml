@@ -6,7 +6,7 @@
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -18,12 +18,12 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 var data = new {
     sensorId = "<sensorId>",
     sensorPartnerId = "<sensorPartnerId>",
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     status = "<status>",
     name = "<name>",
@@ -38,7 +38,7 @@ Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", Reques
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -47,6 +47,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -59,7 +61,7 @@ Schema for <c>SensorMapping</c>:
 <code>{
   sensorId: string, # Optional. Id of the associated sensor.
   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  farmerId: string, # Optional. Id of the associated farmer.
+  partyId: string, # Optional. Id of the associated party.
   boundaryId: string, # Optional. Id of the associated boundary.
   id: string, # Optional. Id of the resource.
   status: string, # Optional. Status of the resource.
@@ -68,6 +70,8 @@ Schema for <c>SensorMapping</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -82,7 +86,7 @@ Schema for <c>SensorMapping</c>:
 <code>{
   sensorId: string, # Optional. Id of the associated sensor.
   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  farmerId: string, # Optional. Id of the associated farmer.
+  partyId: string, # Optional. Id of the associated party.
   boundaryId: string, # Optional. Id of the associated boundary.
   id: string, # Optional. Id of the resource.
   status: string, # Optional. Status of the resource.
@@ -91,6 +95,8 @@ Schema for <c>SensorMapping</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -106,7 +112,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -118,12 +124,12 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 var data = new {
     sensorId = "<sensorId>",
     sensorPartnerId = "<sensorPartnerId>",
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     status = "<status>",
     name = "<name>",
@@ -138,7 +144,7 @@ Response response = client.CreateOrUpdate("<sensorMappingId>", RequestContent.Cr
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -147,6 +153,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -159,7 +167,7 @@ Schema for <c>SensorMapping</c>:
 <code>{
   sensorId: string, # Optional. Id of the associated sensor.
   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  farmerId: string, # Optional. Id of the associated farmer.
+  partyId: string, # Optional. Id of the associated party.
   boundaryId: string, # Optional. Id of the associated boundary.
   id: string, # Optional. Id of the resource.
   status: string, # Optional. Status of the resource.
@@ -168,6 +176,8 @@ Schema for <c>SensorMapping</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -182,7 +192,7 @@ Schema for <c>SensorMapping</c>:
 <code>{
   sensorId: string, # Optional. Id of the associated sensor.
   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  farmerId: string, # Optional. Id of the associated farmer.
+  partyId: string, # Optional. Id of the associated party.
   boundaryId: string, # Optional. Id of the associated boundary.
   id: string, # Optional. Id of the resource.
   status: string, # Optional. Status of the resource.
@@ -191,6 +201,8 @@ Schema for <c>SensorMapping</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -206,14 +218,14 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSensorMappingAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 Response response = await client.GetSensorMappingAsync("<sensorMappingId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -222,6 +234,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -234,7 +248,7 @@ Schema for <c>SensorMapping</c>:
 <code>{
   sensorId: string, # Optional. Id of the associated sensor.
   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  farmerId: string, # Optional. Id of the associated farmer.
+  partyId: string, # Optional. Id of the associated party.
   boundaryId: string, # Optional. Id of the associated boundary.
   id: string, # Optional. Id of the resource.
   status: string, # Optional. Status of the resource.
@@ -243,6 +257,8 @@ Schema for <c>SensorMapping</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -258,14 +274,14 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSensorMapping with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 Response response = client.GetSensorMapping("<sensorMappingId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("sensorId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -274,6 +290,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -286,7 +304,7 @@ Schema for <c>SensorMapping</c>:
 <code>{
   sensorId: string, # Optional. Id of the associated sensor.
   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  farmerId: string, # Optional. Id of the associated farmer.
+  partyId: string, # Optional. Id of the associated party.
   boundaryId: string, # Optional. Id of the associated boundary.
   id: string, # Optional. Id of the resource.
   status: string, # Optional. Status of the resource.
@@ -295,6 +313,8 @@ Schema for <c>SensorMapping</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -310,7 +330,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 Response response = await client.DeleteAsync("<sensorMappingId>");
 Console.WriteLine(response.Status);
@@ -322,7 +342,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 Response response = client.Delete("<sensorMappingId>");
 Console.WriteLine(response.Status);
@@ -334,7 +354,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetSensorMappingsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetSensorMappingsAsync())
 {
@@ -345,14 +365,14 @@ await foreach (var data in client.GetSensorMappingsAsync())
 This sample shows how to call GetSensorMappingsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<farmerIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetSensorMappingsAsync(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorId").ToString());
     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("boundaryId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -361,6 +381,8 @@ await foreach (var data in client.GetSensorMappingsAsync(new String[]{"<sensorId
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -374,7 +396,7 @@ Schema for <c>SensorMappingListResponseValue</c>:
 <code>{
   sensorId: string, # Optional. Id of the associated sensor.
   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  farmerId: string, # Optional. Id of the associated farmer.
+  partyId: string, # Optional. Id of the associated party.
   boundaryId: string, # Optional. Id of the associated boundary.
   id: string, # Optional. Id of the resource.
   status: string, # Optional. Status of the resource.
@@ -383,6 +405,8 @@ Schema for <c>SensorMappingListResponseValue</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -398,7 +422,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSensorMappings and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetSensorMappings())
 {
@@ -409,14 +433,14 @@ foreach (var data in client.GetSensorMappings())
 This sample shows how to call GetSensorMappings with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorMappingsClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<farmerIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetSensorMappings(new String[]{"<sensorIds>"}, new String[]{"<sensorPartnerIds>"}, new String[]{"<partyIds>"}, new String[]{"<boundaryIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sensorId").ToString());
     Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("boundaryId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -425,6 +449,8 @@ foreach (var data in client.GetSensorMappings(new String[]{"<sensorIds>"}, new S
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -438,7 +464,7 @@ Schema for <c>SensorMappingListResponseValue</c>:
 <code>{
   sensorId: string, # Optional. Id of the associated sensor.
   sensorPartnerId: string, # Optional. Id of the associated sensor partner.
-  farmerId: string, # Optional. Id of the associated farmer.
+  partyId: string, # Optional. Id of the associated party.
   boundaryId: string, # Optional. Id of the associated boundary.
   id: string, # Optional. Id of the resource.
   status: string, # Optional. Status of the resource.
@@ -447,6 +473,8 @@ Schema for <c>SensorMappingListResponseValue</c>:
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.

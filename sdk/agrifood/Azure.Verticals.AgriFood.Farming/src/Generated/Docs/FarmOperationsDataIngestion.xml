@@ -6,12 +6,12 @@
 This sample shows how to call GetJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
 
 Response response = await client.GetJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
@@ -20,12 +20,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -36,7 +39,7 @@ Response Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
@@ -46,12 +49,15 @@ Schema for <c>FarmOperationDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -67,12 +73,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
 
 Response response = client.GetJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
@@ -81,12 +87,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -97,7 +106,7 @@ Response Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
@@ -107,12 +116,15 @@ Schema for <c>FarmOperationDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -128,10 +140,10 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     authProviderId = "<authProviderId>",
     startYear = 1234,
 };
@@ -140,17 +152,17 @@ var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", Requ
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
 ]]></code>
 This sample shows how to call CreateJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     authProviderId = "<authProviderId>",
     operations = new[] {
         "<String>"
@@ -168,7 +180,7 @@ var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", Requ
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
@@ -177,12 +189,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -193,7 +208,7 @@ Request Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
@@ -203,12 +218,15 @@ Schema for <c>FarmOperationDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -221,7 +239,7 @@ Response Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
@@ -231,12 +249,15 @@ Schema for <c>FarmOperationDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -252,10 +273,10 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     authProviderId = "<authProviderId>",
     startYear = 1234,
 };
@@ -264,17 +285,17 @@ var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
 ]]></code>
 This sample shows how to call CreateJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     authProviderId = "<authProviderId>",
     operations = new[] {
         "<String>"
@@ -292,7 +313,7 @@ var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("authProviderId").ToString());
 Console.WriteLine(result.GetProperty("operations")[0].ToString());
 Console.WriteLine(result.GetProperty("startYear").ToString());
@@ -301,12 +322,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -317,7 +341,7 @@ Request Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
@@ -327,12 +351,15 @@ Schema for <c>FarmOperationDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -345,7 +372,7 @@ Response Body:
 
 Schema for <c>FarmOperationDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   authProviderId: string, # Required. Authentication provider Id.
   operations: [string], # Optional. List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.
   startYear: number, # Required. Start Year (Minimum = 2000, Maximum = CurrentYear).
@@ -355,12 +382,15 @@ Schema for <c>FarmOperationDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.

@@ -6,7 +6,7 @@
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -18,7 +18,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 var data = new {
     sensorDataModelId = "<sensorDataModelId>",
@@ -66,6 +66,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -99,6 +101,8 @@ Like sensor moisture at 2m, 4m, 6m.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -134,6 +138,8 @@ Like sensor moisture at 2m, 4m, 6m.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -149,7 +155,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 var data = new {};
 
@@ -161,7 +167,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 var data = new {
     sensorDataModelId = "<sensorDataModelId>",
@@ -209,6 +215,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -242,6 +250,8 @@ Like sensor moisture at 2m, 4m, 6m.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -277,6 +287,8 @@ Like sensor moisture at 2m, 4m, 6m.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -292,7 +304,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSensorAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 Response response = await client.GetSensorAsync("<sensorPartnerId>", "<sensorId>");
 
@@ -315,6 +327,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -348,6 +362,8 @@ Like sensor moisture at 2m, 4m, 6m.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -363,7 +379,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSensor with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 Response response = client.GetSensor("<sensorPartnerId>", "<sensorId>");
 
@@ -386,6 +402,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -419,6 +437,8 @@ Like sensor moisture at 2m, 4m, 6m.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -434,7 +454,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 Response response = await client.DeleteAsync("<sensorPartnerId>", "<sensorId>");
 Console.WriteLine(response.Status);
@@ -446,7 +466,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 Response response = client.Delete("<sensorPartnerId>", "<sensorId>");
 Console.WriteLine(response.Status);
@@ -458,7 +478,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetConnectionStringAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 Response response = await client.GetConnectionStringAsync("<sensorPartnerId>", "<sensorId>");
 
@@ -486,7 +506,7 @@ Schema for <c>IoTHubDeviceAuthentication</c>:
 This sample shows how to call GetConnectionString with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 Response response = client.GetConnectionString("<sensorPartnerId>", "<sensorId>");
 
@@ -514,7 +534,7 @@ Schema for <c>IoTHubDeviceAuthentication</c>:
 This sample shows how to call RenewConnectionStringAsync with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 var data = new {
     connectionStringType = "Primary",
@@ -554,7 +574,7 @@ Schema for <c>IoTHubDeviceAuthentication</c>:
 This sample shows how to call RenewConnectionString with required parameters and request content and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 var data = new {
     connectionStringType = "Primary",
@@ -594,7 +614,7 @@ Schema for <c>IoTHubDeviceAuthentication</c>:
 This sample shows how to call GetSensorsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetSensorsAsync("<sensorPartnerId>"))
 {
@@ -605,7 +625,7 @@ await foreach (var data in client.GetSensorsAsync("<sensorPartnerId>"))
 This sample shows how to call GetSensorsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetSensorsAsync("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
@@ -628,6 +648,8 @@ await foreach (var data in client.GetSensorsAsync("<sensorPartnerId>", new Strin
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -662,6 +684,8 @@ Like sensor moisture at 2m, 4m, 6m.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -677,7 +701,7 @@ only string, numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSensors with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetSensors("<sensorPartnerId>"))
 {
@@ -688,7 +712,7 @@ foreach (var data in client.GetSensors("<sensorPartnerId>"))
 This sample shows how to call GetSensors with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorsClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetSensors("<sensorPartnerId>", new String[]{"<sensorDataModelIds>"}, new String[]{"<sensorMappingIds>"}, new String[]{"<deviceIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
@@ -711,6 +735,8 @@ foreach (var data in client.GetSensors("<sensorPartnerId>", new String[]{"<senso
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -745,6 +771,8 @@ Like sensor moisture at 2m, 4m, 6m.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.

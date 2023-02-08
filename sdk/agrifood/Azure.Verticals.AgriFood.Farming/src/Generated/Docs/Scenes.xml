@@ -1,12 +1,378 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
+    <member name="SearchFeaturesAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call SearchFeaturesAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+var data = new {
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+};
+
+Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("returned").ToString());
+]]></code>
+This sample shows how to call SearchFeaturesAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+var data = new {
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+    intersects = new {
+        type = "MultiPolygon",
+    },
+    bbox = new[] {
+        123.45d
+    },
+    featureIds = new[] {
+        "<String>"
+    },
+    limit = 1234,
+    next = 1234,
+};
+
+Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("geometry").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("bbox")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").ToString());
+Console.WriteLine(result.GetProperty("next").ToString());
+Console.WriteLine(result.GetProperty("returned").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>SearchFeaturesQuery</c>:
+<code>{
+  startDateTime: string (ISO 8601 Format), # Required. Start datetime of the time interval in which to search for Features.
+  endDateTime: string (ISO 8601 Format), # Required. End datetime of the time interval in which to search for Features.
+  intersects: {
+    type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+  }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: [number], # Optional. Only features that have a geometry that intersects the bounding box are selected.
+The bounding box is provided as four numbers. The coordinate reference system of the values is WGS84 longitude/latitude.
+  featureIds: [string], # Optional. Array of feature ids to return.
+  limit: number, # Optional. Maximum number of features needed (inclusive).
+Minimum = 1, Maximum = 100, Default value = 10.
+  next: number, # Optional. Skip token for getting next set of results.
+}
+</code>
+
+Response Body:
+
+Schema for <c>SearchFeaturesResponse</c>:
+<code>{
+  features: [
+    {
+      stacVersion: string, # Required. The STAC version the Feature implements.
+      stacExtensions: [string], # Optional. A list of extensions the Feature implements.
+      id: string, # Required. Provider identifier. Globally unique ID by Data provider.
+      type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
+      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+Its a GeoJSON geometry.
+      bbox: [number], # Optional. Bounding box of the feature.
+      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      links: [
+        {
+          href: string, # Required. The actual link in the format of an URL.
+          rel: string, # Required. Relationship between the current document and the linked document.
+          type: string, # Optional. Media type of the referenced entity.
+          title: string, # Optional. A human readable title to be used in rendered displays of the link.
+        }
+      ], # Required. List of link objects to resources and related URLs.
+      assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
+      collection: string, # Optional. The id of the STAC Collection this Feature references.
+    }
+  ], # Required. List of features.
+  next: number, # Optional. Merge this next property in next search request
+to get next set of results.
+  returned: number, # Required. No of features returned.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="SearchFeatures(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call SearchFeatures with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+var data = new {
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+};
+
+Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("returned").ToString());
+]]></code>
+This sample shows how to call SearchFeatures with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+var data = new {
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+    intersects = new {
+        type = "MultiPolygon",
+    },
+    bbox = new[] {
+        123.45d
+    },
+    featureIds = new[] {
+        "<String>"
+    },
+    limit = 1234,
+    next = 1234,
+};
+
+Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("geometry").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("bbox")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").ToString());
+Console.WriteLine(result.GetProperty("next").ToString());
+Console.WriteLine(result.GetProperty("returned").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>SearchFeaturesQuery</c>:
+<code>{
+  startDateTime: string (ISO 8601 Format), # Required. Start datetime of the time interval in which to search for Features.
+  endDateTime: string (ISO 8601 Format), # Required. End datetime of the time interval in which to search for Features.
+  intersects: {
+    type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+  }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: [number], # Optional. Only features that have a geometry that intersects the bounding box are selected.
+The bounding box is provided as four numbers. The coordinate reference system of the values is WGS84 longitude/latitude.
+  featureIds: [string], # Optional. Array of feature ids to return.
+  limit: number, # Optional. Maximum number of features needed (inclusive).
+Minimum = 1, Maximum = 100, Default value = 10.
+  next: number, # Optional. Skip token for getting next set of results.
+}
+</code>
+
+Response Body:
+
+Schema for <c>SearchFeaturesResponse</c>:
+<code>{
+  features: [
+    {
+      stacVersion: string, # Required. The STAC version the Feature implements.
+      stacExtensions: [string], # Optional. A list of extensions the Feature implements.
+      id: string, # Required. Provider identifier. Globally unique ID by Data provider.
+      type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
+      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+Its a GeoJSON geometry.
+      bbox: [number], # Optional. Bounding box of the feature.
+      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      links: [
+        {
+          href: string, # Required. The actual link in the format of an URL.
+          rel: string, # Required. Relationship between the current document and the linked document.
+          type: string, # Optional. Media type of the referenced entity.
+          title: string, # Optional. A human readable title to be used in rendered displays of the link.
+        }
+      ], # Required. List of link objects to resources and related URLs.
+      assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
+      collection: string, # Optional. The id of the STAC Collection this Feature references.
+    }
+  ], # Required. List of features.
+  next: number, # Optional. Merge this next property in next search request
+to get next set of results.
+  returned: number, # Required. No of features returned.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetStacFeatureAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetStacFeatureAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+Response response = await client.GetStacFeatureAsync("<collectionId>", "<featureId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("stacExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("geometry").ToString());
+Console.WriteLine(result.GetProperty("bbox")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("collection").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StacFeature</c>:
+<code>{
+  stacVersion: string, # Required. The STAC version the Feature implements.
+  stacExtensions: [string], # Optional. A list of extensions the Feature implements.
+  id: string, # Required. Provider identifier. Globally unique ID by Data provider.
+  type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
+  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+Its a GeoJSON geometry.
+  bbox: [number], # Optional. Bounding box of the feature.
+  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  links: [
+    {
+      href: string, # Required. The actual link in the format of an URL.
+      rel: string, # Required. Relationship between the current document and the linked document.
+      type: string, # Optional. Media type of the referenced entity.
+      title: string, # Optional. A human readable title to be used in rendered displays of the link.
+    }
+  ], # Required. List of link objects to resources and related URLs.
+  assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
+  collection: string, # Optional. The id of the STAC Collection this Feature references.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetStacFeature(String,String,RequestContext)">
+<example>
+This sample shows how to call GetStacFeature with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+Response response = client.GetStacFeature("<collectionId>", "<featureId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("stacExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("geometry").ToString());
+Console.WriteLine(result.GetProperty("bbox")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("collection").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StacFeature</c>:
+<code>{
+  stacVersion: string, # Required. The STAC version the Feature implements.
+  stacExtensions: [string], # Optional. A list of extensions the Feature implements.
+  id: string, # Required. Provider identifier. Globally unique ID by Data provider.
+  type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
+  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+Its a GeoJSON geometry.
+  bbox: [number], # Optional. Bounding box of the feature.
+  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  links: [
+    {
+      href: string, # Required. The actual link in the format of an URL.
+      rel: string, # Required. Relationship between the current document and the linked document.
+      type: string, # Optional. Media type of the referenced entity.
+      title: string, # Optional. A human readable title to be used in rendered displays of the link.
+    }
+  ], # Required. List of link objects to resources and related URLs.
+  assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
+  collection: string, # Optional. The id of the STAC Collection this Feature references.
+}
+</code>
+
+</remarks>
+    </member>
     <member name="DownloadAsync(String,RequestContext)">
 <example>
 This sample shows how to call DownloadAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
 Response response = await client.DownloadAsync("<filePath>");
 if (response.ContentStream != null)
@@ -24,7 +390,7 @@ if (response.ContentStream != null)
 This sample shows how to call Download with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
 Response response = client.Download("<filePath>");
 if (response.ContentStream != null)
@@ -42,12 +408,12 @@ if (response.ContentStream != null)
 This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
 Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
@@ -60,12 +426,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -76,12 +445,12 @@ Response Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
+  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -92,12 +461,15 @@ Schema for <c>SatelliteDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -113,12 +485,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSatelliteDataIngestionJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
 Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
@@ -131,12 +503,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -147,12 +522,12 @@ Response Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
+  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -163,12 +538,15 @@ Schema for <c>SatelliteDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -184,9 +562,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetScenesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>"))
+await foreach (var data in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -195,9 +573,9 @@ await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<b
 This sample shows how to call GetScenesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
+await foreach (var data in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
@@ -212,7 +590,7 @@ await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<b
     Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
     Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
     Console.WriteLine(result.GetProperty("boundaryId").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
 }
@@ -241,7 +619,7 @@ Schema for <c>SceneListResponseValue</c>:
   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
   boundaryId: string, # Optional. Boundary ID which belongs to the scene.
-  farmerId: string, # Optional. Farmer ID which belongs to the scene.
+  partyId: string, # Optional. Party ID which belongs to the scene.
   id: string, # Optional. Unique scene resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
 }
@@ -254,9 +632,9 @@ Schema for <c>SceneListResponseValue</c>:
 This sample shows how to call GetScenes with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>"))
+foreach (var data in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
@@ -265,9 +643,9 @@ foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>"
 This sample shows how to call GetScenes with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
+foreach (var data in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("sceneDateTime").ToString());
@@ -282,7 +660,7 @@ foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>"
     Console.WriteLine(result.GetProperty("darkPixelPercentage").ToString());
     Console.WriteLine(result.GetProperty("ndviMedianValue").ToString());
     Console.WriteLine(result.GetProperty("boundaryId").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
 }
@@ -311,7 +689,7 @@ Schema for <c>SceneListResponseValue</c>:
   darkPixelPercentage: number, # Optional. Dark pixel percentage of the scene.
   ndviMedianValue: number, # Optional. Median of NDVI of the scene.
   boundaryId: string, # Optional. Boundary ID which belongs to the scene.
-  farmerId: string, # Optional. Farmer ID which belongs to the scene.
+  partyId: string, # Optional. Party ID which belongs to the scene.
   id: string, # Optional. Unique scene resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
 }
@@ -324,31 +702,33 @@ Schema for <c>SceneListResponseValue</c>:
 This sample shows how to call CreateSatelliteDataIngestionJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
+    source = "Sentinel_2_L2A",
 };
 
 var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 ]]></code>
 This sample shows how to call CreateSatelliteDataIngestionJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -376,7 +756,7 @@ var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Comp
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
@@ -389,12 +769,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -405,12 +788,12 @@ Request Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
+  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -421,12 +804,15 @@ Schema for <c>SatelliteDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -439,12 +825,12 @@ Response Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
+  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -455,12 +841,15 @@ Schema for <c>SatelliteDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -476,31 +865,33 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateSatelliteDataIngestionJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
+    source = "Sentinel_2_L2A",
 };
 
 var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
 ]]></code>
 This sample shows how to call CreateSatelliteDataIngestionJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -528,7 +919,7 @@ var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jo
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("startDateTime").ToString());
 Console.WriteLine(result.GetProperty("endDateTime").ToString());
@@ -541,12 +932,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -557,12 +951,12 @@ Request Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
+  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -573,12 +967,15 @@ Schema for <c>SatelliteDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -591,12 +988,12 @@ Response Body:
 
 Schema for <c>SatelliteDataIngestionJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which satellite data is being fetched.
   startDateTime: string (ISO 8601 Format), # Required. Start Date.
   endDateTime: string (ISO 8601 Format), # Required. End Date.
   provider: &quot;Microsoft&quot;, # Optional. Provider of satellite data. Available Value: Microsoft.
-  source: &quot;Sentinel_2_L2A&quot;, # Optional. Source of satellite data. Available Value: Sentinel_2_L2A.
+  source: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   data: {
     imageNames: [string], # Optional. List of ImageNames.
     imageFormats: [string], # Optional. List of ImageFormats. Available value: TIF.
@@ -607,12 +1004,15 @@ Schema for <c>SatelliteDataIngestionJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.

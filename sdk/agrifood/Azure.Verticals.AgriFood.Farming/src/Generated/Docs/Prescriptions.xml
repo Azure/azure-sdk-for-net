@@ -6,18 +6,18 @@
 This sample shows how to call GetPrescriptionAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-Response response = await client.GetPrescriptionAsync("<farmerId>", "<prescriptionId>");
+Response response = await client.GetPrescriptionAsync("<partyId>", "<prescriptionId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("prescriptionMapId").ToString());
 Console.WriteLine(result.GetProperty("productCode").ToString());
 Console.WriteLine(result.GetProperty("productName").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -26,6 +26,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -36,12 +38,12 @@ Response Body:
 
 Schema for <c>Prescription</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -50,6 +52,8 @@ Schema for <c>Prescription</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -65,18 +69,18 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetPrescription with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-Response response = client.GetPrescription("<farmerId>", "<prescriptionId>");
+Response response = client.GetPrescription("<partyId>", "<prescriptionId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("prescriptionMapId").ToString());
 Console.WriteLine(result.GetProperty("productCode").ToString());
 Console.WriteLine(result.GetProperty("productName").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -85,6 +89,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -95,12 +101,12 @@ Response Body:
 
 Schema for <c>Prescription</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -109,6 +115,8 @@ Schema for <c>Prescription</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -124,11 +132,11 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<prescriptionId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -136,14 +144,14 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 var data = new {
     prescriptionMapId = "<prescriptionMapId>",
     productCode = "<productCode>",
     productName = "<productName>",
     type = "<type>",
-    measures = new {
+    measurements = new {
         key = new {
             unit = "<unit>",
             value = 123.45d,
@@ -158,16 +166,16 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<prescriptionId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("prescriptionMapId").ToString());
 Console.WriteLine(result.GetProperty("productCode").ToString());
 Console.WriteLine(result.GetProperty("productName").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -176,6 +184,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -186,12 +196,12 @@ Request Body:
 
 Schema for <c>Prescription</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -200,6 +210,8 @@ Schema for <c>Prescription</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -212,12 +224,12 @@ Response Body:
 
 Schema for <c>Prescription</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -226,6 +238,8 @@ Schema for <c>Prescription</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -241,11 +255,11 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = client.CreateOrUpdate("<farmerId>", "<prescriptionId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<prescriptionId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -253,14 +267,14 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 var data = new {
     prescriptionMapId = "<prescriptionMapId>",
     productCode = "<productCode>",
     productName = "<productName>",
     type = "<type>",
-    measures = new {
+    measurements = new {
         key = new {
             unit = "<unit>",
             value = 123.45d,
@@ -275,16 +289,16 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<farmerId>", "<prescriptionId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<prescriptionId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("prescriptionMapId").ToString());
 Console.WriteLine(result.GetProperty("productCode").ToString());
 Console.WriteLine(result.GetProperty("productName").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -293,6 +307,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -303,12 +319,12 @@ Request Body:
 
 Schema for <c>Prescription</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -317,6 +333,8 @@ Schema for <c>Prescription</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -329,12 +347,12 @@ Response Body:
 
 Schema for <c>Prescription</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -343,6 +361,8 @@ Schema for <c>Prescription</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -358,9 +378,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-Response response = await client.DeleteAsync("<farmerId>", "<prescriptionId>");
+Response response = await client.DeleteAsync("<partyId>", "<prescriptionId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -370,9 +390,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-Response response = client.Delete("<farmerId>", "<prescriptionId>");
+Response response = client.Delete("<partyId>", "<prescriptionId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -382,18 +402,19 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -407,7 +428,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -415,6 +436,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -429,18 +451,19 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -454,7 +477,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -462,6 +485,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -471,34 +495,34 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 
 </remarks>
     </member>
-    <member name="GetPrescriptionsByFarmerIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetPrescriptionsByPartyIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetPrescriptionsByFarmerIdAsync with required parameters and parse the result.
+This sample shows how to call GetPrescriptionsByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetPrescriptionsByFarmerIdAsync("<farmerId>"))
+await foreach (var data in client.GetPrescriptionsByPartyIdAsync("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetPrescriptionsByFarmerIdAsync with all parameters, and how to parse the result.
+This sample shows how to call GetPrescriptionsByPartyIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetPrescriptionsByFarmerIdAsync("<farmerId>", new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetPrescriptionsByPartyIdAsync("<partyId>", new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("prescriptionMapId").ToString());
     Console.WriteLine(result.GetProperty("productCode").ToString());
     Console.WriteLine(result.GetProperty("productName").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -507,6 +531,8 @@ await foreach (var data in client.GetPrescriptionsByFarmerIdAsync("<farmerId>", 
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -518,12 +544,12 @@ Response Body:
 
 Schema for <c>PrescriptionListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -532,6 +558,8 @@ Schema for <c>PrescriptionListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -542,34 +570,34 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetPrescriptionsByFarmerId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetPrescriptionsByPartyId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetPrescriptionsByFarmerId with required parameters and parse the result.
+This sample shows how to call GetPrescriptionsByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetPrescriptionsByFarmerId("<farmerId>"))
+foreach (var data in client.GetPrescriptionsByPartyId("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetPrescriptionsByFarmerId with all parameters, and how to parse the result.
+This sample shows how to call GetPrescriptionsByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetPrescriptionsByFarmerId("<farmerId>", new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetPrescriptionsByPartyId("<partyId>", new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("prescriptionMapId").ToString());
     Console.WriteLine(result.GetProperty("productCode").ToString());
     Console.WriteLine(result.GetProperty("productName").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -578,6 +606,8 @@ foreach (var data in client.GetPrescriptionsByFarmerId("<farmerId>", new String[
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -589,12 +619,12 @@ Response Body:
 
 Schema for <c>PrescriptionListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -603,6 +633,8 @@ Schema for <c>PrescriptionListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -618,7 +650,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetPrescriptionsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetPrescriptionsAsync())
 {
@@ -629,18 +661,18 @@ await foreach (var data in client.GetPrescriptionsAsync())
 This sample shows how to call GetPrescriptionsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetPrescriptionsAsync(new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("prescriptionMapId").ToString());
     Console.WriteLine(result.GetProperty("productCode").ToString());
     Console.WriteLine(result.GetProperty("productName").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -649,6 +681,8 @@ await foreach (var data in client.GetPrescriptionsAsync(new String[]{"<prescript
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -660,12 +694,12 @@ Response Body:
 
 Schema for <c>PrescriptionListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -674,6 +708,8 @@ Schema for <c>PrescriptionListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -689,7 +725,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetPrescriptions and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetPrescriptions())
 {
@@ -700,18 +736,18 @@ foreach (var data in client.GetPrescriptions())
 This sample shows how to call GetPrescriptions with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetPrescriptions(new String[]{"<prescriptionMapIds>"}, new String[]{"<types>"}, new String[]{"<productCodes>"}, new String[]{"<productNames>"}, new String[]{"<sources>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("prescriptionMapId").ToString());
     Console.WriteLine(result.GetProperty("productCode").ToString());
     Console.WriteLine(result.GetProperty("productName").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("unit").ToString());
-    Console.WriteLine(result.GetProperty("measures").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -720,6 +756,8 @@ foreach (var data in client.GetPrescriptions(new String[]{"<prescriptionMapIds>"
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -731,12 +769,12 @@ Response Body:
 
 Schema for <c>PrescriptionListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
+  partyId: string, # Optional. Party Id.
   prescriptionMapId: string, # Optional. Prescription map Id.
   productCode: string, # Optional. Product Code.
   productName: string, # Optional. Product name.
   type: string, # Optional. Prescription type.
-  measures: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
+  measurements: Dictionary&lt;string, Measure&gt;, # Optional. Measures.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -745,6 +783,8 @@ Schema for <c>PrescriptionListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -760,19 +800,20 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<prescriptionId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionId>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -786,7 +827,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -794,6 +835,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -808,19 +850,20 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPrescriptionsClient(<2022-11-01-preview>);
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<prescriptionId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionId>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -834,7 +877,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -842,6 +885,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.

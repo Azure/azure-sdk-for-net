@@ -52,232 +52,6 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Creates or updates insight entity. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="modelId">
-        /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
-        /// </param>
-        /// <param name="resourceType"> Resource type associated with the record. </param>
-        /// <param name="resourceId"> Id of the associated resource. </param>
-        /// <param name="insightId"> Id of the insight resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/>, <paramref name="insightId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,String,String,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Insights.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, modelId, resourceType, resourceId, insightId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates or updates insight entity. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="modelId">
-        /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
-        /// </param>
-        /// <param name="resourceType"> Resource type associated with the record. </param>
-        /// <param name="resourceId"> Id of the associated resource. </param>
-        /// <param name="insightId"> Id of the insight resource. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/>, <paramref name="insightId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,String,String,String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("Insights.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateOrUpdateRequest(farmerId, modelId, resourceType, resourceId, insightId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a specified insight resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="modelId">
-        /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
-        /// </param>
-        /// <param name="resourceType"> Resource type associated with the record. </param>
-        /// <param name="resourceId"> Id of the associated resource. </param>
-        /// <param name="insightId"> Id of the insight resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightAsync(String,String,String,String,String,RequestContext)']/*" />
-        public virtual async Task<Response> GetInsightAsync(string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
-
-            using var scope = ClientDiagnostics.CreateScope("Insights.GetInsight");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetInsightRequest(farmerId, modelId, resourceType, resourceId, insightId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a specified insight resource under a particular farmer. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="modelId">
-        /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
-        /// </param>
-        /// <param name="resourceType"> Resource type associated with the record. </param>
-        /// <param name="resourceId"> Id of the associated resource. </param>
-        /// <param name="insightId"> Id of the insight resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsight(String,String,String,String,String,RequestContext)']/*" />
-        public virtual Response GetInsight(string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
-
-            using var scope = ClientDiagnostics.CreateScope("Insights.GetInsight");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetInsightRequest(farmerId, modelId, resourceType, resourceId, insightId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a specified insight resource. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="modelId">
-        /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
-        /// </param>
-        /// <param name="resourceType"> Resource type associated with the record. </param>
-        /// <param name="resourceId"> Id of the associated resource. </param>
-        /// <param name="insightId"> Id of the insight resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='DeleteAsync(String,String,String,String,String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
-
-            using var scope = ClientDiagnostics.CreateScope("Insights.Delete");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteRequest(farmerId, modelId, resourceType, resourceId, insightId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a specified insight resource. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
-        /// <param name="modelId">
-        /// Id of the associated model.
-        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
-        /// </param>
-        /// <param name="resourceType"> Resource type associated with the record. </param>
-        /// <param name="resourceId"> Id of the associated resource. </param>
-        /// <param name="insightId"> Id of the insight resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='Delete(String,String,String,String,String,RequestContext)']/*" />
-        public virtual Response Delete(string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
-
-            using var scope = ClientDiagnostics.CreateScope("Insights.Delete");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteRequest(farmerId, modelId, resourceType, resourceId, insightId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Get a cascade delete job for specified insight. </summary>
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -330,8 +104,234 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        /// <summary> Creates or updates insight entity. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="modelId">
+        /// Id of the associated model.
+        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// </param>
+        /// <param name="resourceType"> Resource type associated with the record. </param>
+        /// <param name="resourceId"> Id of the associated resource. </param>
+        /// <param name="insightId"> Id of the insight resource. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/>, <paramref name="insightId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,String,String,String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Insights.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, modelId, resourceType, resourceId, insightId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates insight entity. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="modelId">
+        /// Id of the associated model.
+        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// </param>
+        /// <param name="resourceType"> Resource type associated with the record. </param>
+        /// <param name="resourceId"> Id of the associated resource. </param>
+        /// <param name="insightId"> Id of the insight resource. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/>, <paramref name="insightId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,String,String,String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Insights.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(partyId, modelId, resourceType, resourceId, insightId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a specified insight resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="modelId">
+        /// Id of the associated model.
+        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// </param>
+        /// <param name="resourceType"> Resource type associated with the record. </param>
+        /// <param name="resourceId"> Id of the associated resource. </param>
+        /// <param name="insightId"> Id of the insight resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightAsync(String,String,String,String,String,RequestContext)']/*" />
+        public virtual async Task<Response> GetInsightAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+
+            using var scope = ClientDiagnostics.CreateScope("Insights.GetInsight");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetInsightRequest(partyId, modelId, resourceType, resourceId, insightId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a specified insight resource under a particular party. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="modelId">
+        /// Id of the associated model.
+        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// </param>
+        /// <param name="resourceType"> Resource type associated with the record. </param>
+        /// <param name="resourceId"> Id of the associated resource. </param>
+        /// <param name="insightId"> Id of the insight resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsight(String,String,String,String,String,RequestContext)']/*" />
+        public virtual Response GetInsight(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+
+            using var scope = ClientDiagnostics.CreateScope("Insights.GetInsight");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetInsightRequest(partyId, modelId, resourceType, resourceId, insightId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a specified insight resource. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="modelId">
+        /// Id of the associated model.
+        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// </param>
+        /// <param name="resourceType"> Resource type associated with the record. </param>
+        /// <param name="resourceId"> Id of the associated resource. </param>
+        /// <param name="insightId"> Id of the insight resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='DeleteAsync(String,String,String,String,String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+
+            using var scope = ClientDiagnostics.CreateScope("Insights.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(partyId, modelId, resourceType, resourceId, insightId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a specified insight resource. </summary>
+        /// <param name="partyId"> Id of the associated party. </param>
+        /// <param name="modelId">
+        /// Id of the associated model.
+        /// It can be either &apos;BiomassModelId&apos;, &apos;SensorPlacementModelId&apos;, &apos;SoilMoistureModelId&apos; or any solution id.
+        /// </param>
+        /// <param name="resourceType"> Resource type associated with the record. </param>
+        /// <param name="resourceId"> Id of the associated resource. </param>
+        /// <param name="insightId"> Id of the insight resource. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='Delete(String,String,String,String,String,RequestContext)']/*" />
+        public virtual Response Delete(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+
+            using var scope = ClientDiagnostics.CreateScope("Insights.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(partyId, modelId, resourceType, resourceId, insightId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Returns a paginated list of insight resources. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId"> Id of the associated model. </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
@@ -339,7 +339,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxInsightStartDateTime"> Maximum insightStartDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="minInsightEndDateTime"> Minimum insightEndDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxInsightEndDateTime"> Maximum insightEndDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="measureFilters">
+        /// <param name="measurementFilters">
         /// Filters on measureKey.unit/unitValue or measureKey.value/value pairs within the Measures object.
         /// eg. &quot;measureKey.unit eq {testValue}&quot; where testValue is string.
         /// eg. &quot;measureKey.value eq {testValue}&quot; where testValue = double.
@@ -361,22 +361,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightsByFarmerIdModelIdAndResourceAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetInsightsByFarmerIdModelIdAndResourceAsync(string farmerId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime = null, DateTimeOffset? maxInsightStartDateTime = null, DateTimeOffset? minInsightEndDateTime = null, DateTimeOffset? maxInsightEndDateTime = null, IEnumerable<string> measureFilters = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightsByPartyIdModelIdAndResourceAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetInsightsByPartyIdModelIdAndResourceAsync(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime = null, DateTimeOffset? maxInsightStartDateTime = null, DateTimeOffset? minInsightEndDateTime = null, DateTimeOffset? maxInsightEndDateTime = null, IEnumerable<string> measurementFilters = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return GetInsightsByFarmerIdModelIdAndResourceImplementationAsync("Insights.GetInsightsByFarmerIdModelIdAndResource", farmerId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measureFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetInsightsByPartyIdModelIdAndResourceImplementationAsync("Insights.GetInsightsByPartyIdModelIdAndResource", partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetInsightsByFarmerIdModelIdAndResourceImplementationAsync(string diagnosticsScopeName, string farmerId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measureFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetInsightsByPartyIdModelIdAndResourceImplementationAsync(string diagnosticsScopeName, string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -384,8 +384,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetInsightsByFarmerIdModelIdAndResourceRequest(farmerId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measureFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetInsightsByFarmerIdModelIdAndResourceNextPageRequest(nextLink, farmerId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measureFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetInsightsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -394,7 +394,7 @@ namespace Azure.Verticals.AgriFood.Farming
         }
 
         /// <summary> Returns a paginated list of insight resources. </summary>
-        /// <param name="farmerId"> Id of the associated farmer. </param>
+        /// <param name="partyId"> Id of the associated party. </param>
         /// <param name="modelId"> Id of the associated model. </param>
         /// <param name="resourceType"> Resource type associated with the record. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
@@ -402,7 +402,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="maxInsightStartDateTime"> Maximum insightStartDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="minInsightEndDateTime"> Minimum insightEndDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="maxInsightEndDateTime"> Maximum insightEndDateTime time of insight resources (inclusive), sample format: yyyy-MM-ddTHH:mm:ssZ. </param>
-        /// <param name="measureFilters">
+        /// <param name="measurementFilters">
         /// Filters on measureKey.unit/unitValue or measureKey.value/value pairs within the Measures object.
         /// eg. &quot;measureKey.unit eq {testValue}&quot; where testValue is string.
         /// eg. &quot;measureKey.value eq {testValue}&quot; where testValue = double.
@@ -424,22 +424,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/> or <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightsByFarmerIdModelIdAndResource(String,String,String,String,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetInsightsByFarmerIdModelIdAndResource(string farmerId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime = null, DateTimeOffset? maxInsightStartDateTime = null, DateTimeOffset? minInsightEndDateTime = null, DateTimeOffset? maxInsightEndDateTime = null, IEnumerable<string> measureFilters = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightsByPartyIdModelIdAndResource(String,String,String,String,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetInsightsByPartyIdModelIdAndResource(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime = null, DateTimeOffset? maxInsightStartDateTime = null, DateTimeOffset? minInsightEndDateTime = null, DateTimeOffset? maxInsightEndDateTime = null, IEnumerable<string> measurementFilters = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return GetInsightsByFarmerIdModelIdAndResourceImplementation("Insights.GetInsightsByFarmerIdModelIdAndResource", farmerId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measureFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetInsightsByPartyIdModelIdAndResourceImplementation("Insights.GetInsightsByPartyIdModelIdAndResource", partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetInsightsByFarmerIdModelIdAndResourceImplementation(string diagnosticsScopeName, string farmerId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measureFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetInsightsByPartyIdModelIdAndResourceImplementation(string diagnosticsScopeName, string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -447,8 +447,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetInsightsByFarmerIdModelIdAndResourceRequest(farmerId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measureFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetInsightsByFarmerIdModelIdAndResourceNextPageRequest(nextLink, farmerId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measureFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetInsightsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -456,24 +456,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a cascade delete job for insights specified farmerId/modelId/resourceType/resourceId. </summary>
+        /// <summary> Create a cascade delete job for insights specified partyId/modelId/resourceType/resourceId. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="modelId"> Id of the associated model. </param>
         /// <param name="resourceType"> Resource Type. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
         /// <param name="insightId"> Insight id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,String,String,String,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(resourceType, nameof(resourceType));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
@@ -483,7 +483,7 @@ namespace Azure.Verticals.AgriFood.Farming
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, modelId, resourceType, resourceId, insightId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, modelId, resourceType, resourceId, insightId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Insights.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -493,24 +493,24 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Create a cascade delete job for insights specified farmerId/modelId/resourceType/resourceId. </summary>
+        /// <summary> Create a cascade delete job for insights specified partyId/modelId/resourceType/resourceId. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="farmerId"> ID of the associated farmer. </param>
+        /// <param name="partyId"> ID of the associated party. </param>
         /// <param name="modelId"> Id of the associated model. </param>
         /// <param name="resourceType"> Resource Type. </param>
         /// <param name="resourceId"> Id of the associated resource. </param>
         /// <param name="insightId"> Insight id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,String,String,String,String,String,String,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(resourceType, nameof(resourceType));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
@@ -520,7 +520,7 @@ namespace Azure.Verticals.AgriFood.Farming
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, modelId, resourceType, resourceId, insightId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, modelId, resourceType, resourceId, insightId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Insights.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -530,15 +530,50 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetInsightsByFarmerIdModelIdAndResourceRequest(string farmerId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measureFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/insights/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("partyId", partyId, true);
+            uri.AppendQuery("modelId", modelId, true);
+            uri.AppendQuery("resourceType", resourceType, true);
+            uri.AppendQuery("resourceId", resourceId, true);
+            uri.AppendQuery("insightId", insightId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/insights/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetInsightsByPartyIdModelIdAndResourceRequest(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
             uri.AppendPath("/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/resource-types/", false);
@@ -562,11 +597,11 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxInsightEndDateTime", maxInsightEndDateTime.Value, "O", true);
             }
-            if (measureFilters != null)
+            if (measurementFilters != null)
             {
-                foreach (var param in measureFilters)
+                foreach (var param in measurementFilters)
                 {
-                    uri.AppendQuery("measureFilters", param, true);
+                    uri.AppendQuery("measurementFilters", param, true);
                 }
             }
             if (ids != null)
@@ -615,11 +650,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -627,15 +662,15 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
             uri.AppendPath("/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/resource-types/", false);
@@ -652,15 +687,15 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetInsightRequest(string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
+        internal HttpMessage CreateGetInsightRequest(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
             uri.AppendPath("/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/resource-types/", false);
@@ -675,15 +710,15 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/farmers/", false);
-            uri.AppendPath(farmerId, true);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
             uri.AppendPath("/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/resource-types/", false);
@@ -698,42 +733,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/insights/cascade-delete/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("farmerId", farmerId, true);
-            uri.AppendQuery("modelId", modelId, true);
-            uri.AppendQuery("resourceType", resourceType, true);
-            uri.AppendQuery("resourceId", resourceId, true);
-            uri.AppendQuery("insightId", insightId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/insights/cascade-delete/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetInsightsByFarmerIdModelIdAndResourceNextPageRequest(string nextLink, string farmerId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measureFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(string nextLink, string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -746,13 +746,13 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier200201;
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

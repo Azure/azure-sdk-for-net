@@ -16,9 +16,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated sub-client. The CropVarieties sub-client.
-    /// <summary> The CropVarieties sub-client. </summary>
-    public partial class CropVarieties
+    // Data plane generated sub-client. The CropProducts sub-client.
+    /// <summary> The CropProducts sub-client. </summary>
+    public partial class CropProducts
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -32,18 +32,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of CropVarieties for mocking. </summary>
-        protected CropVarieties()
+        /// <summary> Initializes a new instance of CropProducts for mocking. </summary>
+        protected CropProducts()
         {
         }
 
-        /// <summary> Initializes a new instance of CropVarieties. </summary>
+        /// <summary> Initializes a new instance of CropProducts. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal CropVarieties(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal CropProducts(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -52,23 +52,23 @@ namespace Azure.Verticals.AgriFood.Farming
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets a specified crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety. </param>
+        /// <summary> Gets a specified crop Product resource. </summary>
+        /// <param name="cropProductId"> Id of the crop Product. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropProductId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropProductId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/CropVarieties.xml" path="doc/members/member[@name='GetCropVarietyAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetCropVarietyAsync(string cropVarietyId, RequestContext context = null)
+        /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='GetCropProductAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetCropProductAsync(string cropProductId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarieties.GetCropVariety");
+            using var scope = ClientDiagnostics.CreateScope("CropProducts.GetCropProduct");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCropVarietyRequest(cropVarietyId, context);
+                using HttpMessage message = CreateGetCropProductRequest(cropProductId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -78,23 +78,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Gets a specified crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety. </param>
+        /// <summary> Gets a specified crop Product resource. </summary>
+        /// <param name="cropProductId"> Id of the crop Product. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropProductId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropProductId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/CropVarieties.xml" path="doc/members/member[@name='GetCropVariety(String,RequestContext)']/*" />
-        public virtual Response GetCropVariety(string cropVarietyId, RequestContext context = null)
+        /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='GetCropProduct(String,RequestContext)']/*" />
+        public virtual Response GetCropProduct(string cropProductId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarieties.GetCropVariety");
+            using var scope = ClientDiagnostics.CreateScope("CropProducts.GetCropProduct");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCropVarietyRequest(cropVarietyId, context);
+                using HttpMessage message = CreateGetCropProductRequest(cropProductId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -104,25 +104,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates a crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety resource. </param>
+        /// <summary> Creates or updates a crop Product resource. </summary>
+        /// <param name="cropProductId"> Id of the crop Product resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropProductId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropProductId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/CropVarieties.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string cropVarietyId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAsync(string cropProductId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarieties.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropProducts.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(cropVarietyId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(cropProductId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -132,25 +132,25 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Creates or updates a crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety resource. </param>
+        /// <summary> Creates or updates a crop Product resource. </summary>
+        /// <param name="cropProductId"> Id of the crop Product resource. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropProductId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropProductId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/CropVarieties.xml" path="doc/members/member[@name='CreateOrUpdate(String,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string cropVarietyId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='CreateOrUpdate(String,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdate(string cropProductId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarieties.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("CropProducts.CreateOrUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(cropVarietyId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(cropProductId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -160,23 +160,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety. </param>
+        /// <summary> Deletes a specified crop Product resource. </summary>
+        /// <param name="cropProductId"> Id of the crop Product. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropProductId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropProductId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CropVarieties.xml" path="doc/members/member[@name='DeleteAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string cropVarietyId, RequestContext context = null)
+        /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='DeleteAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(string cropProductId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarieties.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropProducts.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(cropVarietyId, context);
+                using HttpMessage message = CreateDeleteRequest(cropProductId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -186,23 +186,23 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Deletes a specified crop variety resource. </summary>
-        /// <param name="cropVarietyId"> Id of the crop variety. </param>
+        /// <summary> Deletes a specified crop Product resource. </summary>
+        /// <param name="cropProductId"> Id of the crop Product. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cropVarietyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cropVarietyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cropProductId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cropProductId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/CropVarieties.xml" path="doc/members/member[@name='Delete(String,RequestContext)']/*" />
-        public virtual Response Delete(string cropVarietyId, RequestContext context = null)
+        /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='Delete(String,RequestContext)']/*" />
+        public virtual Response Delete(string cropProductId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(cropVarietyId, nameof(cropVarietyId));
+            Argument.AssertNotNullOrEmpty(cropProductId, nameof(cropProductId));
 
-            using var scope = ClientDiagnostics.CreateScope("CropVarieties.Delete");
+            using var scope = ClientDiagnostics.CreateScope("CropProducts.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(cropVarietyId, context);
+                using HttpMessage message = CreateDeleteRequest(cropProductId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -212,11 +212,12 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of crop variety resources. </summary>
+        /// <summary> Returns a paginated list of crop product resources. </summary>
         /// <param name="cropIds"> CropIds of the resource. </param>
         /// <param name="brands"> Brands of the resource. </param>
         /// <param name="products"> Products of the resource. </param>
-        /// <param name="cropVarietyIds"> Ids of the resource. </param>
+        /// <param name="traits"> Traits of the resource. </param>
+        /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -235,13 +236,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/CropVarieties.xml" path="doc/members/member[@name='GetCropVarietiesAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetCropVarietiesAsync(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='GetCropProductsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetCropProductsAsync(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> traits = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetCropVarietiesImplementationAsync("CropVarieties.GetCropVarieties", cropIds, brands, products, cropVarietyIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetCropProductsImplementationAsync("CropProducts.GetCropProducts", cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetCropVarietiesImplementationAsync(string diagnosticsScopeName, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> cropVarietyIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetCropProductsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> traits, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -249,8 +250,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCropVarietiesRequest(cropIds, brands, products, cropVarietyIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetCropVarietiesNextPageRequest(nextLink, cropIds, brands, products, cropVarietyIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetCropProductsRequest(cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetCropProductsNextPageRequest(nextLink, cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -258,11 +259,12 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        /// <summary> Returns a paginated list of crop variety resources. </summary>
+        /// <summary> Returns a paginated list of crop product resources. </summary>
         /// <param name="cropIds"> CropIds of the resource. </param>
         /// <param name="brands"> Brands of the resource. </param>
         /// <param name="products"> Products of the resource. </param>
-        /// <param name="cropVarietyIds"> Ids of the resource. </param>
+        /// <param name="traits"> Traits of the resource. </param>
+        /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
         /// Filters on key-value pairs within the Properties object.
@@ -281,13 +283,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/CropVarieties.xml" path="doc/members/member[@name='GetCropVarieties(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetCropVarieties(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> cropVarietyIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        /// <include file="Docs/CropProducts.xml" path="doc/members/member[@name='GetCropProducts(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetCropProducts(IEnumerable<string> cropIds = null, IEnumerable<string> brands = null, IEnumerable<string> products = null, IEnumerable<string> traits = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetCropVarietiesImplementation("CropVarieties.GetCropVarieties", cropIds, brands, products, cropVarietyIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetCropProductsImplementation("CropProducts.GetCropProducts", cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetCropVarietiesImplementation(string diagnosticsScopeName, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> cropVarietyIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetCropProductsImplementation(string diagnosticsScopeName, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> traits, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -295,8 +297,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCropVarietiesRequest(cropIds, brands, products, cropVarietyIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetCropVarietiesNextPageRequest(nextLink, cropIds, brands, products, cropVarietyIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetCropProductsRequest(cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetCropProductsNextPageRequest(nextLink, cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -304,14 +306,14 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetCropVarietiesRequest(IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> cropVarietyIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetCropProductsRequest(IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> traits, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/crop-varieties", false);
+            uri.AppendPath("/crop-products", false);
             if (cropIds != null)
             {
                 foreach (var param in cropIds)
@@ -333,9 +335,16 @@ namespace Azure.Verticals.AgriFood.Farming
                     uri.AppendQuery("products", param, true);
                 }
             }
-            if (cropVarietyIds != null)
+            if (traits != null)
             {
-                foreach (var param in cropVarietyIds)
+                foreach (var param in traits)
+                {
+                    uri.AppendQuery("traits", param, true);
+                }
+            }
+            if (ids != null)
+            {
+                foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
@@ -379,11 +388,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -391,30 +400,30 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetCropVarietyRequest(string cropVarietyId, RequestContext context)
+        internal HttpMessage CreateGetCropProductRequest(string cropProductId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/crop-varieties/", false);
-            uri.AppendPath(cropVarietyId, true);
+            uri.AppendPath("/crop-products/", false);
+            uri.AppendPath(cropProductId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string cropVarietyId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string cropProductId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/crop-varieties/", false);
-            uri.AppendPath(cropVarietyId, true);
+            uri.AppendPath("/crop-products/", false);
+            uri.AppendPath(cropProductId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -423,22 +432,22 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string cropVarietyId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string cropProductId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/crop-varieties/", false);
-            uri.AppendPath(cropVarietyId, true);
+            uri.AppendPath("/crop-products/", false);
+            uri.AppendPath(cropProductId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetCropVarietiesNextPageRequest(string nextLink, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> cropVarietyIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetCropProductsNextPageRequest(string nextLink, IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> traits, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

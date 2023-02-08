@@ -156,7 +156,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a list of OAuthToken documents. </summary>
         /// <param name="authProviderIds"> Name of AuthProvider. </param>
-        /// <param name="farmerIds"> List of farmers. </param>
+        /// <param name="partyIds"> List of parties. </param>
         /// <param name="isValid"> If the token object is valid. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
         /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
@@ -171,12 +171,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='GetAuthenticatedFarmersDetailsAsync(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAuthenticatedFarmersDetailsAsync(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAuthenticatedFarmersDetailsAsync(IEnumerable<string> authProviderIds = null, IEnumerable<string> partyIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAuthenticatedFarmersDetailsImplementationAsync("FarmerOAuthTokens.GetAuthenticatedFarmersDetails", authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetAuthenticatedFarmersDetailsImplementationAsync("FarmerOAuthTokens.GetAuthenticatedFarmersDetails", authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetAuthenticatedFarmersDetailsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetAuthenticatedFarmersDetailsImplementationAsync(string diagnosticsScopeName, IEnumerable<string> authProviderIds, IEnumerable<string> partyIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -184,8 +184,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAuthenticatedFarmersDetailsRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAuthenticatedFarmersDetailsNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetAuthenticatedFarmersDetailsRequest(authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAuthenticatedFarmersDetailsNextPageRequest(nextLink, authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -195,7 +195,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Returns a list of OAuthToken documents. </summary>
         /// <param name="authProviderIds"> Name of AuthProvider. </param>
-        /// <param name="farmerIds"> List of farmers. </param>
+        /// <param name="partyIds"> List of parties. </param>
         /// <param name="isValid"> If the token object is valid. </param>
         /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
         /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
@@ -210,12 +210,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='GetAuthenticatedFarmersDetails(IEnumerable,IEnumerable,Boolean,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAuthenticatedFarmersDetails(IEnumerable<string> authProviderIds = null, IEnumerable<string> farmerIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAuthenticatedFarmersDetails(IEnumerable<string> authProviderIds = null, IEnumerable<string> partyIds = null, bool? isValid = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAuthenticatedFarmersDetailsImplementation("FarmerOAuthTokens.GetAuthenticatedFarmersDetails", authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetAuthenticatedFarmersDetailsImplementation("FarmerOAuthTokens.GetAuthenticatedFarmersDetails", authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetAuthenticatedFarmersDetailsImplementation(string diagnosticsScopeName, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetAuthenticatedFarmersDetailsImplementation(string diagnosticsScopeName, IEnumerable<string> authProviderIds, IEnumerable<string> partyIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -223,8 +223,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAuthenticatedFarmersDetailsRequest(authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAuthenticatedFarmersDetailsNextPageRequest(nextLink, authProviderIds, farmerIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetAuthenticatedFarmersDetailsRequest(authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetAuthenticatedFarmersDetailsNextPageRequest(nextLink, authProviderIds, partyIds, isValid, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -235,25 +235,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create remove job for OAuth token. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job Id supplied by end user. </param>
-        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="partyId"> Id of the party. </param>
         /// <param name="oauthProviderId"> Id of the OAuthProvider. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="oauthProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string farmerId, string oauthProviderId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string oauthProviderId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, oauthProviderId, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "FarmerOAuthTokens.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -266,25 +266,25 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create remove job for OAuth token. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job Id supplied by end user. </param>
-        /// <param name="farmerId"> Id of the farmer. </param>
+        /// <param name="partyId"> Id of the party. </param>
         /// <param name="oauthProviderId"> Id of the OAuthProvider. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="oauthProviderId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="partyId"/> or <paramref name="oauthProviderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <include file="Docs/FarmerOAuthTokens.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,String,String,String,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string farmerId, string oauthProviderId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string oauthProviderId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(farmerId, nameof(farmerId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("FarmerOAuthTokens.CreateCascadeDeleteJob");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, farmerId, oauthProviderId, context);
+                using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, oauthProviderId, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "FarmerOAuthTokens.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -294,7 +294,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetAuthenticatedFarmersDetailsRequest(IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetAuthenticatedFarmersDetailsRequest(IEnumerable<string> authProviderIds, IEnumerable<string> partyIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -309,11 +309,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     uri.AppendQuery("authProviderIds", param, true);
                 }
             }
-            if (farmerIds != null)
+            if (partyIds != null)
             {
-                foreach (var param in farmerIds)
+                foreach (var param in partyIds)
                 {
-                    uri.AppendQuery("farmerIds", param, true);
+                    uri.AppendQuery("partyIds", param, true);
                 }
             }
             if (isValid != null)
@@ -338,11 +338,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -366,23 +366,6 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string farmerId, string oauthProviderId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/oauth/tokens/remove/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendQuery("farmerId", farmerId, true);
-            uri.AppendQuery("oauthProviderId", oauthProviderId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -398,7 +381,24 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetAuthenticatedFarmersDetailsNextPageRequest(string nextLink, IEnumerable<string> authProviderIds, IEnumerable<string> farmerIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string partyId, string oauthProviderId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/oauth/tokens/remove/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("partyId", partyId, true);
+            uri.AppendQuery("oauthProviderId", oauthProviderId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAuthenticatedFarmersDetailsNextPageRequest(string nextLink, IEnumerable<string> authProviderIds, IEnumerable<string> partyIds, bool? isValid, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

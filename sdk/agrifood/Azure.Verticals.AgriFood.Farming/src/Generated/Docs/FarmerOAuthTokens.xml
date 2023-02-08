@@ -6,10 +6,10 @@
 This sample shows how to call GetOAuthConnectionLinkAsync with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     oAuthProviderId = "<oAuthProviderId>",
     userRedirectLink = "<userRedirectLink>",
 };
@@ -22,10 +22,10 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetOAuthConnectionLinkAsync with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     oAuthProviderId = "<oAuthProviderId>",
     userRedirectLink = "<userRedirectLink>",
     userRedirectState = "<userRedirectState>",
@@ -44,7 +44,7 @@ Request Body:
 
 Schema for <c>OAuthConnectRequest</c>:
 <code>{
-  farmerId: string, # Required. Id of the farmer.
+  partyId: string, # Required. Id of the party.
   oAuthProviderId: string, # Required. Id of the OAuthProvider.
   userRedirectLink: string, # Required. Link to redirect the user to, at the end of the oauth flow.
   userRedirectState: string, # Optional. State to provide back when redirecting the user, at the end of the oauth flow.
@@ -58,10 +58,10 @@ Schema for <c>OAuthConnectRequest</c>:
 This sample shows how to call GetOAuthConnectionLink with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     oAuthProviderId = "<oAuthProviderId>",
     userRedirectLink = "<userRedirectLink>",
 };
@@ -74,10 +74,10 @@ Console.WriteLine(result.ToString());
 This sample shows how to call GetOAuthConnectionLink with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     oAuthProviderId = "<oAuthProviderId>",
     userRedirectLink = "<userRedirectLink>",
     userRedirectState = "<userRedirectState>",
@@ -96,7 +96,7 @@ Request Body:
 
 Schema for <c>OAuthConnectRequest</c>:
 <code>{
-  farmerId: string, # Required. Id of the farmer.
+  partyId: string, # Required. Id of the party.
   oAuthProviderId: string, # Required. Id of the OAuthProvider.
   userRedirectLink: string, # Required. Link to redirect the user to, at the end of the oauth flow.
   userRedirectState: string, # Optional. State to provide back when redirecting the user, at the end of the oauth flow.
@@ -110,18 +110,19 @@ Schema for <c>OAuthConnectRequest</c>:
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -135,7 +136,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -143,6 +144,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -157,18 +159,19 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -182,7 +185,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -190,6 +193,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -204,24 +208,24 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call GetAuthenticatedFarmersDetailsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetAuthenticatedFarmersDetailsAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("authProviderId").ToString());
 }
 ]]></code>
 This sample shows how to call GetAuthenticatedFarmersDetailsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetAuthenticatedFarmersDetailsAsync(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetAuthenticatedFarmersDetailsAsync(new String[]{"<authProviderIds>"}, new String[]{"<partyIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("authProviderId").ToString());
     Console.WriteLine(result.GetProperty("isValid").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -237,7 +241,7 @@ Response Body:
 
 Schema for <c>OAuthTokenListResponseValue</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID for this OAuth config.
+  partyId: string, # Required. Party ID for this OAuth config.
   authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
   isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
@@ -253,24 +257,24 @@ Schema for <c>OAuthTokenListResponseValue</c>:
 This sample shows how to call GetAuthenticatedFarmersDetails and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetAuthenticatedFarmersDetails())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("authProviderId").ToString());
 }
 ]]></code>
 This sample shows how to call GetAuthenticatedFarmersDetails with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetAuthenticatedFarmersDetails(new String[]{"<authProviderIds>"}, new String[]{"<farmerIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetAuthenticatedFarmersDetails(new String[]{"<authProviderIds>"}, new String[]{"<partyIds>"}, true, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("authProviderId").ToString());
     Console.WriteLine(result.GetProperty("isValid").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
@@ -286,7 +290,7 @@ Response Body:
 
 Schema for <c>OAuthTokenListResponseValue</c>:
 <code>{
-  farmerId: string, # Required. Farmer ID for this OAuth config.
+  partyId: string, # Required. Party ID for this OAuth config.
   authProviderId: string, # Required. ID of the OAuth provider resource containing app information.
   isValid: boolean, # Optional. An optional flag indicating whether the token is a valid or expired (Default value: true).
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
@@ -302,19 +306,20 @@ Schema for <c>OAuthTokenListResponseValue</c>:
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<oauthProviderId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -328,7 +333,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -336,6 +341,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -350,19 +356,20 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(<2022-11-01-preview>);
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<oauthProviderId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -376,7 +383,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -384,6 +391,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.

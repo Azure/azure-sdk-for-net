@@ -6,12 +6,12 @@
 This sample shows how to call GetBiomassModelJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 Response response = await client.GetBiomassModelJobAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("modelVersion").ToString());
 Console.WriteLine(result.GetProperty("cropName").ToString());
@@ -26,12 +26,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -42,7 +45,7 @@ Response Body:
 
 Schema for <c>BiomassModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which biomass is being calculated.
   modelVersion: string, # Required. The version of the biomass model to be run. Available Value: 1.0 .
   cropName: &quot;Corn&quot;, # Required. Crop name for biomass model. Available Value: Corn.
@@ -50,7 +53,7 @@ Schema for <c>BiomassModelJob</c>:
   inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime till which biomass will be calculated. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   weatherExtensionId: string, # Required. ExtensionId of weather data. Available values: DTN.ClearAg, DTN.ContentServices.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   id: string, # Optional. Unique job id.
@@ -58,12 +61,15 @@ Schema for <c>BiomassModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -79,12 +85,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetBiomassModelJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 Response response = client.GetBiomassModelJob("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("modelVersion").ToString());
 Console.WriteLine(result.GetProperty("cropName").ToString());
@@ -99,12 +105,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -115,7 +124,7 @@ Response Body:
 
 Schema for <c>BiomassModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which biomass is being calculated.
   modelVersion: string, # Required. The version of the biomass model to be run. Available Value: 1.0 .
   cropName: &quot;Corn&quot;, # Required. Crop name for biomass model. Available Value: Corn.
@@ -123,7 +132,7 @@ Schema for <c>BiomassModelJob</c>:
   inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime till which biomass will be calculated. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   weatherExtensionId: string, # Required. ExtensionId of weather data. Available values: DTN.ClearAg, DTN.ContentServices.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   id: string, # Optional. Unique job id.
@@ -131,12 +140,165 @@ Schema for <c>BiomassModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetSensorPlacementModelJobAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetSensorPlacementModelJobAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
+
+Response response = await client.GetSensorPlacementModelJobAsync("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("sensorType").ToString());
+Console.WriteLine(result.GetProperty("isRanked").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>SensorPlacementModelJob</c>:
+<code>{
+  partyId: string, # Required. Party Id.
+  boundaryId: string, # Required. The id of the boundary object for which sensor placement is being calculated.
+  modelVersion: string, # Required. The version of the sensor placement model to be run.
+  inferenceStartDateTime: string (ISO 8601 Format), # Required. Start datetime for satellite data to be pulled.
+  inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime for satellite data to be pulled.
+  satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  sensorType: string, # Required. SensorType. The sensor placement map generated for sensor type (e.g., soil moisture, soil temperature, npk). Available Value: SoilMoisture.
+  isRanked: boolean, # Required. IsRanked, if True the sensor placements will be ranked.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetSensorPlacementModelJob(String,RequestContext)">
+<example>
+This sample shows how to call GetSensorPlacementModelJob with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
+
+Response response = client.GetSensorPlacementModelJob("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("sensorType").ToString());
+Console.WriteLine(result.GetProperty("isRanked").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>SensorPlacementModelJob</c>:
+<code>{
+  partyId: string, # Required. Party Id.
+  boundaryId: string, # Required. The id of the boundary object for which sensor placement is being calculated.
+  modelVersion: string, # Required. The version of the sensor placement model to be run.
+  inferenceStartDateTime: string (ISO 8601 Format), # Required. Start datetime for satellite data to be pulled.
+  inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime for satellite data to be pulled.
+  satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  sensorType: string, # Required. SensorType. The sensor placement map generated for sensor type (e.g., soil moisture, soil temperature, npk). Available Value: SoilMoisture.
+  isRanked: boolean, # Required. IsRanked, if True the sensor placements will be ranked.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -152,12 +314,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSoilMoistureModelJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 Response response = await client.GetSoilMoistureModelJobAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
@@ -175,12 +337,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -191,14 +356,14 @@ Response Body:
 
 Schema for <c>SoilMoistureModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which soil moisture is being calculated.
   sensorDataModelId: string, # Required. Sensor data model Id.
   sensorPartnerId: string, # Required. Sensor partner Id.
   inferenceStartDateTime: string (ISO 8601 Format), # Required. Inference start date time for soil moisture calculations.
   inferenceEndDateTime: string (ISO 8601 Format), # Required. Inference end date time for soil moisture calculations.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   modelVersion: string, # Required. The version of the soil moisture model to be run.
@@ -212,12 +377,15 @@ Schema for <c>SoilMoistureModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -233,12 +401,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSoilMoistureModelJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 Response response = client.GetSoilMoistureModelJob("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
@@ -256,12 +424,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -272,14 +443,14 @@ Response Body:
 
 Schema for <c>SoilMoistureModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which soil moisture is being calculated.
   sensorDataModelId: string, # Required. Sensor data model Id.
   sensorPartnerId: string, # Required. Sensor partner Id.
   inferenceStartDateTime: string (ISO 8601 Format), # Required. Inference start date time for soil moisture calculations.
   inferenceEndDateTime: string (ISO 8601 Format), # Required. Inference end date time for soil moisture calculations.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   modelVersion: string, # Required. The version of the soil moisture model to be run.
@@ -293,12 +464,15 @@ Schema for <c>SoilMoistureModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -314,10 +488,10 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateBiomassModelJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
     cropName = "Corn",
@@ -334,7 +508,7 @@ var operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<j
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("modelVersion").ToString());
 Console.WriteLine(result.GetProperty("cropName").ToString());
@@ -349,10 +523,10 @@ Console.WriteLine(result.GetProperty("imageFormat").ToString());
 This sample shows how to call CreateBiomassModelJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
     cropName = "Corn",
@@ -374,7 +548,7 @@ var operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<j
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("modelVersion").ToString());
 Console.WriteLine(result.GetProperty("cropName").ToString());
@@ -389,12 +563,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -405,7 +582,7 @@ Request Body:
 
 Schema for <c>BiomassModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which biomass is being calculated.
   modelVersion: string, # Required. The version of the biomass model to be run. Available Value: 1.0 .
   cropName: &quot;Corn&quot;, # Required. Crop name for biomass model. Available Value: Corn.
@@ -413,7 +590,7 @@ Schema for <c>BiomassModelJob</c>:
   inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime till which biomass will be calculated. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   weatherExtensionId: string, # Required. ExtensionId of weather data. Available values: DTN.ClearAg, DTN.ContentServices.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   id: string, # Optional. Unique job id.
@@ -421,12 +598,15 @@ Schema for <c>BiomassModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -439,7 +619,7 @@ Response Body:
 
 Schema for <c>BiomassModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which biomass is being calculated.
   modelVersion: string, # Required. The version of the biomass model to be run. Available Value: 1.0 .
   cropName: &quot;Corn&quot;, # Required. Crop name for biomass model. Available Value: Corn.
@@ -447,7 +627,7 @@ Schema for <c>BiomassModelJob</c>:
   inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime till which biomass will be calculated. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   weatherExtensionId: string, # Required. ExtensionId of weather data. Available values: DTN.ClearAg, DTN.ContentServices.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   id: string, # Optional. Unique job id.
@@ -455,12 +635,15 @@ Schema for <c>BiomassModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -476,10 +659,10 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateBiomassModelJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
     cropName = "Corn",
@@ -496,7 +679,7 @@ var operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", Req
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("modelVersion").ToString());
 Console.WriteLine(result.GetProperty("cropName").ToString());
@@ -511,10 +694,10 @@ Console.WriteLine(result.GetProperty("imageFormat").ToString());
 This sample shows how to call CreateBiomassModelJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     modelVersion = "<modelVersion>",
     cropName = "Corn",
@@ -536,7 +719,7 @@ var operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", Req
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("modelVersion").ToString());
 Console.WriteLine(result.GetProperty("cropName").ToString());
@@ -551,12 +734,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -567,7 +753,7 @@ Request Body:
 
 Schema for <c>BiomassModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which biomass is being calculated.
   modelVersion: string, # Required. The version of the biomass model to be run. Available Value: 1.0 .
   cropName: &quot;Corn&quot;, # Required. Crop name for biomass model. Available Value: Corn.
@@ -575,7 +761,7 @@ Schema for <c>BiomassModelJob</c>:
   inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime till which biomass will be calculated. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   weatherExtensionId: string, # Required. ExtensionId of weather data. Available values: DTN.ClearAg, DTN.ContentServices.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   id: string, # Optional. Unique job id.
@@ -583,12 +769,15 @@ Schema for <c>BiomassModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -601,7 +790,7 @@ Response Body:
 
 Schema for <c>BiomassModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which biomass is being calculated.
   modelVersion: string, # Required. The version of the biomass model to be run. Available Value: 1.0 .
   cropName: &quot;Corn&quot;, # Required. Crop name for biomass model. Available Value: Corn.
@@ -609,7 +798,7 @@ Schema for <c>BiomassModelJob</c>:
   inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime till which biomass will be calculated. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   weatherExtensionId: string, # Required. ExtensionId of weather data. Available values: DTN.ClearAg, DTN.ContentServices.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   id: string, # Optional. Unique job id.
@@ -617,12 +806,333 @@ Schema for <c>BiomassModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateSensorPlacementModelJobAsync(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateSensorPlacementModelJobAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    partyId = "<partyId>",
+    boundaryId = "<boundaryId>",
+    modelVersion = "<modelVersion>",
+    inferenceStartDateTime = "2022-05-10T18:57:31.2311892Z",
+    inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
+    satelliteProvider = "Microsoft",
+    satelliteSource = "Sentinel_2_L2A",
+    sensorType = "<sensorType>",
+    isRanked = true,
+};
+
+var operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("sensorType").ToString());
+Console.WriteLine(result.GetProperty("isRanked").ToString());
+]]></code>
+This sample shows how to call CreateSensorPlacementModelJobAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    partyId = "<partyId>",
+    boundaryId = "<boundaryId>",
+    modelVersion = "<modelVersion>",
+    inferenceStartDateTime = "2022-05-10T18:57:31.2311892Z",
+    inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
+    satelliteProvider = "Microsoft",
+    satelliteSource = "Sentinel_2_L2A",
+    sensorType = "<sensorType>",
+    isRanked = true,
+    name = "<name>",
+    description = "<description>",
+    properties = new {
+        key = new {},
+    },
+};
+
+var operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData data = await operation.WaitForCompletionAsync();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("sensorType").ToString());
+Console.WriteLine(result.GetProperty("isRanked").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>SensorPlacementModelJob</c>:
+<code>{
+  partyId: string, # Required. Party Id.
+  boundaryId: string, # Required. The id of the boundary object for which sensor placement is being calculated.
+  modelVersion: string, # Required. The version of the sensor placement model to be run.
+  inferenceStartDateTime: string (ISO 8601 Format), # Required. Start datetime for satellite data to be pulled.
+  inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime for satellite data to be pulled.
+  satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  sensorType: string, # Required. SensorType. The sensor placement map generated for sensor type (e.g., soil moisture, soil temperature, npk). Available Value: SoilMoisture.
+  isRanked: boolean, # Required. IsRanked, if True the sensor placements will be ranked.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+Response Body:
+
+Schema for <c>SensorPlacementModelJob</c>:
+<code>{
+  partyId: string, # Required. Party Id.
+  boundaryId: string, # Required. The id of the boundary object for which sensor placement is being calculated.
+  modelVersion: string, # Required. The version of the sensor placement model to be run.
+  inferenceStartDateTime: string (ISO 8601 Format), # Required. Start datetime for satellite data to be pulled.
+  inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime for satellite data to be pulled.
+  satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  sensorType: string, # Required. SensorType. The sensor placement map generated for sensor type (e.g., soil moisture, soil temperature, npk). Available Value: SoilMoisture.
+  isRanked: boolean, # Required. IsRanked, if True the sensor placements will be ranked.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateSensorPlacementModelJob(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateSensorPlacementModelJob with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    partyId = "<partyId>",
+    boundaryId = "<boundaryId>",
+    modelVersion = "<modelVersion>",
+    inferenceStartDateTime = "2022-05-10T18:57:31.2311892Z",
+    inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
+    satelliteProvider = "Microsoft",
+    satelliteSource = "Sentinel_2_L2A",
+    sensorType = "<sensorType>",
+    isRanked = true,
+};
+
+var operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("sensorType").ToString());
+Console.WriteLine(result.GetProperty("isRanked").ToString());
+]]></code>
+This sample shows how to call CreateSensorPlacementModelJob with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
+
+var data = new {
+    partyId = "<partyId>",
+    boundaryId = "<boundaryId>",
+    modelVersion = "<modelVersion>",
+    inferenceStartDateTime = "2022-05-10T18:57:31.2311892Z",
+    inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
+    satelliteProvider = "Microsoft",
+    satelliteSource = "Sentinel_2_L2A",
+    sensorType = "<sensorType>",
+    isRanked = true,
+    name = "<name>",
+    description = "<description>",
+    properties = new {
+        key = new {},
+    },
+};
+
+var operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+
+BinaryData data = operation.WaitForCompletion();
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("modelVersion").ToString());
+Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+Console.WriteLine(result.GetProperty("sensorType").ToString());
+Console.WriteLine(result.GetProperty("isRanked").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>SensorPlacementModelJob</c>:
+<code>{
+  partyId: string, # Required. Party Id.
+  boundaryId: string, # Required. The id of the boundary object for which sensor placement is being calculated.
+  modelVersion: string, # Required. The version of the sensor placement model to be run.
+  inferenceStartDateTime: string (ISO 8601 Format), # Required. Start datetime for satellite data to be pulled.
+  inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime for satellite data to be pulled.
+  satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  sensorType: string, # Required. SensorType. The sensor placement map generated for sensor type (e.g., soil moisture, soil temperature, npk). Available Value: SoilMoisture.
+  isRanked: boolean, # Required. IsRanked, if True the sensor placements will be ranked.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
+  properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string,
+numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+Response Body:
+
+Schema for <c>SensorPlacementModelJob</c>:
+<code>{
+  partyId: string, # Required. Party Id.
+  boundaryId: string, # Required. The id of the boundary object for which sensor placement is being calculated.
+  modelVersion: string, # Required. The version of the sensor placement model to be run.
+  inferenceStartDateTime: string (ISO 8601 Format), # Required. Start datetime for satellite data to be pulled.
+  inferenceEndDateTime: string (ISO 8601 Format), # Required. End datetime for satellite data to be pulled.
+  satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  sensorType: string, # Required. SensorType. The sensor placement map generated for sensor type (e.g., soil moisture, soil temperature, npk). Available Value: SoilMoisture.
+  isRanked: boolean, # Required. IsRanked, if True the sensor placements will be ranked.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -638,10 +1148,10 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateSoilMoistureModelJobAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     sensorDataModelId = "<sensorDataModelId>",
     sensorPartnerId = "<sensorPartnerId>",
@@ -663,7 +1173,7 @@ var operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
@@ -681,10 +1191,10 @@ Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxPropert
 This sample shows how to call CreateSoilMoistureModelJobAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     sensorDataModelId = "<sensorDataModelId>",
     sensorPartnerId = "<sensorPartnerId>",
@@ -711,7 +1221,7 @@ var operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
@@ -729,12 +1239,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -745,14 +1258,14 @@ Request Body:
 
 Schema for <c>SoilMoistureModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which soil moisture is being calculated.
   sensorDataModelId: string, # Required. Sensor data model Id.
   sensorPartnerId: string, # Required. Sensor partner Id.
   inferenceStartDateTime: string (ISO 8601 Format), # Required. Inference start date time for soil moisture calculations.
   inferenceEndDateTime: string (ISO 8601 Format), # Required. Inference end date time for soil moisture calculations.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   modelVersion: string, # Required. The version of the soil moisture model to be run.
@@ -766,12 +1279,15 @@ Schema for <c>SoilMoistureModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -784,14 +1300,14 @@ Response Body:
 
 Schema for <c>SoilMoistureModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which soil moisture is being calculated.
   sensorDataModelId: string, # Required. Sensor data model Id.
   sensorPartnerId: string, # Required. Sensor partner Id.
   inferenceStartDateTime: string (ISO 8601 Format), # Required. Inference start date time for soil moisture calculations.
   inferenceEndDateTime: string (ISO 8601 Format), # Required. Inference end date time for soil moisture calculations.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   modelVersion: string, # Required. The version of the soil moisture model to be run.
@@ -805,12 +1321,15 @@ Schema for <c>SoilMoistureModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -826,10 +1345,10 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateSoilMoistureModelJob with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     sensorDataModelId = "<sensorDataModelId>",
     sensorPartnerId = "<sensorPartnerId>",
@@ -851,7 +1370,7 @@ var operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>"
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
@@ -869,10 +1388,10 @@ Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxPropert
 This sample shows how to call CreateSoilMoistureModelJob with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetModelInferenceClient(<2022-11-01-preview>);
 
 var data = new {
-    farmerId = "<farmerId>",
+    partyId = "<partyId>",
     boundaryId = "<boundaryId>",
     sensorDataModelId = "<sensorDataModelId>",
     sensorPartnerId = "<sensorPartnerId>",
@@ -899,7 +1418,7 @@ var operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>"
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
 Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
@@ -917,12 +1436,15 @@ Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
 Console.WriteLine(result.GetProperty("endTime").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -933,14 +1455,14 @@ Request Body:
 
 Schema for <c>SoilMoistureModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which soil moisture is being calculated.
   sensorDataModelId: string, # Required. Sensor data model Id.
   sensorPartnerId: string, # Required. Sensor partner Id.
   inferenceStartDateTime: string (ISO 8601 Format), # Required. Inference start date time for soil moisture calculations.
   inferenceEndDateTime: string (ISO 8601 Format), # Required. Inference end date time for soil moisture calculations.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   modelVersion: string, # Required. The version of the soil moisture model to be run.
@@ -954,12 +1476,15 @@ Schema for <c>SoilMoistureModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -972,14 +1497,14 @@ Response Body:
 
 Schema for <c>SoilMoistureModelJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   boundaryId: string, # Required. The id of the boundary object for which soil moisture is being calculated.
   sensorDataModelId: string, # Required. Sensor data model Id.
   sensorPartnerId: string, # Required. Sensor partner Id.
   inferenceStartDateTime: string (ISO 8601 Format), # Required. Inference start date time for soil moisture calculations.
   inferenceEndDateTime: string (ISO 8601 Format), # Required. Inference end date time for soil moisture calculations.
   satelliteProvider: &quot;Microsoft&quot;, # Required. Provider of satellite data. Available Value: Microsoft.
-  satelliteSource: &quot;Sentinel_2_L2A&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
+  satelliteSource: &quot;Sentinel_2_L2A&quot; | &quot;Sentinel_2_L1C&quot;, # Required. Source of satellite data. Available Value: Sentinel_2_L2A.
   imageResolution: number, # Required. ImageResolution in meters. Available values: 10, 20, 60.
   imageFormat: &quot;TIF&quot;, # Required. ImageFormat. Available value: TIF.
   modelVersion: string, # Required. The version of the soil moisture model to be run.
@@ -993,12 +1518,15 @@ Schema for <c>SoilMoistureModelJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.

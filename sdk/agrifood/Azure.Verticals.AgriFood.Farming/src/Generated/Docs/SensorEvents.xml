@@ -6,29 +6,29 @@
 This sample shows how to call GetSensorEventsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2022-11-01-preview>);
 
 Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("value")[0].ToString());
 ]]></code>
 This sample shows how to call GetSensorEventsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2022-11-01-preview>);
 
 Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorPartnerId").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("eventDateTime").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("ingestionDateTime").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("measures").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("$skipToken").ToString());
+Console.WriteLine(result.GetProperty("skipToken").ToString());
 Console.WriteLine(result.GetProperty("nextLink").ToString());
 ]]></code>
 </example>
@@ -43,14 +43,14 @@ Schema for <c>SensorEventListResponse</c>:
     {
       sensorId: string, # Optional. Id of the sensor.
       sensorPartnerId: string, # Optional. Id of the sensor partner.
-      farmerId: string, # Optional. Id of the associated farmer.
+      partyId: string, # Optional. Id of the associated party.
       boundaryId: string, # Optional. Id of the associated boundary.
       eventDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event observation.
       ingestionDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event ingestion to data store.
       measures: Dictionary&lt;string, any&gt;, # Optional. Sensor measures.
     }
-  ], # Optional. List of requested objects.
-  $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+  ], # Required. List of requested objects.
+  skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
 }
 </code>
@@ -62,29 +62,29 @@ Schema for <c>SensorEventListResponse</c>:
 This sample shows how to call GetSensorEvents with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2022-11-01-preview>);
 
 Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("value")[0].ToString());
 ]]></code>
 This sample shows how to call GetSensorEvents with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSensorEventsClient(<2022-11-01-preview>);
 
 Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorPartnerId").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("boundaryId").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("eventDateTime").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("ingestionDateTime").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("measures").GetProperty("<test>").ToString());
-Console.WriteLine(result.GetProperty("$skipToken").ToString());
+Console.WriteLine(result.GetProperty("skipToken").ToString());
 Console.WriteLine(result.GetProperty("nextLink").ToString());
 ]]></code>
 </example>
@@ -99,14 +99,14 @@ Schema for <c>SensorEventListResponse</c>:
     {
       sensorId: string, # Optional. Id of the sensor.
       sensorPartnerId: string, # Optional. Id of the sensor partner.
-      farmerId: string, # Optional. Id of the associated farmer.
+      partyId: string, # Optional. Id of the associated party.
       boundaryId: string, # Optional. Id of the associated boundary.
       eventDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event observation.
       ingestionDateTime: string (ISO 8601 Format), # Optional. DateTime of sensor event ingestion to data store.
       measures: Dictionary&lt;string, any&gt;, # Optional. Sensor measures.
     }
-  ], # Optional. List of requested objects.
-  $skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
+  ], # Required. List of requested objects.
+  skipToken: string, # Optional. Token used in retrieving the next page. If null, there are no additional pages.
   nextLink: string, # Optional. Continuation link (absolute URI) to the next page of results in the list.
 }
 </code>

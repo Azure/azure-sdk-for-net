@@ -343,7 +343,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Gets partner integration models. </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
         /// <param name="integrationIds"> Ids of the partner integration models. </param>
-        /// <param name="farmerIds"> Ids of the farmers. </param>
+        /// <param name="partyIds"> Ids of the parties. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -366,14 +366,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrationsAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSensorPartnerIntegrationsAsync(string sensorPartnerId, IEnumerable<string> integrationIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSensorPartnerIntegrationsAsync(string sensorPartnerId, IEnumerable<string> integrationIds = null, IEnumerable<string> partyIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 
-            return GetSensorPartnerIntegrationsImplementationAsync("SensorPartnerIntegrations.GetSensorPartnerIntegrations", sensorPartnerId, integrationIds, farmerIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSensorPartnerIntegrationsImplementationAsync("SensorPartnerIntegrations.GetSensorPartnerIntegrations", sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private AsyncPageable<BinaryData> GetSensorPartnerIntegrationsImplementationAsync(string diagnosticsScopeName, string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> farmerIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private AsyncPageable<BinaryData> GetSensorPartnerIntegrationsImplementationAsync(string diagnosticsScopeName, string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> partyIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -381,8 +381,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSensorPartnerIntegrationsRequest(sensorPartnerId, integrationIds, farmerIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetSensorPartnerIntegrationsNextPageRequest(nextLink, sensorPartnerId, integrationIds, farmerIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSensorPartnerIntegrationsRequest(sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSensorPartnerIntegrationsNextPageRequest(nextLink, sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -393,7 +393,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Gets partner integration models. </summary>
         /// <param name="sensorPartnerId"> Id of the associated sensor partner. </param>
         /// <param name="integrationIds"> Ids of the partner integration models. </param>
-        /// <param name="farmerIds"> Ids of the farmers. </param>
+        /// <param name="partyIds"> Ids of the parties. </param>
         /// <param name="ids"> Ids of the resource. </param>
         /// <param name="names"> Names of the resource. </param>
         /// <param name="propertyFilters">
@@ -416,14 +416,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrations(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSensorPartnerIntegrations(string sensorPartnerId, IEnumerable<string> integrationIds = null, IEnumerable<string> farmerIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSensorPartnerIntegrations(string sensorPartnerId, IEnumerable<string> integrationIds = null, IEnumerable<string> partyIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 
-            return GetSensorPartnerIntegrationsImplementation("SensorPartnerIntegrations.GetSensorPartnerIntegrations", sensorPartnerId, integrationIds, farmerIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return GetSensorPartnerIntegrationsImplementation("SensorPartnerIntegrations.GetSensorPartnerIntegrations", sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
         }
 
-        private Pageable<BinaryData> GetSensorPartnerIntegrationsImplementation(string diagnosticsScopeName, string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> farmerIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        private Pageable<BinaryData> GetSensorPartnerIntegrationsImplementation(string diagnosticsScopeName, string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> partyIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -431,8 +431,8 @@ namespace Azure.Verticals.AgriFood.Farming
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSensorPartnerIntegrationsRequest(sensorPartnerId, integrationIds, farmerIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetSensorPartnerIntegrationsNextPageRequest(nextLink, sensorPartnerId, integrationIds, farmerIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+                        ? CreateGetSensorPartnerIntegrationsRequest(sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
+                        : CreateGetSensorPartnerIntegrationsNextPageRequest(nextLink, sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -440,7 +440,7 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
-        internal HttpMessage CreateGetSensorPartnerIntegrationsRequest(string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> farmerIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetSensorPartnerIntegrationsRequest(string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> partyIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -457,11 +457,11 @@ namespace Azure.Verticals.AgriFood.Farming
                     uri.AppendQuery("integrationIds", param, true);
                 }
             }
-            if (farmerIds != null)
+            if (partyIds != null)
             {
-                foreach (var param in farmerIds)
+                foreach (var param in partyIds)
                 {
-                    uri.AppendQuery("farmerIds", param, true);
+                    uri.AppendQuery("partyIds", param, true);
                 }
             }
             if (ids != null)
@@ -510,11 +510,11 @@ namespace Azure.Verticals.AgriFood.Farming
             }
             if (maxPageSize != null)
             {
-                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (skipToken != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("skipToken", skipToken, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -612,7 +612,7 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
-        internal HttpMessage CreateGetSensorPartnerIntegrationsNextPageRequest(string nextLink, string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> farmerIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetSensorPartnerIntegrationsNextPageRequest(string nextLink, string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> partyIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

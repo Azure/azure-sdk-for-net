@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ```yaml
 title: FarmBeats
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/fa581bd5f31cbc6f6882b254ce5b0f5c20d84648/specification/agrifood/data-plane/Microsoft.AgFoodPlatform/preview/2021-07-31-preview/agfood.json
+- https://github.com/Azure/azure-rest-api-specs/blob/86672aefc4c255d7b5d4f5d4825dd470fa1692f0/specification/agrifood/data-plane/Microsoft.AgFoodPlatform/preview/2022-11-01-preview/agfood.json
 
 namespace: Azure.Verticals.AgriFood.Farming
 security: AADToken

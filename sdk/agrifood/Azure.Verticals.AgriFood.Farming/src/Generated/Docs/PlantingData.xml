@@ -6,9 +6,9 @@
 This sample shows how to call GetPlantingDataAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-Response response = await client.GetPlantingDataAsync("<farmerId>", "<plantingDataId>");
+Response response = await client.GetPlantingDataAsync("<partyId>", "<plantingDataId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
@@ -31,7 +31,7 @@ Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
 Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
 Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -40,6 +40,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -71,7 +73,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -80,6 +82,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -95,9 +99,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetPlantingData with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-Response response = client.GetPlantingData("<farmerId>", "<plantingDataId>");
+Response response = client.GetPlantingData("<partyId>", "<plantingDataId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
@@ -120,7 +124,7 @@ Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
 Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
 Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -129,6 +133,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -160,7 +166,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -169,6 +175,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -184,11 +192,11 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<plantingDataId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantingDataId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -196,7 +204,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 var data = new {
     avgPlantingRate = new {
@@ -245,7 +253,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<plantingDataId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantingDataId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
@@ -268,7 +276,7 @@ Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
 Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
 Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -277,6 +285,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -308,7 +318,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -317,6 +327,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -350,7 +362,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -359,6 +371,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -374,11 +388,11 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = client.CreateOrUpdate("<farmerId>", "<plantingDataId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<plantingDataId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -386,7 +400,7 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 var data = new {
     avgPlantingRate = new {
@@ -435,7 +449,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<farmerId>", "<plantingDataId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<plantingDataId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
@@ -458,7 +472,7 @@ Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
 Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
 Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
 Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -467,6 +481,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -498,7 +514,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -507,6 +523,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -540,7 +558,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -549,6 +567,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -564,9 +584,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-Response response = await client.DeleteAsync("<farmerId>", "<plantingDataId>");
+Response response = await client.DeleteAsync("<partyId>", "<plantingDataId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -576,9 +596,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-Response response = client.Delete("<farmerId>", "<plantingDataId>");
+Response response = client.Delete("<partyId>", "<plantingDataId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -588,18 +608,19 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -613,7 +634,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -621,6 +642,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -635,18 +657,19 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -660,7 +683,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -668,6 +691,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -677,25 +701,25 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 
 </remarks>
     </member>
-    <member name="GetAllPlantingDataByFarmerIdAsync(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAllPlantingDataByPartyIdAsync(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetAllPlantingDataByFarmerIdAsync with required parameters and parse the result.
+This sample shows how to call GetAllPlantingDataByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetAllPlantingDataByFarmerIdAsync("<farmerId>"))
+await foreach (var data in client.GetAllPlantingDataByPartyIdAsync("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetAllPlantingDataByFarmerIdAsync with all parameters, and how to parse the result.
+This sample shows how to call GetAllPlantingDataByPartyIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetAllPlantingDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<plantingDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetAllPlantingDataByPartyIdAsync("<partyId>", 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
@@ -718,7 +742,7 @@ await foreach (var data in client.GetAllPlantingDataByFarmerIdAsync("<farmerId>"
     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -727,6 +751,8 @@ await foreach (var data in client.GetAllPlantingDataByFarmerIdAsync("<farmerId>"
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -759,7 +785,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -768,6 +794,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -778,25 +806,25 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetAllPlantingDataByFarmerId(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetAllPlantingDataByPartyId(String,Double,Double,Double,Double,Double,Double,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetAllPlantingDataByFarmerId with required parameters and parse the result.
+This sample shows how to call GetAllPlantingDataByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetAllPlantingDataByFarmerId("<farmerId>"))
+foreach (var data in client.GetAllPlantingDataByPartyId("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetAllPlantingDataByFarmerId with all parameters, and how to parse the result.
+This sample shows how to call GetAllPlantingDataByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetAllPlantingDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<plantingDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetAllPlantingDataByPartyId("<partyId>", 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("avgPlantingRate").GetProperty("unit").ToString());
@@ -819,7 +847,7 @@ foreach (var data in client.GetAllPlantingDataByFarmerId("<farmerId>", 1234, 123
     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -828,6 +856,8 @@ foreach (var data in client.GetAllPlantingDataByFarmerId("<farmerId>", 1234, 123
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -860,7 +890,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -869,6 +899,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -884,7 +916,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetAllPlantingDataAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetAllPlantingDataAsync())
 {
@@ -895,7 +927,7 @@ await foreach (var data in client.GetAllPlantingDataAsync())
 This sample shows how to call GetAllPlantingDataAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetAllPlantingDataAsync(1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<plantingDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
@@ -920,7 +952,7 @@ await foreach (var data in client.GetAllPlantingDataAsync(1234, 1234, 1234, 1234
     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -929,6 +961,8 @@ await foreach (var data in client.GetAllPlantingDataAsync(1234, 1234, 1234, 1234
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -961,7 +995,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -970,6 +1004,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -985,7 +1021,7 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetAllPlantingData and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetAllPlantingData())
 {
@@ -996,7 +1032,7 @@ foreach (var data in client.GetAllPlantingData())
 This sample shows how to call GetAllPlantingData with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetAllPlantingData(1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<plantingDataIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
@@ -1021,7 +1057,7 @@ foreach (var data in client.GetAllPlantingData(1234, 1234, 1234, 1234, 1234, 123
     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -1030,6 +1066,8 @@ foreach (var data in client.GetAllPlantingData(1234, 1234, 1234, 1234, 1234, 123
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -1062,7 +1100,7 @@ Note: this will be specified by the source provider itself.
   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
   attachmentsLink: string, # Optional. Link for attachments.
   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-  farmerId: string, # Optional. Farmer ID which belongs to the operation data.
+  partyId: string, # Optional. Party ID which belongs to the operation data.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -1071,6 +1109,8 @@ Note: this will be specified by the source provider itself.
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -1086,19 +1126,20 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<plantingDataId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -1112,7 +1153,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -1120,6 +1161,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -1134,19 +1176,20 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetPlantingDataClient(<2022-11-01-preview>);
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<plantingDataId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantingDataId>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -1160,7 +1203,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -1168,6 +1211,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.

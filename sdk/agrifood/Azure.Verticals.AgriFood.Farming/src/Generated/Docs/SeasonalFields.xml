@@ -6,24 +6,17 @@
 This sample shows how to call GetSeasonalFieldAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-Response response = await client.GetSeasonalFieldAsync("<farmerId>", "<seasonalFieldId>");
+Response response = await client.GetSeasonalFieldAsync("<partyId>", "<seasonalFieldId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
-Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("farmId").ToString());
 Console.WriteLine(result.GetProperty("fieldId").ToString());
 Console.WriteLine(result.GetProperty("seasonId").ToString());
-Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
 Console.WriteLine(result.GetProperty("cropId").ToString());
-Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
-Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
-Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
-Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
-Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -32,6 +25,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -42,19 +37,12 @@ Response Body:
 
 Schema for <c>SeasonalField</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -63,6 +51,8 @@ Schema for <c>SeasonalField</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -78,24 +68,17 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call GetSeasonalField with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-Response response = client.GetSeasonalField("<farmerId>", "<seasonalFieldId>");
+Response response = client.GetSeasonalField("<partyId>", "<seasonalFieldId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
-Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("farmId").ToString());
 Console.WriteLine(result.GetProperty("fieldId").ToString());
 Console.WriteLine(result.GetProperty("seasonId").ToString());
-Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
 Console.WriteLine(result.GetProperty("cropId").ToString());
-Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
-Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
-Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
-Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
-Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -104,6 +87,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -114,19 +99,12 @@ Response Body:
 
 Schema for <c>SeasonalField</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -135,6 +113,8 @@ Schema for <c>SeasonalField</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -150,11 +130,11 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -162,21 +142,16 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
 var data = new {
     farmId = "<farmId>",
     fieldId = "<fieldId>",
     seasonId = "<seasonId>",
-    cropVarietyIds = new[] {
+    cropProductIds = new[] {
         "<String>"
     },
     cropId = "<cropId>",
-    avgYieldValue = 123.45d,
-    avgYieldUnit = "<avgYieldUnit>",
-    avgSeedPopulationValue = 123.45d,
-    avgSeedPopulationUnit = "<avgSeedPopulationUnit>",
-    plantingDateTime = "2022-05-10T18:57:31.2311892Z",
     status = "<status>",
     source = "<source>",
     name = "<name>",
@@ -186,22 +161,15 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateAsync("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
-Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("farmId").ToString());
 Console.WriteLine(result.GetProperty("fieldId").ToString());
 Console.WriteLine(result.GetProperty("seasonId").ToString());
-Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
 Console.WriteLine(result.GetProperty("cropId").ToString());
-Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
-Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
-Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
-Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
-Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -210,6 +178,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -220,19 +190,12 @@ Request Body:
 
 Schema for <c>SeasonalField</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -241,6 +204,8 @@ Schema for <c>SeasonalField</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -253,19 +218,12 @@ Response Body:
 
 Schema for <c>SeasonalField</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -274,6 +232,8 @@ Schema for <c>SeasonalField</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -289,11 +249,11 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateOrUpdate with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
 var data = new {};
 
-Response response = client.CreateOrUpdate("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -301,21 +261,16 @@ Console.WriteLine(result.ToString());
 This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
 var data = new {
     farmId = "<farmId>",
     fieldId = "<fieldId>",
     seasonId = "<seasonId>",
-    cropVarietyIds = new[] {
+    cropProductIds = new[] {
         "<String>"
     },
     cropId = "<cropId>",
-    avgYieldValue = 123.45d,
-    avgYieldUnit = "<avgYieldUnit>",
-    avgSeedPopulationValue = 123.45d,
-    avgSeedPopulationUnit = "<avgSeedPopulationUnit>",
-    plantingDateTime = "2022-05-10T18:57:31.2311892Z",
     status = "<status>",
     source = "<source>",
     name = "<name>",
@@ -325,22 +280,15 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdate("<farmerId>", "<seasonalFieldId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<partyId>", "<seasonalFieldId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
-Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("farmId").ToString());
 Console.WriteLine(result.GetProperty("fieldId").ToString());
 Console.WriteLine(result.GetProperty("seasonId").ToString());
-Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
 Console.WriteLine(result.GetProperty("cropId").ToString());
-Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
-Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
-Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
-Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
-Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -349,6 +297,8 @@ Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("source").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 ]]></code>
 </example>
@@ -359,19 +309,12 @@ Request Body:
 
 Schema for <c>SeasonalField</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -380,6 +323,8 @@ Schema for <c>SeasonalField</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -392,19 +337,12 @@ Response Body:
 
 Schema for <c>SeasonalField</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -413,6 +351,8 @@ Schema for <c>SeasonalField</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -428,9 +368,9 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call DeleteAsync with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-Response response = await client.DeleteAsync("<farmerId>", "<seasonalFieldId>");
+Response response = await client.DeleteAsync("<partyId>", "<seasonalFieldId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -440,9 +380,9 @@ Console.WriteLine(response.Status);
 This sample shows how to call Delete with required parameters.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-Response response = client.Delete("<farmerId>", "<seasonalFieldId>");
+Response response = client.Delete("<partyId>", "<seasonalFieldId>");
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -452,18 +392,19 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -477,7 +418,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -485,6 +426,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -499,18 +441,19 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -524,7 +467,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -532,6 +475,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -541,40 +485,33 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 
 </remarks>
     </member>
-    <member name="GetSeasonalFieldsByFarmerIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,Double,Double,String,Double,Double,String,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSeasonalFieldsByPartyIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetSeasonalFieldsByFarmerIdAsync with required parameters and parse the result.
+This sample shows how to call GetSeasonalFieldsByPartyIdAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>"))
+await foreach (var data in client.GetSeasonalFieldsByPartyIdAsync("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetSeasonalFieldsByFarmerIdAsync with all parameters, and how to parse the result.
+This sample shows how to call GetSeasonalFieldsByPartyIdAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetSeasonalFieldsByPartyIdAsync("<partyId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
-    Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("farmId").ToString());
     Console.WriteLine(result.GetProperty("fieldId").ToString());
     Console.WriteLine(result.GetProperty("seasonId").ToString());
-    Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
     Console.WriteLine(result.GetProperty("cropId").ToString());
-    Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
-    Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
-    Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
-    Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
-    Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -583,6 +520,8 @@ await foreach (var data in client.GetSeasonalFieldsByFarmerIdAsync("<farmerId>",
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -594,19 +533,12 @@ Response Body:
 
 Schema for <c>SeasonalFieldListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -615,6 +547,8 @@ Schema for <c>SeasonalFieldListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -625,40 +559,33 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSeasonalFieldsByFarmerId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,Double,Double,String,Double,Double,String,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSeasonalFieldsByPartyId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
-This sample shows how to call GetSeasonalFieldsByFarmerId with required parameters and parse the result.
+This sample shows how to call GetSeasonalFieldsByPartyId with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetSeasonalFieldsByFarmerId("<farmerId>"))
+foreach (var data in client.GetSeasonalFieldsByPartyId("<partyId>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetSeasonalFieldsByFarmerId with all parameters, and how to parse the result.
+This sample shows how to call GetSeasonalFieldsByPartyId with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetSeasonalFieldsByFarmerId("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetSeasonalFieldsByPartyId("<partyId>", new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
-    Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("farmId").ToString());
     Console.WriteLine(result.GetProperty("fieldId").ToString());
     Console.WriteLine(result.GetProperty("seasonId").ToString());
-    Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
     Console.WriteLine(result.GetProperty("cropId").ToString());
-    Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
-    Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
-    Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
-    Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
-    Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -667,6 +594,8 @@ foreach (var data in client.GetSeasonalFieldsByFarmerId("<farmerId>", new String
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -678,19 +607,12 @@ Response Body:
 
 Schema for <c>SeasonalFieldListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -699,6 +621,8 @@ Schema for <c>SeasonalFieldListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -709,12 +633,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSeasonalFieldsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,Double,Double,String,Double,Double,String,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSeasonalFieldsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetSeasonalFieldsAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
 await foreach (var data in client.GetSeasonalFieldsAsync())
 {
@@ -725,24 +649,17 @@ await foreach (var data in client.GetSeasonalFieldsAsync())
 This sample shows how to call GetSeasonalFieldsAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-await foreach (var data in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+await foreach (var data in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
-    Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("farmId").ToString());
     Console.WriteLine(result.GetProperty("fieldId").ToString());
     Console.WriteLine(result.GetProperty("seasonId").ToString());
-    Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
     Console.WriteLine(result.GetProperty("cropId").ToString());
-    Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
-    Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
-    Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
-    Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
-    Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -751,6 +668,8 @@ await foreach (var data in client.GetSeasonalFieldsAsync(new String[]{"<farmIds>
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -762,19 +681,12 @@ Response Body:
 
 Schema for <c>SeasonalFieldListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -783,6 +695,8 @@ Schema for <c>SeasonalFieldListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -793,12 +707,12 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 
 </remarks>
     </member>
-    <member name="GetSeasonalFields(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,Double,Double,String,Double,Double,String,DateTimeOffset,DateTimeOffset,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+    <member name="GetSeasonalFields(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
 <example>
 This sample shows how to call GetSeasonalFields and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
 foreach (var data in client.GetSeasonalFields())
 {
@@ -809,24 +723,17 @@ foreach (var data in client.GetSeasonalFields())
 This sample shows how to call GetSeasonalFields with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-foreach (var data in client.GetSeasonalFields(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropVarietyIds>"}, new String[]{"<cropIds>"}, 1234, 1234, "<avgYieldUnit>", 1234, 1234, "<avgSeedPopulationUnit>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+foreach (var data in client.GetSeasonalFields(new String[]{"<farmIds>"}, new String[]{"<fieldIds>"}, new String[]{"<seasonIds>"}, new String[]{"<cropProductIds>"}, new String[]{"<cropIds>"}, new String[]{"<seasonalFieldIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("farmerId").ToString());
-    Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
-    Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("partyId").ToString());
     Console.WriteLine(result.GetProperty("farmId").ToString());
     Console.WriteLine(result.GetProperty("fieldId").ToString());
     Console.WriteLine(result.GetProperty("seasonId").ToString());
-    Console.WriteLine(result.GetProperty("cropVarietyIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("cropProductIds")[0].ToString());
     Console.WriteLine(result.GetProperty("cropId").ToString());
-    Console.WriteLine(result.GetProperty("avgYieldValue").ToString());
-    Console.WriteLine(result.GetProperty("avgYieldUnit").ToString());
-    Console.WriteLine(result.GetProperty("avgSeedPopulationValue").ToString());
-    Console.WriteLine(result.GetProperty("avgSeedPopulationUnit").ToString());
-    Console.WriteLine(result.GetProperty("plantingDateTime").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -835,6 +742,8 @@ foreach (var data in client.GetSeasonalFields(new String[]{"<farmIds>"}, new Str
     Console.WriteLine(result.GetProperty("source").ToString());
     Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
 }
 ]]></code>
@@ -846,19 +755,12 @@ Response Body:
 
 Schema for <c>SeasonalFieldListResponseValue</c>:
 <code>{
-  farmerId: string, # Optional. Farmer Id.
-  primaryBoundaryId: string, # Optional. Primary boundary id.
-  boundaryIds: [string], # Optional. Boundary Ids.
+  partyId: string, # Optional. Party Id.
   farmId: string, # Optional. Id of the associated Farm.
   fieldId: string, # Optional. Id of the associated Field.
   seasonId: string, # Optional. Id of the season it belongs to.
-  cropVarietyIds: [string], # Optional. CropVariety ids.
+  cropProductIds: [string], # Optional. CropProduct ids.
   cropId: string, # Optional. Id of the crop it belongs to.
-  avgYieldValue: number, # Optional. Average yield value of the seasonal field.
-  avgYieldUnit: string, # Optional. Unit of the average yield value attribute.
-  avgSeedPopulationValue: number, # Optional. Average seed population value of the seasonal field.
-  avgSeedPopulationUnit: string, # Optional. Unit of average seed population value attribute.
-  plantingDateTime: string (ISO 8601 Format), # Optional. Planting datetime, sample format: yyyy-MM-ddTHH:mm:ssZ.
   id: string, # Optional. Unique resource ID.
   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
   status: string, # Optional. Status of the resource.
@@ -867,6 +769,8 @@ Schema for <c>SeasonalFieldListResponseValue</c>:
   source: string, # Optional. Source of the resource.
   name: string, # Optional. Name to identify resource.
   description: string, # Optional. Textual description of the resource.
+  createdBy: string, # Optional. Created by user/tenant id.
+  modifiedBy: string, # Optional. Modified by user/tenant id.
   properties: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource.
 Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
@@ -882,19 +786,20 @@ numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
 This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<seasonalFieldId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -908,7 +813,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -916,6 +821,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
@@ -930,19 +836,20 @@ Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;
 This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2021-07-31-preview>);
+var client = new FarmBeatsClient(credential).GetSeasonalFieldsClient(<2022-11-01-preview>);
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<seasonalFieldId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<seasonalFieldId>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
 Console.WriteLine(result.GetProperty("resourceId").ToString());
 Console.WriteLine(result.GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
 Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
 Console.WriteLine(result.GetProperty("startTime").ToString());
@@ -956,7 +863,7 @@ Response Body:
 
 Schema for <c>CascadeDeleteJob</c>:
 <code>{
-  farmerId: string, # Required. Farmer Id.
+  partyId: string, # Required. Party Id.
   resourceId: string, # Required. The id of the resource.
   resourceType: string, # Required. The type of the resource.
   id: string, # Optional. Unique job id.
@@ -964,6 +871,7 @@ Schema for <c>CascadeDeleteJob</c>:
 Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
   durationInSeconds: number, # Optional. Duration of the job in seconds.
   message: string, # Optional. Status message to capture more details of the job.
+  errorCode: string, # Optional. Error Code when job failed.
   createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
   startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
