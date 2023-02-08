@@ -232,10 +232,12 @@ namespace Azure.Monitor.Ingestion
                         // if there is no Handler on options, throw exception otherwise raise Handler
                         if (!options.HasHandler)
                         {
+                            // throw exception here that is caught in catch and we increment LogsFailed
                             throw new RequestFailedException(response);
                         }
                         else
                         {
+                            logsFailed += batch.Logs.Count;
                             var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                             // sync/async parameter in eventArgs
@@ -259,6 +261,7 @@ namespace Azure.Monitor.Ingestion
                     }
                     else
                     {
+                        logsFailed += batch.Logs.Count;
                         var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                         var exceptionOnUpload = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
@@ -266,6 +269,12 @@ namespace Azure.Monitor.Ingestion
                         shouldAbort = exceptionOnUpload != null;
                         if (shouldAbort)
                             AddException(ref exceptions, exceptionOnUpload);
+                    }
+
+                    // Cancel all future Uploads if user triggers CancellationToken
+                    if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
+                    {
+                        shouldAbort = true;
                     }
                 }
             }
@@ -368,6 +377,7 @@ namespace Azure.Monitor.Ingestion
                                 if (shouldAbort)
                                     AddException(ref exceptions, exceptionEventHandler);
                             }
+
                             // Remove completed task from task list
                             runningTasks.RemoveAt(i);
                             i--;
@@ -377,9 +387,14 @@ namespace Azure.Monitor.Ingestion
                     // Wait for all the remaining blocks to finish uploading
                     await Task.WhenAll(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     // We do not want to log exceptions here as we will loop through all the tasks later
+                    // Cancel all future Uploads if user triggers CancellationToken
+                    if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
+                    {
+                        shouldAbort = true;
+                    }
                 }
             }
 
@@ -394,6 +409,7 @@ namespace Azure.Monitor.Ingestion
                 else
                 {
                     Exception exceptionEventHandler = await ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).ConfigureAwait(false);
+                    logsFailed += task.Logs.Count;
                     shouldAbort = exceptionEventHandler != null;
                     if (shouldAbort)
                         AddException(ref exceptions, exceptionEventHandler);
