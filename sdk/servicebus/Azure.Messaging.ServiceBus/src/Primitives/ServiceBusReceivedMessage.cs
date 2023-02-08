@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="message">The AMQP message.</param>
         /// <param name="lockTokenBytes">The lock token bytes.</param>
-        /// <returns></returns>
+        /// <returns>The constructed <see cref="ServiceBusReceivedMessage"/>.</returns>
         public static ServiceBusReceivedMessage FromAmqpMessage(AmqpAnnotatedMessage message, BinaryData lockTokenBytes)
         {
             var receivedMessage = new ServiceBusReceivedMessage(message);

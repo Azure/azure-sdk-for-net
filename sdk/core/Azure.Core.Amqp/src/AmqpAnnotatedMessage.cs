@@ -157,7 +157,8 @@ namespace Azure.Core.Amqp
             };
 
         /// <summary>
-        /// Converts the AMQP message into its binary serialized form.
+        /// Serializes the message into its AMQP binary form.
+        /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format"/>
         /// </summary>
         /// <returns>A <see cref="BinaryData"/> instance representing the serialized message.</returns>
         public virtual BinaryData ToBytes()
@@ -167,9 +168,10 @@ namespace Azure.Core.Amqp
         }
 
         /// <summary>
-        /// Constructs a message from its binary serialized form.
+        /// Constructs a message from the AMQP binary serialized form.
+        /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format"/>
         /// </summary>
-        /// <param name="messageBytes">The bytes of the message</param>
+        /// <param name="messageBytes">The bytes of the message.</param>
         /// <returns>A <see cref="AmqpAnnotatedMessage"/> based on the specified bytes.</returns>
         public static AmqpAnnotatedMessage FromBytes(BinaryData messageBytes)
         {
