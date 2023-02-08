@@ -362,7 +362,7 @@ KeyData = "aaaaaa",
 {
 },
                     AllowExtensionOperations = true,
-                    RequireGuestProvisionSignal = true,
+                    IsGuestProvisionSignalRequired = true,
                 },
                 SecurityProfile = new SecurityProfile()
                 {
