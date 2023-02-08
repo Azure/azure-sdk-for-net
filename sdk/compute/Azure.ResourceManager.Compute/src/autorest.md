@@ -259,7 +259,6 @@ rename-mapping:
   ScheduledEventsProfile: ComputeScheduledEventsProfile
   OSProfile.requireGuestProvisionSignal: IsGuestProvisionSignalRequired
   VirtualMachineScaleSetOSProfile.requireGuestProvisionSignal: IsGuestProvisionSignalRequired
-  VirtualMachineOSProfile.requireGuestProvisionSignal: IsGuestProvisionSignalRequired
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
