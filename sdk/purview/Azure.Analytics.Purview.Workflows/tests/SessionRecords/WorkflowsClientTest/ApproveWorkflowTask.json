@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://workflow-sdk.purview.azure-test.com/workflow/workflowtasks/507d9e8a-e5c4-41db-ace5-358961e0bfeb/approve-approval?api-version=2022-05-01-preview",
+      "RequestUri": "https://account-name.purview.azure.com/workflow/workflowtasks/507d9e8a-e5c4-41db-ace5-358961e0bfeb/approve-approval?api-version=2022-05-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -32,6 +32,6 @@
   ],
   "Variables": {
     "RandomSeed": "1912949621",
-    "WORKFLOW_ENDPOINT": "https://workflow-sdk.purview.azure-test.com"
+    "WORKFLOW_ENDPOINT": "https://account-name.purview.azure.com"
   }
 }

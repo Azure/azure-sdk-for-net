@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://workflow-sdk.purview.azure-test.com/workflow/workflows/5ec07661-0111-4264-aed8-2a335773a831?api-version=2022-05-01-preview",
+      "RequestUri": "https://account-name.purview.azure.com/workflow/workflows/5ec07661-0111-4264-aed8-2a335773a831?api-version=2022-05-01-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -28,6 +28,6 @@
   ],
   "Variables": {
     "RandomSeed": "187402631",
-    "WORKFLOW_ENDPOINT": "https://workflow-sdk.purview.azure-test.com"
+    "WORKFLOW_ENDPOINT": "https://account-name.purview.azure.com"
   }
 }

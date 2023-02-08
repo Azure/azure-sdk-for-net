@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://workflow-sdk.purview.azure-test.com/workflow/workflows/8af1ecae-16ee-4b2d-8972-00d611dd2f99?api-version=2022-05-01-preview",
+      "RequestUri": "https://account-name.purview.azure.com/workflow/workflows/8af1ecae-16ee-4b2d-8972-00d611dd2f99?api-version=2022-05-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -127,6 +127,6 @@
   ],
   "Variables": {
     "RandomSeed": "1535260612",
-    "WORKFLOW_ENDPOINT": "https://workflow-sdk.purview.azure-test.com"
+    "WORKFLOW_ENDPOINT": "https://account-name.purview.azure.com"
   }
 }
