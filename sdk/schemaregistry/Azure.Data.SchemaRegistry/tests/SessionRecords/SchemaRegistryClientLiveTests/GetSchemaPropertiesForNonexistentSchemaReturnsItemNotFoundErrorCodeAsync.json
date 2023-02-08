@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/test-17244/schemas/azsdk_net_test_group:get-id?api-version=2022-10",
+      "RequestUri": "https://mreddingschemaregistry-avro1.servicebus.windows.net/$schemaGroups/test-27092/schemas/azsdk_net_test_group:get-id?api-version=2022-10",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "5",
         "Content-Type": "application/json; serialization=Avro",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a39ef346b13b1f9c5173a8ae4861fa6c",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230207.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "be84e80d4d3e60a7d5ad7e38c278f0aa",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "Hello",
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Thu, 12 Jan 2023 19:02:23 GMT",
+        "Date": "Wed, 08 Feb 2023 18:02:05 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
@@ -25,15 +25,15 @@
       "ResponseBody": {
         "error": {
           "code": "ItemNotFound",
-          "message": "Schema test-17244/azsdk_net_test_group does not exist. TrackingId:81fe4f78-cf40-43a9-b3dd-dbe67072b0f8_G12, SystemTracker:mreddingschemaregistry-avro.servicebus.windows.net:$schemaGroups/test-17244/schemas/azsdk_net_test_group:get-id, Timestamp:2023-01-12T19:02:23"
+          "message": "Schema test-27092/azsdk_net_test_group does not exist. TrackingId:adfe95bf-c990-4fc9-85ed-7e9581e0f0ef_G26, SystemTracker:mreddingschemaregistry-avro1.servicebus.windows.net:$schemaGroups/test-27092/schemas/azsdk_net_test_group:get-id, Timestamp:2023-02-08T18:02:06"
         }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1847503015",
-    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net",
+    "RandomSeed": "866291225",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO1": "mreddingschemaregistry-avro1.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
 }
