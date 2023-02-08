@@ -97,6 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
                 activity?.SetTag(SemanticConventions.AttributeHttpMethod, "Get");
+                activity?.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.com");
             }
 
             tracerProvider?.ForceFlush();
@@ -122,6 +123,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out _));
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
             Assert.Equal(StandardMetricConstants.DependencyDurationMetricIdValue, metricId);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTypeKey, out var dependencyType));
+            Assert.Equal("Http", dependencyType);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTargetKey, out var dependencyTarget));
+            Assert.Equal("www.foo.com", dependencyTarget);
         }
 
         private void WaitForActivityExport(ConcurrentBag<TelemetryItem> traceTelemetryItems)
