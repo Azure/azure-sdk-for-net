@@ -74,10 +74,10 @@ namespace Azure.Communication.CallAutomation
                     }
                 };
 
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
                 return _callRecordingRestClient.StartRecording(request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -119,10 +119,10 @@ namespace Azure.Communication.CallAutomation
                     }
                 };
 
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
                 return await _callRecordingRestClient.StartRecordingAsync(request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)

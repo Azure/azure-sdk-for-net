@@ -98,18 +98,20 @@
     {
       "RequestUri": "https://sanitized.skype.com/calling/callConnections?api-version=2023-01-15-preview",
       "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "254",
-        "Content-Type": "application/json",
-        "traceparent": "00-c39b668924326c532abb7ae23c99973e-c9bd5483da0a901a-00",
-        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20230130.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f48c489060074507e4efc2f3e1c60915",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 31 Jan 2023 00:06:10 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "Repeatability-Request-ID": "Sanitized",
+            "Repeatability-First-Sent": "Sanitized",
+            "Content-Length": "254",
+            "Content-Type": "application/json",
+            "traceparent": "00-c39b668924326c532abb7ae23c99973e-c9bd5483da0a901a-00",
+            "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20230130.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
+            "x-ms-client-request-id": "f48c489060074507e4efc2f3e1c60915",
+            "x-ms-content-sha256": "Sanitized",
+            "x-ms-date": "Tue, 31 Jan 2023 00:06:10 GMT",
+            "x-ms-return-client-request-id": "true"
+        },
       "RequestBody": {
         "targets": [
           {
@@ -171,6 +173,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "Repeatability-First-Sent": "Sanitized",
         "Content-Length": "7856",
         "Content-Type": "application/json",
         "traceparent": "00-7d5b916c2e273897dc47d95c618c0b8e-a9bae005d2dad380-00",

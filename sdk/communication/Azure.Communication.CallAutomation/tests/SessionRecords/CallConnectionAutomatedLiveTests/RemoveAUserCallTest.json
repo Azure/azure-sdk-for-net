@@ -101,6 +101,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "Repeatability-First-Sent": "Sanitized",
         "Content-Length": "254",
         "Content-Type": "application/json",
         "traceparent": "00-9036106d51209cb03239496a0df3fab1-125bffb09a9cb3a9-00",
@@ -171,6 +173,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "Repeatability-First-Sent": "Sanitized",
         "Content-Length": "7909",
         "Content-Type": "application/json",
         "traceparent": "00-c330b4cfa328e0f4944edb08f63f4f83-db7b2698f0710e6c-00",
@@ -277,6 +281,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "Repeatability-First-Sent": "Sanitized",
         "Content-Length": "131",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20230130.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",

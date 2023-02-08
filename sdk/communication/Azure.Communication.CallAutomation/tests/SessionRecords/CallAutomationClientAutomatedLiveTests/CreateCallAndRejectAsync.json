@@ -101,6 +101,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "Repeatability-First-Sent": "Sanitized",
         "Content-Length": "254",
         "Content-Type": "application/json",
         "traceparent": "00-3fac3ce9658afef41ba5dbef941c8d2e-0a55e52763d3d5a7-00",
@@ -171,6 +173,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "Repeatability-First-Sent": "Sanitized",
         "Content-Length": "7845",
         "Content-Type": "application/json",
         "traceparent": "00-817c75ad6eb386094e3a75dd58da80dc-7baacef265304fc3-00",

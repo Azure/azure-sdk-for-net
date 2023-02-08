@@ -140,12 +140,12 @@ namespace Azure.Communication.CallAutomation
                 if (options == null) throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var answerResponse = await AzureCommunicationServicesRestClient.AnswerCallAsync(request,
-                        options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                        options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
-                        cancellationToken)
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken)
                     .ConfigureAwait(false);
 
                 var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
@@ -194,11 +194,11 @@ namespace Azure.Communication.CallAutomation
                 if (options == null) throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var answerResponse = AzureCommunicationServicesRestClient.AnswerCall(request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken);
 
                 var result = new AnswerCallResult(GetCallConnection(answerResponse.Value.CallConnectionId), new CallConnectionProperties(answerResponse.Value));
@@ -267,12 +267,12 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(
                     request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -313,12 +313,12 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 return AzureCommunicationServicesRestClient.RedirectCall(
                     request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken);
             }
             catch (Exception ex)
@@ -357,12 +357,12 @@ namespace Azure.Communication.CallAutomation
 
                 RejectCallRequestInternal request = new RejectCallRequestInternal(options.IncomingCallContext);
                 request.CallRejectReason = options.CallRejectReason.ToString();
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 return await AzureCommunicationServicesRestClient.RejectCallAsync(
                     request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -402,12 +402,12 @@ namespace Azure.Communication.CallAutomation
 
                 RejectCallRequestInternal request = new RejectCallRequestInternal(options.IncomingCallContext);
                 request.CallRejectReason = options.CallRejectReason.ToString();
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 return AzureCommunicationServicesRestClient.RejectCall(
                     request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     );
             }
@@ -438,12 +438,12 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
                     request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     ).ConfigureAwait(false);
 
@@ -482,12 +482,12 @@ namespace Azure.Communication.CallAutomation
                 if (options == null) throw new ArgumentNullException(nameof(options));
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
-                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+                var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
                     request,
-                    options.RepeatabilityHeaders?.RepeatabilityRequestId,
-                    options.RepeatabilityHeaders?.GetRepeatabilityFirstSentString(),
+                    repeatabilityHeaders.RepeatabilityRequestId,
+                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
                     cancellationToken
                     );
 

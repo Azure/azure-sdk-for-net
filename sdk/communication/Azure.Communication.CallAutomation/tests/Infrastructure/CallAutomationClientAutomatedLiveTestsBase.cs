@@ -43,6 +43,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("X-FORWARDED-HOST");
+            SanitizedHeaders.Add("Repeatability-Request-ID");
+            SanitizedHeaders.Add("Repeatability-First-Sent");
             JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
@@ -195,7 +197,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                         using (Recording.DisableRecording())
                         {
                             var hangUpOptions = new HangUpOptions(true);
-                            hangUpOptions.RepeatabilityHeaders = null;
                             await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
                         }
                     }
