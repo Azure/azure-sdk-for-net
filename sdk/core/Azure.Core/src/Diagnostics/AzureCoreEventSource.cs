@@ -275,6 +275,15 @@ namespace Azure.Core.Diagnostics
             WriteEvent(RequestRedirectCountExceededEvent, requestId, from, to);
         }
 
+        [NonEvent]
+        public void PipelineTransportOptionsNotApplied(Type optionsType)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                PipelineTransportOptionsNotApplied(optionsType.FullName ?? string.Empty);
+            }
+        }
+
         [Event(PipelineTransportOptionsNotAppliedEvent, Level = EventLevel.Informational, Message = "The client requires transport configuration but it was not applied because custom transport was provided. Type: {0}")]
         public void PipelineTransportOptionsNotApplied(string optionsType)
         {
@@ -337,6 +346,8 @@ namespace Azure.Core.Diagnostics
                     data[1].Size = 4;
                     data[2].DataPointer = (IntPtr)(&blobSize); // valid address instead of empty content
                     data[2].Size = 0;
+
+                    WriteEventCore(eventId, 3, data);
                 }
                 else
                 {
@@ -347,10 +358,10 @@ namespace Azure.Core.Diagnostics
                         data[1].Size = 4;
                         data[2].DataPointer = (IntPtr)blob;
                         data[2].Size = blobSize;
+
+                        WriteEventCore(eventId, 3, data);
                     }
                 }
-
-                WriteEventCore(eventId, 3, data);
             }
         }
 
@@ -424,6 +435,7 @@ namespace Azure.Core.Diagnostics
                     data[2].Size = 4;
                     data[3].DataPointer = (IntPtr)(&blobSize); // valid address instead of empty content
                     data[3].Size = 0;
+                    WriteEventCore(eventId, 4, data);
                 }
                 else
                 {
@@ -434,10 +446,9 @@ namespace Azure.Core.Diagnostics
                         data[2].Size = 4;
                         data[3].DataPointer = (IntPtr)blob;
                         data[3].Size = blobSize;
+                        WriteEventCore(eventId, 4, data);
                     }
                 }
-
-                WriteEventCore(eventId, 4, data);
             }
         }
 
