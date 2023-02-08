@@ -34,9 +34,7 @@ The following section provides several code snippets covering some of the most c
 - [Create Workflow](#create-workflow)
 - [Submit User Requests](#submit-user-requests)
 - [Approve Workflow Task](#approve-workflow-task)
-
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/purview/Azure.Analytics.Purview.Workflows/samples).
-
+-
 ### Create workflow
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_CreateWorkflow
