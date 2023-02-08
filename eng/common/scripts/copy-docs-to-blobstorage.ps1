@@ -245,4 +245,4 @@ else
 }
 
 # Add some debugging that dumpes the azcopy log files
-dir $env:UserProfile\.azcopy | % { "LOG: " + $_; gc $_; }
+dir $env:UserProfile\.azcopy -Filter *.log | % { "LOG: " + $_; gc $_; }
