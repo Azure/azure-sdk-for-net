@@ -114,7 +114,10 @@ namespace Azure.Storage.DataMovement
                         StorageTransferStatus.CompletedWithSkippedTransfers == status ||
                         StorageTransferStatus.CompletedWithFailedTransfers == status)
                     {
-                        _completionSource.SetResult(status);
+                        // If the _completionSource has been cancelled or the exception
+                        // has been set, we don't need to check if TrySetResult returns false
+                        // because it's acceptable to cancel or have an error occur before then.
+                        _completionSource.TrySetResult(status);
                     }
                     _status = status;
                 }
