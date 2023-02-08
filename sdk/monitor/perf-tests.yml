@@ -9,7 +9,7 @@ PackageVersions:
 Tests:
 - Test: upload
   Class: SingleUpload
-  Arguments:
+  Arguments: &parallels
   - --parallel 1
   - --parallel 2
   - --parallel 4
@@ -23,14 +23,4 @@ Tests:
 
 - Test: upload-batch
   Class: BatchUpload
-  Arguments:
-  - --parallel 1
-  - --parallel 2
-  - --parallel 4
-  - --parallel 8
-  - --parallel 16
-  - --parallel 32
-  - --parallel 64
-  - --parallel 128
-  - --parallel 256
-  - --parallel 512
+  Arguments: *parallels
