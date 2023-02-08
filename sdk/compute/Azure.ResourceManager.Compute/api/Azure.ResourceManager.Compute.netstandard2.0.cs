@@ -5583,8 +5583,8 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? AllowExtensionOperations { get { throw null; } set { } }
         public string ComputerName { get { throw null; } set { } }
         public string CustomData { get { throw null; } set { } }
-        public bool? IsGuestProvisionSignalRequired { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
+        public bool? RequireGuestProvisionSignal { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultSecretGroup> Secrets { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.WindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
     }
@@ -5846,8 +5846,8 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? AllowExtensionOperations { get { throw null; } set { } }
         public string ComputerNamePrefix { get { throw null; } set { } }
         public string CustomData { get { throw null; } set { } }
-        public bool? IsGuestProvisionSignalRequired { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.LinuxConfiguration LinuxConfiguration { get { throw null; } set { } }
+        public bool? RequireGuestProvisionSignal { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VaultSecretGroup> Secrets { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.WindowsConfiguration WindowsConfiguration { get { throw null; } set { } }
     }

@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("allowExtensionOperations");
                 writer.WriteBooleanValue(AllowExtensionOperations.Value);
             }
-            if (Optional.IsDefined(IsGuestProvisionSignalRequired))
+            if (Optional.IsDefined(RequireGuestProvisionSignal))
             {
                 writer.WritePropertyName("requireGuestProvisionSignal");
-                writer.WriteBooleanValue(IsGuestProvisionSignalRequired.Value);
+                writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
             }
             writer.WriteEndObject();
         }

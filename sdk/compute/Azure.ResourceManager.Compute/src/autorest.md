@@ -257,8 +257,6 @@ rename-mapping:
   VirtualMachineScaleSet.properties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
   RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
   ScheduledEventsProfile: ComputeScheduledEventsProfile
-  OSProfile.requireGuestProvisionSignal: IsGuestProvisionSignalRequired
-  VirtualMachineScaleSetOSProfile.requireGuestProvisionSignal: IsGuestProvisionSignalRequired
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
