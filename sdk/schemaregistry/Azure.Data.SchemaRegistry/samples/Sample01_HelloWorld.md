@@ -2,7 +2,7 @@
 
 The following shows examples of how to use the basic functionality of the `SchemaRegistryClient` with each of the available schema format types. All of the client methods can be used with each format by passing in the proper 'SchemaFormat' value when needed.
 
-Each Event Hubs namespace can only accept one format of schemas.
+Schema Registry schema groups can only accept one format of schemas.
 
 In the current service version, the Schema Registry service only accepts and validates draft 3 JSON schemas. Functionality to support additional drafts of JSON will be added.
 
@@ -33,7 +33,7 @@ string definition = @"
     ]
 }";
 
-Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
+Response<SchemaProperties> schemaProperties = avroClient.RegisterSchema(groupName, name, definition, format);
 ```
 
 ### Retrieve an Avro schema
@@ -41,7 +41,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, n
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaAvro
-SchemaRegistrySchema schema = client.GetSchema(schemaId);
+SchemaRegistrySchema schema = avroClient.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
 
@@ -62,18 +62,17 @@ string definition = @"
     type: ""object"",
     properties: {
         name: {
-        type: ""string"",
-        required: true,
-    },
-    favoriteNumber: {
-        type: ""integer"",
-        required: true,
-    },
-},
-required: [""name"", ""favoriteNumber""],
+            type: ""string"",
+            required: true,
+        },
+        favoriteNumber: {
+            type: ""integer"",
+            required: true,
+        },
+    }
 }";
 
-Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
+Response<SchemaProperties> schemaProperties = jsonClient.RegisterSchema(groupName, name, definition, format);
 ```
 
 ### Retrieve a Json schema (preview)
@@ -81,7 +80,7 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, n
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaJson
-SchemaRegistrySchema schema = client.GetSchema(schemaId);
+SchemaRegistrySchema schema = jsonClient.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
 
@@ -100,7 +99,7 @@ string definition = @"
     EMAIL: string
 }";
 
-Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
+Response<SchemaProperties> schemaProperties = customClient.RegisterSchema(groupName, name, definition, format);
 ```
 
 ### Retrieve a custom schema (preview)
@@ -108,6 +107,6 @@ Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, n
 Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version. This is the same regardless of schema format.
 
 ```C# Snippet:SchemaRegistryRetrieveSchemaCustom
-SchemaRegistrySchema schema = client.GetSchema(schemaId);
+SchemaRegistrySchema schema = customClient.GetSchema(schemaId);
 string definition = schema.Definition;
 ```
