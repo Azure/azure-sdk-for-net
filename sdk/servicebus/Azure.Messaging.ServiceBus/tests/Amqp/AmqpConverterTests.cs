@@ -129,23 +129,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.AreEqual(3, sbMessage.DeliveryCount);
         }
 
-        // [Test]
-        // public void CanParseDictionaryValueSection()
-        // {
-        //     var converter = new AmqpMessageConverter();
-        //     var amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new Dictionary<string, string> { { "key", "value" } } });
-        //     var sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
-        //     var body = sbMessage.GetRawAmqpMessage().Body;
-        //     Assert.IsTrue(body.TryGetValue(out object val));
-        //     Assert.AreEqual("value", ((Dictionary<string, string>)val)["key"]);
-        //
-        //     amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new AmqpMap { { new MapKey("key"), "value" } } });
-        //     sbMessage = converter.AmqpMessageToSBReceivedMessage(amqpMessage);
-        //     body = sbMessage.GetRawAmqpMessage().Body;
-        //     Assert.IsTrue(body.TryGetValue(out val));
-        //     Assert.AreEqual("value", ((Dictionary<string, object>)val)["key"]);
-        // }
-
         [Test]
         public void CanRoundTripDictionaryValueSection()
         {
