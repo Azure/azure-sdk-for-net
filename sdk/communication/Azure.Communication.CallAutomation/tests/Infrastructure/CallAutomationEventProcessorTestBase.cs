@@ -117,6 +117,11 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return targetsOutput;
         }
 
+        protected CallInvite CreateMockInvite(CallInvite? target = default)
+        {
+            return target == default? new CallInvite(new CommunicationUserIdentifier(TargetUser)) : target;
+        }
+
         protected CallConnection CreateMockCallConnection(int responseCode, string? responseContent = default, string? callConnectionId = default)
         {
             return CreateMockCallAutomationClient(responseCode, responseContent).GetCallConnection(callConnectionId == default ? CallConnectionId : callConnectionId);
