@@ -5,6 +5,7 @@
 ## Logging
 
 The Azure SDK libraries produce various log messages that include information about:
+
 1. Requests and responses
 2. Authentication attempts
 3. Retries
@@ -28,7 +29,8 @@ Logging can also be enabled for `Trace` in the same manner as console logging.
 // Setup a listener to monitor logged events.
 using AzureEventSourceListener listener = AzureEventSourceListener.CreateTraceLogger();
 ```
-### Changing log level 
+
+### Changing log level
 
 The `CreateConsoleLogger` and `CreateTraceLogger` methods have an optional parameter that specifies a minimum log level to display messages for.
 
@@ -96,7 +98,7 @@ More information about the `args` parameter for the callback can be found in the
 
 ### Applying filtering logic
 
-The custom callback can be used with the listener to help filter log messages to reduce volume and noise when troubleshooting.   
+The custom callback can be used with the listener to help filter log messages to reduce volume and noise when troubleshooting.
 
 In the following example, `Verbose` messages for the `Azure-Identity` event source are captured and written to `Trace`.  Log messages for the `Azure-Messaging-EventHubs` event source are filtered to capture only a specific set to aid in debugging publishing, which are then written to the console.
 
@@ -123,7 +125,7 @@ using AzureEventSourceListener listener = new AzureEventSourceListener((args, me
 
 ### Capture filtered logs to a file
 
-For scenarios where capturing logs to `Trace` or console isn't ideal, log information can be streamed into a variety of targets, such as Azure Storage, databases, and files for durable persistence. 
+For scenarios where capturing logs to `Trace` or console isn't ideal, log information can be streamed into a variety of targets, such as Azure Storage, databases, and files for durable persistence.
 
 The following example demonstrates capturing error logs to a text file so that they can be analyzed later, while capturing non-error information to console.  Its important to note that a simple approach is used for illustration.  This form may be helpful for troubleshooting, but a more robust and performant approach is recommended for long-term production use.
 
@@ -170,6 +172,7 @@ Azure SDKs produce the following kinds of Activities:
 - *messaging events*: Event Hubs and Service Bus message creation is traced and correlated with its sending, receiving, and processing.
 
 Because `ActivitySource` support is experimental, the shape of Activities may change in the future without notice.  This includes:
+
 - the kinds of operations that are tracked
 - relationships between telemetry spans
 - attributes attached to telemetry spans
@@ -190,7 +193,7 @@ AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
 ```xml
  <ItemGroup>
     <RuntimeHostConfigurationOption Include="Azure.Experimental.EnableActivitySource" Value="true" />
-  </ItemGroup> 
+  </ItemGroup>
 ```
 
 You'll need `System.Diagnostics.DiagnosticSource` package with version `5.0` or later consume Azure SDK Activities.
@@ -198,7 +201,7 @@ You'll need `System.Diagnostics.DiagnosticSource` package with version `5.0` or 
 ```xml
  <ItemGroup>
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.1" />
-  </ItemGroup> 
+  </ItemGroup>
 ```
 
 The following sample shows how `ActivityListener` can be used to listen to Azure SDK Activities.
@@ -237,6 +240,7 @@ OpenTelemetry relies on ActivitySource to collect distributed traces. Follow ste
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
 
 ### Sample
+
 To see an example of distributed tracing in action, take a look at our [sample app](https://github.com/Azure/azure-sdk-for-net/blob/main/samples/linecounter/README.md) that combines several Azure SDKs.
 
 ## Setting x-ms-client-request-id value sent with requests

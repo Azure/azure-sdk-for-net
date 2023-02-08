@@ -48,7 +48,8 @@ namespace Azure.Core.Samples
                 {
                     Id = (string)widget.Id,
                     Name = "New Name"
-                    // Required fields
+
+                    // A forgotten field may be deleted!
                 }
             );
             await client.SetWidgetAsync((string)widget.Id, update);
@@ -60,15 +61,15 @@ namespace Azure.Core.Samples
         {
             WidgetsClient client = GetMockClient();
 
-            // TODO: Add implicit cast to RequestContent.
-
             #region Snippet:RoundTripDynamicJson
             Response response = client.GetWidget("123");
             dynamic widget = response.Content.ToDynamic();
 
             widget.Name = "New Name";
 
-            await client.SetWidgetAsync((string)widget.Id, widget);
+            // TODO: Add implicit cast to RequestContent?
+
+            await client.SetWidgetAsync((string)widget.Id, RequestContent.Create(widget));
             #endregion
         }
 
