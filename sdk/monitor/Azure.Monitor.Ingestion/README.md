@@ -90,7 +90,6 @@ We guarantee that all client instance methods are thread-safe and independent of
 - [Upload custom logs](#upload-custom-logs)
 - [Upload custom logs as IEnumerable](#upload-custom-logs-ienumerable)
 - [Upload custom logs as IEnumerable with EventHandler](#upload-custom-logs-ienumerable-eventhandler)
-- [Upload custom logs as IEnumerable with Cancellation Token](#upload-custom-logs-ienumerable-eventhandler)
 - [Verify logs](#verify-logs)
 
 You can familiarize yourself with different APIs using [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Ingestion/samples).
@@ -218,42 +217,6 @@ Task Options_UploadFailed(UploadFailedEventArgs e)
     // Throw exception from EventHandler to stop Upload if there is a failure
     IReadOnlyList<object> failedLogs = e.FailedLogs;
     throw e.Exception;
-}
-```
-
-### Upload custom logs as IEnumerable with EventHandler and CancellationToken
-
-You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. In these two methods, logs are passed in a generic IEnumerable type. Additionally, there is an UploadLogsOptions options parameter in which a serializer, concurrency, and EventHandler can be set. Along with the options, a CancellationToken can be passed in that cancels the operation after the first failed batch. An example is shown below. 
-
-```C# Snippet:UploadLogDataIEnumerableCancellationTokenAsync
-var endpoint = new Uri("<data_collection_endpoint_uri>");
-var ruleId = "<data_collection_rule_id>";
-var streamName = "<stream_name>";
-
-var credential = new DefaultAzureCredential();
-LogsIngestionClient client = new(endpoint, credential);
-DateTimeOffset currentTime = DateTimeOffset.UtcNow;
-
-var entries = new List<Object>();
-for (int i = 0; i < 100; i++)
-{
-    entries.Add(new Object[] {
-        new {
-            Time = currentTime,
-            Computer = "Computer" + i.ToString(),
-            AdditionalContext = i
-        }
-    });
-}
-// Make the request
-UploadLogsOptions options = new UploadLogsOptions();
-var cts = new CancellationTokenSource();
-options.UploadFailedEventHandler += Options_UploadFailed;
-await client.UploadAsync(ruleId, streamName, entries, options, cts.Token).ConfigureAwait(false);
-Task Options_UploadFailed(UploadFailedEventArgs e)
-{
-    cts.Cancel();
-    return Task.CompletedTask;
 }
 ```
 

@@ -266,9 +266,14 @@ namespace Azure.Monitor.Ingestion
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                         var exceptionOnUpload = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
-                        shouldAbort = exceptionOnUpload != null;
-                        if (shouldAbort)
+                        //shouldAbort = exceptionOnUpload != null;
+                        //if (shouldAbort)
+                       // AddException(ref exceptions, exceptionOnUpload);
+                        if (exceptionOnUpload != null)
+                        {
+                            shouldAbort = true;
                             AddException(ref exceptions, exceptionOnUpload);
+                        }
                     }
 
                     // Cancel all future Uploads if user triggers CancellationToken

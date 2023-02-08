@@ -179,46 +179,5 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             Response response = await client.UploadAsync(ruleId, streamName, entries).ConfigureAwait(false);
             #endregion
         }
-
-        public async Task LogDataIEnumerableCancellationTokenAsync()
-        {
-            #region Snippet:UploadLogDataIEnumerableCancellationTokenAsync
-            var endpoint = new Uri("<data_collection_endpoint_uri>");
-            var ruleId = "<data_collection_rule_id>";
-            var streamName = "<stream_name>";
-
-#if SNIPPET
-            var credential = new DefaultAzureCredential();
-#else
-            TokenCredential credential = new DefaultAzureCredential();
-            endpoint = new Uri(TestEnvironment.DCREndpoint);
-            credential = TestEnvironment.Credential;
-#endif
-            LogsIngestionClient client = new(endpoint, credential);
-            DateTimeOffset currentTime = DateTimeOffset.UtcNow;
-
-            var entries = new List<Object>();
-            for (int i = 0; i < 100; i++)
-            {
-                entries.Add(new Object[] {
-                    new {
-                        Time = currentTime,
-                        Computer = "Computer" + i.ToString(),
-                        AdditionalContext = i
-                    }
-                });
-            }
-            // Make the request
-            UploadLogsOptions options = new UploadLogsOptions();
-            var cts = new CancellationTokenSource();
-            options.UploadFailedEventHandler += Options_UploadFailed;
-            await client.UploadAsync(ruleId, streamName, entries, options, cts.Token).ConfigureAwait(false);
-            Task Options_UploadFailed(UploadFailedEventArgs e)
-            {
-                cts.Cancel();
-                return Task.CompletedTask;
-            }
-            #endregion
-        }
     }
 }
