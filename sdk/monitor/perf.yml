@@ -28,7 +28,6 @@ extends:
   parameters:
     LanguageVersion: ${{ parameters.LanguageVersion }}
     ServiceDirectory: monitor
-    Services: "^monitor-ingestion$"
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
     Arguments: ${{ parameters.Arguments }}
