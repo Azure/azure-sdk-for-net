@@ -90,7 +90,7 @@ try {
 
         Write-Host "Re-generating tests"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot/../service.proj /restore /t:GenerateTest /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
+            & dotnet msbuild $PSScriptRoot/../service.proj /restore /t:GenerateTests /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
         }
     }
 
@@ -180,7 +180,7 @@ try {
     run 'eng\scripts\Update-Snippets.ps1' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets), `
     run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
     run 'dotnet build /t:GenerateCode' to update the generated code.`
-    run 'dotnet build /t:GenerateTest' to update the generated test code.`
+    run 'dotnet build /t:GenerateTests' to update the generated test code.`
     `
 To reproduce this error locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory'."
         }
