@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                 }
-                if (property.NameEquals("finishReason"))
+                if (property.NameEquals("finish_reason"))
                 {
                     finishReason = property.Value.GetString();
                     continue;
