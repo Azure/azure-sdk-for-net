@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -18,10 +16,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
-        private readonly ResourceParser _resourceParser;
-        private readonly AzureMonitorPersistentStorage _persistentStorage;
+        private readonly AzureMonitorPersistentStorage? _persistentStorage;
+        private AzureMonitorResource? _resource;
 
-        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options, TokenCredential credential = null) : this(new AzureMonitorTransmitter(options, credential))
+        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options, TokenCredential? credential = null) : this(new AzureMonitorTransmitter(options, credential))
         {
         }
 
@@ -29,13 +27,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
-            _resourceParser = new ResourceParser();
 
             if (transmitter is AzureMonitorTransmitter azureMonitorTransmitter && azureMonitorTransmitter._fileBlobProvider != null)
             {
                 _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
             }
         }
+
+        internal AzureMonitorResource? TraceResource => _resource ??= ParentProvider?.GetResource().UpdateRoleNameAndInstance();
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Activity> batch)
@@ -47,13 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
-                {
-                    var resource = ParentProvider.GetResource();
-                    _resourceParser.UpdateRoleNameAndInstance(resource);
-                }
-
-                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
+                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey);
                 var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
                 _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
 

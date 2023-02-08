@@ -7,16 +7,20 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _recoveryServicesClientDiagnostics;
+        private RecoveryServicesRestOperations _recoveryServicesRestClient;
         private ClientDiagnostics _vaultClientDiagnostics;
         private VaultsRestOperations _vaultRestClient;
 
@@ -32,6 +36,8 @@ namespace Azure.ResourceManager.RecoveryServices
         {
         }
 
+        private ClientDiagnostics RecoveryServicesClientDiagnostics => _recoveryServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private RecoveryServicesRestOperations RecoveryServicesRestClient => _recoveryServicesRestClient ??= new RecoveryServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics VaultClientDiagnostics => _vaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", VaultResource.ResourceType.Namespace, Diagnostics);
         private VaultsRestOperations VaultRestClient => _vaultRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VaultResource.ResourceType));
 
@@ -39,6 +45,70 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary>
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServices_Capabilities</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CapabilitiesResult>> GetCapabilitiesRecoveryServiceAsync(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        {
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesRecoveryService");
+            scope.Start();
+            try
+            {
+                var response = await RecoveryServicesRestClient.CapabilitiesAsync(Id.SubscriptionId, location, input, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServices_Capabilities</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CapabilitiesResult> GetCapabilitiesRecoveryService(AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        {
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCapabilitiesRecoveryService");
+            scope.Start();
+            try
+            {
+                var response = RecoveryServicesRestClient.Capabilities(Id.SubscriptionId, location, input, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

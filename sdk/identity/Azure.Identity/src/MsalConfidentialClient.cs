@@ -12,7 +12,6 @@ namespace Azure.Identity
 {
     internal class MsalConfidentialClient : MsalClientBase<IConfidentialClientApplication>
     {
-        private const string s_instanceMetadata = "{\"tenant_discovery_endpoint\":\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\",\"api-version\":\"1.1\",\"metadata\":[{\"preferred_network\":\"login.microsoftonline.com\",\"preferred_cache\":\"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]}]}";
         internal readonly string _clientSecret;
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
@@ -76,11 +75,15 @@ namespace Azure.Identity
             {
                 confClientBuilder.WithAppTokenProvider(_appTokenProviderCallback)
                     .WithAuthority(_authority.AbsoluteUri, TenantId, false)
-                    .WithInstanceDiscoveryMetadata(s_instanceMetadata);
+                    .WithInstanceDiscovery(false);
             }
             else
             {
                 confClientBuilder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, TenantId);
+                if (DisableInstanceDiscovery)
+                {
+                    confClientBuilder.WithInstanceDiscovery(false);
+                }
             }
 
             if (_clientSecret != null)
@@ -104,6 +107,7 @@ namespace Azure.Identity
                 confClientBuilder.WithCertificate(clientCertificate);
             }
 
+            // When the appTokenProviderCallback is set, meaning this is for managed identity, the regional authority is not relevant.
             if (_appTokenProviderCallback == null && !string.IsNullOrEmpty(RegionalAuthority))
             {
                 confClientBuilder.WithAzureRegion(RegionalAuthority);

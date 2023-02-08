@@ -4,6 +4,8 @@ namespace Azure.ResourceManager.RecoveryServices
     {
         public static Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CheckNameAvailabilityResult> CheckNameAvailabilityRecoveryService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityRecoveryServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult> GetCapabilitiesRecoveryService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>> GetCapabilitiesRecoveryServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServices.VaultResource> GetVault(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.VaultResource>> GetVaultAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -182,6 +184,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion left, Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class CapabilitiesResult : Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase
+    {
+        public CapabilitiesResult(string resourceCapabilitiesBaseType) : base (default(string)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult> CapabilitiesResponseDnsZones { get { throw null; } }
+    }
     public partial class CertificateContent
     {
         public CertificateContent() { }
@@ -223,6 +230,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static implicit operator Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore left, Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DnsZone
+    {
+        public DnsZone() { }
+        public Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType? SubResource { get { throw null; } set { } }
+    }
+    public partial class DnsZoneResult : Azure.ResourceManager.RecoveryServices.Models.DnsZone
+    {
+        public DnsZoneResult() { }
+        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImmutabilityState : System.IEquatable<Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState>
@@ -336,6 +353,24 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServices.Models.ProvisioningState left, Azure.ResourceManager.RecoveryServices.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess left, Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess left, Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RawCertificateData
     {
         public RawCertificateData() { }
@@ -345,6 +380,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public partial class RecoveryServicesPrivateEndpointConnection
     {
         internal RecoveryServicesPrivateEndpointConnection() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -392,6 +428,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public int? RecoveryPlanCount { get { throw null; } }
         public int? RecoveryServicesProviderAuthType { get { throw null; } }
         public int? RegisteredServersCount { get { throw null; } }
+    }
+    public partial class ResourceCapabilities : Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase
+    {
+        public ResourceCapabilities(string resourceCapabilitiesBaseType) : base (default(string)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZone> CapabilitiesDnsZones { get { throw null; } }
+    }
+    public partial class ResourceCapabilitiesBase
+    {
+        public ResourceCapabilitiesBase(string resourceCapabilitiesBaseType) { }
+        public string ResourceCapabilitiesBaseType { get { throw null; } set { } }
     }
     public partial class ResourceCertificateAndAadDetails : Azure.ResourceManager.RecoveryServices.Models.ResourceCertificateDetails
     {
@@ -565,6 +611,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState? PrivateEndpointStateForBackup { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultPrivateEndpointState? PrivateEndpointStateForSiteRecovery { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServices.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesRedundancySettings RedundancySettings { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.UpgradeDetails UpgradeDetails { get { throw null; } set { } }
     }
@@ -589,6 +636,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public VaultPropertiesRedundancySettings() { }
         public Azure.ResourceManager.RecoveryServices.Models.CrossRegionRestore? CrossRegionRestore { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.StandardTierStorageRedundancy? StandardTierStorageRedundancy { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VaultSubResourceType : System.IEquatable<Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VaultSubResourceType(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType AzureBackup { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType AzureBackupSecondary { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType AzureSiteRecovery { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType left, Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType left, Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VaultUpgradeState : System.IEquatable<Azure.ResourceManager.RecoveryServices.Models.VaultUpgradeState>

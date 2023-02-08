@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,7 +8,6 @@ using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -19,7 +16,7 @@ using OpenTelemetry;
 using OpenTelemetry.Extensions.PersistentStorage;
 using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     /// <summary>
     /// This class encapsulates transmitting a collection of <see cref="TelemetryItem"/> to the configured Ingestion Endpoint.
@@ -27,10 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class AzureMonitorTransmitter : ITransmitter
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
-        internal PersistentBlobProvider _fileBlobProvider;
+        internal PersistentBlobProvider? _fileBlobProvider;
         private readonly ConnectionVars _connectionVars;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential credential = null)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential? credential = null)
         {
             if (options == null)
             {
@@ -43,14 +40,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             HttpPipeline pipeline;
             if (credential != null)
             {
+                var scope = AadHelper.GetScope(_connectionVars.AadAudience);
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
-                                             {
-                                                 new BearerTokenAuthenticationPolicy(credential, "https://monitor.azure.com//.default"),
-                                                 new IngestionRedirectPolicy()
-                                             };
+                {
+                    new BearerTokenAuthenticationPolicy(credential, scope),
+                    new IngestionRedirectPolicy()
+                };
 
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", "HttpPipelineBuilder is built with AAD Credentials");
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
             }
             else
             {
@@ -64,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 try
                 {
-                    var storageDirectory = options.StorageDirectory ?? StorageHelper.GetDefaultStorageDirectory();
+                    var storageDirectory = options.StorageDirectory ?? StorageHelper.GetDefaultStorageDirectory() ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
 
                     // TODO: Fallback to default location if location provided via options does not work.
                     _fileBlobProvider = new FileBlobProvider(storageDirectory);
@@ -124,6 +122,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 return;
             }
 
+            if (_fileBlobProvider == null)
+            {
+                return;
+            }
+
             long files = maxFilesToTransmit;
             while (files > 0)
             {
@@ -179,6 +182,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         private ExportResult HandleFailures(HttpMessage httpMessage)
         {
+            if (_fileBlobProvider == null)
+            {
+                return ExportResult.Failure;
+            }
+
             ExportResult result = ExportResult.Failure;
             int statusCode = 0;
             byte[] content;
@@ -270,7 +278,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         {
                             retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                             blob.TryDelete();
-                            _fileBlobProvider.SaveTelemetry(content, retryInterval);
+                            _fileBlobProvider?.SaveTelemetry(content, retryInterval);
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:

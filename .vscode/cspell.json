@@ -987,6 +987,14 @@
         "Ackable",
         "awps"
         ]
+    },
+    {
+      "filename": "**/sdk/openai/**/*.cs",
+      "words": [
+        "Probs",
+        "Logprobs",
+        "Logit"
+      ]
     }
   ],
   "allowCompoundWords": true

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media.Tests
         [SetUp]
         public async Task SetUp()
         {
-            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatest");
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatests");
             var mediaAssetName = Recording.GenerateAssetName("asset");
             var mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
             _mediaAsset = await CreateMediaAsset(mediaService, mediaAssetName);

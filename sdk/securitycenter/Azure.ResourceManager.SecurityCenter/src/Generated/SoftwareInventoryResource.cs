@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _softwareInventoryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _softwareInventoryRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _softwareInventoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _softwareInventoryRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SoftwareInventoryResource(Client, response.Value), response.GetRawResponse());
