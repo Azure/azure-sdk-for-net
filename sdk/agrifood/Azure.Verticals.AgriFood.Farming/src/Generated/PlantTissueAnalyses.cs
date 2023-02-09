@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated sub-client. The PlantTissueAnalyses sub-client.
+    // Data plane generated sub-client.
     /// <summary> The PlantTissueAnalyses sub-client. </summary>
     public partial class PlantTissueAnalyses
     {
@@ -308,24 +306,9 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
-            return GetPlantTissueAnalysesByPartyIdImplementationAsync("PlantTissueAnalyses.GetPlantTissueAnalysesByPartyId", partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetPlantTissueAnalysesByPartyIdImplementationAsync(string diagnosticsScopeName, string partyId, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetPlantTissueAnalysesByPartyIdRequest(partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetPlantTissueAnalysesByPartyIdNextPageRequest(nextLink, partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPlantTissueAnalysesByPartyIdRequest(partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPlantTissueAnalysesByPartyIdNextPageRequest(nextLink, partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantTissueAnalyses.GetPlantTissueAnalysesByPartyId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of plant tissue analysis resources under a particular party. </summary>
@@ -360,24 +343,9 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
-            return GetPlantTissueAnalysesByPartyIdImplementation("PlantTissueAnalyses.GetPlantTissueAnalysesByPartyId", partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetPlantTissueAnalysesByPartyIdImplementation(string diagnosticsScopeName, string partyId, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetPlantTissueAnalysesByPartyIdRequest(partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetPlantTissueAnalysesByPartyIdNextPageRequest(nextLink, partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPlantTissueAnalysesByPartyIdRequest(partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPlantTissueAnalysesByPartyIdNextPageRequest(nextLink, partyId, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantTissueAnalyses.GetPlantTissueAnalysesByPartyId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of plant tissue analysis resources across all parties. </summary>
@@ -407,24 +375,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/PlantTissueAnalyses.xml" path="doc/members/member[@name='GetPlantTissueAnalysesAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetPlantTissueAnalysesAsync(IEnumerable<string> seasonIds = null, IEnumerable<string> cropIds = null, IEnumerable<string> cropProductsIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetPlantTissueAnalysesImplementationAsync("PlantTissueAnalyses.GetPlantTissueAnalyses", seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetPlantTissueAnalysesImplementationAsync(string diagnosticsScopeName, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetPlantTissueAnalysesRequest(seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetPlantTissueAnalysesNextPageRequest(nextLink, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPlantTissueAnalysesRequest(seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPlantTissueAnalysesNextPageRequest(nextLink, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantTissueAnalyses.GetPlantTissueAnalyses", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of plant tissue analysis resources across all parties. </summary>
@@ -454,24 +407,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/PlantTissueAnalyses.xml" path="doc/members/member[@name='GetPlantTissueAnalyses(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetPlantTissueAnalyses(IEnumerable<string> seasonIds = null, IEnumerable<string> cropIds = null, IEnumerable<string> cropProductsIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetPlantTissueAnalysesImplementation("PlantTissueAnalyses.GetPlantTissueAnalyses", seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetPlantTissueAnalysesImplementation(string diagnosticsScopeName, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetPlantTissueAnalysesRequest(seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetPlantTissueAnalysesNextPageRequest(nextLink, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPlantTissueAnalysesRequest(seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPlantTissueAnalysesNextPageRequest(nextLink, seasonIds, cropIds, cropProductsIds, fieldIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PlantTissueAnalyses.GetPlantTissueAnalyses", "value", "nextLink", context);
         }
 
         /// <summary> Create a cascade delete job for specified plant tissue analysis. </summary>

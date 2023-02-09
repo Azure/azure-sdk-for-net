@@ -120,13 +120,40 @@ var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-pre
 
 var data = new {
     geometry = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
     type = "<type>",
     centroid = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
     bbox = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
     parentId = "<parentId>",
@@ -270,13 +297,40 @@ var client = new FarmBeatsClient(credential).GetBoundariesClient(<2022-11-01-pre
 
 var data = new {
     geometry = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
     type = "<type>",
     centroid = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
     bbox = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
     parentId = "<parentId>",
@@ -832,6 +886,15 @@ var data = new {
     minArea = 123.45d,
     maxArea = 123.45d,
     intersectsWithGeometry = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
 };
@@ -968,6 +1031,15 @@ var data = new {
     minArea = 123.45d,
     maxArea = 123.45d,
     intersectsWithGeometry = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
 };
@@ -1256,6 +1328,15 @@ var data = new {
     minArea = 123.45d,
     maxArea = 123.45d,
     intersectsWithGeometry = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
 };
@@ -1392,6 +1473,15 @@ var data = new {
     minArea = 123.45d,
     maxArea = 123.45d,
     intersectsWithGeometry = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
 };

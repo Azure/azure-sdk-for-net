@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated sub-client. The SensorEvents sub-client.
+    // Data plane generated sub-client.
     /// <summary> The SensorEvents sub-client. </summary>
     public partial class SensorEvents
     {

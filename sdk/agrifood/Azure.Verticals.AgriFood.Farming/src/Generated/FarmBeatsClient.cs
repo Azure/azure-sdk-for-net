@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The FarmBeats service client.
+    // Data plane generated client.
     /// <summary> The FarmBeats service client. </summary>
     public partial class FarmBeatsClient
     {

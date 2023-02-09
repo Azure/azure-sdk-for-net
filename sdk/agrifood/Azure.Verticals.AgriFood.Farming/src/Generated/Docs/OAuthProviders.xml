@@ -620,7 +620,7 @@ var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01
 
 var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<oauthProviderId>");
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -680,7 +680,7 @@ var client = new FarmBeatsClient(credential).GetOAuthProvidersClient(<2022-11-01
 
 var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<oauthProviderId>");
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("oauthProviderId").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());

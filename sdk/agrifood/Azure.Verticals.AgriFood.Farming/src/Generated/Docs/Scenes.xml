@@ -34,6 +34,15 @@ var data = new {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     intersects = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
     bbox = new[] {
@@ -158,6 +167,15 @@ var data = new {
     startDateTime = "2022-05-10T18:57:31.2311892Z",
     endDateTime = "2022-05-10T18:57:31.2311892Z",
     intersects = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
         type = "MultiPolygon",
     },
     bbox = new[] {

@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated sub-client. The SolutionInference sub-client.
+    // Data plane generated sub-client.
     /// <summary> The SolutionInference sub-client. </summary>
     public partial class SolutionInference
     {
