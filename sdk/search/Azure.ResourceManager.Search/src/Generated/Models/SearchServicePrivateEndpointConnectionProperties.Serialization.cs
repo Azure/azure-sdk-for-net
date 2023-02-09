@@ -26,6 +26,16 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
+            if (Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
+            }
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -33,6 +43,8 @@ namespace Azure.ResourceManager.Search.Models
         {
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<SearchServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<string> groupId = default;
+            Optional<PrivateLinkServiceConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpoint"u8))
@@ -55,8 +67,23 @@ namespace Azure.ResourceManager.Search.Models
                     privateLinkServiceConnectionState = SearchServicePrivateLinkServiceConnectionState.DeserializeSearchServicePrivateLinkServiceConnectionState(property.Value);
                     continue;
                 }
+                if (property.NameEquals("groupId"u8))
+                {
+                    groupId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    provisioningState = new PrivateLinkServiceConnectionProvisioningState(property.Value.GetString());
+                    continue;
+                }
             }
-            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value);
+            return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, groupId.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

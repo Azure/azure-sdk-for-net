@@ -65,6 +65,9 @@ namespace Azure.ResourceManager.Search
     public partial class SearchServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SearchServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Search.Models.DataPlaneAuthOptions AuthOptions { get { throw null; } set { } }
+        public bool? DisableLocalAuth { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.EncryptionWithCmk EncryptionWithCmk { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceHostingMode? HostingMode { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceIPRule> IPRules { get { throw null; } }
@@ -153,6 +156,56 @@ namespace Azure.ResourceManager.Search
 }
 namespace Azure.ResourceManager.Search.Models
 {
+    public enum AadAuthFailureMode
+    {
+        Http403 = 0,
+        Http401WithBearerChallenge = 1,
+    }
+    public partial class DataPlaneAuthOptions
+    {
+        public DataPlaneAuthOptions() { }
+        public Azure.ResourceManager.Search.Models.AadAuthFailureMode? AadAuthFailureMode { get { throw null; } set { } }
+        public System.BinaryData ApiKeyOnly { get { throw null; } set { } }
+    }
+    public partial class EncryptionWithCmk
+    {
+        public EncryptionWithCmk() { }
+        public Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get { throw null; } }
+        public Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk? Enforcement { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivateLinkServiceConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivateLinkServiceConnectionProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Incomplete { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState left, Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState left, Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public enum SearchEncryptionComplianceStatus
+    {
+        Compliant = 0,
+        NonCompliant = 1,
+    }
+    public enum SearchEncryptionWithCmk
+    {
+        Unspecified = 0,
+        Disabled = 1,
+        Enabled = 2,
+    }
     public partial class SearchManagementRequestOptions
     {
         public SearchManagementRequestOptions() { }
@@ -226,6 +279,9 @@ namespace Azure.ResourceManager.Search.Models
     public partial class SearchServicePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SearchServicePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Search.Models.DataPlaneAuthOptions AuthOptions { get { throw null; } set { } }
+        public bool? DisableLocalAuth { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.EncryptionWithCmk EncryptionWithCmk { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceHostingMode? HostingMode { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Search.Models.SearchServiceIPRule> IPRules { get { throw null; } }
@@ -243,7 +299,9 @@ namespace Azure.ResourceManager.Search.Models
     {
         public SearchServicePrivateEndpointConnectionProperties() { }
         public Azure.ResourceManager.Search.Models.SearchServicePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public string GroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
+        public Azure.ResourceManager.Search.Models.PrivateLinkServiceConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
     public partial class SearchServicePrivateLinkServiceConnectionState
     {
@@ -301,6 +359,7 @@ namespace Azure.ResourceManager.Search.Models
         Degraded = 3,
         Disabled = 4,
         Error = 5,
+        Stopped = 6,
     }
     public enum SearchSkuName
     {
