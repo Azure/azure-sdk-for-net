@@ -19,12 +19,23 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ManagedIdentity", "FederatedIdentityCredentials", "2022-01-31-preview"),
-                new Tuple<string, string, string>("ManagedIdentity", "Operations", "2022-01-31-preview"),
-                new Tuple<string, string, string>("ManagedIdentity", "SystemAssignedIdentities", "2022-01-31-preview"),
-                new Tuple<string, string, string>("ManagedIdentity", "UserAssignedIdentities", "2022-01-31-preview"),
+                new Tuple<string, string, string>("ManagedIdentity", "FederatedIdentityCredentials", "2023-01-31"),
+                new Tuple<string, string, string>("ManagedIdentity", "Operations", "2023-01-31"),
+                new Tuple<string, string, string>("ManagedIdentity", "SystemAssignedIdentities", "2023-01-31"),
+                new Tuple<string, string, string>("ManagedIdentity", "UserAssignedIdentities", "2023-01-31"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/msi/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\src\\igorsolenov\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "fe331143b67ab7679e84c47f659f3c90c0c81f64";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

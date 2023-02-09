@@ -33,15 +33,17 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// <summary>
         /// Initializes a new instance of the AzureEntityResource class.
         /// </summary>
-        /// <param name="id">Fully qualified resource ID for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="id">Fully qualified resource ID for the resource. E.g.
+        /// "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Resource Etag.</param>
-        public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
-            : base(id, name, type)
+        public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string))
+            : base(id, name, type, systemData)
         {
             Etag = etag;
             CustomInit();

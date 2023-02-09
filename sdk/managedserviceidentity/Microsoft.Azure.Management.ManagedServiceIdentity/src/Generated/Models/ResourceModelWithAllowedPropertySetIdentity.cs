@@ -10,31 +10,24 @@
 
 namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
 {
-    using Microsoft.Rest;
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Tracked Resource
-    /// </summary>
-    /// <remarks>
-    /// The resource model definition for an Azure Resource Manager tracked top
-    /// level resource which has 'tags' and a 'location'
-    /// </remarks>
-    public partial class TrackedResource : Resource
+    public partial class ResourceModelWithAllowedPropertySetIdentity : Identity
     {
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the
+        /// ResourceModelWithAllowedPropertySetIdentity class.
         /// </summary>
-        public TrackedResource()
+        public ResourceModelWithAllowedPropertySetIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the
+        /// ResourceModelWithAllowedPropertySetIdentity class.
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
@@ -47,11 +40,15 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// <param name="systemData">Azure Resource Manager metadata containing
         /// createdBy and modifiedBy information.</param>
         /// <param name="tags">Resource tags.</param>
-        public TrackedResource(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(id, name, type, systemData)
+        /// <param name="tenantId">The id of the tenant which the identity
+        /// belongs to.</param>
+        /// <param name="principalId">The id of the service principal object
+        /// associated with the created identity.</param>
+        /// <param name="clientId">The id of the app associated with the
+        /// identity. This is a random generated UUID by MSI.</param>
+        public ResourceModelWithAllowedPropertySetIdentity(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?))
+            : base(location, id, name, type, systemData, tags, tenantId, principalId, clientId)
         {
-            Tags = tags;
-            Location = location;
             CustomInit();
         }
 
@@ -61,29 +58,14 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets the geo-location where the resource lives
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
+            base.Validate();
         }
     }
 }

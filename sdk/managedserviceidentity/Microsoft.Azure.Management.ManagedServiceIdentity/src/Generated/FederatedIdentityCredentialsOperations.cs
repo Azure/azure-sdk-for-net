@@ -325,6 +325,13 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "federatedIdentityCredentialResourceName");
             }
+            if (federatedIdentityCredentialResourceName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(federatedIdentityCredentialResourceName, "^[a-zA-Z0-9]{1}[a-zA-Z0-9-_]{2,119}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "federatedIdentityCredentialResourceName", "^[a-zA-Z0-9]{1}[a-zA-Z0-9-_]{2,119}$");
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -563,6 +570,13 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "federatedIdentityCredentialResourceName");
             }
+            if (federatedIdentityCredentialResourceName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(federatedIdentityCredentialResourceName, "^[a-zA-Z0-9]{1}[a-zA-Z0-9-_]{2,119}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "federatedIdentityCredentialResourceName", "^[a-zA-Z0-9]{1}[a-zA-Z0-9-_]{2,119}$");
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -764,6 +778,13 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             if (federatedIdentityCredentialResourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "federatedIdentityCredentialResourceName");
+            }
+            if (federatedIdentityCredentialResourceName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(federatedIdentityCredentialResourceName, "^[a-zA-Z0-9]{1}[a-zA-Z0-9-_]{2,119}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "federatedIdentityCredentialResourceName", "^[a-zA-Z0-9]{1}[a-zA-Z0-9-_]{2,119}$");
+                }
             }
             if (Client.ApiVersion == null)
             {

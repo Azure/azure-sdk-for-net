@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
             UserAssignedIdentities = new UserAssignedIdentitiesOperations(this);
             FederatedIdentityCredentials = new FederatedIdentityCredentialsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2022-01-31-preview";
+            ApiVersion = "2023-01-31";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

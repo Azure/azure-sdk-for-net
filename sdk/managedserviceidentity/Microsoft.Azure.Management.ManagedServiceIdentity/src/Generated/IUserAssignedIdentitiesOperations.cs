@@ -67,50 +67,6 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         /// </exception>
         Task<AzureOperationResponse<IPage<Identity>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the associated resources for this identity.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Resource Group to which the identity belongs.
-        /// </param>
-        /// <param name='resourceName'>
-        /// The name of the identity resource.
-        /// </param>
-        /// <param name='filter'>
-        /// OData filter expression to apply to the query.
-        /// </param>
-        /// <param name='orderby'>
-        /// OData orderBy expression to apply to the query.
-        /// </param>
-        /// <param name='top'>
-        /// Number of records to return.
-        /// </param>
-        /// <param name='skip'>
-        /// Number of records to skip.
-        /// </param>
-        /// <param name='skiptoken'>
-        /// A skip token is used to continue retrieving items after an
-        /// operation returns a partial result. If a previous response contains
-        /// a nextLink element, the value of the nextLink element will include
-        /// a skipToken parameter that specifies a starting point to use for
-        /// subsequent calls.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<AzureResource>>> ListAssociatedResourcesWithHttpMessagesAsync(string resourceGroupName, string resourceName, string filter = default(string), string orderby = default(string), int? top = default(int?), int? skip = default(int?), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Create or update an identity in the specified subscription and
         /// resource group.
         /// </summary>
@@ -261,27 +217,5 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<Identity>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the associated resources for this identity.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<AzureResource>>> ListAssociatedResourcesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

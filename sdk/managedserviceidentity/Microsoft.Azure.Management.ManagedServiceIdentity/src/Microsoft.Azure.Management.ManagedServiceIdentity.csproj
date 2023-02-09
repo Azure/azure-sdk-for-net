@@ -5,10 +5,10 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.ManagedServiceIdentity</PackageId>
-    <PackageReleaseNotes>Provides developers with libraries for Managed Identites for Azure resources under Azure Resource manager to perform CRUD operations on identities. Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
-    <Version>3.0.0-beta.1</Version>
+    <PackageReleaseNotes>Provides developers with libraries for Managed Identites for Azure resources under Azure Resource manager to perform CRUD operations on identities and federated credentials.</PackageReleaseNotes>
+    <Version>4.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.ManagedServiceIdentity</AssemblyName>
-    <PackageTags>Microsoft Azure resource management;msi;managedserviceidentity;</PackageTags>
+    <PackageTags>Microsoft Azure resource management;msi;managedserviceidentity;federatedcredentials;fic</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
