@@ -18,24 +18,31 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="source"> The source of the call. </param>
+        /// <param name="callSourceIdentifier"> The identifier of the source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
-        public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, CallSourceInternal source, string callbackUri)
+        /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="callSourceIdentifier"/> or <paramref name="callbackUri"/> is null. </exception>
+        public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, CommunicationIdentifierModel callSourceIdentifier, string callbackUri)
         {
             Argument.AssertNotNull(targets, nameof(targets));
-            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(callSourceIdentifier, nameof(callSourceIdentifier));
             Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 
             Targets = targets.ToList();
-            Source = source;
+            CallSourceIdentifier = callSourceIdentifier;
             CallbackUri = callbackUri;
         }
 
         /// <summary> The targets of the call. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
-        /// <summary> The source of the call. </summary>
-        public CallSourceInternal Source { get; }
+        /// <summary>
+        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
+        /// Required only when calling a PSTN callee.
+        /// </summary>
+        public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
+        /// <summary> Display name of the call if dialing out to a pstn number. </summary>
+        public string SourceDisplayName { get; set; }
+        /// <summary> The identifier of the source of the call. </summary>
+        public CommunicationIdentifierModel CallSourceIdentifier { get; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>

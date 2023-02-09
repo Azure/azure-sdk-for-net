@@ -6,24 +6,22 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The request payload for adding participants to the call. </summary>
-    internal partial class AddParticipantsRequestInternal
+    /// <summary> The request payload for adding participant to the call. </summary>
+    public partial class AddParticipantRequest
     {
-        /// <summary> Initializes a new instance of AddParticipantsRequestInternal. </summary>
-        /// <param name="participantsToAdd"> The participants to invite. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
-        public AddParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToAdd)
+        /// <summary> Initializes a new instance of AddParticipantRequest. </summary>
+        /// <param name="participantToAdd"> The participant to invite. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
+        public AddParticipantRequest(CommunicationIdentifierModel participantToAdd)
         {
-            Argument.AssertNotNull(participantsToAdd, nameof(participantsToAdd));
+            Argument.AssertNotNull(participantToAdd, nameof(participantToAdd));
 
-            ParticipantsToAdd = participantsToAdd.ToList();
+            ParticipantToAdd = participantToAdd;
         }
 
         /// <summary>
@@ -41,8 +39,8 @@ namespace Azure.Communication.CallAutomation
         /// is not set, the display name of the source will be used by default when adding a PSTN participant or teams user.
         /// </summary>
         public CommunicationIdentifierModel SourceIdentifier { get; set; }
-        /// <summary> The participants to invite. </summary>
-        public IList<CommunicationIdentifierModel> ParticipantsToAdd { get; }
+        /// <summary> The participant to invite. </summary>
+        public CommunicationIdentifierModel ParticipantToAdd { get; }
         /// <summary>
         /// Gets or sets the timeout to wait for the invited participant to pickup.
         /// The maximum value of this is 180 seconds
@@ -50,5 +48,7 @@ namespace Azure.Communication.CallAutomation
         public int? InvitationTimeoutInSeconds { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
+        /// <summary> Gets or sets the custom context. </summary>
+        public CustomContext CustomContext { get; set; }
     }
 }

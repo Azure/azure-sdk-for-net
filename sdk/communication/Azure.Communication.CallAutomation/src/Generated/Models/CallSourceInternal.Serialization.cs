@@ -11,26 +11,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class CallSourceInternal : IUtf8JsonSerializable
+    internal partial class CallSourceInternal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(CallerId))
-            {
-                writer.WritePropertyName("callerId");
-                writer.WriteObjectValue(CallerId);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName");
-                writer.WriteStringValue(DisplayName);
-            }
-            writer.WritePropertyName("identifier");
-            writer.WriteObjectValue(Identifier);
-            writer.WriteEndObject();
-        }
-
         internal static CallSourceInternal DeserializeCallSourceInternal(JsonElement element)
         {
             Optional<PhoneNumberIdentifierModel> callerId = default;
