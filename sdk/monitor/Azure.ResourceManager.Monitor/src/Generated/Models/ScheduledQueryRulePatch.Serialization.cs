@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -47,6 +52,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
@@ -112,6 +122,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(AutoMitigate.Value);
+            }
+            if (Optional.IsDefined(RuleResolveConfiguration))
+            {
+                writer.WritePropertyName("ruleResolveConfiguration"u8);
+                writer.WriteObjectValue(RuleResolveConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
