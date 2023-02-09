@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionType))
             {
-                writer.WritePropertyName("actionType");
+                writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
             if (Optional.IsDefined(CustomAction))
             {
-                writer.WritePropertyName("customAction");
+                writer.WritePropertyName("customAction"u8);
                 writer.WriteObjectValue(CustomAction);
             }
             if (Optional.IsDefined(MinProcessExecutionTime))
             {
-                writer.WritePropertyName("minProcessExecutionTime");
+                writer.WritePropertyName("minProcessExecutionTime"u8);
                 writer.WriteStringValue(MinProcessExecutionTime);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> minProcessExecutionTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("actionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                     actionType = property.Value.GetString().ToAutoHealActionType();
                     continue;
                 }
-                if (property.NameEquals("customAction"))
+                if (property.NameEquals("customAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
                     customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value);
                     continue;
                 }
-                if (property.NameEquals("minProcessExecutionTime"))
+                if (property.NameEquals("minProcessExecutionTime"u8))
                 {
                     minProcessExecutionTime = property.Value.GetString();
                     continue;

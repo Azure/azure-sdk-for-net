@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(BaiduApiKey))
             {
-                writer.WritePropertyName("baiduApiKey");
+                writer.WritePropertyName("baiduApiKey"u8);
                 writer.WriteStringValue(BaiduApiKey);
             }
             if (Optional.IsDefined(BaiduEndpoint))
             {
-                writer.WritePropertyName("baiduEndPoint");
+                writer.WritePropertyName("baiduEndPoint"u8);
                 writer.WriteStringValue(BaiduEndpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(BaiduSecretKey))
             {
-                writer.WritePropertyName("baiduSecretKey");
+                writer.WritePropertyName("baiduSecretKey"u8);
                 writer.WriteStringValue(BaiduSecretKey);
             }
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<string> baiduSecretKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("baiduApiKey"))
+                        if (property0.NameEquals("baiduApiKey"u8))
                         {
                             baiduApiKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("baiduEndPoint"))
+                        if (property0.NameEquals("baiduEndPoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                             baiduEndPoint = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("baiduSecretKey"))
+                        if (property0.NameEquals("baiduSecretKey"u8))
                         {
                             baiduSecretKey = property0.Value.GetString();
                             continue;

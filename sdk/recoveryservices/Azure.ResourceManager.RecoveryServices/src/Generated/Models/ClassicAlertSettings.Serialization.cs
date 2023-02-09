@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertsForCriticalOperations))
             {
-                writer.WritePropertyName("alertsForCriticalOperations");
+                writer.WritePropertyName("alertsForCriticalOperations"u8);
                 writer.WriteStringValue(AlertsForCriticalOperations.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<AlertsState> alertsForCriticalOperations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alertsForCriticalOperations"))
+                if (property.NameEquals("alertsForCriticalOperations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

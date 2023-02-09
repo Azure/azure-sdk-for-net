@@ -18,34 +18,34 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataSourceType))
             {
-                writer.WritePropertyName("datasourceType");
+                writer.WritePropertyName("datasourceType"u8);
                 writer.WriteStringValue(DataSourceType);
             }
             if (Optional.IsDefined(ObjectType))
             {
-                writer.WritePropertyName("objectType");
+                writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            writer.WritePropertyName("resourceID");
+            writer.WritePropertyName("resourceID"u8);
             writer.WriteStringValue(ResourceId);
             if (Optional.IsDefined(ResourceLocation))
             {
-                writer.WritePropertyName("resourceLocation");
+                writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
             if (Optional.IsDefined(ResourceName))
             {
-                writer.WritePropertyName("resourceName");
+                writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("resourceType");
+                writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(ResourceUri))
             {
-                writer.WritePropertyName("resourceUri");
+                writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -62,22 +62,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<Uri> resourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datasourceType"))
+                if (property.NameEquals("datasourceType"u8))
                 {
                     datasourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceID"))
+                if (property.NameEquals("resourceID"u8))
                 {
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"))
+                if (property.NameEquals("resourceLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     resourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("resourceName"u8))
                 {
                     resourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceUri"))
+                if (property.NameEquals("resourceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

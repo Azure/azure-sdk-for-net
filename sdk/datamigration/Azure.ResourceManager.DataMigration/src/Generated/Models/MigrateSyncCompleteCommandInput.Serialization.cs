@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("databaseName");
+            writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
             if (Optional.IsDefined(CommitTimeStamp))
             {
-                writer.WritePropertyName("commitTimeStamp");
+                writer.WritePropertyName("commitTimeStamp"u8);
                 writer.WriteStringValue(CommitTimeStamp.Value, "O");
             }
             writer.WriteEndObject();
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DateTimeOffset> commitTimeStamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("commitTimeStamp"))
+                if (property.NameEquals("commitTimeStamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

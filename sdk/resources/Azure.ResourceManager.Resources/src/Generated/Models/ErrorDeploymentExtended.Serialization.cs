@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> deploymentName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
                     type = property.Value.GetString().ToErrorDeploymentType();
                     continue;
                 }
-                if (property.NameEquals("deploymentName"))
+                if (property.NameEquals("deploymentName"u8))
                 {
                     deploymentName = property.Value.GetString();
                     continue;

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PipelineResourceId))
             {
-                writer.WritePropertyName("pipelineResourceId");
+                writer.WritePropertyName("pipelineResourceId"u8);
                 writer.WriteStringValue(PipelineResourceId);
             }
             if (Optional.IsCollectionDefined(Artifacts))
             {
-                writer.WritePropertyName("artifacts");
+                writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
             if (Optional.IsDefined(CatalogDigest))
             {
-                writer.WritePropertyName("catalogDigest");
+                writer.WritePropertyName("catalogDigest"u8);
                 writer.WriteStringValue(CatalogDigest);
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> catalogDigest = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pipelineResourceId"))
+                if (property.NameEquals("pipelineResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     pipelineResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("artifacts"))
+                if (property.NameEquals("artifacts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     artifacts = array;
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     source = PipelineRunSourceProperties.DeserializePipelineRunSourceProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     target = PipelineRunTargetProperties.DeserializePipelineRunTargetProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("catalogDigest"))
+                if (property.NameEquals("catalogDigest"u8))
                 {
                     catalogDigest = property.Value.GetString();
                     continue;

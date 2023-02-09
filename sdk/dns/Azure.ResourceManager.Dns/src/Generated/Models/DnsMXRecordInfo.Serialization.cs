@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Preference))
             {
-                writer.WritePropertyName("preference");
+                writer.WritePropertyName("preference"u8);
                 writer.WriteNumberValue(Preference.Value);
             }
             if (Optional.IsDefined(Exchange))
             {
-                writer.WritePropertyName("exchange");
+                writer.WritePropertyName("exchange"u8);
                 writer.WriteStringValue(Exchange);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dns.Models
             Optional<string> exchange = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preference"))
+                if (property.NameEquals("preference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns.Models
                     preference = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("exchange"))
+                if (property.NameEquals("exchange"u8))
                 {
                     exchange = property.Value.GetString();
                     continue;

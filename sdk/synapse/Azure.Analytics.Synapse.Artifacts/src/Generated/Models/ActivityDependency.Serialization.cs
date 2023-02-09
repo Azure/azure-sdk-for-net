@@ -19,9 +19,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("activity");
+            writer.WritePropertyName("activity"u8);
             writer.WriteStringValue(Activity);
-            writer.WritePropertyName("dependencyConditions");
+            writer.WritePropertyName("dependencyConditions"u8);
             writer.WriteStartArray();
             foreach (var item in DependencyConditions)
             {
@@ -44,12 +44,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activity"))
+                if (property.NameEquals("activity"u8))
                 {
                     activity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependencyConditions"))
+                if (property.NameEquals("dependencyConditions"u8))
                 {
                     List<DependencyCondition> array = new List<DependencyCondition>();
                     foreach (var item in property.Value.EnumerateArray())

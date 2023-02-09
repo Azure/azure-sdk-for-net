@@ -26,12 +26,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             IReadOnlyList<double?> upperBoundaryList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("series"))
+                if (property.NameEquals("series"u8))
                 {
                     series = SeriesIdentity.DeserializeSeriesIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("timestampList"))
+                if (property.NameEquals("timestampList"u8))
                 {
                     List<DateTimeOffset> array = new List<DateTimeOffset>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     timestampList = array;
                     continue;
                 }
-                if (property.NameEquals("valueList"))
+                if (property.NameEquals("valueList"u8))
                 {
                     List<double> array = new List<double>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -51,7 +51,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     valueList = array;
                     continue;
                 }
-                if (property.NameEquals("isAnomalyList"))
+                if (property.NameEquals("isAnomalyList"u8))
                 {
                     List<bool?> array = new List<bool?>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -68,7 +68,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     isAnomalyList = array;
                     continue;
                 }
-                if (property.NameEquals("periodList"))
+                if (property.NameEquals("periodList"u8))
                 {
                     List<int?> array = new List<int?>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -85,7 +85,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     periodList = array;
                     continue;
                 }
-                if (property.NameEquals("expectedValueList"))
+                if (property.NameEquals("expectedValueList"u8))
                 {
                     List<double?> array = new List<double?>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -102,7 +102,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     expectedValueList = array;
                     continue;
                 }
-                if (property.NameEquals("lowerBoundaryList"))
+                if (property.NameEquals("lowerBoundaryList"u8))
                 {
                     List<double?> array = new List<double?>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -119,7 +119,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     lowerBoundaryList = array;
                     continue;
                 }
-                if (property.NameEquals("upperBoundaryList"))
+                if (property.NameEquals("upperBoundaryList"u8))
                 {
                     List<double?> array = new List<double?>();
                     foreach (var item in property.Value.EnumerateArray())

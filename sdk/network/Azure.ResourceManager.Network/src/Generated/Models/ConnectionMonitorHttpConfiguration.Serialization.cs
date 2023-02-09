@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(Method))
             {
-                writer.WritePropertyName("method");
+                writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsCollectionDefined(RequestHeaders))
             {
-                writer.WritePropertyName("requestHeaders");
+                writer.WritePropertyName("requestHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaders)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(ValidStatusCodeRanges))
             {
-                writer.WritePropertyName("validStatusCodeRanges");
+                writer.WritePropertyName("validStatusCodeRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidStatusCodeRanges)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(PreferHttps))
             {
-                writer.WritePropertyName("preferHTTPS");
+                writer.WritePropertyName("preferHTTPS"u8);
                 writer.WriteBooleanValue(PreferHttps.Value);
             }
             writer.WriteEndObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> preferHTTPS = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Network.Models
                     method = new NetworkHttpConfigurationMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestHeaders"))
+                if (property.NameEquals("requestHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                     requestHeaders = array;
                     continue;
                 }
-                if (property.NameEquals("validStatusCodeRanges"))
+                if (property.NameEquals("validStatusCodeRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     validStatusCodeRanges = array;
                     continue;
                 }
-                if (property.NameEquals("preferHTTPS"))
+                if (property.NameEquals("preferHTTPS"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

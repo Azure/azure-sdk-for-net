@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<AvailableProvidersListCountry> countries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("countries"))
+                if (property.NameEquals("countries"u8))
                 {
                     List<AvailableProvidersListCountry> array = new List<AvailableProvidersListCountry>();
                     foreach (var item in property.Value.EnumerateArray())

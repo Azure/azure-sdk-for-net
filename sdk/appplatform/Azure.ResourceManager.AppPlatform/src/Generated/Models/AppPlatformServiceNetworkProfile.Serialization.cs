@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceRuntimeSubnetId))
             {
-                writer.WritePropertyName("serviceRuntimeSubnetId");
+                writer.WritePropertyName("serviceRuntimeSubnetId"u8);
                 writer.WriteStringValue(ServiceRuntimeSubnetId);
             }
             if (Optional.IsDefined(AppSubnetId))
             {
-                writer.WritePropertyName("appSubnetId");
+                writer.WritePropertyName("appSubnetId"u8);
                 writer.WriteStringValue(AppSubnetId);
             }
             if (Optional.IsDefined(ServiceCidr))
             {
-                writer.WritePropertyName("serviceCidr");
+                writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
             if (Optional.IsDefined(ServiceRuntimeNetworkResourceGroup))
             {
-                writer.WritePropertyName("serviceRuntimeNetworkResourceGroup");
+                writer.WritePropertyName("serviceRuntimeNetworkResourceGroup"u8);
                 writer.WriteStringValue(ServiceRuntimeNetworkResourceGroup);
             }
             if (Optional.IsDefined(AppNetworkResourceGroup))
             {
-                writer.WritePropertyName("appNetworkResourceGroup");
+                writer.WritePropertyName("appNetworkResourceGroup"u8);
                 writer.WriteStringValue(AppNetworkResourceGroup);
             }
             if (Optional.IsDefined(IngressConfig))
             {
-                writer.WritePropertyName("ingressConfig");
+                writer.WritePropertyName("ingressConfig"u8);
                 writer.WriteObjectValue(IngressConfig);
             }
             if (Optional.IsDefined(OutboundType))
             {
-                writer.WritePropertyName("outboundType");
+                writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType);
             }
             writer.WriteEndObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> outboundType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceRuntimeSubnetId"))
+                if (property.NameEquals("serviceRuntimeSubnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     serviceRuntimeSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appSubnetId"))
+                if (property.NameEquals("appSubnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,22 +87,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     appSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serviceCidr"))
+                if (property.NameEquals("serviceCidr"u8))
                 {
                     serviceCidr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceRuntimeNetworkResourceGroup"))
+                if (property.NameEquals("serviceRuntimeNetworkResourceGroup"u8))
                 {
                     serviceRuntimeNetworkResourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appNetworkResourceGroup"))
+                if (property.NameEquals("appNetworkResourceGroup"u8))
                 {
                     appNetworkResourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outboundIPs"))
+                if (property.NameEquals("outboundIPs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     outboundIPs = NetworkProfileOutboundIPs.DeserializeNetworkProfileOutboundIPs(property.Value);
                     continue;
                 }
-                if (property.NameEquals("requiredTraffics"))
+                if (property.NameEquals("requiredTraffics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     requiredTraffics = array;
                     continue;
                 }
-                if (property.NameEquals("ingressConfig"))
+                if (property.NameEquals("ingressConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     ingressConfig = IngressConfig.DeserializeIngressConfig(property.Value);
                     continue;
                 }
-                if (property.NameEquals("outboundType"))
+                if (property.NameEquals("outboundType"u8))
                 {
                     outboundType = property.Value.GetString();
                     continue;

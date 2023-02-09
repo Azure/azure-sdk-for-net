@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<ResourceIdentifier> policyAssignmentId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyDefinitionId"))
+                if (property.NameEquals("policyDefinitionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionId"))
+                if (property.NameEquals("policySetDefinitionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policySetDefinitionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionReferenceId"))
+                if (property.NameEquals("policyDefinitionReferenceId"u8))
                 {
                     policyDefinitionReferenceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentId"))
+                if (property.NameEquals("policyAssignmentId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(DataType))
             {
-                writer.WritePropertyName("dataType");
+                writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
             if (Optional.IsDefined(MapTo))
             {
-                writer.WritePropertyName("mapTo");
+                writer.WritePropertyName("mapTo"u8);
                 writer.WriteNumberValue(MapTo.Value);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<int> mapTo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     dataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mapTo"))
+                if (property.NameEquals("mapTo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

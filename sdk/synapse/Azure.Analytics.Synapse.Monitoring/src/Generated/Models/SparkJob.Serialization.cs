@@ -33,37 +33,37 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             Optional<string> totalDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("submitter"))
+                if (property.NameEquals("submitter"u8))
                 {
                     submitter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("compute"))
+                if (property.NameEquals("compute"u8))
                 {
                     compute = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sparkApplicationId"))
+                if (property.NameEquals("sparkApplicationId"u8))
                 {
                     sparkApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("livyId"))
+                if (property.NameEquals("livyId"u8))
                 {
                     livyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timing"))
+                if (property.NameEquals("timing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     timing = array;
                     continue;
                 }
-                if (property.NameEquals("sparkJobDefinition"))
+                if (property.NameEquals("sparkJobDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     sparkJobDefinition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pipeline"))
+                if (property.NameEquals("pipeline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,12 +103,12 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     pipeline = array;
                     continue;
                 }
-                if (property.NameEquals("jobType"))
+                if (property.NameEquals("jobType"u8))
                 {
                     jobType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("submitTime"))
+                if (property.NameEquals("submitTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     submitTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,17 +128,17 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("queuedDuration"))
+                if (property.NameEquals("queuedDuration"u8))
                 {
                     queuedDuration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runningDuration"))
+                if (property.NameEquals("runningDuration"u8))
                 {
                     runningDuration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalDuration"))
+                if (property.NameEquals("totalDuration"u8))
                 {
                     totalDuration = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AssignedUser))
             {
-                writer.WritePropertyName("assignedUser");
+                writer.WritePropertyName("assignedUser"u8);
                 writer.WriteObjectValue(AssignedUser);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningComputeInstanceAssignedUser> assignedUser = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assignedUser"))
+                if (property.NameEquals("assignedUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

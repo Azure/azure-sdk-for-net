@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("referenceType");
+            writer.WritePropertyName("referenceType"u8);
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ReferenceType referenceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("referenceType"))
+                if (property.NameEquals("referenceType"u8))
                 {
                     referenceType = new ReferenceType(property.Value.GetString());
                     continue;

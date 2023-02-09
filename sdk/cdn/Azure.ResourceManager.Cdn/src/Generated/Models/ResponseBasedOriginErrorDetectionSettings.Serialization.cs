@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResponseBasedDetectedErrorType))
             {
-                writer.WritePropertyName("responseBasedDetectedErrorTypes");
+                writer.WritePropertyName("responseBasedDetectedErrorTypes"u8);
                 writer.WriteStringValue(ResponseBasedDetectedErrorType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ResponseBasedFailoverThresholdPercentage))
             {
-                writer.WritePropertyName("responseBasedFailoverThresholdPercentage");
+                writer.WritePropertyName("responseBasedFailoverThresholdPercentage"u8);
                 writer.WriteNumberValue(ResponseBasedFailoverThresholdPercentage.Value);
             }
             if (Optional.IsCollectionDefined(HttpErrorRanges))
             {
-                writer.WritePropertyName("httpErrorRanges");
+                writer.WritePropertyName("httpErrorRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in HttpErrorRanges)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IList<HttpErrorRange>> httpErrorRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("responseBasedDetectedErrorTypes"))
+                if (property.NameEquals("responseBasedDetectedErrorTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     responseBasedDetectedErrorTypes = property.Value.GetString().ToResponseBasedDetectedErrorType();
                     continue;
                 }
-                if (property.NameEquals("responseBasedFailoverThresholdPercentage"))
+                if (property.NameEquals("responseBasedFailoverThresholdPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     responseBasedFailoverThresholdPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("httpErrorRanges"))
+                if (property.NameEquals("httpErrorRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("domain");
+            writer.WritePropertyName("domain"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Domain);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Domain.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("userName");
+            writer.WritePropertyName("userName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserName);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
             writer.WriteEndObject();
         }
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             FactorySecretString password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domain"))
+                if (property.NameEquals("domain"u8))
                 {
                     domain = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = FactorySecretString.DeserializeFactorySecretString(property.Value);
                     continue;

@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionName))
             {
-                writer.WritePropertyName("actionName");
+                writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
             if (Optional.IsDefined(LinkedProperty))
             {
-                writer.WritePropertyName("linkedProperty");
+                writer.WritePropertyName("linkedProperty"u8);
                 writer.WriteStringValue(LinkedProperty);
             }
             if (Optional.IsDefined(LinkedAction))
             {
-                writer.WritePropertyName("linkedAction");
+                writer.WritePropertyName("linkedAction"u8);
                 writer.WriteStringValue(LinkedAction);
             }
             if (Optional.IsDefined(LinkedActionVerb))
             {
-                writer.WritePropertyName("linkedActionVerb");
+                writer.WritePropertyName("linkedActionVerb"u8);
                 writer.WriteStringValue(LinkedActionVerb);
             }
             if (Optional.IsDefined(LinkedType))
             {
-                writer.WritePropertyName("linkedType");
+                writer.WritePropertyName("linkedType"u8);
                 writer.WriteStringValue(LinkedType);
             }
             writer.WriteEndObject();
@@ -52,27 +52,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> linkedType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionName"))
+                if (property.NameEquals("actionName"u8))
                 {
                     actionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkedProperty"))
+                if (property.NameEquals("linkedProperty"u8))
                 {
                     linkedProperty = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkedAction"))
+                if (property.NameEquals("linkedAction"u8))
                 {
                     linkedAction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkedActionVerb"))
+                if (property.NameEquals("linkedActionVerb"u8))
                 {
                     linkedActionVerb = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkedType"))
+                if (property.NameEquals("linkedType"u8))
                 {
                     linkedType = property.Value.GetString();
                     continue;

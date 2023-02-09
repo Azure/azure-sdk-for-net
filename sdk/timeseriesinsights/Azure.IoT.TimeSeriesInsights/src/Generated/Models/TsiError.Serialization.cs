@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<TimeSeriesOperationError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceManagerEndpoint");
+            writer.WritePropertyName("resourceManagerEndpoint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ResourceManagerEndpoint);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(ResourceManagerEndpoint.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("tempScriptPath");
+            writer.WritePropertyName("tempScriptPath"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TempScriptPath);
 #else
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             if (Optional.IsDefined(DistcpOptions))
             {
-                writer.WritePropertyName("distcpOptions");
+                writer.WritePropertyName("distcpOptions"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DistcpOptions);
 #else
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceManagerEndpoint"))
+                if (property.NameEquals("resourceManagerEndpoint"u8))
                 {
                     resourceManagerEndpoint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tempScriptPath"))
+                if (property.NameEquals("tempScriptPath"u8))
                 {
                     tempScriptPath = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("distcpOptions"))
+                if (property.NameEquals("distcpOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

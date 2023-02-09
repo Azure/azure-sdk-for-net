@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ReportCreatorTenantId))
             {
-                writer.WritePropertyName("reportCreatorTenantId");
+                writer.WritePropertyName("reportCreatorTenantId"u8);
                 writer.WriteStringValue(ReportCreatorTenantId);
             }
-            writer.WritePropertyName("downloadType");
+            writer.WritePropertyName("downloadType"u8);
             writer.WriteStringValue(DownloadType.ToString());
             if (Optional.IsDefined(OfferGuid))
             {
-                writer.WritePropertyName("offerGuid");
+                writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
             }
             writer.WriteEndObject();

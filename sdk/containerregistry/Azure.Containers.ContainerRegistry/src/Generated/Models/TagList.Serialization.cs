@@ -21,17 +21,17 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registry"))
+                if (property.NameEquals("registry"u8))
                 {
                     registry = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     List<TagAttributesBase> array = new List<TagAttributesBase>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -41,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry
                     tags = array;
                     continue;
                 }
-                if (property.NameEquals("link"))
+                if (property.NameEquals("link"u8))
                 {
                     link = property.Value.GetString();
                     continue;

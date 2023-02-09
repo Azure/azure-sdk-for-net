@@ -15,9 +15,9 @@ namespace Azure.DigitalTwins.Core
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointName");
+            writer.WritePropertyName("endpointName"u8);
             writer.WriteStringValue(EndpointName);
-            writer.WritePropertyName("filter");
+            writer.WritePropertyName("filter"u8);
             writer.WriteStringValue(Filter);
             writer.WriteEndObject();
         }
@@ -29,17 +29,17 @@ namespace Azure.DigitalTwins.Core
             string filter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointName"))
+                if (property.NameEquals("endpointName"u8))
                 {
                     endpointName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filter"))
+                if (property.NameEquals("filter"u8))
                 {
                     filter = property.Value.GetString();
                     continue;

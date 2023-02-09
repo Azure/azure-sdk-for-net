@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceHealthStatus))
             {
-                writer.WritePropertyName("resourceHealthStatus");
+                writer.WritePropertyName("resourceHealthStatus"u8);
                 writer.WriteStringValue(ResourceHealthStatus.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ResourceHealthDetails))
             {
-                writer.WritePropertyName("resourceHealthDetails");
+                writer.WritePropertyName("resourceHealthDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceHealthDetails)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<ResourceHealthDetails>> resourceHealthDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceHealthStatus"))
+                if (property.NameEquals("resourceHealthStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     resourceHealthStatus = new ResourceHealthStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceHealthDetails"))
+                if (property.NameEquals("resourceHealthDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

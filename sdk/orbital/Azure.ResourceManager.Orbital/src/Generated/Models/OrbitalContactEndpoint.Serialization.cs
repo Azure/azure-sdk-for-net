@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Orbital.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ipAddress");
+            writer.WritePropertyName("ipAddress"u8);
             writer.WriteStringValue(IPAddress.ToString());
-            writer.WritePropertyName("endPointName");
+            writer.WritePropertyName("endPointName"u8);
             writer.WriteStringValue(EndPointName);
-            writer.WritePropertyName("port");
+            writer.WritePropertyName("port"u8);
             writer.WriteStringValue(Port);
-            writer.WritePropertyName("protocol");
+            writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             writer.WriteEndObject();
         }
@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.Orbital.Models
             OrbitalContactProtocol protocol = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endPointName"))
+                if (property.NameEquals("endPointName"u8))
                 {
                     endPointName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     port = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = new OrbitalContactProtocol(property.Value.GetString());
                     continue;

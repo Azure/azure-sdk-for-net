@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> protectedItemName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,27 +32,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     status = new ValidationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     errorCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendation"))
+                if (property.NameEquals("recommendation"u8))
                 {
                     recommendation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerName"))
+                if (property.NameEquals("containerName"u8))
                 {
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemName"))
+                if (property.NameEquals("protectedItemName"u8))
                 {
                     protectedItemName = property.Value.GetString();
                     continue;

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxPercentageCpu))
             {
-                writer.WritePropertyName("maxPercentageCpu");
+                writer.WritePropertyName("maxPercentageCpu"u8);
                 writer.WriteNumberValue(MaxPercentageCpu.Value);
             }
             if (Optional.IsDefined(MaxMemoryInMb))
             {
-                writer.WritePropertyName("maxMemoryInMb");
+                writer.WritePropertyName("maxMemoryInMb"u8);
                 writer.WriteNumberValue(MaxMemoryInMb.Value);
             }
             if (Optional.IsDefined(MaxDiskSizeInMb))
             {
-                writer.WritePropertyName("maxDiskSizeInMb");
+                writer.WritePropertyName("maxDiskSizeInMb"u8);
                 writer.WriteNumberValue(MaxDiskSizeInMb.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<long> maxDiskSizeInMb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxPercentageCpu"))
+                if (property.NameEquals("maxPercentageCpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                     maxPercentageCpu = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maxMemoryInMb"))
+                if (property.NameEquals("maxMemoryInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
                     maxMemoryInMb = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxDiskSizeInMb"))
+                if (property.NameEquals("maxDiskSizeInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PublicIPPrefixes))
             {
-                writer.WritePropertyName("publicIPPrefixes");
+                writer.WritePropertyName("publicIPPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicIPPrefixes)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<IList<WritableSubResource>> publicIPPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicIPPrefixes"))
+                if (property.NameEquals("publicIPPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

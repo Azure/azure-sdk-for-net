@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (Tags != null)
                 {
-                    writer.WritePropertyName("tags");
+                    writer.WritePropertyName("tags"u8);
                     writer.WriteStartObject();
                     foreach (var item in Tags)
                     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (EnableDdosProtection != null)
                 {
-                    writer.WritePropertyName("enableDdosProtection");
+                    writer.WritePropertyName("enableDdosProtection"u8);
                     writer.WriteBooleanValue(EnableDdosProtection.Value);
                 }
                 else
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (AddressSpace != null)
                 {
-                    writer.WritePropertyName("addressSpace");
+                    writer.WritePropertyName("addressSpace"u8);
                     writer.WriteStartArray();
                     foreach (var item in AddressSpace)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (DnsServers != null)
                 {
-                    writer.WritePropertyName("dnsServers");
+                    writer.WritePropertyName("dnsServers"u8);
                     writer.WriteStartArray();
                     foreach (var item in DnsServers)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (Subnets != null)
                 {
-                    writer.WritePropertyName("subnets");
+                    writer.WritePropertyName("subnets"u8);
                     writer.WriteStartArray();
                     foreach (var item in Subnets)
                     {
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("subnets");
                 }
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
+            writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
             writer.WriteEndObject();
         }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("enableDdosProtection"))
+                if (property.NameEquals("enableDdosProtection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     enableDdosProtection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("addressSpace"))
+                if (property.NameEquals("addressSpace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     addressSpace = array;
                     continue;
                 }
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("subnets"))
+                if (property.NameEquals("subnets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     subnets = array;
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;

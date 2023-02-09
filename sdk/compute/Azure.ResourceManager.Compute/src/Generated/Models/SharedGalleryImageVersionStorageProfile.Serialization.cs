@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<SharedGalleryDataDiskImage>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osDiskImage"))
+                if (property.NameEquals("osDiskImage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
                     osDiskImage = SharedGalleryOSDiskImage.DeserializeSharedGalleryOSDiskImage(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDiskImages"))
+                if (property.NameEquals("dataDiskImages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

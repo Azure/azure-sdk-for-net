@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ErrorMessage))
             {
-                writer.WritePropertyName("errorMessage");
+                writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
             if (Optional.IsDefined(ProvisioningStatus))
             {
-                writer.WritePropertyName("provisioningStatus");
+                writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);
             }
             if (Optional.IsDefined(ReadyReplicas))
             {
-                writer.WritePropertyName("readyReplicas");
+                writer.WritePropertyName("readyReplicas"u8);
                 writer.WriteNumberValue(ReadyReplicas.Value);
             }
             if (Optional.IsDefined(Replicas))
             {
-                writer.WritePropertyName("replicas");
+                writer.WritePropertyName("replicas"u8);
                 writer.WriteNumberValue(Replicas.Value);
             }
             writer.WriteEndObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<int> replicas = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningStatus"))
+                if (property.NameEquals("provisioningStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     provisioningStatus = AgentPoolProvisioningStatusStatusProvisioningStatus.DeserializeAgentPoolProvisioningStatusStatusProvisioningStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("readyReplicas"))
+                if (property.NameEquals("readyReplicas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     readyReplicas = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("replicas"))
+                if (property.NameEquals("replicas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

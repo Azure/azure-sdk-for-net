@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ClientSecret != null)
                 {
-                    writer.WritePropertyName("clientSecret");
+                    writer.WritePropertyName("clientSecret"u8);
                     writer.WriteStringValue(ClientSecret);
                 }
                 else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clientSecret");
                 }
             }
-            writer.WritePropertyName("secretsType");
+            writer.WritePropertyName("secretsType"u8);
             writer.WriteStringValue(SecretsType.ToString());
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SecretsType secretsType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientSecret"))
+                if (property.NameEquals("clientSecret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     clientSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretsType"))
+                if (property.NameEquals("secretsType"u8))
                 {
                     secretsType = new SecretsType(property.Value.GetString());
                     continue;

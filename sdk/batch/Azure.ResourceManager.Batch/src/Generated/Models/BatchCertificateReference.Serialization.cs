@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(StoreLocation))
             {
-                writer.WritePropertyName("storeLocation");
+                writer.WritePropertyName("storeLocation"u8);
                 writer.WriteStringValue(StoreLocation.Value.ToSerialString());
             }
             if (Optional.IsDefined(StoreName))
             {
-                writer.WritePropertyName("storeName");
+                writer.WritePropertyName("storeName"u8);
                 writer.WriteStringValue(StoreName);
             }
             if (Optional.IsCollectionDefined(Visibility))
             {
-                writer.WritePropertyName("visibility");
+                writer.WritePropertyName("visibility"u8);
                 writer.WriteStartArray();
                 foreach (var item in Visibility)
                 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<IList<BatchCertificateVisibility>> visibility = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storeLocation"))
+                if (property.NameEquals("storeLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Batch.Models
                     storeLocation = property.Value.GetString().ToBatchCertificateStoreLocation();
                     continue;
                 }
-                if (property.NameEquals("storeName"))
+                if (property.NameEquals("storeName"u8))
                 {
                     storeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("visibility"))
+                if (property.NameEquals("visibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

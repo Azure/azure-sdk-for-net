@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> regionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     accountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiKey"))
+                if (property.NameEquals("apiKey"u8))
                 {
                     apiKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("regionId"))
+                if (property.NameEquals("regionId"u8))
                 {
                     regionId = property.Value.GetString();
                     continue;

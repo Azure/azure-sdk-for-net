@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(FileSpecType))
             {
-                writer.WritePropertyName("fileSpecType");
+                writer.WritePropertyName("fileSpecType"u8);
                 writer.WriteStringValue(FileSpecType);
             }
             if (Optional.IsDefined(TargetFolderPath))
             {
-                writer.WritePropertyName("targetFolderPath");
+                writer.WritePropertyName("targetFolderPath"u8);
                 writer.WriteStringValue(TargetFolderPath);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> targetFolderPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileSpecType"))
+                if (property.NameEquals("fileSpecType"u8))
                 {
                     fileSpecType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetFolderPath"))
+                if (property.NameEquals("targetFolderPath"u8))
                 {
                     targetFolderPath = property.Value.GetString();
                     continue;

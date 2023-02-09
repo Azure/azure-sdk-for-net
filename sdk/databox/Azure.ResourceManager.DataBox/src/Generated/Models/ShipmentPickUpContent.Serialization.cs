@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
-            writer.WritePropertyName("endTime");
+            writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndOn, "O");
-            writer.WritePropertyName("shipmentLocation");
+            writer.WritePropertyName("shipmentLocation"u8);
             writer.WriteStringValue(ShipmentLocation);
             writer.WriteEndObject();
         }

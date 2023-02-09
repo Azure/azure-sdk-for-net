@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VaultCriticalOperation))
             {
-                writer.WritePropertyName("vaultCriticalOperation");
+                writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
             if (Optional.IsDefined(DefaultResourceRequest))
             {
-                writer.WritePropertyName("defaultResourceRequest");
+                writer.WritePropertyName("defaultResourceRequest"u8);
                 writer.WriteStringValue(DefaultResourceRequest);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> defaultResourceRequest = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vaultCriticalOperation"))
+                if (property.NameEquals("vaultCriticalOperation"u8))
                 {
                     vaultCriticalOperation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultResourceRequest"))
+                if (property.NameEquals("defaultResourceRequest"u8))
                 {
                     defaultResourceRequest = property.Value.GetString();
                     continue;

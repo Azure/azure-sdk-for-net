@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("typeName");
+            writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            writer.WritePropertyName("redirectType");
+            writer.WritePropertyName("redirectType"u8);
             writer.WriteStringValue(RedirectType.ToString());
             if (Optional.IsDefined(DestinationProtocol))
             {
-                writer.WritePropertyName("destinationProtocol");
+                writer.WritePropertyName("destinationProtocol"u8);
                 writer.WriteStringValue(DestinationProtocol.Value.ToString());
             }
             if (Optional.IsDefined(CustomPath))
             {
-                writer.WritePropertyName("customPath");
+                writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
             if (Optional.IsDefined(CustomHostname))
             {
-                writer.WritePropertyName("customHostname");
+                writer.WritePropertyName("customHostname"u8);
                 writer.WriteStringValue(CustomHostname);
             }
             if (Optional.IsDefined(CustomQueryString))
             {
-                writer.WritePropertyName("customQueryString");
+                writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
             }
             if (Optional.IsDefined(CustomFragment))
             {
-                writer.WritePropertyName("customFragment");
+                writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
             }
             writer.WriteEndObject();
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> customFragment = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = new UriRedirectActionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("redirectType"))
+                if (property.NameEquals("redirectType"u8))
                 {
                     redirectType = new RedirectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("destinationProtocol"))
+                if (property.NameEquals("destinationProtocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.Cdn.Models
                     destinationProtocol = new DestinationProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("customPath"))
+                if (property.NameEquals("customPath"u8))
                 {
                     customPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customHostname"))
+                if (property.NameEquals("customHostname"u8))
                 {
                     customHostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customQueryString"))
+                if (property.NameEquals("customQueryString"u8))
                 {
                     customQueryString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customFragment"))
+                if (property.NameEquals("customFragment"u8))
                 {
                     customFragment = property.Value.GetString();
                     continue;

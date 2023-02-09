@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertSettingsForAllJobFailures))
             {
-                writer.WritePropertyName("alertsForAllJobFailures");
+                writer.WritePropertyName("alertsForAllJobFailures"u8);
                 writer.WriteStringValue(AlertSettingsForAllJobFailures.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<AzureMonitorAlertsState> alertsForAllJobFailures = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alertsForAllJobFailures"))
+                if (property.NameEquals("alertsForAllJobFailures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

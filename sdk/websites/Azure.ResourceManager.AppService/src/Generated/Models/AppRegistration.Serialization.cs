@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AppId))
             {
-                writer.WritePropertyName("appId");
+                writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
             if (Optional.IsDefined(AppSecretSettingName))
             {
-                writer.WritePropertyName("appSecretSettingName");
+                writer.WritePropertyName("appSecretSettingName"u8);
                 writer.WriteStringValue(AppSecretSettingName);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> appSecretSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appSecretSettingName"))
+                if (property.NameEquals("appSecretSettingName"u8))
                 {
                     appSecretSettingName = property.Value.GetString();
                     continue;

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Purview.Models
             Optional<string> scan = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("catalog"))
+                if (property.NameEquals("catalog"u8))
                 {
                     catalog = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("guardian"))
+                if (property.NameEquals("guardian"u8))
                 {
                     guardian = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scan"))
+                if (property.NameEquals("scan"u8))
                 {
                     scan = property.Value.GetString();
                     continue;

@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> commitId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isCheckedIn"))
+                if (property.NameEquals("isCheckedIn"u8))
                 {
                     isCheckedIn = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("statusMessage"))
+                if (property.NameEquals("statusMessage"u8))
                 {
                     statusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pullRequest"))
+                if (property.NameEquals("pullRequest"u8))
                 {
                     pullRequest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("commitId"))
+                if (property.NameEquals("commitId"u8))
                 {
                     commitId = property.Value.GetString();
                     continue;
