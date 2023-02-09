@@ -331,7 +331,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                AddParticipantRequest request = CreateAddParticipantRequest(options);
+                AddParticipantRequestInternal request = CreateAddParticipantRequest(options);
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var response = await RestClient.AddParticipantAsync(
@@ -370,7 +370,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                AddParticipantRequest request = CreateAddParticipantRequest(options);
+                AddParticipantRequestInternal request = CreateAddParticipantRequest(options);
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 var response = RestClient.AddParticipant(
@@ -393,7 +393,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        private static AddParticipantRequest CreateAddParticipantRequest(AddParticipantsOptions options)
+        private static AddParticipantRequestInternal CreateAddParticipantRequest(AddParticipantsOptions options)
         {
             // when add PSTN participants, the SourceCallerId must be provided.
             if (options.ParticipantsToAdd.Any(participant => participant is PhoneNumberIdentifier))
@@ -405,7 +405,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNullOrEmpty(options.ParticipantsToAdd, nameof(options.ParticipantsToAdd));
 
             // TODO: update logic
-            AddParticipantRequest request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantsToAdd.FirstOrDefault()));
+            AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantsToAdd.FirstOrDefault()));
 
             request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
             request.SourceDisplayName = options.SourceDisplayName;
