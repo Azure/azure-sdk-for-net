@@ -42,7 +42,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // create call and assert response
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
                     Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -53,7 +52,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3ab516f48b180ac443d90d4b5788ecb8829b5cd1
                     AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
 
                     // wait for callConnected
@@ -68,7 +70,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // try hangup
                     var hangUpOptions = new HangUpOptions(true);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3ab516f48b180ac443d90d4b5788ecb8829b5cd1
                     await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
@@ -108,6 +113,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
                 CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
                 string? callConnectionId = null;
+<<<<<<< HEAD
 
                 try
                 {
@@ -132,6 +138,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // check reject response
                     Assert.IsFalse(rejectResponse.IsError);
+=======
+>>>>>>> 3ab516f48b180ac443d90d4b5788ecb8829b5cd1
 
                     try
                     {
@@ -156,7 +164,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                     var createCallOptions = new CreateCallOptions(
                         new CallInvite(target),
                         new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3ab516f48b180ac443d90d4b5788ecb8829b5cd1
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
                     Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
