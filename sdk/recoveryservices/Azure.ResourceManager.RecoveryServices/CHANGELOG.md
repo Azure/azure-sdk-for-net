@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2023-02-13)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+Added support for Immutable vaults.
 
 ### Other Changes
+Changed API verison to 2023-01-01.
 
 ## 1.0.0-beta.1 (2022-09-25)
 

@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> DNSZone information for Microsoft.RecoveryServices. </summary>
-    public partial class DnsZoneResponse : DnsZone
+    public partial class DnsZoneResult : DnsZone
     {
-        /// <summary> Initializes a new instance of DnsZoneResponse. </summary>
-        public DnsZoneResponse()
+        /// <summary> Initializes a new instance of DnsZoneResult. </summary>
+        public DnsZoneResult()
         {
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DnsZoneResponse. </summary>
+        /// <summary> Initializes a new instance of DnsZoneResult. </summary>
         /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone names. </param>
-        internal DnsZoneResponse(VaultSubResourceType? subResource, IList<string> requiredZoneNames) : base(subResource)
+        internal DnsZoneResult(VaultSubResourceType? subResource, IList<string> requiredZoneNames) : base(subResource)
         {
             RequiredZoneNames = requiredZoneNames;
         }

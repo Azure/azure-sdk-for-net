@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const int Version = 2;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource resource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new();
             foreach (var metric in batch)

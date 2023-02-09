@@ -8,10 +8,10 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The RecognizeCompleted. </summary>
-    public partial class RecognizeCompleted
+    internal partial class RecognizeCompletedInternal
     {
-        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
-        internal RecognizeCompleted()
+        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
+        internal RecognizeCompletedInternal()
         {
         }
         /// <summary> Defines the result for RecognitionType = Dtmf. </summary>

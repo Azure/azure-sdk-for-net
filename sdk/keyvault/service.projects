@@ -2,5 +2,10 @@
   <ItemGroup>
     <!-- Remove deprecated track 1 packages from builds and live testing. -->
     <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.*\**\*.csproj" />
+
+    <!-- Make sure backup/restore tests in the Administration package do not run parallel with other tests. -->
+    <ProjectReference Update="$(MSBuildThisFileDirectory)Azure.Security.KeyVault.Administration\tests\Azure.Security.KeyVault.Administration.Tests.csproj">
+      <TestInParallel>false</TestInParallel>
+    </ProjectReference>
   </ItemGroup>
 </Project>
