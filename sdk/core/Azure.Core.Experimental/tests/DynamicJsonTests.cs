@@ -308,15 +308,15 @@ namespace Azure.Core.Experimental.Tests
             json.Baz = "baz";
 
             // Remove property A
-            json.Bar = "bar";
+            json.Bar = new { B = "b" };
 
             // Properties are present
             Assert.IsFalse((string)json.Foo == null);
-            Assert.IsFalse((string)json.Bar == null);
+            Assert.IsFalse((string)json.Bar.B == null);
             Assert.IsFalse((string)json.Baz == null);
 
-            // Properties is absent
-            Assert.IsTrue((string)json.Baz.A == null);
+            // Properties are absent
+            Assert.IsTrue((string)json.Bar.A == null);
         }
 
         #region Helpers
