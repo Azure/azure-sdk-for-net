@@ -15,15 +15,16 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetProperty()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Baz"" : {
-                     ""A"" : 3.0
+                  "Baz" : {
+                     "A" : 3.0
                   },
-                  ""Foo"" : 1.2,
-                  ""Bar"" : ""Hi!"",
-                  ""Qux"" : false
-                }";
+                  "Foo" : 1.2,
+                  "Bar" : "Hi!",
+                  "Qux" : false
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -42,15 +43,16 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetProperty()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Baz"" : {
-                     ""A"" : 3
+                  "Baz" : {
+                     "A" : 3
                   },
-                  ""Foo"" : 1,
-                  ""Bar"" : ""Hi!"",
-                  ""Qux"" : false
-                }";
+                  "Foo" : 1,
+                  "Bar" : "Hi!",
+                  "Qux" : false
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -67,29 +69,31 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Baz"" : {
-                     ""A"" : 5
+                  "Baz" : {
+                     "A" : 5
                   },
-                  ""Foo"" : 2,
-                  ""Bar"" : ""Hello"",
-                  ""Qux"" : true
-                }"),
+                  "Foo" : 2,
+                  "Bar" : "Hello",
+                  "Qux" : true
+                }
+                """),
                 jsonString);
         }
 
         [Test]
         public void CanSetPropertyMultipleTimes()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Baz"" : {
-                     ""A"" : 3
+                  "Baz" : {
+                     "A" : 3
                   },
-                  ""Foo"" : 1,
-                  ""Bar"" : ""Hi!""
-                }";
+                  "Foo" : 1,
+                  "Bar" : "Hi!"
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -102,28 +106,30 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Baz"" : {
-                     ""A"" : 3
+                  "Baz" : {
+                     "A" : 3
                   },
-                  ""Foo"" : 3,
-                  ""Bar"" : ""Hi!""
-                }"),
+                  "Foo" : 3,
+                  "Bar" : "Hi!"
+                }
+                """),
                 jsonString);
         }
 
         [Test]
         public void CanSetPropertyToMutableJsonDocument()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : ""Hello""
-                }";
+                  "Foo" : "Hello"
+                }
+                """;
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            MutableJsonDocument anotherMDoc = MutableJsonDocument.Parse(@"{ ""Baz"": ""hi"" }");
+            MutableJsonDocument anotherMDoc = MutableJsonDocument.Parse("""{ "Baz": "hi" }""");
 
             mdoc.RootElement.GetProperty("Foo").Set(anotherMDoc);
 
@@ -132,26 +138,28 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : {
-                     ""Baz"" : ""hi""
+                  "Foo" : {
+                     "Baz" : "hi"
                   }
-                }"),
+                }
+                """),
                 jsonString);
         }
 
         [Test]
         public void CanSetPropertyToJsonDocument()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : ""Hello""
-                }";
+                  "Foo" : "Hello"
+                }
+                """;
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            JsonDocument doc = JsonDocument.Parse(@"{ ""Baz"": ""hi"" }");
+            JsonDocument doc = JsonDocument.Parse("""{ "Baz": "hi" }""");
 
             mdoc.RootElement.GetProperty("Foo").Set(doc);
 
@@ -160,22 +168,24 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : {
-                     ""Baz"" : ""hi""
+                  "Foo" : {
+                     "Baz" : "hi"
                   }
-                }"),
+                }
+                """),
                 jsonString);
         }
 
         [Test]
         public void CanAddPropertyToRootObject()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : 1.2
-                }";
+                  "Foo" : 1.2
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -198,22 +208,24 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetDouble());
             Assert.AreEqual("hi", doc.RootElement.GetProperty("Bar").GetString());
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : 1.2,
-                  ""Bar"" : ""hi""
-                }"), jsonString);
+                  "Foo" : 1.2,
+                  "Bar" : "hi"
+                }
+                """), jsonString);
         }
 
         [Test]
         public void CanAddPropertyToObject()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : {
-                    ""A"": 1.2
+                  "Foo" : {
+                    "A": 1.2
                     }
-                }";
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -234,26 +246,28 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
             Assert.AreEqual("hi", doc.RootElement.GetProperty("Foo").GetProperty("B").GetString());
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : {
-                    ""A"": 1.2,
-                    ""B"": ""hi""
+                  "Foo" : {
+                    "A": 1.2,
+                    "B": "hi"
                     }
-                }"), jsonString);
+                }
+                """), jsonString);
         }
 
         [Test]
         public void CanAddMutableJsonDocumentProperty()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : ""Hello""
-                }";
+                  "Foo" : "Hello"
+                }
+                """;
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            MutableJsonDocument anotherMDoc = MutableJsonDocument.Parse(@"{ ""Baz"": ""hi"" }");
+            MutableJsonDocument anotherMDoc = MutableJsonDocument.Parse("""{ "Baz": "hi" }""");
 
             mdoc.RootElement.SetProperty("A", anotherMDoc);
 
@@ -262,27 +276,29 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : ""Hello"",
-                  ""A"" : {
-                     ""Baz"" : ""hi""
+                  "Foo" : "Hello",
+                  "A" : {
+                     "Baz" : "hi"
                   }
-                }"),
+                }
+                """),
                 jsonString);
         }
 
         [Test]
         public void CanAddJsonDocumentProperty()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : ""Hello""
-                }";
+                  "Foo" : "Hello"
+                }
+                """;
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            JsonDocument doc = JsonDocument.Parse(@"{ ""Baz"": ""hi"" }");
+            JsonDocument doc = JsonDocument.Parse("""{ "Baz": "hi" }""");
 
             mdoc.RootElement.SetProperty("A", doc);
 
@@ -291,24 +307,26 @@ namespace Azure.Core.Experimental.Tests
             MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : ""Hello"",
-                  ""A"" : {
-                     ""Baz"" : ""hi""
+                  "Foo" : "Hello",
+                  "A" : {
+                     "Baz" : "hi"
                   }
-                }"),
+                }
+                """),
                 jsonString);
         }
 
         [Test]
         public void CanRemovePropertyFromRootObject()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : 1.2,
-                  ""Bar"" : ""Hi!""
-                }";
+                  "Foo" : 1.2,
+                  "Bar" : "Hi!"
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -328,22 +346,24 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetDouble());
             Assert.IsFalse(doc.RootElement.TryGetProperty("Bar", out JsonElement _));
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : 1.2
-                }"), jsonString);
+                  "Foo" : 1.2
+                }
+                """), jsonString);
         }
 
         [Test]
         public void CanRemovePropertyFromObject()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : {
-                    ""A"": 1.2,
-                    ""B"": ""hi""
+                  "Foo" : {
+                    "A": 1.2,
+                    "B": "hi"
                     }
-                }";
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -361,24 +381,26 @@ namespace Azure.Core.Experimental.Tests
             JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(1.2, doc.RootElement.GetProperty("Foo").GetProperty("A").GetDouble());
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : {
-                    ""A"": 1.2
+                  "Foo" : {
+                    "A": 1.2
                     }
-                }"), jsonString);
+                }
+                """), jsonString);
         }
 
         [Test]
         public void CanReplaceObjectWithAnonymousType()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Baz"" : {
-                     ""A"" : 3.0
+                  "Baz" : {
+                     "A" : 3.0
                   },
-                  ""Foo"" : 1.2
-                }";
+                  "Foo" : 1.2
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -400,13 +422,14 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(1.2, baz.Foo);
             Assert.AreEqual(5.5, baz.Baz.B);
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Baz"" : {
-                     ""B"" : 5.5
+                  "Baz" : {
+                     "B" : 5.5
                   },
-                  ""Foo"" : 1.2
-                }"), jsonString);
+                  "Foo" : 1.2
+                }
+                """), jsonString);
         }
 
         private class BazA
@@ -434,10 +457,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetArrayElement()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : [ 1, 2, 3 ]
-                }";
+                  "Foo" : [ 1, 2, 3 ]
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -449,10 +473,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetArrayElement()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : [ 1, 2, 3 ]
-                }";
+                  "Foo" : [ 1, 2, 3 ]
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -468,10 +493,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetArrayElement_WriteTo()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : [ 1, 2, 3 ]
-                }";
+                  "Foo" : [ 1, 2, 3 ]
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -482,20 +508,22 @@ namespace Azure.Core.Experimental.Tests
             JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : [ 5, 6, 7 ]
-                }"),
+                  "Foo" : [ 5, 6, 7 ]
+                }
+                """),
                 jsonString);
         }
 
         [Test]
         public void CanSetArrayElementMultipleTimes()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : [ 1, 2, 3 ]
-                }";
+                  "Foo" : [ 1, 2, 3 ]
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -508,10 +536,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanChangeArrayElementType()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : [ 1, 2, 3 ]
-                }";
+                  "Foo" : [ 1, 2, 3 ]
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -530,10 +559,11 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(true, doc.RootElement.GetProperty("Foo")[2].GetBoolean());
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Foo"" : [ 5, ""string"", true ]
-                }"),
+                  "Foo" : [ 5, "string", true ]
+                }
+                """),
                 jsonString);
         }
 
@@ -542,7 +572,7 @@ namespace Azure.Core.Experimental.Tests
         {
             // This tests reference semantics.
 
-            string json = @"[ { ""Foo"" : 4 } ]";
+            string json = """[ { "Foo" : 4 } ]""";
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
@@ -571,7 +601,7 @@ namespace Azure.Core.Experimental.Tests
             JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
 
             Assert.AreEqual(5, doc.RootElement[0].GetInt32());
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""[ 5 ]"""), jsonString);
         }
 
         [Test]
@@ -590,7 +620,7 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(
                 MutableJsonDocumentWriteToTests.RemoveWhiteSpace(
-                    @"{ ""A"" : { ""B"" : 2 } }"),
+                    """{ "A" : { "B" : 2 } }"""),
                 jsonString);
         }
 
@@ -599,7 +629,7 @@ namespace Azure.Core.Experimental.Tests
         {
             // This tests reference semantics.
 
-            string json = @"[ { ""Foo"" : {} } ]";
+            string json = """[ { "Foo" : {} } ]""";
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
@@ -613,12 +643,13 @@ namespace Azure.Core.Experimental.Tests
 
             MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(
-                @"[ {
-                    ""Foo"" : {
-                        ""Bar"" : 5
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+                [ {
+                    "Foo" : {
+                        "Bar" : 5
                     }
-                } ]"), jsonString);
+                } ]
+                """), jsonString);
         }
 
         [Test]
@@ -626,7 +657,7 @@ namespace Azure.Core.Experimental.Tests
         {
             // This tests reference semantics.
 
-            string json = @"[ { ""Foo"" : 4 } ]";
+            string json = """[ { "Foo" : 4 } ]""";
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
@@ -643,23 +674,25 @@ namespace Azure.Core.Experimental.Tests
 
             MutableJsonDocumentWriteToTests.WriteToAndParse(mdoc, out string jsonString);
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(
-                @"[ {
-                    ""Foo"" : {
-                        ""Bar"" : 5
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+                [ {
+                    "Foo" : {
+                        "Bar" : 5
                     }
-                } ]"), jsonString);
+                } ]
+                """), jsonString);
         }
 
         [Test]
         public void CanInvalidateElement()
         {
-            string json = @"[
-                {
-                  ""Foo"" : {
-                    ""A"": 6
+            string json = """
+                [{
+                  "Foo" : {
+                    "A": 6
                     }
-                } ]";
+                }]
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -683,18 +716,19 @@ namespace Azure.Core.Experimental.Tests
             JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(5, doc.RootElement[0].GetInt32());
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ 5 ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""[ 5 ]"""), jsonString);
         }
 
         [Test]
         public void CanAccessPropertyInChangedStructure()
         {
-            string json = @"[
-                {
-                  ""Foo"" : {
-                    ""A"": 6
+            string json = """
+                [ {
+                  "Foo" : {
+                    "A": 6
                     }
-                } ]";
+                } ]
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -731,26 +765,28 @@ namespace Azure.Core.Experimental.Tests
             // 3. Type round-trips correctly.
             JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[
-                {
-                  ""Foo"" : {
-                    ""A"": 7
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+                [ {
+                  "Foo" : {
+                    "A": 7
                     }
-                } ]"), jsonString);
+                } ]
+                """), jsonString);
         }
 
         [Test]
         public void CanAccessChangesInDifferentBranches()
         {
-            string json = @"[
-                {
-                  ""Foo"" : {
-                    ""A"": 6
+            string json = """
+                [ {
+                  "Foo" : {
+                    "A": 6
                     }
                 },
                 {
-                    ""Bar"" : ""hi""
-                }]";
+                    "Bar" : "hi"
+                }]
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -781,27 +817,33 @@ namespace Azure.Core.Experimental.Tests
             // 3. Type round-trips correctly.
             JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[
-                {
-                  ""Foo"" : {
-                    ""A"": 7
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+                [ {
+                  "Foo" : {
+                    "A": 7
                     }
                 },
                 {
-                    ""Bar"" : ""new""
-                }]"), jsonString);
+                    "Bar" : "new"
+                }]
+                """), jsonString);
         }
 
         [Test]
         public void PriorChangeToReplacedPropertyIsIgnored()
         {
-            string json = @"{ ""ArrayProperty"": [
+            string json = """
                 {
-                  ""Foo"" : {
-                    ""A"": 6
-                    }
-                } ],
-                  ""Bar"" : ""hi"" }";
+                    "ArrayProperty": [
+                        {
+                           "Foo" : {
+                                "A": 6
+                                }
+                        }
+                    ],
+                    "Bar" : "hi"
+                 }
+            """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -835,20 +877,24 @@ namespace Azure.Core.Experimental.Tests
             string jsonString = BinaryData.FromStream(stream).ToString();
             JsonDocument doc = JsonDocument.Parse(jsonString);
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"{
-                ""ArrayProperty"": [
-                    {
-                      ""Foo"" : {
-                        ""A"": 7
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
+                 {
+                    "ArrayProperty": [
+                        {
+                            "Foo" : {
+                                "A": 7
+                            }
                         }
-                    } ],
-                ""Bar"" : ""hi"" }"), jsonString);
+                     ],
+                    "Bar" : "hi"
+                 }
+                 """), jsonString);
         }
 
         [Test]
         public void CanSetProperty_StringToNumber()
         {
-            string json = @"[ { ""Foo"" : ""hi"" } ]";
+            string json = """[ { "Foo" : "hi" } ]""";
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -862,13 +908,13 @@ namespace Azure.Core.Experimental.Tests
             JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(1.2, doc.RootElement[0].GetProperty("Foo").GetDouble());
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : 1.2 } ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""[ { "Foo" : 1.2 } ]"""), jsonString);
         }
 
         [Test]
         public void CanSetProperty_StringToBool()
         {
-            string json = @"[ { ""Foo"" : ""hi"" } ]";
+            string json = """[ { "Foo" : "hi" } ]""";
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -882,13 +928,13 @@ namespace Azure.Core.Experimental.Tests
             JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.IsFalse(doc.RootElement[0].GetProperty("Foo").GetBoolean());
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : false } ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""[ { "Foo" : false } ]"""), jsonString);
         }
 
         [Test]
         public void CanSetProperty_StringToObject()
         {
-            string json = @"{ ""Foo"" : ""hi"" }";
+            string json = """{ "Foo" : "hi" }""";
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -905,15 +951,14 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(6, doc.RootElement.GetProperty("Foo").GetProperty("Bar").GetInt32());
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(
-                @"{ ""Foo"" : {""Bar"" : 6 } }"),
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""{ "Foo" : {"Bar" : 6 } }"""),
                 jsonString);
         }
 
         [Test]
         public void CanSetProperty_StringToArray()
         {
-            string json = @"[ { ""Foo"" : ""hi"" } ]";
+            string json = """[ { "Foo" : "hi" } ]""";
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -932,13 +977,13 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(2, doc.RootElement[0].GetProperty("Foo")[1].GetInt32());
             Assert.AreEqual(3, doc.RootElement[0].GetProperty("Foo")[2].GetInt32());
 
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : [1, 2, 3] }]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""[ { "Foo" : [1, 2, 3] }]"""), jsonString);
         }
 
         [Test]
         public void CanSetProperty_StringToNull()
         {
-            string json = @"[ { ""Foo"" : ""hi"" } ]";
+            string json = """[ { "Foo" : "hi" } ]""";
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -952,16 +997,17 @@ namespace Azure.Core.Experimental.Tests
             JsonDocument doc = MutableJsonDocumentWriteToTests.WriteToAndParse(jd, out string jsonString);
 
             Assert.AreEqual(JsonValueKind.Null, doc.RootElement[0].GetProperty("Foo").ValueKind);
-            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"[ { ""Foo"" : null } ]"), jsonString);
+            Assert.AreEqual(MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""[ { "Foo" : null } ]"""), jsonString);
         }
 
         [Test]
         public void CanSerialize()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : ""Hello""
-                }";
+                  "Foo" : "Hello"
+                }
+                """;
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(mdoc);
