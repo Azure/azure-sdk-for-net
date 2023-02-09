@@ -15,26 +15,31 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targets");
+            writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
             if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("operationContext");
+                writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            writer.WritePropertyName("callbackUri");
+            writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
-                writer.WritePropertyName("mediaStreamingConfiguration");
+                writer.WritePropertyName("mediaStreamingConfiguration"u8);
                 writer.WriteObjectValue(MediaStreamingConfiguration);
+            }
+            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
+            {
+                writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
+                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
             }
             writer.WriteEndObject();
         }

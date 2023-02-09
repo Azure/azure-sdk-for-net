@@ -28,17 +28,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> to = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deliveryStatus"))
+                if (property.NameEquals("deliveryStatus"u8))
                 {
                     deliveryStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deliveryStatusDetails"))
+                if (property.NameEquals("deliveryStatusDetails"u8))
                 {
                     deliveryStatusDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deliveryAttempts"))
+                if (property.NameEquals("deliveryAttempts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     deliveryAttempts = array;
                     continue;
                 }
-                if (property.NameEquals("receivedTimestamp"))
+                if (property.NameEquals("receivedTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,22 +63,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     receivedTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("from"))
+                if (property.NameEquals("from"u8))
                 {
                     @from = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("to"))
+                if (property.NameEquals("to"u8))
                 {
                     to = property.Value.GetString();
                     continue;

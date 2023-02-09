@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceId");
+            writer.WritePropertyName("sourceId"u8);
             writer.WriteStringValue(SourceId);
             if (Optional.IsDefined(ExistingTargetId))
             {
                 if (ExistingTargetId != null)
                 {
-                    writer.WritePropertyName("existingTargetId");
+                    writer.WritePropertyName("existingTargetId"u8);
                     writer.WriteStringValue(ExistingTargetId);
                 }
                 else
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (ResourceSettings != null)
                 {
-                    writer.WritePropertyName("resourceSettings");
+                    writer.WritePropertyName("resourceSettings"u8);
                     writer.WriteObjectValue(ResourceSettings);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             if (Optional.IsCollectionDefined(DependsOnOverrides))
             {
-                writer.WritePropertyName("dependsOnOverrides");
+                writer.WritePropertyName("dependsOnOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOnOverrides)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<MoveResourcePropertiesErrors> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     provisioningState = new MoverProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceId"))
+                if (property.NameEquals("sourceId"u8))
                 {
                     sourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetId"))
+                if (property.NameEquals("targetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("existingTargetId"))
+                if (property.NameEquals("existingTargetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     existingTargetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceSettings"))
+                if (property.NameEquals("resourceSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     resourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceResourceSettings"))
+                if (property.NameEquals("sourceResourceSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     sourceResourceSettings = MoverResourceSettings.DeserializeMoverResourceSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("moveStatus"))
+                if (property.NameEquals("moveStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     moveStatus = MoverResourcePropertiesMoveStatus.DeserializeMoverResourcePropertiesMoveStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("dependsOnOverrides"))
+                if (property.NameEquals("dependsOnOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     dependsOnOverrides = array;
                     continue;
                 }
-                if (property.NameEquals("isResolveRequired"))
+                if (property.NameEquals("isResolveRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     isResolveRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

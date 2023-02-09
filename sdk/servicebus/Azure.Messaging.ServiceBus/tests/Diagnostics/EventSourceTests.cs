@@ -373,7 +373,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 mockConnection.Object,
                 "queueName",
                 false,
-                new ServiceBusReceiverOptions()
+                new ServiceBusReceiverOptions
                 {
                     PrefetchCount = maxMessages - 1
                 })
@@ -1257,6 +1257,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
         private Mock<ServiceBusConnection> GetMockConnection(Mock<TransportReceiver> mockTransportReceiver)
         {
+            var prefetchCount = 0;
+
+            mockTransportReceiver.Setup(receiver => receiver.PrefetchCount).Returns(() => prefetchCount);
             var mockConnection = GetMockConnection();
 
             mockConnection.Setup(
@@ -1269,7 +1272,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
-                    CancellationToken.None))
+                    It.IsAny<CancellationToken>()))
+                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken>(
+                    (_, _, _, count, _, _, _, _, _) =>
+                    {
+                        prefetchCount = (int) count;
+                    })
                 .Returns(mockTransportReceiver.Object);
 
             return mockConnection;

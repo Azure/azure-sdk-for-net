@@ -213,6 +213,7 @@ rename-rules:
   B2B: B2B|b2b
 
 directive:
+  - remove-operation: Workflows_Update
   - from: logic.json
     where: $.definitions
     transform: >

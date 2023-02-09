@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag");
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Containers))
             {
-                writer.WritePropertyName("containers");
+                writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Containers)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
             if (Optional.IsCollectionDefined(Tables))
             {
-                writer.WritePropertyName("tables");
+                writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
             if (Optional.IsDefined(StorageAccount))
             {
-                writer.WritePropertyName("storageAccount");
+                writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
             writer.WriteEndObject();
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<SystemData> systemData = default;
             Optional<IList<string>> containers = default;
             Optional<IList<string>> tables = default;
-            Optional<StorageAccount> storageAccount = default;
+            Optional<OperationalInsightsStorageAccount> storageAccount = default;
             Optional<StorageInsightStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,32 +105,32 @@ namespace Azure.ResourceManager.OperationalInsights
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("containers"))
+                        if (property0.NameEquals("containers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             containers = array;
                             continue;
                         }
-                        if (property0.NameEquals("tables"))
+                        if (property0.NameEquals("tables"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,17 +169,17 @@ namespace Azure.ResourceManager.OperationalInsights
                             tables = array;
                             continue;
                         }
-                        if (property0.NameEquals("storageAccount"))
+                        if (property0.NameEquals("storageAccount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageAccount = StorageAccount.DeserializeStorageAccount(property0.Value);
+                            storageAccount = OperationalInsightsStorageAccount.DeserializeOperationalInsightsStorageAccount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

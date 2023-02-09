@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, DataExportData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, OperationalInsightsDataExportData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dataExportName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataExportData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, DataExportData data, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationalInsightsDataExportData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, OperationalInsightsDataExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                 case 201:
                     {
-                        DataExportData value = default;
+                        OperationalInsightsDataExportData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataExportData.DeserializeDataExportData(document.RootElement);
+                        value = OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="dataExportName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataExportData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, DataExportData data, CancellationToken cancellationToken = default)
+        public Response<OperationalInsightsDataExportData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, OperationalInsightsDataExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.OperationalInsights
                 case 200:
                 case 201:
                     {
-                        DataExportData value = default;
+                        OperationalInsightsDataExportData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataExportData.DeserializeDataExportData(document.RootElement);
+                        value = OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataExportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataExportData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, CancellationToken cancellationToken = default)
+        public async Task<Response<OperationalInsightsDataExportData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        DataExportData value = default;
+                        OperationalInsightsDataExportData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataExportData.DeserializeDataExportData(document.RootElement);
+                        value = OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataExportData)null, message.Response);
+                    return Response.FromValue((OperationalInsightsDataExportData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataExportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dataExportName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataExportData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, CancellationToken cancellationToken = default)
+        public Response<OperationalInsightsDataExportData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -286,13 +286,13 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        DataExportData value = default;
+                        OperationalInsightsDataExportData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataExportData.DeserializeDataExportData(document.RootElement);
+                        value = OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataExportData)null, message.Response);
+                    return Response.FromValue((OperationalInsightsDataExportData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

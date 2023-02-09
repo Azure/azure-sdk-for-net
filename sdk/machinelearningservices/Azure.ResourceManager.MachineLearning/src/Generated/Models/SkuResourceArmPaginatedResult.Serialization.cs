@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static SkuResourceArmPaginatedResult DeserializeSkuResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SkuResource>> value = default;
+            Optional<IReadOnlyList<MachineLearningSkuDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuResource> array = new List<SkuResource>();
+                    List<MachineLearningSkuDetail> array = new List<MachineLearningSkuDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuResource.DeserializeSkuResource(item));
+                        array.Add(MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail(item));
                     }
                     value = array;
                     continue;

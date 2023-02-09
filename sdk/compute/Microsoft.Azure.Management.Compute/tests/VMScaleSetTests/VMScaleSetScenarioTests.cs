@@ -441,6 +441,11 @@ namespace Compute.Tests
                                 {
                                     Enable = true,
                                     NotBeforeTimeout = "PT6M",
+                                },
+                                OsImageNotificationProfile = new OSImageNotificationProfile
+                                {
+                                    Enable = true,
+                                    NotBeforeTimeout = "PT15M",
                                 }
                             };
                         },
@@ -448,6 +453,8 @@ namespace Compute.Tests
                         {
                             Assert.True(true == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.Enable);
                             Assert.True("PT6M" == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.TerminateNotificationProfile?.NotBeforeTimeout);
+                            Assert.True(true == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.OsImageNotificationProfile?.Enable);
+                            Assert.True("PT15M" == vmScaleSet.VirtualMachineProfile.ScheduledEventsProfile?.OsImageNotificationProfile?.NotBeforeTimeout);
                         });
                 }
             }
@@ -714,6 +721,79 @@ namespace Compute.Tests
             finally
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        /// <summary>
+        /// This test creates a VMSS with PIR image and serviceArtifactReference defined.
+        /// Once the VMSS is created, it verifies whether the response contains serviceArtifactReference or not
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperation_PirImageWithServiceArtifactReferenceId")]
+        public void TestVMScaleSetScenarioOperation_PirImageWithServiceArtifactReferenceId()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // Create resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+                var serviceArtifaceReferenceId = "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/resourceGroups/crpTestrgarco/providers/Microsoft.Compute/galleries/mygalleryForCrp97f7/serviceArtifacts/serviceArtifactWithPirImage2/vmArtifactsProfiles/myVMP";
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    EnsureClientsInitialized(context);
+                    ImageReference imageRef = new ImageReference()
+                    {
+                        Publisher = "MicrosoftWindowsServer",
+                        Offer = "WindowsServer",
+                        Sku = "2022-datacenter",
+                        Version = "latest"
+                    };
+
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                    var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                        rgName,
+                        vmssName,
+                        storageAccountOutput,
+                        imageRef,
+                        out inputVMScaleSet,
+                        null,
+                        (vmScaleSet) =>
+                        {
+                            vmScaleSet.VirtualMachineProfile.ServiceArtifactReference = new ServiceArtifactReference()
+                            {
+                                Id = serviceArtifaceReferenceId
+                            };
+                            vmScaleSet.Overprovision = false;
+                            vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Automatic;
+                            vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                            {
+                                EnableAutomaticOSUpgrade = true
+                            };
+                        },
+                        createWithManagedDisks: true,
+                        createWithPublicIpAddress: false,
+                        createWithHealthProbe: true);
+
+                    ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                    Assert.True(string.Equals(serviceArtifaceReferenceId, getResponse.VirtualMachineProfile.ServiceArtifactReference.Id, StringComparison.OrdinalIgnoreCase),
+                        "ServiceArtifactReference.Id are not matching");
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
             }
         }
 

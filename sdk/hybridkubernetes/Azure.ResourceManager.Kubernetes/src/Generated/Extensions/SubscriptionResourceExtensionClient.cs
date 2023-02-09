@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,86 +43,46 @@ namespace Azure.ResourceManager.Kubernetes
 
         /// <summary>
         /// API to enumerate registered connected K8s clusters under a Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kubernetes/connectedClusters
-        /// Operation Id: ConnectedCluster_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kubernetes/connectedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedCluster_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConnectedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectedClusterResource> GetConnectedClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConnectedClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConnectedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConnectedClusters");
-                scope.Start();
-                try
-                {
-                    var response = await ConnectedClusterRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConnectedClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConnectedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConnectedClusters");
-                scope.Start();
-                try
-                {
-                    var response = await ConnectedClusterRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConnectedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// API to enumerate registered connected K8s clusters under a Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kubernetes/connectedClusters
-        /// Operation Id: ConnectedCluster_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kubernetes/connectedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedCluster_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectedClusterResource> GetConnectedClusters(CancellationToken cancellationToken = default)
         {
-            Page<ConnectedClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConnectedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConnectedClusters");
-                scope.Start();
-                try
-                {
-                    var response = ConnectedClusterRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConnectedClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConnectedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConnectedClusters");
-                scope.Start();
-                try
-                {
-                    var response = ConnectedClusterRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConnectedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

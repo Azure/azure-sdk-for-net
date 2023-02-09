@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("metricName");
+            writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
-            writer.WritePropertyName("lowerLoadThreshold");
+            writer.WritePropertyName("lowerLoadThreshold"u8);
             writer.WriteNumberValue(LowerLoadThreshold);
-            writer.WritePropertyName("upperLoadThreshold");
+            writer.WritePropertyName("upperLoadThreshold"u8);
             writer.WriteNumberValue(UpperLoadThreshold);
-            writer.WritePropertyName("scaleInterval");
+            writer.WritePropertyName("scaleInterval"u8);
             writer.WriteStringValue(ScaleInterval);
-            writer.WritePropertyName("useOnlyPrimaryLoad");
+            writer.WritePropertyName("useOnlyPrimaryLoad"u8);
             writer.WriteBooleanValue(UseOnlyPrimaryLoad);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
@@ -40,32 +40,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServiceScalingTriggerKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lowerLoadThreshold"))
+                if (property.NameEquals("lowerLoadThreshold"u8))
                 {
                     lowerLoadThreshold = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("upperLoadThreshold"))
+                if (property.NameEquals("upperLoadThreshold"u8))
                 {
                     upperLoadThreshold = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("scaleInterval"))
+                if (property.NameEquals("scaleInterval"u8))
                 {
                     scaleInterval = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("useOnlyPrimaryLoad"))
+                if (property.NameEquals("useOnlyPrimaryLoad"u8))
                 {
                     useOnlyPrimaryLoad = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new ServiceScalingTriggerKind(property.Value.GetString());
                     continue;

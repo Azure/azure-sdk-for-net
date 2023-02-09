@@ -6,10 +6,9 @@
 #nullable disable
 
 using System;
-using Azure.Communication.CallAutomation;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TextSource. </summary>
     internal partial class TextSourceInternal
@@ -26,13 +25,17 @@ namespace Azure.Communication.CallAutomation.Models
 
         /// <summary> Text for the cognitive service to be played. </summary>
         public string Text { get; }
-        /// <summary> Source language locale to be played. </summary>
+        /// <summary>
+        /// Source language locale to be played
+        /// Refer to available locales here: &lt;seealso href=&quot;https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts&quot; /&gt;
+        /// </summary>
         public string SourceLocale { get; set; }
-        /// <summary> Target language locale to be played. </summary>
-        public string TargetLocale { get; set; }
         /// <summary> Voice gender type. </summary>
         public GenderType? VoiceGender { get; set; }
-        /// <summary> Voice name to be played. </summary>
+        /// <summary>
+        /// Voice name to be played
+        /// Refer to available Text-to-speech voices here: &lt;seealso href=&quot;https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts&quot; /&gt;
+        /// </summary>
         public string VoiceName { get; set; }
     }
 }

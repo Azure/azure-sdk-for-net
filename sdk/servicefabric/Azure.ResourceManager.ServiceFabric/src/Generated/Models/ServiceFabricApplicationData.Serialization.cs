@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.ServiceFabric
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,18 +35,18 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TypeVersion))
             {
-                writer.WritePropertyName("typeVersion");
+                writer.WritePropertyName("typeVersion"u8);
                 writer.WriteStringValue(TypeVersion);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -57,27 +57,27 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsDefined(UpgradePolicy))
             {
-                writer.WritePropertyName("upgradePolicy");
+                writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy);
             }
             if (Optional.IsDefined(MinimumNodes))
             {
-                writer.WritePropertyName("minimumNodes");
+                writer.WritePropertyName("minimumNodes"u8);
                 writer.WriteNumberValue(MinimumNodes.Value);
             }
             if (Optional.IsDefined(MaximumNodes))
             {
-                writer.WritePropertyName("maximumNodes");
+                writer.WritePropertyName("maximumNodes"u8);
                 writer.WriteNumberValue(MaximumNodes.Value);
             }
             if (Optional.IsDefined(RemoveApplicationCapacity))
             {
-                writer.WritePropertyName("removeApplicationCapacity");
+                writer.WritePropertyName("removeApplicationCapacity"u8);
                 writer.WriteBooleanValue(RemoveApplicationCapacity.Value);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
-                writer.WritePropertyName("metrics");
+                writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsCollectionDefined(ManagedIdentities))
             {
-                writer.WritePropertyName("managedIdentities");
+                writer.WritePropertyName("managedIdentities"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagedIdentities)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceFabric
             }
             if (Optional.IsDefined(TypeName))
             {
-                writer.WritePropertyName("typeName");
+                writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
             writer.WriteEndObject();
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<string> typeName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,37 +161,37 @@ namespace Azure.ResourceManager.ServiceFabric
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.ServiceFabric
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("typeVersion"))
+                        if (property0.NameEquals("typeVersion"u8))
                         {
                             typeVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("parameters"))
+                        if (property0.NameEquals("parameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             parameters = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("upgradePolicy"))
+                        if (property0.NameEquals("upgradePolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("minimumNodes"))
+                        if (property0.NameEquals("minimumNodes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             minimumNodes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("maximumNodes"))
+                        if (property0.NameEquals("maximumNodes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             maximumNodes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("removeApplicationCapacity"))
+                        if (property0.NameEquals("removeApplicationCapacity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             removeApplicationCapacity = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("metrics"))
+                        if (property0.NameEquals("metrics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ServiceFabric
                             metrics = array;
                             continue;
                         }
-                        if (property0.NameEquals("managedIdentities"))
+                        if (property0.NameEquals("managedIdentities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -290,12 +290,12 @@ namespace Azure.ResourceManager.ServiceFabric
                             managedIdentities = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("typeName"))
+                        if (property0.NameEquals("typeName"u8))
                         {
                             typeName = property0.Value.GetString();
                             continue;

@@ -7,6 +7,8 @@ Project("{FD77ECA1-142F-41A2-AD10-463CD3B6A518}") = "Azure.ResourceManager.Billi
 EndProject
 Project("{FD77ECA1-142F-41A2-AD10-463CD3B6A518}") = "Azure.ResourceManager.Billing.Tests", "tests\Azure.ResourceManager.Billing.Tests.csproj", "{CFACB7E4-012B-489F-A164-BA56803B8333}"
 EndProject
+Project("{FD77ECA1-142F-41A2-AD10-463CD3B6A518}") = "Azure.ResourceManager.Billing.Samples", "samples\Azure.ResourceManager.Billing.Samples.csproj", "{4B75865B-4288-4894-BC38-657A199AC03E}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

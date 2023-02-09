@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataAccountType");
+            writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
             if (Optional.IsDefined(TransferAllBlobs))
             {
-                writer.WritePropertyName("transferAllBlobs");
+                writer.WritePropertyName("transferAllBlobs"u8);
                 writer.WriteBooleanValue(TransferAllBlobs.Value);
             }
             if (Optional.IsDefined(TransferAllFiles))
             {
-                writer.WritePropertyName("transferAllFiles");
+                writer.WritePropertyName("transferAllFiles"u8);
                 writer.WriteBooleanValue(TransferAllFiles.Value);
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<bool> transferAllFiles = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataAccountType"))
+                if (property.NameEquals("dataAccountType"u8))
                 {
                     dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("transferAllBlobs"))
+                if (property.NameEquals("transferAllBlobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     transferAllBlobs = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("transferAllFiles"))
+                if (property.NameEquals("transferAllFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

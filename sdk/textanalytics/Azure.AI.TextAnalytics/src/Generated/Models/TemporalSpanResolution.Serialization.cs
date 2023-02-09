@@ -18,25 +18,30 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStartObject();
             if (Optional.IsDefined(Begin))
             {
-                writer.WritePropertyName("begin");
+                writer.WritePropertyName("begin"u8);
                 writer.WriteStringValue(Begin);
             }
             if (Optional.IsDefined(End))
             {
-                writer.WritePropertyName("end");
+                writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End);
             }
             if (Optional.IsDefined(Duration))
             {
-                writer.WritePropertyName("duration");
+                writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
             if (Optional.IsDefined(Modifier))
             {
-                writer.WritePropertyName("modifier");
+                writer.WritePropertyName("modifier"u8);
                 writer.WriteStringValue(Modifier.Value.ToString());
             }
-            writer.WritePropertyName("resolutionKind");
+            if (Optional.IsDefined(Timex))
+            {
+                writer.WritePropertyName("timex"u8);
+                writer.WriteStringValue(Timex);
+            }
+            writer.WritePropertyName("resolutionKind"u8);
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
         }
@@ -47,25 +52,26 @@ namespace Azure.AI.TextAnalytics
             Optional<string> end = default;
             Optional<string> duration = default;
             Optional<TemporalModifier> modifier = default;
+            Optional<string> timex = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("begin"))
+                if (property.NameEquals("begin"u8))
                 {
                     begin = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("end"))
+                if (property.NameEquals("end"u8))
                 {
                     end = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     duration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modifier"))
+                if (property.NameEquals("modifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,13 +81,18 @@ namespace Azure.AI.TextAnalytics
                     modifier = new TemporalModifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resolutionKind"))
+                if (property.NameEquals("timex"u8))
+                {
+                    timex = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resolutionKind"u8))
                 {
                     resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new TemporalSpanResolution(resolutionKind, begin.Value, end.Value, duration.Value, Optional.ToNullable(modifier));
+            return new TemporalSpanResolution(resolutionKind, begin.Value, end.Value, duration.Value, Optional.ToNullable(modifier), timex.Value);
         }
     }
 }

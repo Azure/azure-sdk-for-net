@@ -34,7 +34,8 @@ namespace Azure.Storage.Test.Shared
                 "Azure.Storage.Blobs",
                 "Azure.Storage.Files.DataLake",
                 "Azure.Storage.Files.Shares",
-                "Azure.Storage.Queues");
+                "Azure.Storage.Queues",
+                "Azure.Storage.Blobs.DataMovmement");
         }
 
         private void SetSasVersionInAssemblies(string version, params string[] assemblyNames)

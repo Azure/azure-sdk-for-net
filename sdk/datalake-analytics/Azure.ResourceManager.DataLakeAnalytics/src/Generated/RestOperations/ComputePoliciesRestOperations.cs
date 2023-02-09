@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-11-01-preview";
+            _apiVersion = apiVersion ?? "2016-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComputePolicyListResult>> ListByAccountAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsComputePolicyListResult>> ListByAccountAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyListResult value = default;
+                        DataLakeAnalyticsComputePolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComputePolicyListResult.DeserializeComputePolicyListResult(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyListResult.DeserializeDataLakeAnalyticsComputePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComputePolicyListResult> ListByAccount(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsComputePolicyListResult> ListByAccount(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyListResult value = default;
+                        DataLakeAnalyticsComputePolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComputePolicyListResult.DeserializeComputePolicyListResult(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyListResult.DeserializeDataLakeAnalyticsComputePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, ComputePolicyCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, DataLakeAnalyticsComputePolicyCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="computePolicyName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComputePolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, ComputePolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsComputePolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, DataLakeAnalyticsComputePolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyData value = default;
+                        DataLakeAnalyticsComputePolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComputePolicyData.DeserializeComputePolicyData(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="computePolicyName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComputePolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, ComputePolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsComputePolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, DataLakeAnalyticsComputePolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyData value = default;
+                        DataLakeAnalyticsComputePolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComputePolicyData.DeserializeComputePolicyData(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="computePolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComputePolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsComputePolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -251,13 +251,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyData value = default;
+                        DataLakeAnalyticsComputePolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComputePolicyData.DeserializeComputePolicyData(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ComputePolicyData)null, message.Response);
+                    return Response.FromValue((DataLakeAnalyticsComputePolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="computePolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComputePolicyData> Get(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsComputePolicyData> Get(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyData value = default;
+                        DataLakeAnalyticsComputePolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComputePolicyData.DeserializeComputePolicyData(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ComputePolicyData)null, message.Response);
+                    return Response.FromValue((DataLakeAnalyticsComputePolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, ComputePolicyPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, DataLakeAnalyticsComputePolicyPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="computePolicyName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComputePolicyData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, ComputePolicyPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsComputePolicyData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, DataLakeAnalyticsComputePolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -345,9 +345,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyData value = default;
+                        DataLakeAnalyticsComputePolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComputePolicyData.DeserializeComputePolicyData(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="computePolicyName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="computePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComputePolicyData> Update(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, ComputePolicyPatch patch, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsComputePolicyData> Update(string subscriptionId, string resourceGroupName, string accountName, string computePolicyName, DataLakeAnalyticsComputePolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -378,9 +378,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyData value = default;
+                        DataLakeAnalyticsComputePolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComputePolicyData.DeserializeComputePolicyData(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComputePolicyListResult>> ListByAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsComputePolicyListResult>> ListByAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -499,9 +499,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyListResult value = default;
+                        DataLakeAnalyticsComputePolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComputePolicyListResult.DeserializeComputePolicyListResult(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyListResult.DeserializeDataLakeAnalyticsComputePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComputePolicyListResult> ListByAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsComputePolicyListResult> ListByAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -530,9 +530,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        ComputePolicyListResult value = default;
+                        DataLakeAnalyticsComputePolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComputePolicyListResult.DeserializeComputePolicyListResult(document.RootElement);
+                        value = DataLakeAnalyticsComputePolicyListResult.DeserializeDataLakeAnalyticsComputePolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

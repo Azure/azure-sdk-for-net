@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,29 +16,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static AmlComputeNodeInformation DeserializeAmlComputeNodeInformation(JsonElement element)
         {
             Optional<string> nodeId = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> publicIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
+            Optional<IPAddress> publicIPAddress = default;
             Optional<int> port = default;
-            Optional<NodeState> nodeState = default;
+            Optional<MachineLearningNodeState> nodeState = default;
             Optional<string> runId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeId"))
+                if (property.NameEquals("nodeId"u8))
                 {
                     nodeId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        privateIPAddress = null;
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicIpAddress"))
+                if (property.NameEquals("publicIpAddress"u8))
                 {
-                    publicIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        publicIPAddress = null;
+                        continue;
+                    }
+                    publicIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,18 +58,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeState"))
+                if (property.NameEquals("nodeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nodeState = new NodeState(property.Value.GetString());
+                    nodeState = new MachineLearningNodeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        runId = null;
+                        continue;
+                    }
                     runId = property.Value.GetString();
                     continue;
                 }

@@ -21,39 +21,39 @@ namespace Azure.ResourceManager.Consumption
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag");
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Category))
             {
-                writer.WritePropertyName("category");
+                writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
             if (Optional.IsDefined(Amount))
             {
-                writer.WritePropertyName("amount");
+                writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
             if (Optional.IsDefined(TimeGrain))
             {
-                writer.WritePropertyName("timeGrain");
+                writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain.Value.ToString());
             }
             if (Optional.IsDefined(TimePeriod))
             {
-                writer.WritePropertyName("timePeriod");
+                writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
             if (Optional.IsDefined(Filter))
             {
-                writer.WritePropertyName("filter");
+                writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
-                writer.WritePropertyName("notifications");
+                writer.WritePropertyName("notifications"u8);
                 writer.WriteStartObject();
                 foreach (var item in Notifications)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Consumption
             Optional<BudgetForecastSpend> forecastSpend = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,32 +93,32 @@ namespace Azure.ResourceManager.Consumption
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Consumption
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("category"))
+                        if (property0.NameEquals("category"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Consumption
                             category = new BudgetCategory(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("amount"))
+                        if (property0.NameEquals("amount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Consumption
                             amount = property0.Value.GetDecimal();
                             continue;
                         }
-                        if (property0.NameEquals("timeGrain"))
+                        if (property0.NameEquals("timeGrain"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Consumption
                             timeGrain = new BudgetTimeGrainType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("timePeriod"))
+                        if (property0.NameEquals("timePeriod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Consumption
                             timePeriod = BudgetTimePeriod.DeserializeBudgetTimePeriod(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("filter"))
+                        if (property0.NameEquals("filter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Consumption
                             filter = ConsumptionBudgetFilter.DeserializeConsumptionBudgetFilter(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("currentSpend"))
+                        if (property0.NameEquals("currentSpend"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Consumption
                             currentSpend = BudgetCurrentSpend.DeserializeBudgetCurrentSpend(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("notifications"))
+                        if (property0.NameEquals("notifications"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Consumption
                             notifications = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("forecastSpend"))
+                        if (property0.NameEquals("forecastSpend"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -7,6 +7,8 @@ Project("{A748C02E-AF2F-4C9D-BAF5-73539191083F}") = "Azure.ResourceManager.Quant
 EndProject
 Project("{A748C02E-AF2F-4C9D-BAF5-73539191083F}") = "Azure.ResourceManager.Quantum.Tests", "tests\Azure.ResourceManager.Quantum.Tests.csproj", "{EA6E08B6-077B-48BB-984F-C103C8227CDB}"
 EndProject
+Project("{A748C02E-AF2F-4C9D-BAF5-73539191083F}") = "Azure.ResourceManager.Quantum.Samples", "samples\Azure.ResourceManager.Quantum.Samples.csproj", "{1C4147F8-F602-44ED-9D97-8A314E02C603}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

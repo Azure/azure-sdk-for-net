@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Identity;
 using Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs;
 using Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics;
 using Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces;
@@ -14,13 +15,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
         public static void Main()
         {
-            using var traceDemo = new TraceDemo(ConnectionString);
+            var credential = new DefaultAzureCredential();
+            using var traceDemo = new TraceDemo(ConnectionString, credential);
             traceDemo.GenerateTraces();
 
-            using var metricDemo = new MetricDemo(ConnectionString);
+            using var metricDemo = new MetricDemo(ConnectionString, credential);
             metricDemo.GenerateMetrics();
 
-            using var logDemo = new LogDemo(ConnectionString);
+            using var logDemo = new LogDemo(ConnectionString, credential);
             logDemo.GenerateLogs();
 
             Console.WriteLine("Press Enter key to exit.");

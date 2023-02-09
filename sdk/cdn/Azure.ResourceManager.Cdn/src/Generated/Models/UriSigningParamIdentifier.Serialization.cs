@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("paramIndicator");
+            writer.WritePropertyName("paramIndicator"u8);
             writer.WriteStringValue(ParamIndicator.ToString());
-            writer.WritePropertyName("paramName");
+            writer.WritePropertyName("paramName"u8);
             writer.WriteStringValue(ParamName);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
             string paramName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("paramIndicator"))
+                if (property.NameEquals("paramIndicator"u8))
                 {
                     paramIndicator = new ParamIndicator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("paramName"))
+                if (property.NameEquals("paramName"u8))
                 {
                     paramName = property.Value.GetString();
                     continue;

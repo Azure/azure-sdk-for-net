@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Specifies an OS SKU. This value must not be specified if OSType is Windows. </summary>
+    /// <summary> Specifies the OS SKU used by the agent pool. The default is Ubuntu if OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows. </summary>
     public readonly partial struct ContainerServiceOSSku : IEquatable<ContainerServiceOSSku>
     {
         private readonly string _value;
@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         private const string UbuntuValue = "Ubuntu";
         private const string CblMarinerValue = "CBLMariner";
+        private const string Windows2019Value = "Windows2019";
+        private const string Windows2022Value = "Windows2022";
 
         /// <summary> Ubuntu. </summary>
         public static ContainerServiceOSSku Ubuntu { get; } = new ContainerServiceOSSku(UbuntuValue);
         /// <summary> CBLMariner. </summary>
         public static ContainerServiceOSSku CblMariner { get; } = new ContainerServiceOSSku(CblMarinerValue);
+        /// <summary> Windows2019. </summary>
+        public static ContainerServiceOSSku Windows2019 { get; } = new ContainerServiceOSSku(Windows2019Value);
+        /// <summary> Windows2022. </summary>
+        public static ContainerServiceOSSku Windows2022 { get; } = new ContainerServiceOSSku(Windows2022Value);
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceOSSku left, ContainerServiceOSSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceOSSku"/> values are not the same. </summary>

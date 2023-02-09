@@ -11,7 +11,10 @@ using Azure.ResourceManager.DataLakeAnalytics;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> Data Lake Store account list information. </summary>
+    /// <summary>
+    /// Data Lake Store account list information.
+    /// Serialized Name: DataLakeStoreAccountInformationListResult
+    /// </summary>
     internal partial class DataLakeStoreAccountInformationListResult
     {
         /// <summary> Initializes a new instance of DataLakeStoreAccountInformationListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreAccountInformationListResult. </summary>
-        /// <param name="value"> The results of the list operation. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value">
+        /// The results of the list operation.
+        /// Serialized Name: DataLakeStoreAccountInformationListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link (url) to the next page of results.
+        /// Serialized Name: DataLakeStoreAccountInformationListResult.nextLink
+        /// </param>
         internal DataLakeStoreAccountInformationListResult(IReadOnlyList<DataLakeStoreAccountInformationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The results of the list operation. </summary>
+        /// <summary>
+        /// The results of the list operation.
+        /// Serialized Name: DataLakeStoreAccountInformationListResult.value
+        /// </summary>
         public IReadOnlyList<DataLakeStoreAccountInformationData> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
+        /// <summary>
+        /// The link (url) to the next page of results.
+        /// Serialized Name: DataLakeStoreAccountInformationListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

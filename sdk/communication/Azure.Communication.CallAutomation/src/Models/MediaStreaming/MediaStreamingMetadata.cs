@@ -3,7 +3,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace Azure.Communication.CallAutomation.Models.MediaStreaming
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// Metadata package for Media Streaming.

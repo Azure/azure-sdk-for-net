@@ -13,10 +13,8 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class MediaTransformJobTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _mediaTransformIdentifier;
-        private ResourceIdentifier _mediaServiceIdentifier;
-        private MediaTransformResource _mediaTransform;
         private MediaServicesAccountResource _mediaService;
+        private MediaTransformResource _mediaTransform;
 
         private MediaJobCollection mediaTransformJobCollection => _mediaTransform.GetMediaJobs();
 
@@ -25,30 +23,20 @@ namespace Azure.ResourceManager.Media.Tests
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediafortjob"), storage.Id);
-            var mediaTransform = await CreateMediaTransfer(mediaService.GetMediaTransforms(), SessionRecording.GenerateAssetName("randomtransfer"));
-            _mediaServiceIdentifier = mediaService.Id;
-            _mediaTransformIdentifier = mediaTransform.Id;
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task SetUp()
         {
-            _mediaService = await Client.GetMediaServicesAccountResource(_mediaServiceIdentifier).GetAsync();
-            _mediaTransform = await Client.GetMediaTransformResource(_mediaTransformIdentifier).GetAsync();
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatests");
+            var mediaTransformName = Recording.GenerateAssetName("randomtransfer");
+            _mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
+            _mediaTransform = await CreateMediaTransfer(_mediaService, mediaTransformName);
         }
 
         private async Task<MediaJobResource> CreateDefautMediaTransferJob(string jobName)
         {
             // create two asset
-            var inputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("empty-asset-input"), new MediaAssetData());
-            var outputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("empty-asset-output"), new MediaAssetData());
+            var inputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("empty-asset-input"), new MediaAssetData());
+            var outputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("empty-asset-output"), new MediaAssetData());
 
             MediaJobData data = new MediaJobData();
             data.Input = new MediaJobInputAsset(inputAsset.Value.Data.Name);
@@ -62,7 +50,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task MediaTransformJobBasicTests()
         {
             // Create
-            string jobName = SessionRecording.GenerateAssetName("job");
+            string jobName = Recording.GenerateAssetName("job");
             var job = await CreateDefautMediaTransferJob(jobName);
             Assert.IsNotNull(job);
             Assert.AreEqual(jobName, job.Data.Name);

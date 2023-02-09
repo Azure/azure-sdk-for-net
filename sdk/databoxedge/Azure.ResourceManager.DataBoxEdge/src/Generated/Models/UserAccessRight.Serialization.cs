@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("userId");
+            writer.WritePropertyName("userId"u8);
             writer.WriteStringValue(UserId);
-            writer.WritePropertyName("accessType");
+            writer.WritePropertyName("accessType"u8);
             writer.WriteStringValue(AccessType.ToString());
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ShareAccessType accessType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userId"))
+                if (property.NameEquals("userId"u8))
                 {
                     userId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("accessType"))
+                if (property.NameEquals("accessType"u8))
                 {
                     accessType = new ShareAccessType(property.Value.GetString());
                     continue;

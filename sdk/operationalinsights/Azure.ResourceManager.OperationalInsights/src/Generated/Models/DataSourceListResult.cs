@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of DataSourceListResult. </summary>
         internal DataSourceListResult()
         {
-            Value = new ChangeTrackingList<DataSourceData>();
+            Value = new ChangeTrackingList<OperationalInsightsDataSourceData>();
         }
 
         /// <summary> Initializes a new instance of DataSourceListResult. </summary>
         /// <param name="value"> A list of datasources. </param>
         /// <param name="nextLink"> The link (url) to the next page of datasources. </param>
-        internal DataSourceListResult(IReadOnlyList<DataSourceData> value, string nextLink)
+        internal DataSourceListResult(IReadOnlyList<OperationalInsightsDataSourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of datasources. </summary>
-        public IReadOnlyList<DataSourceData> Value { get; }
+        public IReadOnlyList<OperationalInsightsDataSourceData> Value { get; }
         /// <summary> The link (url) to the next page of datasources. </summary>
         public string NextLink { get; }
     }

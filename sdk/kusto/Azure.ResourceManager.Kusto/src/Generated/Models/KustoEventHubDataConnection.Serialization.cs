@@ -20,41 +20,41 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EventHubResourceId))
             {
-                writer.WritePropertyName("eventHubResourceId");
+                writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
             if (Optional.IsDefined(ConsumerGroup))
             {
-                writer.WritePropertyName("consumerGroup");
+                writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
             if (Optional.IsDefined(TableName))
             {
-                writer.WritePropertyName("tableName");
+                writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
             if (Optional.IsDefined(MappingRuleName))
             {
-                writer.WritePropertyName("mappingRuleName");
+                writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
             if (Optional.IsDefined(DataFormat))
             {
-                writer.WritePropertyName("dataFormat");
+                writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
             if (Optional.IsCollectionDefined(EventSystemProperties))
             {
-                writer.WritePropertyName("eventSystemProperties");
+                writer.WritePropertyName("eventSystemProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventSystemProperties)
                 {
@@ -64,22 +64,22 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsDefined(Compression))
             {
-                writer.WritePropertyName("compression");
+                writer.WritePropertyName("compression"u8);
                 writer.WriteStringValue(Compression.Value.ToString());
             }
             if (Optional.IsDefined(ManagedIdentityResourceId))
             {
-                writer.WritePropertyName("managedIdentityResourceId");
+                writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
             }
             if (Optional.IsDefined(DatabaseRouting))
             {
-                writer.WritePropertyName("databaseRouting");
+                writer.WritePropertyName("databaseRouting"u8);
                 writer.WriteStringValue(DatabaseRouting.Value.ToString());
             }
             if (Optional.IsDefined(RetrievalStartOn))
             {
-                writer.WritePropertyName("retrievalStartDate");
+                writer.WritePropertyName("retrievalStartDate"u8);
                 writer.WriteStringValue(RetrievalStartOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<DateTimeOffset> retrievalStartDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,37 +118,37 @@ namespace Azure.ResourceManager.Kusto.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new DataConnectionKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("eventHubResourceId"))
+                        if (property0.NameEquals("eventHubResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,22 +167,22 @@ namespace Azure.ResourceManager.Kusto.Models
                             eventHubResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("consumerGroup"))
+                        if (property0.NameEquals("consumerGroup"u8))
                         {
                             consumerGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tableName"))
+                        if (property0.NameEquals("tableName"u8))
                         {
                             tableName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("mappingRuleName"))
+                        if (property0.NameEquals("mappingRuleName"u8))
                         {
                             mappingRuleName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataFormat"))
+                        if (property0.NameEquals("dataFormat"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             dataFormat = new KustoEventHubDataFormat(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("eventSystemProperties"))
+                        if (property0.NameEquals("eventSystemProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             eventSystemProperties = array;
                             continue;
                         }
-                        if (property0.NameEquals("compression"))
+                        if (property0.NameEquals("compression"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             compression = new EventHubMessagesCompressionType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             provisioningState = new KustoProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("managedIdentityResourceId"))
+                        if (property0.NameEquals("managedIdentityResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             managedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("managedIdentityObjectId"))
+                        if (property0.NameEquals("managedIdentityObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             managedIdentityObjectId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("databaseRouting"))
+                        if (property0.NameEquals("databaseRouting"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Kusto.Models
                             databaseRouting = new KustoDatabaseRouting(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("retrievalStartDate"))
+                        if (property0.NameEquals("retrievalStartDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

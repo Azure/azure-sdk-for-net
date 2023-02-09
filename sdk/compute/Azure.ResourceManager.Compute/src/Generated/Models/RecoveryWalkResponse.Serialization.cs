@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> nextPlatformUpdateDomain = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("walkPerformed"))
+                if (property.NameEquals("walkPerformed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
                     walkPerformed = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("nextPlatformUpdateDomain"))
+                if (property.NameEquals("nextPlatformUpdateDomain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

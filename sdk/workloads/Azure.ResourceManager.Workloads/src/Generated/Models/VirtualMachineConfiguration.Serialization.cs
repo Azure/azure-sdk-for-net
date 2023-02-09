@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vmSize");
+            writer.WritePropertyName("vmSize"u8);
             writer.WriteStringValue(VmSize);
-            writer.WritePropertyName("imageReference");
+            writer.WritePropertyName("imageReference"u8);
             writer.WriteObjectValue(ImageReference);
-            writer.WritePropertyName("osProfile");
+            writer.WritePropertyName("osProfile"u8);
             writer.WriteObjectValue(OSProfile);
             writer.WriteEndObject();
         }
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Workloads.Models
             OSProfile osProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmSize"))
+                if (property.NameEquals("vmSize"u8))
                 {
                     vmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageReference"))
+                if (property.NameEquals("imageReference"u8))
                 {
                     imageReference = ImageReference.DeserializeImageReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osProfile"))
+                if (property.NameEquals("osProfile"u8))
                 {
                     osProfile = OSProfile.DeserializeOSProfile(property.Value);
                     continue;

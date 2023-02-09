@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-12-05)
+
+### Breaking Changes
+ 
+ - Split `RecordSet` to each `PrivateDns[RecordType]Record`
+ - Rename `PrivateZone` to `PrivateDnsZone`
+ - Rename `RecordSet` to `Record`
+ - Renamed some properties to more comprehensive names.
+
+### Other Changes
+ - Upgraded dependent `Azure.ResourceManager` to 1.3.2
+ - Upgraded dependent `Azure.Core` to 1.26.0
 
 ## 1.0.0-beta.1 (2022-08-29)
 

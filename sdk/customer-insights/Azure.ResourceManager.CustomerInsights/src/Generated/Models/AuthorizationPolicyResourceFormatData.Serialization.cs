@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CustomerInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Permissions))
             {
-                writer.WritePropertyName("permissions");
+                writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsDefined(PrimaryKey))
             {
-                writer.WritePropertyName("primaryKey");
+                writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
             if (Optional.IsDefined(SecondaryKey))
             {
-                writer.WritePropertyName("secondaryKey");
+                writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
             writer.WriteEndObject();
@@ -56,32 +56,32 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("policyName"))
+                        if (property0.NameEquals("policyName"u8))
                         {
                             policyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("permissions"))
+                        if (property0.NameEquals("permissions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.CustomerInsights
                             permissions = array;
                             continue;
                         }
-                        if (property0.NameEquals("primaryKey"))
+                        if (property0.NameEquals("primaryKey"u8))
                         {
                             primaryKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secondaryKey"))
+                        if (property0.NameEquals("secondaryKey"u8))
                         {
                             secondaryKey = property0.Value.GetString();
                             continue;

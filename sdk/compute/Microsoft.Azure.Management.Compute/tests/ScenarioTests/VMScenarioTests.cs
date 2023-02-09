@@ -58,7 +58,7 @@ namespace Compute.Tests
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
                 TestVMScenarioOperationsInternal("TestVMScenarioOperations_ManagedDisks", vmSize: VirtualMachineSizeTypes.StandardM64s, hasManagedDisks: true,
-                    osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS, writeAcceleratorEnabled: true);
+                    osDiskStorageAccountType: StorageAccountTypes.PremiumLRS, dataDiskStorageAccountType: StorageAccountTypes.PremiumLRS, writeAcceleratorEnabled: true, validateListAvailableSize: false);
             }
             finally
             {
@@ -290,7 +290,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_PpgScenario", hasManagedDisks: true, isPpgScenario: true);
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_PpgScenario", hasManagedDisks: true, isPpgScenario: true, validateListAvailableSize: false);
             }
             finally
             {

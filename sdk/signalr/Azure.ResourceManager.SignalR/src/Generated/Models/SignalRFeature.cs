@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// </param>
         /// <param name="value"> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SignalRFeature(FeatureFlag flag, string value)
+        public SignalRFeature(SignalRFeatureFlag flag, string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// </param>
         /// <param name="value"> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </param>
         /// <param name="properties"> Optional properties related to this feature. </param>
-        internal SignalRFeature(FeatureFlag flag, string value, IDictionary<string, string> properties)
+        internal SignalRFeature(SignalRFeatureFlag flag, string value, IDictionary<string, string> properties)
         {
             Flag = flag;
             Value = value;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// - EnableMessagingLogs: &quot;true&quot;/&quot;false&quot;, to enable/disable the connectivity log category respectively.
         /// - EnableLiveTrace: Live Trace allows you to know what&apos;s happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: &quot;true&quot;/&quot;false&quot;, to enable/disable live trace feature.
         /// </summary>
-        public FeatureFlag Flag { get; set; }
+        public SignalRFeatureFlag Flag { get; set; }
         /// <summary> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </summary>
         public string Value { get; set; }
         /// <summary> Optional properties related to this feature. </summary>

@@ -5,6 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.Security.KeyVault.Keys;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -231,6 +233,105 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DownloadCertificateAsync("test"));
             Assert.AreEqual(403, ex.Status);
             Assert.AreEqual("Forbidden", ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task PagesResults()
+        {
+            // The DiagnosticScope names have been fully-qualified since v4 was created and has already shipped that way.
+            TestDiagnostics = false;
+
+            MockTransport transport = new(
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/certificates/1""},
+                        {""id"": ""https://test/certificates/2""}
+                    ],
+                    ""nextLink"": ""https://test/certificates?$skiptoken=1""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [],
+                    ""nextLink"": ""https://test/certificates?$skiptoken=2""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/certificates/3""}
+                    ]
+                }"));
+
+            CertificateClient client = InstrumentClient(new CertificateClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
+
+            var certificates = await client.GetPropertiesOfCertificatesAsync().ToEnumerableAsync();
+            Assert.AreEqual(3, certificates.Count);
+        }
+
+        [Test]
+        public async Task PagesVersionsResults()
+        {
+            // The DiagnosticScope names have been fully-qualified since v4 was created and has already shipped that way.
+            TestDiagnostics = false;
+
+            MockTransport transport = new(
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/certificates/1/1""},
+                        {""id"": ""https://test/certificates/1/2""}
+                    ],
+                    ""nextLink"": ""https://test/certificates/1/versions?$skiptoken=1""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [],
+                    ""nextLink"": ""https://test/certificates/1/versions?$skiptoken=2""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/certificates/1/3""}
+                    ]
+                }"));
+
+            CertificateClient client = InstrumentClient(new CertificateClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
+
+            var versions = await client.GetPropertiesOfCertificateVersionsAsync("1").ToEnumerableAsync();
+            Assert.AreEqual(3, versions.Count);
+        }
+
+        [Test]
+        public async Task PagesDeletedResults()
+        {
+            // The DiagnosticScope names have been fully-qualified since v4 was created and has already shipped that way.
+            TestDiagnostics = false;
+
+            MockTransport transport = new(
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/certificates/1""},
+                        {""id"": ""https://test/certificates/2""}
+                    ],
+                    ""nextLink"": ""https://test/deletedcertificates?$skiptoken=1""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [],
+                    ""nextLink"": ""https://test/deletedcertificates?$skiptoken=2""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/certificates/3""}
+                    ]
+                }"));
+
+            CertificateClient client = InstrumentClient(new CertificateClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
+
+            var certificates = await client.GetDeletedCertificatesAsync().ToEnumerableAsync();
+            Assert.AreEqual(3, certificates.Count);
         }
     }
 }

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionState))
             {
-                writer.WritePropertyName("connectionState");
+                writer.WritePropertyName("connectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
-                writer.WritePropertyName("fqdns");
+                writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Fqdns)
                 {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(GroupId))
             {
-                writer.WritePropertyName("groupId");
+                writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("privateLinkResourceId");
+                writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
             foreach (var item in AdditionalProperties)
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionState"))
+                if (property.NameEquals("connectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     connectionState = ConnectionStateProperties.DeserializeConnectionStateProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("fqdns"))
+                if (property.NameEquals("fqdns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     fqdns = array;
                     continue;
                 }
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isReserved"))
+                if (property.NameEquals("isReserved"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     isReserved = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("privateLinkResourceId"))
+                if (property.NameEquals("privateLinkResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     privateLinkResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;

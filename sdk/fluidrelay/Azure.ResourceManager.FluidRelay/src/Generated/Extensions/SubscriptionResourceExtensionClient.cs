@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,86 +43,46 @@ namespace Azure.ResourceManager.FluidRelay
 
         /// <summary>
         /// List all Fluid Relay servers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers
-        /// Operation Id: FluidRelayServers_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayServers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FluidRelayServerResource> GetFluidRelayServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FluidRelayServerResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FluidRelayServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFluidRelayServers");
-                scope.Start();
-                try
-                {
-                    var response = await FluidRelayServerRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FluidRelayServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FluidRelayServerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FluidRelayServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFluidRelayServers");
-                scope.Start();
-                try
-                {
-                    var response = await FluidRelayServerRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FluidRelayServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FluidRelayServerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FluidRelayServerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFluidRelayServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all Fluid Relay servers in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers
-        /// Operation Id: FluidRelayServers_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.FluidRelay/fluidRelayServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayServers_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FluidRelayServerResource> GetFluidRelayServers(CancellationToken cancellationToken = default)
         {
-            Page<FluidRelayServerResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = FluidRelayServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFluidRelayServers");
-                scope.Start();
-                try
-                {
-                    var response = FluidRelayServerRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FluidRelayServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FluidRelayServerResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = FluidRelayServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFluidRelayServers");
-                scope.Start();
-                try
-                {
-                    var response = FluidRelayServerRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FluidRelayServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FluidRelayServerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FluidRelayServerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFluidRelayServers", "value", "nextLink", cancellationToken);
         }
     }
 }

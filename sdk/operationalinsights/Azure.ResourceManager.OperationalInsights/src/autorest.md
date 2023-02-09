@@ -3,7 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
 csharp: true
 library-name: OperationalInsights
@@ -21,6 +20,13 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'clusterId': 'uuid'
+  'dataExportId': 'uuid'
+  'lastSkuUpdatedOn': 'datetime'
+  '*ResourceId': 'arm-id'
+  'queryPackId': 'uuid'
+  'customerId': 'uuid'
+  'azureAsyncOperationId': 'uuid'
 
 rename-rules:
   CPU: Cpu
@@ -45,6 +51,113 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - Cluster
+  - DataExport
+  - DataSource
+  - LinkedService
+  - SavedSearch
+  - Table
+  - Workspace
+  - AvailableServiceTier
+  - BillingType
+  - CapacityReservationProperties
+  - ClusterEntityStatus
+  - ClusterSku
+  - Column
+  - DataIngestionStatus
+  - DataSourceKind
+  - DataSourceType
+  - IntelligencePack
+  - KeyVaultProperties
+  - LinkedServiceEntityStatus
+  - ManagementGroup
+  - MetricName
+  - PublicNetworkAccessType
+  - RestoredLogs
+  - Schema
+  - SearchSchemaValue
+  - StorageAccount
+  - Tag
+  - UsageMetric
+  - WorkspaceCapping
+  - WorkspaceEntityStatus
+  - WorkspaceFeatures
+  - WorkspaceSku
+
+rename-mapping:
+  LinkedStorageAccountsResource: OperationalInsightsLinkedStorageAccounts
+  Cluster.properties.createdDate: -|date-time-rfc1123
+  Cluster.properties.lastModifiedDate: -|date-time-rfc1123
+  DataExport.properties.createdDate: -|date-time-rfc1123
+  DataExport.properties.lastModifiedDate: -|date-time-rfc1123
+  AssociatedWorkspace.associateDate: AssociatedOn|date-time-rfc1123
+  AssociatedWorkspace.workspaceId: -|uuid
+  Workspace.properties.createdDate: -|date-time
+  Workspace.properties.modifiedDate: -|date-time
+  WorkspacePatch.properties.createdDate: -|date-time
+  WorkspacePatch.properties.modifiedDate: -|date-time
+  DataExport.properties.enable: IsEnabled
+  AvailableServiceTier.enabled: IsEnabled
+  AvailableServiceTier.lastSkuUpdate: LastSkuUpdatedOn
+  CapacityReservationProperties.lastSkuUpdate: LastSkuUpdatedOn
+  WorkspaceSku.lastSkuUpdate: LastSkuUpdatedOn
+  IntelligencePack.enabled: IsEnabled
+  WorkspaceFeatures.disableLocalAuth: IsLocalAuthDisabled
+  WorkspaceFeatures.enableDataExport: IsDataExportEnabled
+  WorkspaceFeatures.enableLogAccessUsingOnlyResourcePermissions: IsLogAccessUsingOnlyResourcePermissionsEnabled
+  PrivateLinkScopedResource: OperationalInsightsPrivateLinkScopedResourceInfo
+  LogAnalyticsQueryPack.properties.timeCreated: CreatedOn
+  LogAnalyticsQueryPack.properties.timeModified: ModifiedOn
+  LogAnalyticsQueryPackQuery.properties.id: ApplicationId|uuid
+  LogAnalyticsQueryPackQuery.properties.timeCreated: CreatedOn
+  LogAnalyticsQueryPackQuery.properties.timeModified: ModifiedOn
+  LogAnalyticsQueryPackQuery: LogAnalyticsQuery
+  ClusterSkuNameEnum: OperationalInsightsClusterSkuName
+  ColumnDataTypeHintEnum: OperationalInsightsColumnDataTypeHint
+  ColumnTypeEnum: OperationalInsightsColumnType
+  ProvisioningStateEnum: OperationalInsightsTableProvisioningState
+  SourceEnum: OperationalInsightsTableCreator
+  TablePlanEnum: OperationalInsightsTablePlan
+  TableSubTypeEnum: OperationalInsightsTableSubType
+  TableTypeEnum: OperationalInsightsTableType
+  WorkspaceSkuNameEnum: OperationalInsightsWorkspaceSkuName
+  SkuNameEnum: OperationalInsightsSkuName
+  AssociatedWorkspace: OperationalInsightsClusterAssociatedWorkspace
+  CoreSummary: OperationalInsightsSearchCoreSummary
+  LogAnalyticsQueryPackQuerySearchProperties: LogAnalyticsQuerySearchProperties
+  LogAnalyticsQueryPackQueryPropertiesRelated: LogAnalyticsQueryRelatedMetadata
+  LogAnalyticsQueryPackQuerySearchPropertiesRelated: LogAnalyticsQuerySearchRelatedMetadata
+  PurgeState: OperationalInsightsWorkspacePurgeState
+  SharedKeys: OperationalInsightsWorkspaceSharedKeys
+  WorkspacePurgeResponse: OperationalInsightsWorkspacePurgeResult
+  WorkspacePurgeStatusResponse: OperationalInsightsWorkspacePurgeStatusResult
+  RestoredLogs: OperationalInsightsTableRestoredLogs
+  SearchResults: OperationalInsightsTableSearchResults
+  ResultStatistics: OperationalInsightsTableResultStatistics
+  ResultStatistics.scannedGb: ScannedGB
+  WorkspaceCapping.dailyQuotaGb: DailyQuotaInGB
+  RetentionInDaysAsDefault: RetentionInDaysAsDefaultState
+  TotalRetentionInDaysAsDefault: TotalRetentionInDaysAsDefaultState
+  ManagementGroup.properties.created: CreatedOn
+  ManagementGroup.properties.dataReceived: DataReceivedOn
+  StorageAccount.id: -|arm-id
+  WorkspacePurgeResponse.operationId: -|uuid
+  WorkspacePurgeBody: OperationalInsightsWorkspacePurgeContent
+  WorkspacePurgeBodyFilters: OperationalInsightsWorkspacePurgeFilter
+  Capacity: OperationalInsightsClusterCapacity
+  CapacityReservationLevel: OperationalInsightsWorkspaceCapacityReservationLevel
+
+keep-plural-resource-data:
+  - OperationalInsightsLinkedStorageAccounts
+
+override-operation-name:
+  WorkspacePurge_GetPurgeStatus: GetPurgeStatus
+  SharedKeys_GetSharedKeys: GetSharedKeys
+  WorkspacePurge_Purge: Purge
+  DeletedWorkspaces_List: GetDeletedWorkspaces
+  DeletedWorkspaces_ListByResourceGroup: GetDeletedWorkspaces
+
 directive:
   - remove-operation: OperationStatuses_Get
   # Dup model `SystemData` in this RP, should use the common type
@@ -53,23 +166,28 @@ directive:
     transform: >
       delete $.SystemData;
       delete $.IdentityType;
-      $.AzureResourceProperties.properties.systemData['$ref'] = '../../../../../common-types/resource-management/v2/types.json#/definitions/ErrorResponse';
-  # Codegen can't handle integter enum properly, should be fixed before GA
-  - from: Workspaces.json
-    where: $.definitions
-    transform: >
-      delete $.WorkspaceSku.properties.capacityReservationLevel['enum'];
-      delete $.WorkspaceSku.properties.capacityReservationLevel['x-ms-enum'];
-  # Codegen can't handle integter enum properly, should be fixed before GA
-  - from: Clusters.json
-    where: $.definitions
-    transform: >
-      delete $.ClusterSku.properties.capacity['enum'];
-      delete $.ClusterSku.properties.capacity['x-ms-enum'];
+      $.AzureResourceProperties.properties.systemData['$ref'] = '../../../../../common-types/resource-management/v2/types.json#/definitions/systemData';
   # The `type` is reserved name
   - from: Tables.json
     where: $.definitions
     transform: >
       $.Column.properties.type['x-ms-client-name'] = 'ColumnType';
+  - from: DataExports.json
+    where: $.definitions
+    transform: >
+      $.Destination.properties.type['x-ms-enum'].name = 'OperationalInsightsDataExportDestinationType';
+      $.Destination.properties.type['x-ms-client-name'] = 'DestinationType';
+  - from: LinkedStorageAccounts.json
+    where: $.definitions
+    transform: >
+      $.LinkedStorageAccountsProperties.properties.storageAccountIds.items['x-ms-format'] = 'arm-id';
+  - from: Gateways.json
+    where: $.parameters
+    transform: >
+      $.GatewayIdParameter.format = 'uuid';
+  - from: DataSources.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataSources'].get.parameters[?(@.name === '$skiptoken')]
+    transform: >
+      $['x-ms-client-name'] = 'skipToken';
 
 ```

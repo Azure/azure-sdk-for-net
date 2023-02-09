@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SqlPoolSchemaListResult DeserializeSqlPoolSchemaListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SqlPoolSchemaData>> value = default;
+            Optional<IReadOnlyList<SynapseSqlPoolSchemaData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SqlPoolSchemaData> array = new List<SqlPoolSchemaData>();
+                    List<SynapseSqlPoolSchemaData> array = new List<SynapseSqlPoolSchemaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlPoolSchemaData.DeserializeSqlPoolSchemaData(item));
+                        array.Add(SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

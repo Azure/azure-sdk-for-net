@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "218",
+        "Content-Length": "190",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-80092ba0e1017d2f7e7a1805cdc27d9c-0966e61e0f92cdb6-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "b043f7db5d90995fdacaac6d4a1f9f8d",
+        "traceparent": "00-1235f6bf6561b591512afef90653fa71-bb5cbb7dfedeb1e4-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ce65f0c67ff7d0b6235c4ea209094001",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,22 +24,22 @@
           ]
         },
         "parameters": {
-          "stringIndexType": "Utf16CodeUnit",
-          "modelVersion": "2020-04-01"
+          "stringIndexType": "Utf16CodeUnit"
         },
         "kind": "EntityRecognition"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "59001742-42b5-45b4-aac0-facdb4bf7c6b",
-        "Content-Length": "441",
+        "apim-request-id": "32474e3b-e1af-4820-a003-ad7ae24eb7ae",
+        "Content-Length": "440",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Fri, 14 Oct 2022 22:22:40 GMT",
+        "Date": "Wed, 30 Nov 2022 03:44:49 GMT",
         "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "129"
+        "x-envoy-upstream-service-time": "31",
+        "x-ms-region": "West US 2"
       },
       "ResponseBody": {
         "kind": "EntityRecognitionResults",
@@ -53,7 +53,7 @@
                   "category": "Event",
                   "offset": 18,
                   "length": 4,
-                  "confidenceScore": 0.61
+                  "confidenceScore": 0.74
                 },
                 {
                   "text": "Seattle",
@@ -61,7 +61,7 @@
                   "subcategory": "GPE",
                   "offset": 26,
                   "length": 7,
-                  "confidenceScore": 0.82
+                  "confidenceScore": 1.0
                 },
                 {
                   "text": "last week",
@@ -76,13 +76,13 @@
             }
           ],
           "errors": [],
-          "modelVersion": "2020-04-01"
+          "modelVersion": "2021-06-01"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "112297458",
+    "RandomSeed": "623214473",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

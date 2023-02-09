@@ -12,13 +12,24 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly KeyPhraseCollection _keyPhrases;
 
-        internal ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, KeyPhraseCollection keyPhrases)
+        internal ExtractKeyPhrasesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            KeyPhraseCollection keyPhrases,
+            DetectedLanguage? detectedLanguage)
             : base(id, statistics)
         {
             _keyPhrases = keyPhrases;
+            DetectedLanguage = detectedLanguage;
         }
 
         internal ExtractKeyPhrasesResult(string id, TextAnalyticsError error) : base(id, error) { }
+
+        /// <summary>
+        /// The language of the input document as detected by the service when requested to perform automatic language
+        /// detection, which is possible by specifying "auto" as the language of the input document.
+        /// </summary>
+        public DetectedLanguage? DetectedLanguage { get; }
 
         /// <summary>
         /// Gets the collection of key phrases identified in the document.

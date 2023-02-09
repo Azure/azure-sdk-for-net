@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static FluxConfigurationsList DeserializeFluxConfigurationsList(JsonElement element)
         {
-            Optional<IReadOnlyList<FluxConfigurationData>> value = default;
+            Optional<IReadOnlyList<KubernetesFluxConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FluxConfigurationData> array = new List<FluxConfigurationData>();
+                    List<KubernetesFluxConfigurationData> array = new List<KubernetesFluxConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FluxConfigurationData.DeserializeFluxConfigurationData(item));
+                        array.Add(KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

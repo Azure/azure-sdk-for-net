@@ -18,48 +18,48 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStartObject();
             if (Optional.IsDefined(Iso4217))
             {
-                writer.WritePropertyName("ISO4217");
+                writer.WritePropertyName("iso4217"u8);
                 writer.WriteStringValue(Iso4217);
             }
-            writer.WritePropertyName("unit");
+            writer.WritePropertyName("unit"u8);
             writer.WriteStringValue(Unit);
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
-            writer.WritePropertyName("resolutionKind");
+            writer.WritePropertyName("resolutionKind"u8);
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
         }
 
         internal static CurrencyResolution DeserializeCurrencyResolution(JsonElement element)
         {
-            Optional<string> isO4217 = default;
+            Optional<string> iso4217 = default;
             string unit = default;
             double value = default;
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ISO4217"))
+                if (property.NameEquals("iso4217"u8))
                 {
-                    isO4217 = property.Value.GetString();
+                    iso4217 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("resolutionKind"))
+                if (property.NameEquals("resolutionKind"u8))
                 {
                     resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new CurrencyResolution(resolutionKind, isO4217.Value, unit, value);
+            return new CurrencyResolution(resolutionKind, iso4217.Value, unit, value);
         }
     }
 }

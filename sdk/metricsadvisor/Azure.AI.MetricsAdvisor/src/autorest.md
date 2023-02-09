@@ -21,6 +21,16 @@ directive:
     $["x-accessibility"] = "internal"
 ```
 
+### Suppress Abstract Base Class
+
+``` yaml
+suppress-abstract-base-class:
+- DataFeedDetail
+- DataFeedDetailPatch
+- DataSourceCredentialPatch
+- HookInfoPatch
+```
+
 ### Add nullable annotations
 
 ``` yaml

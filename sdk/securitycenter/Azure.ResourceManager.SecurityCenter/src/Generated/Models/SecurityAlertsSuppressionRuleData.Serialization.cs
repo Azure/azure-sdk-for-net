@@ -18,36 +18,36 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertType))
             {
-                writer.WritePropertyName("alertType");
+                writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expirationDateUtc");
+                writer.WritePropertyName("expirationDateUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Reason))
             {
-                writer.WritePropertyName("reason");
+                writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(Comment))
             {
-                writer.WritePropertyName("comment");
+                writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
             if (Optional.IsDefined(SuppressionAlertsScope))
             {
-                writer.WritePropertyName("suppressionAlertsScope");
+                writer.WritePropertyName("suppressionAlertsScope"u8);
                 writer.WriteObjectValue(SuppressionAlertsScope);
             }
             writer.WriteEndObject();
@@ -69,32 +69,32 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SuppressionAlertsScope> suppressionAlertsScope = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("alertType"))
+                        if (property0.NameEquals("alertType"u8))
                         {
                             alertType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedUtc"))
+                        if (property0.NameEquals("lastModifiedUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             lastModifiedUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("expirationDateUtc"))
+                        if (property0.NameEquals("expirationDateUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.SecurityCenter
                             expirationDateUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("reason"))
+                        if (property0.NameEquals("reason"u8))
                         {
                             reason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.SecurityCenter
                             state = property0.Value.GetString().ToSecurityAlertsSuppressionRuleState();
                             continue;
                         }
-                        if (property0.NameEquals("comment"))
+                        if (property0.NameEquals("comment"u8))
                         {
                             comment = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("suppressionAlertsScope"))
+                        if (property0.NameEquals("suppressionAlertsScope"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("locationMappings"))
+                if (property.NameEquals("locationMappings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
                     locationMappings = array;
                     continue;
                 }
-                if (property.NameEquals("aliases"))
+                if (property.NameEquals("aliases"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources.Models
                     aliases = array;
                     continue;
                 }
-                if (property.NameEquals("apiVersions"))
+                if (property.NameEquals("apiVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Resources.Models
                     apiVersions = array;
                     continue;
                 }
-                if (property.NameEquals("defaultApiVersion"))
+                if (property.NameEquals("defaultApiVersion"u8))
                 {
                     defaultApiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiProfiles"))
+                if (property.NameEquals("apiProfiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Resources.Models
                     apiProfiles = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     capabilities = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

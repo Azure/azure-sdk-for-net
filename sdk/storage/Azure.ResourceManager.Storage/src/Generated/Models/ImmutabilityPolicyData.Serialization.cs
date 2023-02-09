@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Storage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
-                writer.WritePropertyName("immutabilityPeriodSinceCreationInDays");
+                writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
             if (Optional.IsDefined(AllowProtectedAppendWrites))
             {
-                writer.WritePropertyName("allowProtectedAppendWrites");
+                writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
             }
             if (Optional.IsDefined(AllowProtectedAppendWritesAll))
             {
-                writer.WritePropertyName("allowProtectedAppendWritesAll");
+                writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
             Optional<bool> allowProtectedAppendWritesAll = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,32 +62,32 @@ namespace Azure.ResourceManager.Storage
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("immutabilityPeriodSinceCreationInDays"))
+                        if (property0.NameEquals("immutabilityPeriodSinceCreationInDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage
                             immutabilityPeriodSinceCreationInDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage
                             state = new ImmutabilityPolicyState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("allowProtectedAppendWrites"))
+                        if (property0.NameEquals("allowProtectedAppendWrites"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage
                             allowProtectedAppendWrites = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowProtectedAppendWritesAll"))
+                        if (property0.NameEquals("allowProtectedAppendWritesAll"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

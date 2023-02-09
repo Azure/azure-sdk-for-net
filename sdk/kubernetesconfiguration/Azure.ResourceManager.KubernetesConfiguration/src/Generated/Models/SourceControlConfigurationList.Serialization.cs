@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static SourceControlConfigurationList DeserializeSourceControlConfigurationList(JsonElement element)
         {
-            Optional<IReadOnlyList<SourceControlConfigurationData>> value = default;
+            Optional<IReadOnlyList<KubernetesSourceControlConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SourceControlConfigurationData> array = new List<SourceControlConfigurationData>();
+                    List<KubernetesSourceControlConfigurationData> array = new List<KubernetesSourceControlConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceControlConfigurationData.DeserializeSourceControlConfigurationData(item));
+                        array.Add(KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

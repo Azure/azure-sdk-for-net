@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Describes a cloud service IP Configuration
     /// </summary>
-    public partial class LoadBalancerFrontendIPConfigurationProperties
+    public partial class LoadBalancerFrontendIpConfigurationProperties
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// LoadBalancerFrontendIPConfigurationProperties class.
+        /// LoadBalancerFrontendIpConfigurationProperties class.
         /// </summary>
-        public LoadBalancerFrontendIPConfigurationProperties()
+        public LoadBalancerFrontendIpConfigurationProperties()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// LoadBalancerFrontendIPConfigurationProperties class.
+        /// LoadBalancerFrontendIpConfigurationProperties class.
         /// </summary>
         /// <param name="publicIPAddress">The reference to the public ip
         /// address resource.</param>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// resource.</param>
         /// <param name="privateIPAddress">The virtual network private IP
         /// address of the IP configuration.</param>
-        public LoadBalancerFrontendIPConfigurationProperties(SubResource publicIPAddress = default(SubResource), SubResource subnet = default(SubResource), string privateIPAddress = default(string))
+        public LoadBalancerFrontendIpConfigurationProperties(SubResource publicIPAddress = default(SubResource), SubResource subnet = default(SubResource), string privateIPAddress = default(string))
         {
             PublicIPAddress = publicIPAddress;
             Subnet = subnet;

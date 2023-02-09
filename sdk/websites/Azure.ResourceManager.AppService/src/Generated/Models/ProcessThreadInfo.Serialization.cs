@@ -19,64 +19,64 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Href))
             {
-                writer.WritePropertyName("href");
+                writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
             if (Optional.IsDefined(Process))
             {
-                writer.WritePropertyName("process");
+                writer.WritePropertyName("process"u8);
                 writer.WriteStringValue(Process);
             }
             if (Optional.IsDefined(StartAddress))
             {
-                writer.WritePropertyName("start_address");
+                writer.WritePropertyName("start_address"u8);
                 writer.WriteStringValue(StartAddress);
             }
             if (Optional.IsDefined(CurrentPriority))
             {
-                writer.WritePropertyName("current_priority");
+                writer.WritePropertyName("current_priority"u8);
                 writer.WriteNumberValue(CurrentPriority.Value);
             }
             if (Optional.IsDefined(PriorityLevel))
             {
-                writer.WritePropertyName("priority_level");
+                writer.WritePropertyName("priority_level"u8);
                 writer.WriteStringValue(PriorityLevel);
             }
             if (Optional.IsDefined(BasePriority))
             {
-                writer.WritePropertyName("base_priority");
+                writer.WritePropertyName("base_priority"u8);
                 writer.WriteNumberValue(BasePriority.Value);
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("start_time");
+                writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(TotalProcessorTime))
             {
-                writer.WritePropertyName("total_processor_time");
+                writer.WritePropertyName("total_processor_time"u8);
                 writer.WriteStringValue(TotalProcessorTime);
             }
             if (Optional.IsDefined(UserProcessorTime))
             {
-                writer.WritePropertyName("user_processor_time");
+                writer.WritePropertyName("user_processor_time"u8);
                 writer.WriteStringValue(UserProcessorTime);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
             if (Optional.IsDefined(WaitReason))
             {
-                writer.WritePropertyName("wait_reason");
+                writer.WritePropertyName("wait_reason"u8);
                 writer.WriteStringValue(WaitReason);
             }
             writer.WriteEndObject();
@@ -104,37 +104,37 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> waitReason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("identifier"))
+                        if (property0.NameEquals("identifier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -153,22 +153,22 @@ namespace Azure.ResourceManager.AppService.Models
                             identifier = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("href"))
+                        if (property0.NameEquals("href"u8))
                         {
                             href = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("process"))
+                        if (property0.NameEquals("process"u8))
                         {
                             process = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("start_address"))
+                        if (property0.NameEquals("start_address"u8))
                         {
                             startAddress = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("current_priority"))
+                        if (property0.NameEquals("current_priority"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.AppService.Models
                             currentPriority = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("priority_level"))
+                        if (property0.NameEquals("priority_level"u8))
                         {
                             priorityLevel = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("base_priority"))
+                        if (property0.NameEquals("base_priority"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService.Models
                             basePriority = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("start_time"))
+                        if (property0.NameEquals("start_time"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,22 +203,22 @@ namespace Azure.ResourceManager.AppService.Models
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("total_processor_time"))
+                        if (property0.NameEquals("total_processor_time"u8))
                         {
                             totalProcessorTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("user_processor_time"))
+                        if (property0.NameEquals("user_processor_time"u8))
                         {
                             userProcessorTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             state = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("wait_reason"))
+                        if (property0.NameEquals("wait_reason"u8))
                         {
                             waitReason = property0.Value.GetString();
                             continue;

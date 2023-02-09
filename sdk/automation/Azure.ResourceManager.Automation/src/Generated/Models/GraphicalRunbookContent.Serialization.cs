@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 if (RawContent != null)
                 {
-                    writer.WritePropertyName("rawContent");
+                    writer.WritePropertyName("rawContent"u8);
                     writer.WriteObjectValue(RawContent);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 if (GraphRunbookJson != null)
                 {
-                    writer.WritePropertyName("graphRunbookJson");
+                    writer.WritePropertyName("graphRunbookJson"u8);
                     writer.WriteStringValue(GraphRunbookJson);
                 }
                 else
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> graphRunbookJson = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rawContent"))
+                if (property.NameEquals("rawContent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation.Models
                     rawContent = RawGraphicalRunbookContent.DeserializeRawGraphicalRunbookContent(property.Value);
                     continue;
                 }
-                if (property.NameEquals("graphRunbookJson"))
+                if (property.NameEquals("graphRunbookJson"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<bool> isGlobal = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startLine"))
+                if (property.NameEquals("startLine"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     startLine = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startColumn"))
+                if (property.NameEquals("startColumn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     startColumn = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("endLine"))
+                if (property.NameEquals("endLine"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     endLine = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("endColumn"))
+                if (property.NameEquals("endColumn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     endColumn = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isGlobal"))
+                if (property.NameEquals("isGlobal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

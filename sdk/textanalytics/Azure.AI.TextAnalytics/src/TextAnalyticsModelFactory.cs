@@ -87,7 +87,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="neutralScore">Sets the <see cref="SentimentConfidenceScores.Neutral"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <param name="sentenceSentiments">Sets the <see cref="DocumentSentiment.Sentences"/> property.</param>
-        /// <param name="warnings">Sets the <see cref="DetectedLanguage.Warnings"/> property.</param>
+        /// <param name="warnings">Sets the <see cref="DocumentSentiment.Warnings"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DocumentSentiment"/> for mocking purposes.</returns>
         public static DocumentSentiment DocumentSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments, IList<TextAnalyticsWarning> warnings = default)
         {
@@ -177,9 +177,30 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="documentSentiment">Sets the <see cref="AnalyzeSentimentResult.DocumentSentiment"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentResult"/> for mocking purposes.</returns>
-        public static AnalyzeSentimentResult AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AnalyzeSentimentResult AnalyzeSentimentResult(
+            string id,
+            TextDocumentStatistics statistics,
+            DocumentSentiment documentSentiment)
         {
-            return new AnalyzeSentimentResult(id, statistics, documentSentiment);
+            return new AnalyzeSentimentResult(id, statistics, documentSentiment, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="documentSentiment">Sets the <see cref="AnalyzeSentimentResult.DocumentSentiment"/> property.</param>
+        /// <param name="detectedLanguage">Sets the <see cref="AnalyzeSentimentResult.DetectedLanguage"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentResult"/> for mocking purposes.</returns>
+        public static AnalyzeSentimentResult AnalyzeSentimentResult(
+            string id,
+            TextDocumentStatistics statistics,
+            DocumentSentiment documentSentiment,
+            DetectedLanguage? detectedLanguage = default)
+        {
+            return new AnalyzeSentimentResult(id, statistics, documentSentiment, detectedLanguage);
         }
 
         /// <summary>
@@ -341,9 +362,30 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="entities">Sets the collection of <see cref="TextAnalytics.CategorizedEntityCollection"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesResult"/> for mocking purposes.</returns>
-        public static RecognizeEntitiesResult RecognizeEntitiesResult(string id, TextDocumentStatistics statistics, CategorizedEntityCollection entities)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecognizeEntitiesResult RecognizeEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            CategorizedEntityCollection entities)
         {
-            return new RecognizeEntitiesResult(id, statistics, entities);
+            return new RecognizeEntitiesResult(id, statistics, entities, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeEntitiesResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="entities">Sets the collection of <see cref="TextAnalytics.CategorizedEntityCollection"/>.</param>
+        /// <param name="detectedLanguage">Sets the <see cref="RecognizeEntitiesResult.DetectedLanguage"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesResult"/> for mocking purposes.</returns>
+        public static RecognizeEntitiesResult RecognizeEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            CategorizedEntityCollection entities,
+            DetectedLanguage? detectedLanguage = default)
+        {
+            return new RecognizeEntitiesResult(id, statistics, entities, detectedLanguage);
         }
 
         /// <summary>
@@ -512,10 +554,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="end">Sets the <see cref="TemporalSpanResolution.End"/> property.</param>
         /// <param name="duration">Sets the <see cref="TemporalSpanResolution.Duration"/> property.</param>
         /// <param name="modifier">Sets the <see cref="TemporalSpanResolution.Modifier"/> property.</param>
+        /// /// <param name="timex">Sets the <see cref="TemporalSpanResolution.Timex"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.TemporalSpanResolution"/> for mocking purposes.</returns>
-        public static TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, TemporalModifier? modifier)
+        public static TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, TemporalModifier? modifier, string timex)
         {
-            return new TemporalSpanResolution(ResolutionKind.TemporalSpanResolution, begin, end, duration, modifier);
+            return new TemporalSpanResolution(ResolutionKind.TemporalSpanResolution, begin, end, duration, modifier, timex);
         }
 
         /// <summary>
@@ -578,9 +621,30 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="entities">Sets the collection of <see cref="TextAnalytics.PiiEntityCollection"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResult"/> for mocking purposes.</returns>
-        public static RecognizePiiEntitiesResult RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, PiiEntityCollection entities)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecognizePiiEntitiesResult RecognizePiiEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            PiiEntityCollection entities)
         {
-            return new RecognizePiiEntitiesResult(id, statistics, entities);
+            return new RecognizePiiEntitiesResult(id, statistics, entities, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="entities">Sets the collection of <see cref="TextAnalytics.PiiEntityCollection"/>.</param>
+        /// <param name="detectedLanguage">Sets the <see cref="RecognizePiiEntitiesResult.DetectedLanguage"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizePiiEntitiesResult"/> for mocking purposes.</returns>
+        public static RecognizePiiEntitiesResult RecognizePiiEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            PiiEntityCollection entities,
+            DetectedLanguage? detectedLanguage = default)
+        {
+            return new RecognizePiiEntitiesResult(id, statistics, entities, detectedLanguage);
         }
 
         /// <summary>
@@ -625,7 +689,8 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Extract KeyPhrase
+        #region Extract Key Phrases
+
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesResult"/> for mocking purposes.
         /// </summary>
@@ -633,9 +698,30 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="keyPhrases">Sets the <see cref="ExtractKeyPhrasesResult.KeyPhrases"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesResult"/> for mocking purposes.</returns>
-        public static ExtractKeyPhrasesResult ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, KeyPhraseCollection keyPhrases)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExtractKeyPhrasesResult ExtractKeyPhrasesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            KeyPhraseCollection keyPhrases)
         {
-            return new ExtractKeyPhrasesResult(id, statistics, keyPhrases);
+            return new ExtractKeyPhrasesResult(id, statistics, keyPhrases, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractKeyPhrasesResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="keyPhrases">Sets the <see cref="ExtractKeyPhrasesResult.KeyPhrases"/> property.</param>
+        /// /// <param name="detectedLanguage">Sets the <see cref="ExtractKeyPhrasesResult.DetectedLanguage"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesResult"/> for mocking purposes.</returns>
+        public static ExtractKeyPhrasesResult ExtractKeyPhrasesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            KeyPhraseCollection keyPhrases,
+            DetectedLanguage? detectedLanguage = default)
+        {
+            return new ExtractKeyPhrasesResult(id, statistics, keyPhrases, detectedLanguage);
         }
 
         /// <summary>
@@ -676,6 +762,7 @@ namespace Azure.AI.TextAnalytics
         #endregion Extract KeyPhrase
 
         #region Label Classify
+
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.
         /// </summary>
@@ -684,9 +771,33 @@ namespace Azure.AI.TextAnalytics
         /// <param name="documentClassificationCollection">Sets the of <see cref="ClassifyDocumentResult.ClassificationCategories"/>.</param>
         /// <param name="warnings">Sets the collection of <see cref="ClassifyDocumentResult.Warnings"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.</returns>
-        public static ClassifyDocumentResult ClassifyDocumentResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection documentClassificationCollection, IEnumerable<TextAnalyticsWarning> warnings = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ClassifyDocumentResult ClassifyDocumentResult(
+            string id,
+            TextDocumentStatistics statistics,
+            ClassificationCategoryCollection documentClassificationCollection,
+            IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new ClassifyDocumentResult(id, statistics, documentClassificationCollection, warnings?.ToList());
+            return new ClassifyDocumentResult(id, statistics, documentClassificationCollection, default, warnings?.ToList());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="documentClassificationCollection">Sets the of <see cref="ClassifyDocumentResult.ClassificationCategories"/>.</param>
+        /// <param name="detectedLanguage">Sets the <see cref="ClassifyDocumentResult.DetectedLanguage"/> property.</param>
+        /// <param name="warnings">Sets the collection of <see cref="ClassifyDocumentResult.Warnings"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.</returns>
+        public static ClassifyDocumentResult ClassifyDocumentResult(
+            string id,
+            TextDocumentStatistics statistics,
+            ClassificationCategoryCollection documentClassificationCollection,
+            DetectedLanguage? detectedLanguage = default,
+            IEnumerable<TextAnalyticsWarning> warnings = default)
+        {
+            return new ClassifyDocumentResult(id, statistics, documentClassificationCollection, detectedLanguage, warnings?.ToList());
         }
 
         /// <summary>
@@ -733,6 +844,27 @@ namespace Azure.AI.TextAnalytics
         {
             return new ClassificationCategoryCollection(classificationList.ToList(), warnings.ToList());
         }
+        #endregion
+
+        #region Dynamic Classify
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.DynamicClassifyDocumentResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="results">Sets the collection of <see cref="TextAnalytics.ClassifyDocumentResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="DynamicClassifyDocumentResultCollection.Statistics"/> property.</param>
+        /// <param name="modelVersion">Sets the <see cref="DynamicClassifyDocumentResultCollection.ModelVersion"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.DynamicClassifyDocumentResultCollection"/> for mocking purposes.
+        /// </returns>
+        public static DynamicClassifyDocumentResultCollection DynamicClassifyDocumentResultCollection(
+            IEnumerable<ClassifyDocumentResult> results,
+            TextDocumentBatchStatistics statistics,
+            string modelVersion)
+        {
+            return new DynamicClassifyDocumentResultCollection(results.ToList(), statistics, modelVersion);
+        }
+
         #endregion
 
         #region Linked Entities
@@ -812,9 +944,30 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="linkedEntities">Sets the collection of <see cref="TextAnalytics.LinkedEntity"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesResult"/> for mocking purposes.</returns>
-        public static RecognizeLinkedEntitiesResult RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, LinkedEntityCollection linkedEntities)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecognizeLinkedEntitiesResult RecognizeLinkedEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            LinkedEntityCollection linkedEntities)
         {
-            return new RecognizeLinkedEntitiesResult(id, statistics, linkedEntities);
+            return new RecognizeLinkedEntitiesResult(id, statistics, linkedEntities, default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="linkedEntities">Sets the collection of <see cref="TextAnalytics.LinkedEntity"/>.</param>
+        /// <param name="detectedLanguage">Sets the <see cref="RecognizeLinkedEntitiesResult.DetectedLanguage"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesResult"/> for mocking purposes.</returns>
+        public static RecognizeLinkedEntitiesResult RecognizeLinkedEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            LinkedEntityCollection linkedEntities,
+            DetectedLanguage? detectedLanguage = default)
+        {
+            return new RecognizeLinkedEntitiesResult(id, statistics, linkedEntities, detectedLanguage);
         }
 
         /// <summary>
@@ -1637,7 +1790,7 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<HealthcareEntityRelation> entityRelations,
             IEnumerable<TextAnalyticsWarning> warnings)
         {
-            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), warnings.ToList(), default);
+            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), default, default, warnings.ToList());
         }
 
         /// <summary>
@@ -1647,18 +1800,20 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="healthcareEntities">Sets the collection of <see cref="TextAnalytics.HealthcareEntity"/>.</param>
         /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/>.</param>
-        /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/>.</param>
         /// <param name="fhirBundle">Sets the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/> property.</param>
+        /// <param name="detectedLanguage">Sets the <see cref="AnalyzeHealthcareEntitiesResult.DetectedLanguage"/> property.</param>
+        /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
         public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
             string id,
             TextDocumentStatistics statistics,
             IEnumerable<HealthcareEntity> healthcareEntities,
             IEnumerable<HealthcareEntityRelation> entityRelations,
-            IEnumerable<TextAnalyticsWarning> warnings,
-            IDictionary<string, object> fhirBundle)
+            BinaryData fhirBundle,
+            string detectedLanguage,
+            IEnumerable<TextAnalyticsWarning> warnings)
         {
-            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), warnings.ToList(), fhirBundle);
+            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), fhirBundle, detectedLanguage, warnings.ToList());
         }
 
         /// <summary>
@@ -1789,6 +1944,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="sentences">Sets the <see cref="ExtractSummaryResult.Sentences"/> property.</param>
+        /// <param name="detectedLanguage">Sets the <see cref="ExtractSummaryResult.DetectedLanguage"/> property.</param>
         /// <param name="warnings">Sets the <see cref="ExtractSummaryResult.Warnings"/> property.</param>
         /// <returns>
         /// A new instance of <see cref="TextAnalytics.ExtractSummaryResult"/> for mocking purposes.
@@ -1796,10 +1952,11 @@ namespace Azure.AI.TextAnalytics
         public static ExtractSummaryResult ExtractSummaryResult(
             string id,
             TextDocumentStatistics statistics,
-            IList<SummarySentence> sentences,
-            IList<TextAnalyticsWarning> warnings = default)
+            IEnumerable<SummarySentence> sentences,
+            DetectedLanguage? detectedLanguage = default,
+            IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new ExtractSummaryResult(id, statistics, sentences, warnings);
+            return new ExtractSummaryResult(id, statistics, sentences.ToList(), detectedLanguage, warnings.ToList());
         }
 
         /// <summary>
@@ -1826,11 +1983,11 @@ namespace Azure.AI.TextAnalytics
         /// A new instance of <see cref="TextAnalytics.ExtractSummaryResultCollection"/> for mocking purposes.
         /// </returns>
         public static ExtractSummaryResultCollection ExtractSummaryResultCollection(
-            IList<ExtractSummaryResult> results,
+            IEnumerable<ExtractSummaryResult> results,
             TextDocumentBatchStatistics statistics,
             string modelVersion)
         {
-            return new ExtractSummaryResultCollection(results, statistics, modelVersion);
+            return new ExtractSummaryResultCollection(results.ToList(), statistics, modelVersion);
         }
 
         /// <summary>
@@ -1858,6 +2015,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
         /// <param name="summaries">Sets the <see cref="AbstractSummaryResult.Summaries"/> property.</param>
+        /// <param name="detectedLanguage">Sets the <see cref="ExtractSummaryResult.DetectedLanguage"/> property.</param>
         /// <param name="warnings">Sets the <see cref="AbstractSummaryResult.Warnings"/> property.</param>
         /// <returns>
         /// A new instance of <see cref="TextAnalytics.AbstractSummaryResult"/> for mocking purposes.
@@ -1865,10 +2023,11 @@ namespace Azure.AI.TextAnalytics
         public static AbstractSummaryResult AbstractSummaryResult(
             string id,
             TextDocumentStatistics statistics,
-            IList<AbstractiveSummary> summaries,
-            IList<TextAnalyticsWarning> warnings = default)
+            IEnumerable<AbstractiveSummary> summaries,
+            DetectedLanguage? detectedLanguage = default,
+            IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new AbstractSummaryResult(id, statistics, summaries, warnings);
+            return new AbstractSummaryResult(id, statistics, summaries.ToList(), detectedLanguage, warnings.ToList());
         }
 
         /// <summary>
@@ -1895,11 +2054,11 @@ namespace Azure.AI.TextAnalytics
         /// A new instance of <see cref="TextAnalytics.AbstractSummaryResultCollection"/> for mocking purposes.
         /// </returns>
         public static AbstractSummaryResultCollection AbstractSummaryResultCollection(
-            IList<AbstractSummaryResult> results,
+            IEnumerable<AbstractSummaryResult> results,
             TextDocumentBatchStatistics statistics,
             string modelVersion)
         {
-            return new AbstractSummaryResultCollection(results, statistics, modelVersion);
+            return new AbstractSummaryResultCollection(results.ToList(), statistics, modelVersion);
         }
 
         /// <summary>
@@ -1923,7 +2082,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>
         /// A new instance of <see cref="TextAnalytics.AbstractiveSummary"/> for mocking purposes.
         /// </returns>
-        public static AbstractiveSummary AbstractiveSummary(string text, IList<SummaryContext> contexts)
+        public static AbstractiveSummary AbstractiveSummary(string text, IEnumerable<SummaryContext> contexts)
         {
             List<SummaryContextInternal> internalContexts = new();
             foreach (SummaryContext context in contexts)

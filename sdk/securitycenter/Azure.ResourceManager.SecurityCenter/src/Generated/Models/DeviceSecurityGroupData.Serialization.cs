@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ThresholdRules))
             {
-                writer.WritePropertyName("thresholdRules");
+                writer.WritePropertyName("thresholdRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in ThresholdRules)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsCollectionDefined(TimeWindowRules))
             {
-                writer.WritePropertyName("timeWindowRules");
+                writer.WritePropertyName("timeWindowRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in TimeWindowRules)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsCollectionDefined(AllowlistRules))
             {
-                writer.WritePropertyName("allowlistRules");
+                writer.WritePropertyName("allowlistRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowlistRules)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsCollectionDefined(DenylistRules))
             {
-                writer.WritePropertyName("denylistRules");
+                writer.WritePropertyName("denylistRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in DenylistRules)
                 {
@@ -76,32 +76,32 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<IList<DenylistCustomAlertRule>> denylistRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("thresholdRules"))
+                        if (property0.NameEquals("thresholdRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             thresholdRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("timeWindowRules"))
+                        if (property0.NameEquals("timeWindowRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             timeWindowRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("allowlistRules"))
+                        if (property0.NameEquals("allowlistRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             allowlistRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("denylistRules"))
+                        if (property0.NameEquals("denylistRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

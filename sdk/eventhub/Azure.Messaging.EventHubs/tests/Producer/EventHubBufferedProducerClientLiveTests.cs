@@ -117,8 +117,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -220,8 +220,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -325,8 +325,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -435,8 +435,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -547,8 +547,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -646,8 +646,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -774,13 +774,102 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
                 Assert.That(readEvents[index].PartitionId, Is.EqualTo(sortedHandlerEvents[index].PartitionId), $"The partition for the read and sent events should match at index: [{index}].");
                 Assert.That(readEvents[index].Event.IsEquivalentTo(sortedHandlerEvents[index].Event), Is.True, $"The event for the read and sent events should match at index: [{index}].");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubBufferedProducerClient" /> is able to publish events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanPublishAfterFlush()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var eventSetCount = 3;
+            var eventsPerSet = 50;
+            var events = EventGenerator.CreateSmallEvents(eventSetCount * eventsPerSet).ToList();
+            var firstEventSet = events.Take(eventsPerSet).ToList();
+            var secondEventSet = events.Skip(eventsPerSet).Take(eventsPerSet).ToList();
+            var lastEventSet = events.Skip(eventsPerSet * 2).Take(eventsPerSet).ToList();
+            var handlerEvents = new ConcurrentBag<EventData>();
+            var pendingReads = new HashSet<string>(events.Select(evt => evt.MessageId));
+            var readEvents = new List<EventData>();
+            var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = eventSetCount };
+
+            await using var scope = await EventHubScope.CreateAsync(1);
+            await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName, options);
+
+            producer.SendEventBatchSucceededAsync += args =>
+            {
+                foreach (var item in args.EventBatch)
+                {
+                    handlerEvents.Add(item);
+                }
+
+                return Task.CompletedTask;
+            };
+
+            producer.SendEventBatchFailedAsync += args =>
+            {
+                ExceptionDispatchInfo.Capture(args.Exception).Throw();
+                return Task.CompletedTask;
+            };
+
+            // Enqueue and flush the first set of events.
+
+            await producer.EnqueueEventsAsync(firstEventSet, cancellationSource.Token);
+            await producer.FlushAsync(cancellationSource.Token);
+
+            // Enqueue and flush the remaining events; after this flush, all events
+            // should have been published and captured by the handler.
+
+            await producer.EnqueueEventsAsync(secondEventSet, cancellationSource.Token);
+            await producer.EnqueueEventsAsync(lastEventSet, cancellationSource.Token);
+            await producer.FlushAsync(cancellationSource.Token);
+
+            // Ensure that publishing completed with the expected state.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+            Assert.That(producer.IsClosed, Is.False, "The producer should not report that it is closed.");
+            Assert.That(producer.IsPublishing, Is.False, "The producer should report that it is not publishing.");
+            Assert.That(producer.TotalBufferedEventCount, Is.EqualTo(0), "No events should remain in the buffer.");
+            Assert.That(handlerEvents.Count, Is.EqualTo(events.Count), "All events should have been sent.");
+
+            // Read back the events and ensure all were successfully published.
+
+            await using var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+
+            await foreach (var partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
+            {
+                if (pendingReads.Contains(partitionEvent.Data.MessageId))
+                {
+                    pendingReads.Remove(partitionEvent.Data.MessageId);
+                    readEvents.Add(partitionEvent.Data);
+                }
+
+                if (pendingReads.Count == 0)
+                {
+                    break;
+                }
+            }
+
+            // Ensure that all sent events were read back.
+
+            readEvents = readEvents.OrderBy(evt => evt.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.MessageId).ToList();
+
+            for (var index = 0; index < readEvents.Count; ++index)
+            {
+                Assert.That(readEvents[index].IsEquivalentTo(sortedHandlerEvents[index]), Is.True, $"The event for the read and sent events should match at index: [{ index }].");
             }
         }
 
@@ -799,6 +888,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionCount = 2;
             var eventsPerPartition = 50;
             var events = EventGenerator.CreateSmallEvents(partitionCount * eventsPerPartition).ToList();
+            var pendingReads = new HashSet<string>(events.Select(evt => evt.MessageId));
             var handlerEvents = new ConcurrentBag<EventWithPartition>();
             var readEvents = new List<EventWithPartition>();
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = partitionCount };
@@ -854,9 +944,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await foreach (var partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
             {
-                readEvents.Add(new EventWithPartition(partitionEvent.Partition.PartitionId, partitionEvent.Data));
+                if (pendingReads.Contains(partitionEvent.Data.MessageId))
+                {
+                    pendingReads.Remove(partitionEvent.Data.MessageId);
+                    readEvents.Add(new EventWithPartition(partitionEvent.Partition.PartitionId, partitionEvent.Data));
+                }
 
-                if (readEvents.Count >= events.Count)
+                if (pendingReads.Count == 0)
                 {
                     break;
                 }
@@ -864,8 +958,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -890,6 +984,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionCount = 1;
             var eventsPerPartition = 80;
             var events = EventGenerator.CreateSmallEvents(partitionCount * eventsPerPartition).ToList();
+            var pendingReads = new HashSet<string>(events.Select(evt => evt.MessageId));
             var handlerEvents = new ConcurrentBag<EventWithPartition>();
             var readEvents = new List<EventWithPartition>();
 
@@ -950,9 +1045,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await foreach (var partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
             {
-                readEvents.Add(new EventWithPartition(partitionEvent.Partition.PartitionId, partitionEvent.Data));
+                if (pendingReads.Contains(partitionEvent.Data.MessageId))
+                {
+                    pendingReads.Remove(partitionEvent.Data.MessageId);
+                    readEvents.Add(new EventWithPartition(partitionEvent.Partition.PartitionId, partitionEvent.Data));
+                }
 
-                if (readEvents.Count >= events.Count)
+                if (pendingReads.Count == 0)
                 {
                     break;
                 }
@@ -960,8 +1059,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -1050,8 +1149,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -1146,8 +1245,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {
@@ -1348,8 +1447,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Ensure that all sent events were read back.
 
-            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
-            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.Properties[EventGenerator.IdPropertyName]).ToList();
+            readEvents = readEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
+            var sortedHandlerEvents = handlerEvents.OrderBy(evt => evt.PartitionId).ThenBy(evt => evt.Event.MessageId).ToList();
 
             for (var index = 0; index < readEvents.Count; ++index)
             {

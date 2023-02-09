@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.LabServices
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdditionalUsageQuota))
             {
-                writer.WritePropertyName("additionalUsageQuota");
+                writer.WritePropertyName("additionalUsageQuota"u8);
                 writer.WriteStringValue(AdditionalUsageQuota.Value, "P");
             }
-            writer.WritePropertyName("email");
+            writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -47,32 +47,32 @@ namespace Azure.ResourceManager.LabServices
             Optional<TimeSpan> totalUsage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.LabServices
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("additionalUsageQuota"))
+                        if (property0.NameEquals("additionalUsageQuota"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.LabServices
                             additionalUsageQuota = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.LabServices
                             provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("email"))
+                        if (property0.NameEquals("email"u8))
                         {
                             email = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("registrationState"))
+                        if (property0.NameEquals("registrationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.LabServices
                             registrationState = property0.Value.GetString().ToLabUserRegistrationState();
                             continue;
                         }
-                        if (property0.NameEquals("invitationState"))
+                        if (property0.NameEquals("invitationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.LabServices
                             invitationState = property0.Value.GetString().ToLabUserInvitationState();
                             continue;
                         }
-                        if (property0.NameEquals("invitationSent"))
+                        if (property0.NameEquals("invitationSent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.LabServices
                             invitationSent = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("totalUsage"))
+                        if (property0.NameEquals("totalUsage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

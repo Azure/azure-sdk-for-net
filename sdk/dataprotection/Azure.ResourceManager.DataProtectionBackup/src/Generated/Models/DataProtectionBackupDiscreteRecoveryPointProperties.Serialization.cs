@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsCollectionDefined(RecoveryPointDataStoresDetails))
             {
-                writer.WritePropertyName("recoveryPointDataStoresDetails");
+                writer.WritePropertyName("recoveryPointDataStoresDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointDataStoresDetails)
                 {
@@ -32,39 +32,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("recoveryPointTime");
+            writer.WritePropertyName("recoveryPointTime"u8);
             writer.WriteStringValue(RecoverOn, "O");
             if (Optional.IsDefined(PolicyName))
             {
-                writer.WritePropertyName("policyName");
+                writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
             if (Optional.IsDefined(PolicyVersion))
             {
-                writer.WritePropertyName("policyVersion");
+                writer.WritePropertyName("policyVersion"u8);
                 writer.WriteStringValue(PolicyVersion);
             }
             if (Optional.IsDefined(RecoveryPointId))
             {
-                writer.WritePropertyName("recoveryPointId");
+                writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
             if (Optional.IsDefined(RecoveryPointType))
             {
-                writer.WritePropertyName("recoveryPointType");
+                writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
             if (Optional.IsDefined(RetentionTagName))
             {
-                writer.WritePropertyName("retentionTagName");
+                writer.WritePropertyName("retentionTagName"u8);
                 writer.WriteStringValue(RetentionTagName);
             }
             if (Optional.IsDefined(RetentionTagVersion))
             {
-                writer.WritePropertyName("retentionTagVersion");
+                writer.WritePropertyName("retentionTagVersion"u8);
                 writer.WriteStringValue(RetentionTagVersion);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -80,15 +80,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> recoveryPointType = default;
             Optional<string> retentionTagName = default;
             Optional<string> retentionTagVersion = default;
+            Optional<DateTimeOffset> expiryTime = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointDataStoresDetails"))
+                if (property.NameEquals("recoveryPointDataStoresDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,48 +104,58 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     recoveryPointDataStoresDetails = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryPointTime"))
+                if (property.NameEquals("recoveryPointTime"u8))
                 {
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyVersion"))
+                if (property.NameEquals("policyVersion"u8))
                 {
                     policyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointId"))
+                if (property.NameEquals("recoveryPointId"u8))
                 {
                     recoveryPointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointType"))
+                if (property.NameEquals("recoveryPointType"u8))
                 {
                     recoveryPointType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionTagName"))
+                if (property.NameEquals("retentionTagName"u8))
                 {
                     retentionTagName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retentionTagVersion"))
+                if (property.NameEquals("retentionTagVersion"u8))
                 {
                     retentionTagVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("expiryTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expiryTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, friendlyName.Value, Optional.ToList(recoveryPointDataStoresDetails), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value);
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, friendlyName.Value, Optional.ToList(recoveryPointDataStoresDetails), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value, Optional.ToNullable(expiryTime));
         }
     }
 }

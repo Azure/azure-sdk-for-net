@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,48 +30,48 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskType))
             {
-                writer.WritePropertyName("diskType");
+                writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
             if (Optional.IsDefined(DiskSizeGiB))
             {
-                writer.WritePropertyName("diskSizeGiB");
+                writer.WritePropertyName("diskSizeGiB"u8);
                 writer.WriteNumberValue(DiskSizeGiB.Value);
             }
             if (Optional.IsDefined(LeasedByLabVmId))
             {
-                writer.WritePropertyName("leasedByLabVmId");
+                writer.WritePropertyName("leasedByLabVmId"u8);
                 writer.WriteStringValue(LeasedByLabVmId);
             }
             if (Optional.IsDefined(DiskBlobName))
             {
-                writer.WritePropertyName("diskBlobName");
+                writer.WritePropertyName("diskBlobName"u8);
                 writer.WriteStringValue(DiskBlobName);
             }
             if (Optional.IsDefined(DiskUri))
             {
-                writer.WritePropertyName("diskUri");
+                writer.WritePropertyName("diskUri"u8);
                 writer.WriteStringValue(DiskUri.AbsoluteUri);
             }
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
+                writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
             if (Optional.IsDefined(HostCaching))
             {
-                writer.WritePropertyName("hostCaching");
+                writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching);
             }
             if (Optional.IsDefined(ManagedDiskId))
             {
-                writer.WritePropertyName("managedDiskId");
+                writer.WritePropertyName("managedDiskId"u8);
                 writer.WriteStringValue(ManagedDiskId);
             }
             writer.WriteEndObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,37 +114,37 @@ namespace Azure.ResourceManager.DevTestLabs
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("diskType"))
+                        if (property0.NameEquals("diskType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             diskType = new DevTestLabStorageType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("diskSizeGiB"))
+                        if (property0.NameEquals("diskSizeGiB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             diskSizeGiB = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("leasedByLabVmId"))
+                        if (property0.NameEquals("leasedByLabVmId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.DevTestLabs
                             leasedByLabVmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("diskBlobName"))
+                        if (property0.NameEquals("diskBlobName"u8))
                         {
                             diskBlobName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("diskUri"))
+                        if (property0.NameEquals("diskUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.DevTestLabs
                             diskUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountId"))
+                        if (property0.NameEquals("storageAccountId"u8))
                         {
                             storageAccountId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdDate"))
+                        if (property0.NameEquals("createdDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.DevTestLabs
                             createdDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("hostCaching"))
+                        if (property0.NameEquals("hostCaching"u8))
                         {
                             hostCaching = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("managedDiskId"))
+                        if (property0.NameEquals("managedDiskId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.DevTestLabs
                             managedDiskId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("uniqueIdentifier"))
+                        if (property0.NameEquals("uniqueIdentifier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

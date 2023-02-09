@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static DataExportListResult DeserializeDataExportListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DataExportData>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsDataExportData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataExportData> array = new List<DataExportData>();
+                    List<OperationalInsightsDataExportData> array = new List<OperationalInsightsDataExportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataExportData.DeserializeDataExportData(item));
+                        array.Add(OperationalInsightsDataExportData.DeserializeOperationalInsightsDataExportData(item));
                     }
                     value = array;
                     continue;

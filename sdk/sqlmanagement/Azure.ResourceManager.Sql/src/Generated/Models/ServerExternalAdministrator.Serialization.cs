@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorType))
             {
-                writer.WritePropertyName("administratorType");
+                writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
             if (Optional.IsDefined(PrincipalType))
             {
-                writer.WritePropertyName("principalType");
+                writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
             if (Optional.IsDefined(Login))
             {
-                writer.WritePropertyName("login");
+                writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
             if (Optional.IsDefined(Sid))
             {
-                writer.WritePropertyName("sid");
+                writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid.Value);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
-                writer.WritePropertyName("azureADOnlyAuthentication");
+                writer.WritePropertyName("azureADOnlyAuthentication"u8);
                 writer.WriteBooleanValue(IsAzureADOnlyAuthenticationEnabled.Value);
             }
             writer.WriteEndObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<bool> azureADOnlyAuthentication = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("administratorType"))
+                if (property.NameEquals("administratorType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
                     administratorType = new SqlAdministratorType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("principalType"))
+                if (property.NameEquals("principalType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Sql.Models
                     principalType = new SqlServerPrincipalType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("login"))
+                if (property.NameEquals("login"u8))
                 {
                     login = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sid"))
+                if (property.NameEquals("sid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
                     sid = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("azureADOnlyAuthentication"))
+                if (property.NameEquals("azureADOnlyAuthentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

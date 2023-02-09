@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,23 +17,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SentenceCount))
             {
-                writer.WritePropertyName("sentenceCount");
+                writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
             if (Optional.IsDefined(StringIndexType))
             {
-                writer.WritePropertyName("stringIndexType");
+                writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(PhraseControls))
-            {
-                writer.WritePropertyName("phraseControls");
-                writer.WriteStartArray();
-                foreach (var item in PhraseControls)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -43,10 +32,9 @@ namespace Azure.AI.TextAnalytics.Models
         {
             Optional<int> sentenceCount = default;
             Optional<StringIndexType> stringIndexType = default;
-            Optional<IList<PhraseControl>> phraseControls = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sentenceCount"))
+                if (property.NameEquals("sentenceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
                     sentenceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stringIndexType"))
+                if (property.NameEquals("stringIndexType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,23 +54,8 @@ namespace Azure.AI.TextAnalytics.Models
                     stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("phraseControls"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<PhraseControl> array = new List<PhraseControl>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PhraseControl.DeserializePhraseControl(item));
-                    }
-                    phraseControls = array;
-                    continue;
-                }
             }
-            return new AbstractiveSummarizationTaskParametersBase(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType), Optional.ToList(phraseControls));
+            return new AbstractiveSummarizationTaskParametersBase(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType));
         }
     }
 }

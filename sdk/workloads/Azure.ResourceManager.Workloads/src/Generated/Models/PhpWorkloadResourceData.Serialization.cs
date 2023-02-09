@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Workloads
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -41,73 +41,73 @@ namespace Azure.ResourceManager.Workloads
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AppLocation))
             {
-                writer.WritePropertyName("appLocation");
+                writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
-                writer.WritePropertyName("managedResourceGroupConfiguration");
+                writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
             if (Optional.IsDefined(AdminUserProfile))
             {
-                writer.WritePropertyName("adminUserProfile");
+                writer.WritePropertyName("adminUserProfile"u8);
                 writer.WriteObjectValue(AdminUserProfile);
             }
             if (Optional.IsDefined(WebNodesProfile))
             {
-                writer.WritePropertyName("webNodesProfile");
+                writer.WritePropertyName("webNodesProfile"u8);
                 writer.WriteObjectValue(WebNodesProfile);
             }
             if (Optional.IsDefined(ControllerProfile))
             {
-                writer.WritePropertyName("controllerProfile");
+                writer.WritePropertyName("controllerProfile"u8);
                 writer.WriteObjectValue(ControllerProfile);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
-                writer.WritePropertyName("networkProfile");
+                writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
             if (Optional.IsDefined(DatabaseProfile))
             {
-                writer.WritePropertyName("databaseProfile");
+                writer.WritePropertyName("databaseProfile"u8);
                 writer.WriteObjectValue(DatabaseProfile);
             }
             if (Optional.IsDefined(SiteProfile))
             {
-                writer.WritePropertyName("siteProfile");
+                writer.WritePropertyName("siteProfile"u8);
                 writer.WriteObjectValue(SiteProfile);
             }
             if (Optional.IsDefined(FileshareProfile))
             {
-                writer.WritePropertyName("fileshareProfile");
+                writer.WritePropertyName("fileshareProfile"u8);
                 writer.WriteObjectValue(FileshareProfile);
             }
             if (Optional.IsDefined(PhpProfile))
             {
-                writer.WritePropertyName("phpProfile");
+                writer.WritePropertyName("phpProfile"u8);
                 writer.WriteObjectValue(PhpProfile);
             }
             if (Optional.IsDefined(SearchProfile))
             {
-                writer.WritePropertyName("searchProfile");
+                writer.WritePropertyName("searchProfile"u8);
                 writer.WriteObjectValue(SearchProfile);
             }
             if (Optional.IsDefined(CacheProfile))
             {
-                writer.WritePropertyName("cacheProfile");
+                writer.WritePropertyName("cacheProfile"u8);
                 writer.WriteObjectValue(CacheProfile);
             }
             if (Optional.IsDefined(BackupProfile))
             {
-                writer.WritePropertyName("backupProfile");
+                writer.WritePropertyName("backupProfile"u8);
                 writer.WriteObjectValue(BackupProfile);
             }
             writer.WriteEndObject();
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.Workloads
             Optional<PhpWorkloadProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new WorkloadKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Workloads
                     sku = WorkloadsSku.DeserializeWorkloadsSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Workloads
                     identity = PhpWorkloadResourceIdentity.DeserializePhpWorkloadResourceIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,37 +181,37 @@ namespace Azure.ResourceManager.Workloads
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Workloads
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("appLocation"))
+                        if (property0.NameEquals("appLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Workloads
                             appLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("managedResourceGroupConfiguration"))
+                        if (property0.NameEquals("managedResourceGroupConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Workloads
                             managedResourceGroupConfiguration = ManagedRGConfiguration.DeserializeManagedRGConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("adminUserProfile"))
+                        if (property0.NameEquals("adminUserProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Workloads
                             adminUserProfile = UserProfile.DeserializeUserProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("webNodesProfile"))
+                        if (property0.NameEquals("webNodesProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Workloads
                             webNodesProfile = VmssNodesProfile.DeserializeVmssNodesProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("controllerProfile"))
+                        if (property0.NameEquals("controllerProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Workloads
                             controllerProfile = NodeProfile.DeserializeNodeProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("networkProfile"))
+                        if (property0.NameEquals("networkProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Workloads
                             networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("databaseProfile"))
+                        if (property0.NameEquals("databaseProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Workloads
                             databaseProfile = DatabaseProfile.DeserializeDatabaseProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("siteProfile"))
+                        if (property0.NameEquals("siteProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Workloads
                             siteProfile = SiteProfile.DeserializeSiteProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("fileshareProfile"))
+                        if (property0.NameEquals("fileshareProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Workloads
                             fileshareProfile = FileshareProfile.DeserializeFileshareProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("phpProfile"))
+                        if (property0.NameEquals("phpProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Workloads
                             phpProfile = PhpProfile.DeserializePhpProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("searchProfile"))
+                        if (property0.NameEquals("searchProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Workloads
                             searchProfile = SearchProfile.DeserializeSearchProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("cacheProfile"))
+                        if (property0.NameEquals("cacheProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Workloads
                             cacheProfile = CacheProfile.DeserializeCacheProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("backupProfile"))
+                        if (property0.NameEquals("backupProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Workloads
                             backupProfile = BackupProfile.DeserializeBackupProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

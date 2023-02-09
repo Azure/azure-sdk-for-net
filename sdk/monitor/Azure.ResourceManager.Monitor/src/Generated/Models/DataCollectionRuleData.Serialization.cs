@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,23 +35,23 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(DataCollectionEndpointId))
             {
-                writer.WritePropertyName("dataCollectionEndpointId");
+                writer.WritePropertyName("dataCollectionEndpointId"u8);
                 writer.WriteStringValue(DataCollectionEndpointId);
             }
             if (Optional.IsCollectionDefined(StreamDeclarations))
             {
-                writer.WritePropertyName("streamDeclarations");
+                writer.WritePropertyName("streamDeclarations"u8);
                 writer.WriteStartObject();
                 foreach (var item in StreamDeclarations)
                 {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsDefined(DataSources))
             {
-                writer.WritePropertyName("dataSources");
+                writer.WritePropertyName("dataSources"u8);
                 writer.WriteObjectValue(DataSources);
             }
             if (Optional.IsDefined(Destinations))
             {
-                writer.WritePropertyName("destinations");
+                writer.WritePropertyName("destinations"u8);
                 writer.WriteObjectValue(Destinations);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
-                writer.WritePropertyName("dataFlows");
+                writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<DataCollectionRuleProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor
                     kind = new DataCollectionRuleResourceKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,37 +140,37 @@ namespace Azure.ResourceManager.Monitor
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,17 +179,17 @@ namespace Azure.ResourceManager.Monitor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("immutableId"))
+                        if (property0.NameEquals("immutableId"u8))
                         {
                             immutableId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataCollectionEndpointId"))
+                        if (property0.NameEquals("dataCollectionEndpointId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Monitor
                             dataCollectionEndpointId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Monitor
                             metadata = DataCollectionRuleMetadata.DeserializeDataCollectionRuleMetadata(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("streamDeclarations"))
+                        if (property0.NameEquals("streamDeclarations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Monitor
                             streamDeclarations = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("dataSources"))
+                        if (property0.NameEquals("dataSources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Monitor
                             dataSources = DataCollectionRuleDataSources.DeserializeDataCollectionRuleDataSources(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("destinations"))
+                        if (property0.NameEquals("destinations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Monitor
                             destinations = DataCollectionRuleDestinations.DeserializeDataCollectionRuleDestinations(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dataFlows"))
+                        if (property0.NameEquals("dataFlows"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Monitor
                             dataFlows = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

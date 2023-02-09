@@ -103,7 +103,12 @@ internal class PollyPolicy : HttpPipelinePolicy
                 return message.Response;
             });
     }
-    // async version omitted for brevity
+
+    public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+    {
+        // async version omitted for brevity
+        throw new NotImplementedException();
+    }
 }
 ```
 

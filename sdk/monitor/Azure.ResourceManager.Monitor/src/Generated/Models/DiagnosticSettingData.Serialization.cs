@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
+                writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
             if (Optional.IsDefined(ServiceBusRuleId))
             {
-                writer.WritePropertyName("serviceBusRuleId");
+                writer.WritePropertyName("serviceBusRuleId"u8);
                 writer.WriteStringValue(ServiceBusRuleId);
             }
             if (Optional.IsDefined(EventHubAuthorizationRuleId))
             {
-                writer.WritePropertyName("eventHubAuthorizationRuleId");
+                writer.WritePropertyName("eventHubAuthorizationRuleId"u8);
                 writer.WriteStringValue(EventHubAuthorizationRuleId);
             }
             if (Optional.IsDefined(EventHubName))
             {
-                writer.WritePropertyName("eventHubName");
+                writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
-                writer.WritePropertyName("metrics");
+                writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsCollectionDefined(Logs))
             {
-                writer.WritePropertyName("logs");
+                writer.WritePropertyName("logs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Logs)
                 {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsDefined(WorkspaceId))
             {
-                writer.WritePropertyName("workspaceId");
+                writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
             if (Optional.IsDefined(MarketplacePartnerId))
             {
-                writer.WritePropertyName("marketplacePartnerId");
+                writer.WritePropertyName("marketplacePartnerId"u8);
                 writer.WriteStringValue(MarketplacePartnerId);
             }
             if (Optional.IsDefined(LogAnalyticsDestinationType))
             {
-                writer.WritePropertyName("logAnalyticsDestinationType");
+                writer.WritePropertyName("logAnalyticsDestinationType"u8);
                 writer.WriteStringValue(LogAnalyticsDestinationType);
             }
             writer.WriteEndObject();
@@ -96,32 +96,32 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> logAnalyticsDestinationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Monitor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageAccountId"))
+                        if (property0.NameEquals("storageAccountId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Monitor
                             storageAccountId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("serviceBusRuleId"))
+                        if (property0.NameEquals("serviceBusRuleId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor
                             serviceBusRuleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("eventHubAuthorizationRuleId"))
+                        if (property0.NameEquals("eventHubAuthorizationRuleId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.Monitor
                             eventHubAuthorizationRuleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("eventHubName"))
+                        if (property0.NameEquals("eventHubName"u8))
                         {
                             eventHubName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("metrics"))
+                        if (property0.NameEquals("metrics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Monitor
                             metrics = array;
                             continue;
                         }
-                        if (property0.NameEquals("logs"))
+                        if (property0.NameEquals("logs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Monitor
                             logs = array;
                             continue;
                         }
-                        if (property0.NameEquals("workspaceId"))
+                        if (property0.NameEquals("workspaceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Monitor
                             workspaceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("marketplacePartnerId"))
+                        if (property0.NameEquals("marketplacePartnerId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Monitor
                             marketplacePartnerId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("logAnalyticsDestinationType"))
+                        if (property0.NameEquals("logAnalyticsDestinationType"u8))
                         {
                             logAnalyticsDestinationType = property0.Value.GetString();
                             continue;

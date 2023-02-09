@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Chaos.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("parameters");
+            writer.WritePropertyName("parameters"u8);
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("selectorId");
+            writer.WritePropertyName("selectorId"u8);
             writer.WriteStringValue(SelectorId);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActionType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     List<KeyValuePair> array = new List<KeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.Chaos.Models
                     parameters = array;
                     continue;
                 }
-                if (property.NameEquals("selectorId"))
+                if (property.NameEquals("selectorId"u8))
                 {
                     selectorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

@@ -5,23 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The UnknownCertificateProperties. </summary>
-    internal partial class UnknownCertificateProperties : CertificateProperties
+    internal partial class UnknownCertificateProperties : AppPlatformCertificateProperties
     {
         /// <summary> Initializes a new instance of UnknownCertificateProperties. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
-        /// <param name="issuedDate"> The issue date of certificate. </param>
-        /// <param name="expirationDate"> The expiration date of certificate. </param>
-        /// <param name="activateDate"> The activate date of certificate. </param>
+        /// <param name="issuedOn"> The issue date of certificate. </param>
+        /// <param name="expireOn"> The expiration date of certificate. </param>
+        /// <param name="activateOn"> The activate date of certificate. </param>
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
-        internal UnknownCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, string issuedDate, string expirationDate, string activateDate, string subjectName, IReadOnlyList<string> dnsNames) : base(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames)
+        /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
+        internal UnknownCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, DateTimeOffset? activateOn, string subjectName, IReadOnlyList<string> dnsNames, AppPlatformCertificateProvisioningState? provisioningState) : base(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames, provisioningState)
         {
             CertificatePropertiesType = certificatePropertiesType ?? "Unknown";
         }

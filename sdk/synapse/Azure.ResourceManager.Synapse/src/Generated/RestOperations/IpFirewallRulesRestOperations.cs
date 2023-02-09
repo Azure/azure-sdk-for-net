@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IPFirewallRuleInfoListResult>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIPFirewallRuleInfoListResult>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IPFirewallRuleInfoListResult value = default;
+                        SynapseIPFirewallRuleInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IPFirewallRuleInfoListResult.DeserializeIPFirewallRuleInfoListResult(document.RootElement);
+                        value = SynapseIPFirewallRuleInfoListResult.DeserializeSynapseIPFirewallRuleInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IPFirewallRuleInfoListResult> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseIPFirewallRuleInfoListResult> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IPFirewallRuleInfoListResult value = default;
+                        SynapseIPFirewallRuleInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IPFirewallRuleInfoListResult.DeserializeIPFirewallRuleInfoListResult(document.RootElement);
+                        value = SynapseIPFirewallRuleInfoListResult.DeserializeSynapseIPFirewallRuleInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, IPFirewallRuleInfoData info)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, SynapseIPFirewallRuleInfoData info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, IPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, SynapseIPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="ruleName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, IPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, SynapseIPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Deletes a firewall rule. </summary>
+        /// <summary> Deletes a firewall rule. You can call ToObjectFromJson&lt;SynapseIPFirewallRuleInfoData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Deletes a firewall rule. </summary>
+        /// <summary> Deletes a firewall rule. You can call ToObjectFromJson&lt;SynapseIPFirewallRuleInfoData&gt;() against the Value property of the result to get specified type. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IPFirewallRuleInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIPFirewallRuleInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -323,13 +323,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IPFirewallRuleInfoData value = default;
+                        SynapseIPFirewallRuleInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IPFirewallRuleInfoData.DeserializeIPFirewallRuleInfoData(document.RootElement);
+                        value = SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IPFirewallRuleInfoData)null, message.Response);
+                    return Response.FromValue((SynapseIPFirewallRuleInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IPFirewallRuleInfoData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, CancellationToken cancellationToken = default)
+        public Response<SynapseIPFirewallRuleInfoData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -356,13 +356,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IPFirewallRuleInfoData value = default;
+                        SynapseIPFirewallRuleInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IPFirewallRuleInfoData.DeserializeIPFirewallRuleInfoData(document.RootElement);
+                        value = SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IPFirewallRuleInfoData)null, message.Response);
+                    return Response.FromValue((SynapseIPFirewallRuleInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IPFirewallRuleInfoListResult>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIPFirewallRuleInfoListResult>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -482,9 +482,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IPFirewallRuleInfoListResult value = default;
+                        SynapseIPFirewallRuleInfoListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IPFirewallRuleInfoListResult.DeserializeIPFirewallRuleInfoListResult(document.RootElement);
+                        value = SynapseIPFirewallRuleInfoListResult.DeserializeSynapseIPFirewallRuleInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IPFirewallRuleInfoListResult> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseIPFirewallRuleInfoListResult> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -513,9 +513,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IPFirewallRuleInfoListResult value = default;
+                        SynapseIPFirewallRuleInfoListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IPFirewallRuleInfoListResult.DeserializeIPFirewallRuleInfoListResult(document.RootElement);
+                        value = SynapseIPFirewallRuleInfoListResult.DeserializeSynapseIPFirewallRuleInfoListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

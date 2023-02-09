@@ -278,6 +278,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DeadLetterSecret { get { throw null; } set { } }
         public System.Uri DeadLetterUri { get { throw null; } set { } }
+        public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class DigitalTwinsEventGridProperties : Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties
@@ -294,6 +295,30 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public string ConnectionStringSecondaryKey { get { throw null; } set { } }
         public System.Uri EndpointUri { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
+    }
+    public partial class DigitalTwinsManagedIdentityReference
+    {
+        public DigitalTwinsManagedIdentityReference() { }
+        public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType? IdentityType { get { throw null; } set { } }
+        public string UserAssignedIdentity { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DigitalTwinsManagedIdentityType : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DigitalTwinsManagedIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DigitalTwinsNameContent
     {
@@ -461,6 +486,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     public abstract partial class TimeSeriesDatabaseConnectionProperties
     {
         protected TimeSeriesDatabaseConnectionProperties() { }
+        public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState? ProvisioningState { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

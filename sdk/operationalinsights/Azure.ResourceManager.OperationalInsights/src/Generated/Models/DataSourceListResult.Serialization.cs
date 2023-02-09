@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static DataSourceListResult DeserializeDataSourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DataSourceData>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsDataSourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataSourceData> array = new List<DataSourceData>();
+                    List<OperationalInsightsDataSourceData> array = new List<OperationalInsightsDataSourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSourceData.DeserializeDataSourceData(item));
+                        array.Add(OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Supported parameters for the pre-build Abstractive Summarization task. </summary>
@@ -20,10 +18,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of AbstractiveSummarizationTaskParameters. </summary>
         /// <param name="sentenceCount"> It controls the approximate number of sentences in the output summaries. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <param name="phraseControls"> Control the phrases to be used in the summary. </param>
         /// <param name="modelVersion"></param>
         /// <param name="loggingOptOut"></param>
-        internal AbstractiveSummarizationTaskParameters(int? sentenceCount, StringIndexType? stringIndexType, IList<PhraseControl> phraseControls, string modelVersion, bool? loggingOptOut) : base(sentenceCount, stringIndexType, phraseControls)
+        internal AbstractiveSummarizationTaskParameters(int? sentenceCount, StringIndexType? stringIndexType, string modelVersion, bool? loggingOptOut) : base(sentenceCount, stringIndexType)
         {
             ModelVersion = modelVersion;
             LoggingOptOut = loggingOptOut;

@@ -91,6 +91,7 @@ namespace Azure.Core.Pipeline
             SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
             HttpResponseMessage responseMessage;
             Stream? contentStream = null;
+            message.ClearResponse();
             try
             {
 #if NET5_0_OR_GREATER

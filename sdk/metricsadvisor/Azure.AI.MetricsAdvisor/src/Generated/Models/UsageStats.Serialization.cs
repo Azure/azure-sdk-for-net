@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<int> dataFeedCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("activeSeriesCount"))
+                if (property.NameEquals("activeSeriesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     activeSeriesCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allSeriesCount"))
+                if (property.NameEquals("allSeriesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     allSeriesCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("metricsCount"))
+                if (property.NameEquals("metricsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     metricsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataFeedCount"))
+                if (property.NameEquals("dataFeedCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

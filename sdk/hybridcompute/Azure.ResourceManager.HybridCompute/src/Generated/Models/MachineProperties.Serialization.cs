@@ -20,52 +20,52 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LocationData))
             {
-                writer.WritePropertyName("locationData");
+                writer.WritePropertyName("locationData"u8);
                 writer.WriteObjectValue(LocationData);
             }
             if (Optional.IsDefined(ServiceStatuses))
             {
-                writer.WritePropertyName("serviceStatuses");
+                writer.WritePropertyName("serviceStatuses"u8);
                 writer.WriteObjectValue(ServiceStatuses);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
-                writer.WritePropertyName("cloudMetadata");
+                writer.WritePropertyName("cloudMetadata"u8);
                 writer.WriteObjectValue(CloudMetadata);
             }
             if (Optional.IsDefined(OSProfile))
             {
-                writer.WritePropertyName("osProfile");
+                writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
             if (Optional.IsDefined(VmId))
             {
-                writer.WritePropertyName("vmId");
+                writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
             if (Optional.IsDefined(ClientPublicKey))
             {
-                writer.WritePropertyName("clientPublicKey");
+                writer.WritePropertyName("clientPublicKey"u8);
                 writer.WriteStringValue(ClientPublicKey);
             }
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
-                writer.WritePropertyName("privateLinkScopeResourceId");
+                writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
             if (Optional.IsDefined(ParentClusterResourceId))
             {
-                writer.WritePropertyName("parentClusterResourceId");
+                writer.WritePropertyName("parentClusterResourceId"u8);
                 writer.WriteStringValue(ParentClusterResourceId);
             }
             if (Optional.IsDefined(MssqlDiscovered))
             {
-                writer.WritePropertyName("mssqlDiscovered");
+                writer.WritePropertyName("mssqlDiscovered"u8);
                 writer.WriteStringValue(MssqlDiscovered);
             }
             writer.WriteEndObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<IReadOnlyDictionary<string, string>> detectedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("locationData"))
+                if (property.NameEquals("locationData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     locationData = LocationData.DeserializeLocationData(property.Value);
                     continue;
                 }
-                if (property.NameEquals("agentConfiguration"))
+                if (property.NameEquals("agentConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     agentConfiguration = AgentConfiguration.DeserializeAgentConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("serviceStatuses"))
+                if (property.NameEquals("serviceStatuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cloudMetadata"))
+                if (property.NameEquals("cloudMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     cloudMetadata = CloudMetadata.DeserializeCloudMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osProfile"))
+                if (property.NameEquals("osProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     osProfile = OSProfile.DeserializeOSProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     status = new HybridComputeStatusType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastStatusChange"))
+                if (property.NameEquals("lastStatusChange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     lastStatusChange = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errorDetails"))
+                if (property.NameEquals("errorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,92 +186,92 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                     }
                     errorDetails = array;
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmId"))
+                if (property.NameEquals("vmId"u8))
                 {
                     vmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineFqdn"))
+                if (property.NameEquals("machineFqdn"u8))
                 {
                     machineFqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientPublicKey"))
+                if (property.NameEquals("clientPublicKey"u8))
                 {
                     clientPublicKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osName"))
+                if (property.NameEquals("osName"u8))
                 {
                     osName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osVersion"))
+                if (property.NameEquals("osVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmUuid"))
+                if (property.NameEquals("vmUuid"u8))
                 {
                     vmUuid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osSku"))
+                if (property.NameEquals("osSku"u8))
                 {
                     osSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domainName"))
+                if (property.NameEquals("domainName"u8))
                 {
                     domainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adFqdn"))
+                if (property.NameEquals("adFqdn"u8))
                 {
                     adFqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsFqdn"))
+                if (property.NameEquals("dnsFqdn"u8))
                 {
                     dnsFqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateLinkScopeResourceId"))
+                if (property.NameEquals("privateLinkScopeResourceId"u8))
                 {
                     privateLinkScopeResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parentClusterResourceId"))
+                if (property.NameEquals("parentClusterResourceId"u8))
                 {
                     parentClusterResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mssqlDiscovered"))
+                if (property.NameEquals("mssqlDiscovered"u8))
                 {
                     mssqlDiscovered = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detectedProperties"))
+                if (property.NameEquals("detectedProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

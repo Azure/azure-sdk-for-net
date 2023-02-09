@@ -131,7 +131,7 @@ namespace Azure.Messaging.ServiceBus
             amqpMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = deadLetterSource;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = enqueuedSequenceNumber;
             amqpMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = enqueuedTime.UtcDateTime;
-            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = serviceBusMessageState;
+            amqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = (int)serviceBusMessageState;
 
             return new ServiceBusReceivedMessage(amqpMessage)
             {
@@ -278,7 +278,7 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="SubscriptionProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.SubscriptionProperties"/> instance for mocking.
         /// </summary>
         public static SubscriptionProperties SubscriptionProperties(
             string topicName,
@@ -310,7 +310,7 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="RuleProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.RuleProperties"/> instance for mocking.
         /// </summary>
         public static RuleProperties RuleProperties(
             string name,
@@ -427,24 +427,6 @@ namespace Azure.Messaging.ServiceBus
             var transportBatch = new ListTransportBatch(batchOptions.MaxSizeInBytes.Value, batchSizeBytes, batchMessageStore, tryAddCallback);
             return new ServiceBusMessageBatch(transportBatch, new EntityScopeFactory("mock", "mock"));
         }
-
-        /// <summary>
-        /// Creates a new <see cref="ServiceBusTransportMetrics"/> instance for mocking.
-        /// </summary>
-        /// <param name="lastHeartbeat">The last time that a heartbeat was received from the service.</param>
-        /// <param name="lastConnectionOpen">The last time that a connection was opened.</param>
-        /// <param name="lastConnectionClose">The last time that a connection was closed.</param>
-        /// <returns></returns>
-        internal static ServiceBusTransportMetrics ServiceBusTransportMetrics(
-            DateTimeOffset? lastHeartbeat = default,
-            DateTimeOffset? lastConnectionOpen = default,
-            DateTimeOffset? lastConnectionClose = default)
-            => new()
-            {
-                LastHeartBeat = lastHeartbeat,
-                LastConnectionOpen = lastConnectionOpen,
-                LastConnectionClose = lastConnectionClose
-            };
 
         /// <summary>
         ///   Allows for the transport event batch created by the factory to be injected for testing purposes.

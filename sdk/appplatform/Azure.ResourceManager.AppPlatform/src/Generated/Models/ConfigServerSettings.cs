@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of ConfigServerSettings. </summary>
         /// <param name="gitProperty"> Property of git environment. </param>
-        internal ConfigServerSettings(ConfigServerGitProperty gitProperty)
+        internal ConfigServerSettings(AppPlatformConfigServerGitProperty gitProperty)
         {
             GitProperty = gitProperty;
         }
 
         /// <summary> Property of git environment. </summary>
-        public ConfigServerGitProperty GitProperty { get; set; }
+        public AppPlatformConfigServerGitProperty GitProperty { get; set; }
     }
 }

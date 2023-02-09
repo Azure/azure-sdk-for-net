@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.SignalR.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("flag");
+            writer.WritePropertyName("flag"u8);
             writer.WriteStringValue(Flag.ToString());
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRFeature DeserializeSignalRFeature(JsonElement element)
         {
-            FeatureFlag flag = default;
+            SignalRFeatureFlag flag = default;
             string value = default;
             Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("flag"))
+                if (property.NameEquals("flag"u8))
                 {
-                    flag = new FeatureFlag(property.Value.GetString());
+                    flag = new SignalRFeatureFlag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

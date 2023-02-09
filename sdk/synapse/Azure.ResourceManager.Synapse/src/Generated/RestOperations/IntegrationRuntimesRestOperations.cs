@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, SynapseIntegrationRuntimePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIntegrationRuntimeData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, SynapseIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeResourceData value = default;
+                        SynapseIntegrationRuntimeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeResourceData.DeserializeIntegrationRuntimeResourceData(document.RootElement);
+                        value = SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeResourceData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<SynapseIntegrationRuntimeData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, SynapseIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeResourceData value = default;
+                        SynapseIntegrationRuntimeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeResourceData.DeserializeIntegrationRuntimeResourceData(document.RootElement);
+                        value = SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIntegrationRuntimeData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeResourceData value = default;
+                        SynapseIntegrationRuntimeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeResourceData.DeserializeIntegrationRuntimeResourceData(document.RootElement);
+                        value = SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((IntegrationRuntimeResourceData)null, message.Response);
+                    return Response.FromValue((SynapseIntegrationRuntimeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeResourceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<SynapseIntegrationRuntimeData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -212,20 +212,20 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeResourceData value = default;
+                        SynapseIntegrationRuntimeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeResourceData.DeserializeIntegrationRuntimeResourceData(document.RootElement);
+                        value = SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((IntegrationRuntimeResourceData)null, message.Response);
+                    return Response.FromValue((SynapseIntegrationRuntimeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResourceData data, string ifMatch)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, SynapseIntegrationRuntimeData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, SynapseIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, SynapseIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeListResponse>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIntegrationRuntimeListResult>> ListByWorkspaceAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -508,9 +508,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeListResponse value = default;
+                        SynapseIntegrationRuntimeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
+                        value = SynapseIntegrationRuntimeListResult.DeserializeSynapseIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeListResponse> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseIntegrationRuntimeListResult> ListByWorkspace(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -537,9 +537,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeListResponse value = default;
+                        SynapseIntegrationRuntimeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
+                        value = SynapseIntegrationRuntimeListResult.DeserializeSynapseIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse>> ListOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult>> ListOutboundNetworkDependenciesEndpointsAsync(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -745,9 +745,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse value = default;
+                        SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse(document.RootElement);
+                        value = SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse> ListOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
+        public Response<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult> ListOutboundNetworkDependenciesEndpoints(string subscriptionId, string resourceGroupName, string workspaceName, string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -776,9 +776,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse value = default;
+                        SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse(document.RootElement);
+                        value = SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeListResponse>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseIntegrationRuntimeListResult>> ListByWorkspaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -975,9 +975,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeListResponse value = default;
+                        SynapseIntegrationRuntimeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
+                        value = SynapseIntegrationRuntimeListResult.DeserializeSynapseIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeListResponse> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<SynapseIntegrationRuntimeListResult> ListByWorkspaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1006,9 +1006,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        IntegrationRuntimeListResponse value = default;
+                        SynapseIntegrationRuntimeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
+                        value = SynapseIntegrationRuntimeListResult.DeserializeSynapseIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

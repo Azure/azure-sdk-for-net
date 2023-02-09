@@ -1,20 +1,30 @@
 # Release History
 
-## 1.0.0 (2022-09-29)
+## 1.1.0-beta.1 (Unreleased)
 
-This package is the first stable release of the DNS Management library.
+### Features Added
 
 ### Breaking Changes
 
-- Renamed the model `RecordSetData` to `RecordSetData`.
-- Renamed the method `GetAllRecordSets` to `GetAllRecordData`.
-- Renamed properties `MaxNumberOfRecordSets`, `MaxNumberOfRecordsPerRecordSet` and `NumberOfRecordSets` in the model `DnsZoneData`.
-- Removed the method `GetRecordSets`.
+### Bugs Fixed
 
 ### Other Changes
 
-- Upgraded dependent Azure.ResourceManager to 1.3.1.
-- Optimized the implementation of methods related to tag operations.
+## 1.0.0 (2022-12-05)
+
+This package is the first stable release of the Azure DNS management library.
+
+### Breaking Changes
+
+ - Add `Dns` prefix for some models
+ - Rename `RecordSet` to `Record`
+ - Renamed some properties to more comprehensive names.
+
+### Other Changes
+
+ - Upgraded dependent `Azure.ResourceManager` to 1.3.2
+ - Upgraded dependent `Azure.Core` to 1.26.0
+ - Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

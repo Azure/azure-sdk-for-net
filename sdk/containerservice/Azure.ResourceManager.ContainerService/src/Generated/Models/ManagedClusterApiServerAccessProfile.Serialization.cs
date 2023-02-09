@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AuthorizedIPRanges))
             {
-                writer.WritePropertyName("authorizedIPRanges");
+                writer.WritePropertyName("authorizedIPRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuthorizedIPRanges)
                 {
@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             if (Optional.IsDefined(EnablePrivateCluster))
             {
-                writer.WritePropertyName("enablePrivateCluster");
+                writer.WritePropertyName("enablePrivateCluster"u8);
                 writer.WriteBooleanValue(EnablePrivateCluster.Value);
             }
             if (Optional.IsDefined(PrivateDnsZone))
             {
-                writer.WritePropertyName("privateDNSZone");
+                writer.WritePropertyName("privateDNSZone"u8);
                 writer.WriteStringValue(PrivateDnsZone);
             }
             if (Optional.IsDefined(EnablePrivateClusterPublicFqdn))
             {
-                writer.WritePropertyName("enablePrivateClusterPublicFQDN");
+                writer.WritePropertyName("enablePrivateClusterPublicFQDN"u8);
                 writer.WriteBooleanValue(EnablePrivateClusterPublicFqdn.Value);
             }
             if (Optional.IsDefined(DisableRunCommand))
             {
-                writer.WritePropertyName("disableRunCommand");
+                writer.WritePropertyName("disableRunCommand"u8);
                 writer.WriteBooleanValue(DisableRunCommand.Value);
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<bool> disableRunCommand = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authorizedIPRanges"))
+                if (property.NameEquals("authorizedIPRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     authorizedIPRanges = array;
                     continue;
                 }
-                if (property.NameEquals("enablePrivateCluster"))
+                if (property.NameEquals("enablePrivateCluster"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enablePrivateCluster = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("privateDNSZone"))
+                if (property.NameEquals("privateDNSZone"u8))
                 {
                     privateDnsZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enablePrivateClusterPublicFQDN"))
+                if (property.NameEquals("enablePrivateClusterPublicFQDN"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enablePrivateClusterPublicFQDN = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableRunCommand"))
+                if (property.NameEquals("disableRunCommand"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static KustoPoolListResult DeserializeKustoPoolListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<KustoPoolData>> value = default;
+            Optional<IReadOnlyList<SynapseKustoPoolData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KustoPoolData> array = new List<KustoPoolData>();
+                    List<SynapseKustoPoolData> array = new List<SynapseKustoPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoPoolData.DeserializeKustoPoolData(item));
+                        array.Add(SynapseKustoPoolData.DeserializeSynapseKustoPoolData(item));
                     }
                     value = array;
                     continue;

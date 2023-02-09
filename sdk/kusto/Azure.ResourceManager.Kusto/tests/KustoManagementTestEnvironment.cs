@@ -23,13 +23,15 @@ namespace Azure.ResourceManager.Kusto.Tests
 
         public string PrivateEndpointName => GetRecordedVariable("PRIVATE_ENDPOINT_NAME");
 
-        public ResourceIdentifier UserAssignedIdentityId =>
-            new(GetRecordedVariable("USER_ASSIGNED_IDENTITY_ID"));
+        public ResourceIdentifier UserAssignedIdentityId => new(GetRecordedVariable("USER_ASSIGNED_IDENTITY_ID"));
 
         public string UserAssignedIdentityPrincipalId => GetRecordedVariable("USER_ASSIGNED_IDENTITY_PRINCIPAL_ID");
 
         public ResourceIdentifier EventHubId => new(GetRecordedVariable("EVENT_HUB_ID"));
         public ResourceIdentifier IotHubId => new(GetRecordedVariable("IOT_HUB_ID"));
+        public ResourceIdentifier CosmosDbAccountId => new(GetRecordedVariable("COSMOSDB_ACCOUNT_ID"));
+        public string CosmosDbDatabaseName => GetRecordedVariable("COSMOSDB_DATABASE_NAME");
+        public string CosmosDbContainerName => GetRecordedVariable("COSMOSDB_CONTAINER_NAME");
 
         public ResourceIdentifier StorageAccountId => new(GetRecordedVariable("STORAGE_ACCOUNT_ID"));
 

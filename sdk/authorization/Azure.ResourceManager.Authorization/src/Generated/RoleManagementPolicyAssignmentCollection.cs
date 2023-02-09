@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -45,8 +44,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Create a role management policy assignment
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
-        /// Operation Id: RoleManagementPolicyAssignments_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to upsert. </param>
@@ -78,8 +85,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Create a role management policy assignment
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
-        /// Operation Id: RoleManagementPolicyAssignments_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to upsert. </param>
@@ -111,8 +126,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role management policy assignment for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
-        /// Operation Id: RoleManagementPolicyAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,8 +163,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Get the specified role management policy assignment for a resource scope
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
-        /// Operation Id: RoleManagementPolicyAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,92 +200,60 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Gets role management assignment policies for a resource scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments
-        /// Operation Id: RoleManagementPolicyAssignments_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleManagementPolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleManagementPolicyAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoleManagementPolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleManagementPolicyAssignmentClientDiagnostics.CreateScope("RoleManagementPolicyAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleManagementPolicyAssignmentRestClient.ListForScopeAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleManagementPolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RoleManagementPolicyAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleManagementPolicyAssignmentClientDiagnostics.CreateScope("RoleManagementPolicyAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _roleManagementPolicyAssignmentRestClient.ListForScopeNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleManagementPolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets role management assignment policies for a resource scope.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments
-        /// Operation Id: RoleManagementPolicyAssignments_ListForScope
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_ListForScope</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleManagementPolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleManagementPolicyAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RoleManagementPolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _roleManagementPolicyAssignmentClientDiagnostics.CreateScope("RoleManagementPolicyAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleManagementPolicyAssignmentRestClient.ListForScope(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleManagementPolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RoleManagementPolicyAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _roleManagementPolicyAssignmentClientDiagnostics.CreateScope("RoleManagementPolicyAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _roleManagementPolicyAssignmentRestClient.ListForScopeNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleManagementPolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
-        /// Operation Id: RoleManagementPolicyAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -280,8 +279,16 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
-        /// Operation Id: RoleManagementPolicyAssignments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

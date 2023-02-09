@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(And))
             {
-                writer.WritePropertyName("and");
+                writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             if (Optional.IsDefined(Dimensions))
             {
-                writer.WritePropertyName("dimensions");
+                writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
             if (Optional.IsDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<BudgetComparisonExpression> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("and"))
+                if (property.NameEquals("and"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     and = array;
                     continue;
                 }
-                if (property.NameEquals("dimensions"))
+                if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

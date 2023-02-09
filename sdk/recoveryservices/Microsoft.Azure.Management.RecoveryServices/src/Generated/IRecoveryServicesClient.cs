@@ -55,6 +55,16 @@ namespace Microsoft.Azure.Management.RecoveryServices
         string ApiVersion { get; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        string ApiVersion1 { get; set; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        string SubscriptionId1 { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -122,8 +132,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Gets the operation status for a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -142,8 +151,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Gets the operation result for a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

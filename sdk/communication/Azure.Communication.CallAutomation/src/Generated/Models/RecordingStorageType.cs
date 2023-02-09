@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Recording storage mode. `External` enables bring your own storage. </summary>
+    /// <summary> Recording storage mode. When set to &apos;BlobStorage&apos;, specify required parameter &apos;ExternalStorageLocation&apos;, to export recording to your own blob container. </summary>
     public readonly partial struct RecordingStorageType : IEquatable<RecordingStorageType>
     {
         private readonly string _value;
@@ -22,13 +22,13 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ACSValue = "aCS";
-        private const string ExternalValue = "external";
+        private const string AcsValue = "acs";
+        private const string BlobStorageValue = "blobStorage";
 
-        /// <summary> aCS. </summary>
-        public static RecordingStorageType ACS { get; } = new RecordingStorageType(ACSValue);
-        /// <summary> external. </summary>
-        public static RecordingStorageType External { get; } = new RecordingStorageType(ExternalValue);
+        /// <summary> acs. </summary>
+        public static RecordingStorageType Acs { get; } = new RecordingStorageType(AcsValue);
+        /// <summary> blobStorage. </summary>
+        public static RecordingStorageType BlobStorage { get; } = new RecordingStorageType(BlobStorageValue);
         /// <summary> Determines if two <see cref="RecordingStorageType"/> values are the same. </summary>
         public static bool operator ==(RecordingStorageType left, RecordingStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecordingStorageType"/> values are not the same. </summary>

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.StoragePool
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("aclMode");
+            writer.WritePropertyName("aclMode"u8);
             writer.WriteStringValue(AclMode.ToString());
             if (Optional.IsCollectionDefined(StaticAcls))
             {
-                writer.WritePropertyName("staticAcls");
+                writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
                 foreach (var item in StaticAcls)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             if (Optional.IsCollectionDefined(Luns))
             {
-                writer.WritePropertyName("luns");
+                writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Luns)
                 {
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("targetIqn");
+            writer.WritePropertyName("targetIqn"u8);
             writer.WriteStringValue(TargetIqn);
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsCollectionDefined(Endpoints))
             {
-                writer.WritePropertyName("endpoints");
+                writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             writer.WriteEndObject();
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.StoragePool
             Optional<IReadOnlyList<string>> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedBy"))
+                if (property.NameEquals("managedBy"u8))
                 {
                     managedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedByExtended"))
+                if (property.NameEquals("managedByExtended"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,32 +104,32 @@ namespace Azure.ResourceManager.StoragePool
                     managedByExtended = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.StoragePool
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("aclMode"))
+                        if (property0.NameEquals("aclMode"u8))
                         {
                             aclMode = new DiskPoolIscsiTargetAclMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("staticAcls"))
+                        if (property0.NameEquals("staticAcls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.StoragePool
                             staticAcls = array;
                             continue;
                         }
-                        if (property0.NameEquals("luns"))
+                        if (property0.NameEquals("luns"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -173,22 +173,22 @@ namespace Azure.ResourceManager.StoragePool
                             luns = array;
                             continue;
                         }
-                        if (property0.NameEquals("targetIqn"))
+                        if (property0.NameEquals("targetIqn"u8))
                         {
                             targetIqn = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = new DiskPoolIscsiTargetProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = new StoragePoolOperationalStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("endpoints"))
+                        if (property0.NameEquals("endpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StoragePool
                             endpoints = array;
                             continue;
                         }
-                        if (property0.NameEquals("port"))
+                        if (property0.NameEquals("port"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.StoragePool
                             port = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("sessions"))
+                        if (property0.NameEquals("sessions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

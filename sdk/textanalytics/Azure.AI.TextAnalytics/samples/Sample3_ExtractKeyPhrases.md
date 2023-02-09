@@ -11,7 +11,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Extracting key phrases from a single document
@@ -61,7 +61,7 @@ string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversa
 
 string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
                     They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good.
+                    The spa offered couples massages which were really good. 
                     The spa was clean and felt very peaceful. Overall the whole experience was great.
                     We will definitely come back.";
 
@@ -123,7 +123,7 @@ string documentB = @"Nos hospedamos en el Hotel Foo la semana pasada por nuestro
 
 string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
                     They had great amenities that included an indoor pool, a spa, and a bar.
-                    The spa offered couples massages which were really good.
+                    The spa offered couples massages which were really good. 
                     The spa was clean and felt very peaceful. Overall the whole experience was great.
                     We will definitely come back.";
 

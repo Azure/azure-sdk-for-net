@@ -21,7 +21,7 @@ BeforeAll {
     . $PSScriptRoot/../GenerateAndBuildLib.ps1
 }
 
-Describe "update autorest.md" -Tag "Unit" {
+Describe "update autorest.md" -Tag "UnitTest" {
     BeforeAll {
         copy-item -Path $PSScriptRoot/autorest.test.md -Destination $PSScriptRoot/autorest.md
     }
@@ -105,6 +105,7 @@ Describe "update autorest.md" -Tag "Unit" {
     }
 }
 
+# Open an issue to track the disabled tests here: https://github.com/Azure/azure-sdk-for-net/issues/33487
 Describe "Generate and Build SDK" -Tag "Unit" {
     BeforeAll {
         $sdkRootPath =  (Join-Path $PSScriptRoot .. .. .. ..)

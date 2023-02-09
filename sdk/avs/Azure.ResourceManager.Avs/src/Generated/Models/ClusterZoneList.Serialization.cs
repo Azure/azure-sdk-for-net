@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<IReadOnlyList<AvsClusterZone>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

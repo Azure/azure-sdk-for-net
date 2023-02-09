@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ServiceBusQueues))
             {
-                writer.WritePropertyName("serviceBusQueues");
+                writer.WritePropertyName("serviceBusQueues"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusQueues)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             if (Optional.IsCollectionDefined(ServiceBusTopics))
             {
-                writer.WritePropertyName("serviceBusTopics");
+                writer.WritePropertyName("serviceBusTopics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusTopics)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             if (Optional.IsCollectionDefined(EventHubs))
             {
-                writer.WritePropertyName("eventHubs");
+                writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             if (Optional.IsCollectionDefined(StorageContainers))
             {
-                writer.WritePropertyName("storageContainers");
+                writer.WritePropertyName("storageContainers"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageContainers)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<IList<RoutingStorageContainerProperties>> storageContainers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceBusQueues"))
+                if (property.NameEquals("serviceBusQueues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     serviceBusQueues = array;
                     continue;
                 }
-                if (property.NameEquals("serviceBusTopics"))
+                if (property.NameEquals("serviceBusTopics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     serviceBusTopics = array;
                     continue;
                 }
-                if (property.NameEquals("eventHubs"))
+                if (property.NameEquals("eventHubs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     eventHubs = array;
                     continue;
                 }
-                if (property.NameEquals("storageContainers"))
+                if (property.NameEquals("storageContainers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

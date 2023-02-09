@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LoggerType))
             {
-                writer.WritePropertyName("loggerType");
+                writer.WritePropertyName("loggerType"u8);
                 writer.WriteStringValue(LoggerType.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteStartObject();
                 foreach (var item in Credentials)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(IsBuffered))
             {
-                writer.WritePropertyName("isBuffered");
+                writer.WritePropertyName("isBuffered"u8);
                 writer.WriteBooleanValue(IsBuffered.Value);
             }
             writer.WriteEndObject();

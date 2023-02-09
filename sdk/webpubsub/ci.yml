@@ -28,12 +28,13 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: webpubsub
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.WebPubSub
       safeName: AzureMessagingWebPubSub
     - name: Azure.Messaging.WebPubSub.Client
-      safeName: AzureMessagingWebPubSub.Client
+      safeName: AzureMessagingWebPubSubClient
     - name: Microsoft.Azure.WebJobs.Extensions.WebPubSub
       safeName: MicrosoftAzureWebJobsExtensionsWebPubSub
     - name: Microsoft.Azure.WebPubSub.AspNetCore

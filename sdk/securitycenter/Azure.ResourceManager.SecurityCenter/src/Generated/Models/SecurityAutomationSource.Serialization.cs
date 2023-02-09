@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EventSource))
             {
-                writer.WritePropertyName("eventSource");
+                writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource.Value.ToString());
             }
             if (Optional.IsCollectionDefined(RuleSets))
             {
-                writer.WritePropertyName("ruleSets");
+                writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in RuleSets)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<IList<SecurityAutomationRuleSet>> ruleSets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventSource"))
+                if (property.NameEquals("eventSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     eventSource = new SecurityEventSource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ruleSets"))
+                if (property.NameEquals("ruleSets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -57,92 +57,92 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmwareMachineId"))
+                if (property.NameEquals("vmwareMachineId"u8))
                 {
                     vmwareMachineId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firmwareType"))
+                if (property.NameEquals("firmwareType"u8))
                 {
                     firmwareType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetGeneration"))
+                if (property.NameEquals("targetGeneration"u8))
                 {
                     targetGeneration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("licenseType"))
+                if (property.NameEquals("licenseType"u8))
                 {
                     licenseType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sqlServerLicenseType"))
+                if (property.NameEquals("sqlServerLicenseType"u8))
                 {
                     sqlServerLicenseType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataMoverRunAsAccountId"))
+                if (property.NameEquals("dataMoverRunAsAccountId"u8))
                 {
                     dataMoverRunAsAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("snapshotRunAsAccountId"))
+                if (property.NameEquals("snapshotRunAsAccountId"u8))
                 {
                     snapshotRunAsAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccountId"))
+                if (property.NameEquals("storageAccountId"u8))
                 {
                     storageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetVmName"))
+                if (property.NameEquals("targetVmName"u8))
                 {
                     targetVmName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetVmSize"))
+                if (property.NameEquals("targetVmSize"u8))
                 {
                     targetVmSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetLocation"))
+                if (property.NameEquals("targetLocation"u8))
                 {
                     targetLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceGroupId"))
+                if (property.NameEquals("targetResourceGroupId"u8))
                 {
                     targetResourceGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetAvailabilitySetId"))
+                if (property.NameEquals("targetAvailabilitySetId"u8))
                 {
                     targetAvailabilitySetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetAvailabilityZone"))
+                if (property.NameEquals("targetAvailabilityZone"u8))
                 {
                     targetAvailabilityZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetProximityPlacementGroupId"))
+                if (property.NameEquals("targetProximityPlacementGroupId"u8))
                 {
                     targetProximityPlacementGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetBootDiagnosticsStorageAccountId"))
+                if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
                 {
                     targetBootDiagnosticsStorageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetVmTags"))
+                if (property.NameEquals("targetVmTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetVmTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("protectedDisks"))
+                if (property.NameEquals("protectedDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,17 +172,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("targetNetworkId"))
+                if (property.NameEquals("targetNetworkId"u8))
                 {
                     targetNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testNetworkId"))
+                if (property.NameEquals("testNetworkId"u8))
                 {
                     testNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmNics"))
+                if (property.NameEquals("vmNics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("targetNicTags"))
+                if (property.NameEquals("targetNicTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -212,12 +212,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetNicTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("migrationRecoveryPointId"))
+                if (property.NameEquals("migrationRecoveryPointId"u8))
                 {
                     migrationRecoveryPointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRecoveryPointReceived"))
+                if (property.NameEquals("lastRecoveryPointReceived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastRecoveryPointReceived = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastRecoveryPointId"))
+                if (property.NameEquals("lastRecoveryPointId"u8))
                 {
                     lastRecoveryPointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialSeedingProgressPercentage"))
+                if (property.NameEquals("initialSeedingProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     initialSeedingProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("migrationProgressPercentage"))
+                if (property.NameEquals("migrationProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     migrationProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resyncProgressPercentage"))
+                if (property.NameEquals("resyncProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resyncProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resumeProgressPercentage"))
+                if (property.NameEquals("resumeProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resumeProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("initialSeedingRetryCount"))
+                if (property.NameEquals("initialSeedingRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     initialSeedingRetryCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncRetryCount"))
+                if (property.NameEquals("resyncRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resyncRetryCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resumeRetryCount"))
+                if (property.NameEquals("resumeRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -302,12 +302,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resumeRetryCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncRequired"))
+                if (property.NameEquals("resyncRequired"u8))
                 {
                     resyncRequired = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resyncState"))
+                if (property.NameEquals("resyncState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -317,12 +317,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resyncState = new ResyncState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("performAutoResync"))
+                if (property.NameEquals("performAutoResync"u8))
                 {
                     performAutoResync = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seedDiskTags"))
+                if (property.NameEquals("seedDiskTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     seedDiskTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetDiskTags"))
+                if (property.NameEquals("targetDiskTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetDiskTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

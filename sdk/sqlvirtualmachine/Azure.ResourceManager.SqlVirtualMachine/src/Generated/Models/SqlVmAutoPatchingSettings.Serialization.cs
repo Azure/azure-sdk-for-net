@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enable");
+                writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(DayOfWeek))
             {
-                writer.WritePropertyName("dayOfWeek");
+                writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
             if (Optional.IsDefined(MaintenanceWindowStartingHour))
             {
-                writer.WritePropertyName("maintenanceWindowStartingHour");
+                writer.WritePropertyName("maintenanceWindowStartingHour"u8);
                 writer.WriteNumberValue(MaintenanceWindowStartingHour.Value);
             }
             if (Optional.IsDefined(MaintenanceWindowDurationInMinutes))
             {
-                writer.WritePropertyName("maintenanceWindowDuration");
+                writer.WritePropertyName("maintenanceWindowDuration"u8);
                 writer.WriteNumberValue(MaintenanceWindowDurationInMinutes.Value);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<int> maintenanceWindowDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enable"))
+                if (property.NameEquals("enable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     enable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dayOfWeek"))
+                if (property.NameEquals("dayOfWeek"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     dayOfWeek = property.Value.GetString().ToSqlVmAutoPatchingDayOfWeek();
                     continue;
                 }
-                if (property.NameEquals("maintenanceWindowStartingHour"))
+                if (property.NameEquals("maintenanceWindowStartingHour"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     maintenanceWindowStartingHour = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maintenanceWindowDuration"))
+                if (property.NameEquals("maintenanceWindowDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

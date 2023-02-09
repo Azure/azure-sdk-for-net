@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The UnknownCustomSetupBase. </summary>
-    internal partial class UnknownCustomSetupBase : CustomSetupBase
+    internal partial class UnknownCustomSetupBase : SynapseCustomSetupBase
     {
         /// <summary> Initializes a new instance of UnknownCustomSetupBase. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>

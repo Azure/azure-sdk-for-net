@@ -14,7 +14,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// Please note <see cref="MediaInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ActivePresenter"/>, <see cref="DominantSpeaker"/>, <see cref="GroupCallInput"/>, <see cref="ImageInput"/>, <see cref="ParticipantInput"/>, <see cref="RoomInput"/>, <see cref="RtmpInput"/>, <see cref="ScreenShare"/>, <see cref="SrtInput"/> and <see cref="TeamsMeetingInput"/>.
     /// </summary>
-    public partial class MediaInput
+    public abstract partial class MediaInput
     {
 
         /// <summary> Initializes a new instance of MediaInput. </summary>

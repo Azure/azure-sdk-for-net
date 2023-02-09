@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
-                writer.WritePropertyName("dataset");
+                writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
             if (Optional.IsCollectionDefined(DataProvidersMetadata))
             {
-                writer.WritePropertyName("dataProvidersMetadata");
+                writer.WritePropertyName("dataProvidersMetadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataProvidersMetadata)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(SuggestedUtterances))
             {
-                writer.WritePropertyName("suggestedUtterances");
+                writer.WritePropertyName("suggestedUtterances"u8);
                 writer.WriteObjectValue(SuggestedUtterances);
             }
             writer.WriteEndObject();
@@ -78,37 +78,37 @@ namespace Azure.ResourceManager.AppService
             Optional<QueryUtterancesResults> suggestedUtterances = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                             metadata = DetectorInfo.DeserializeDetectorInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dataset"))
+                        if (property0.NameEquals("dataset"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService
                             dataset = array;
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
                             status = AppServiceStatusInfo.DeserializeAppServiceStatusInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dataProvidersMetadata"))
+                        if (property0.NameEquals("dataProvidersMetadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
                             dataProvidersMetadata = array;
                             continue;
                         }
-                        if (property0.NameEquals("suggestedUtterances"))
+                        if (property0.NameEquals("suggestedUtterances"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

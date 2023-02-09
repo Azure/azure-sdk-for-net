@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,30 +30,30 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("schemaType");
+            writer.WritePropertyName("schemaType"u8);
             writer.WriteStringValue(SchemaType.ToString());
             if (Optional.IsDefined(TargetNamespace))
             {
-                writer.WritePropertyName("targetNamespace");
+                writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
             if (Optional.IsDefined(DocumentName))
             {
-                writer.WritePropertyName("documentName");
+                writer.WritePropertyName("documentName"u8);
                 writer.WriteStringValue(DocumentName);
             }
             if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("fileName");
+                writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic
             }
             if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content");
+                writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Content);
 #else
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic
             }
             if (Optional.IsDefined(ContentType))
             {
-                writer.WritePropertyName("contentType");
+                writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicContentLink> contentLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,37 +113,37 @@ namespace Azure.ResourceManager.Logic
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,27 +152,27 @@ namespace Azure.ResourceManager.Logic
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("schemaType"))
+                        if (property0.NameEquals("schemaType"u8))
                         {
                             schemaType = new IntegrationAccountSchemaType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("targetNamespace"))
+                        if (property0.NameEquals("targetNamespace"u8))
                         {
                             targetNamespace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("documentName"))
+                        if (property0.NameEquals("documentName"u8))
                         {
                             documentName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("fileName"))
+                        if (property0.NameEquals("fileName"u8))
                         {
                             fileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdTime"))
+                        if (property0.NameEquals("createdTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Logic
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("changedTime"))
+                        if (property0.NameEquals("changedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Logic
                             changedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Logic
                             metadata = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("content"))
+                        if (property0.NameEquals("content"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Logic
                             content = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("contentType"))
+                        if (property0.NameEquals("contentType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Logic
                             contentType = new ContentType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("contentLink"))
+                        if (property0.NameEquals("contentLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

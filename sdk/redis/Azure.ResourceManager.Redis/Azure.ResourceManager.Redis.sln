@@ -7,6 +7,8 @@ Project("{6D52B45B-1766-409C-BCDA-AE78A291A000}") = "Azure.ResourceManager.Redis
 EndProject
 Project("{6D52B45B-1766-409C-BCDA-AE78A291A000}") = "Azure.ResourceManager.Redis.Tests", "tests\Azure.ResourceManager.Redis.Tests.csproj", "{BFB2FA06-3DAA-4845-A20F-8FB60F3438E2}"
 EndProject
+Project("{6D52B45B-1766-409C-BCDA-AE78A291A000}") = "Azure.ResourceManager.Redis.Samples", "samples\Azure.ResourceManager.Redis.Samples.csproj", "{4579FB37-CAD4-4B6D-B123-A4049492C33B}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

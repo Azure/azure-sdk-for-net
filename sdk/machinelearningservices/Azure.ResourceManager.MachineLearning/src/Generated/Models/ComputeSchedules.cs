@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ComputeSchedules. </summary>
         internal ComputeSchedules()
         {
-            ComputeStartStop = new ChangeTrackingList<ComputeStartStopSchedule>();
+            ComputeStartStop = new ChangeTrackingList<MachineLearningComputeStartStopSchedule>();
         }
 
         /// <summary> Initializes a new instance of ComputeSchedules. </summary>
         /// <param name="computeStartStop"> The list of compute start stop schedules to be applied. </param>
-        internal ComputeSchedules(IReadOnlyList<ComputeStartStopSchedule> computeStartStop)
+        internal ComputeSchedules(IReadOnlyList<MachineLearningComputeStartStopSchedule> computeStartStop)
         {
             ComputeStartStop = computeStartStop;
         }
 
         /// <summary> The list of compute start stop schedules to be applied. </summary>
-        public IReadOnlyList<ComputeStartStopSchedule> ComputeStartStop { get; }
+        public IReadOnlyList<MachineLearningComputeStartStopSchedule> ComputeStartStop { get; }
     }
 }

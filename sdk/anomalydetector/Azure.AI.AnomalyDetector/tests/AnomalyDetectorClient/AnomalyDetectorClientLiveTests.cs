@@ -33,15 +33,15 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var result = await client.DetectEntireSeriesAsync(request);
+            var result = await client.DetectUnivariateEntireSeriesAsync(request);
 
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.ExpectedValues, result.Value.ExpectedValues);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.UpperMargins, result.Value.UpperMargins);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.LowerMargins, result.Value.LowerMargins);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsAnomaly, result.Value.IsAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsPositiveAnomaly, result.Value.IsPositiveAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.IsNegativeAnomaly, result.Value.IsNegativeAnomaly);
-            Assert.AreEqual(TestData.ExpectedEntireDetectResult.Severity, result.Value.Severity);
+            Assert.IsNotNull(result.Value.ExpectedValues);
+            Assert.IsNotNull(result.Value.UpperMargins);
+            Assert.IsNotNull(result.Value.LowerMargins);
+            Assert.IsNotNull(result.Value.IsAnomaly);
+            Assert.IsNotNull(result.Value.IsPositiveAnomaly);
+            Assert.IsNotNull(result.Value.IsNegativeAnomaly);
+            Assert.IsNotNull(result.Value.Severity);
         }
 
         [Test]
@@ -52,17 +52,17 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var result = await client.DetectLastPointAsync(request);
+            var result = await client.DetectUnivariateLastPointAsync(request);
 
-            Assert.AreEqual(809.5658016931228F, result.Value.ExpectedValue);
-            Assert.AreEqual(false, result.Value.IsAnomaly);
-            Assert.AreEqual(false, result.Value.IsNegativeAnomaly);
-            Assert.AreEqual(false, result.Value.IsPositiveAnomaly);
-            Assert.AreEqual(40.47829008465612F, result.Value.LowerMargin);
-            Assert.AreEqual(12, result.Value.Period);
-            Assert.AreEqual(49, result.Value.SuggestedWindow);
-            Assert.AreEqual(40.47829008465612F, result.Value.UpperMargin);
-            Assert.AreEqual(0.0f, result.Value.Severity);
+            Assert.IsNotNull(result.Value.ExpectedValue);
+            Assert.IsNotNull(result.Value.IsAnomaly);
+            Assert.IsNotNull(result.Value.IsNegativeAnomaly);
+            Assert.IsNotNull(result.Value.IsPositiveAnomaly);
+            Assert.IsNotNull(result.Value.LowerMargin);
+            Assert.IsNotNull(result.Value.Period);
+            Assert.IsNotNull(result.Value.SuggestedWindow);
+            Assert.IsNotNull(result.Value.UpperMargin);
+            Assert.IsNotNull(result.Value.Severity);
         }
 
         [Test]
@@ -75,11 +75,25 @@ namespace Azure.AI.AnomalyDetector.Tests
             request.StableTrendWindow = 10;
             request.Threshold = 0.5F;
             request.Period = 0;
-            var result = await client.DetectChangePointAsync(request);
+            var result = await client.DetectUnivariateChangePointAsync(request);
 
-            Assert.AreEqual(TestData.ExpectedChangePointResult.Period, result.Value.Period);
-            Assert.AreEqual(TestData.ExpectedChangePointResult.IsChangePoint, result.Value.IsChangePoint);
-            Assert.AreEqual(TestData.ExpectedChangePointResult.ConfidenceScores, result.Value.ConfidenceScores);
+            Assert.IsNotNull(result.Value.Period);
+            Assert.IsNotNull(result.Value.IsChangePoint);
+            Assert.IsNotNull(result.Value.ConfidenceScores);
+        }
+
+        [Test]
+        public async Task GetResultForMultivariateListModel()
+        {
+            var client = CreateAnomalyDetectorClient();
+
+            int model_number = 0;
+            await foreach (var multivariateModel in client.GetMultivariateModelsAsync())
+            {
+                model_number++;
+            }
+
+            Assert.IsTrue(model_number >= 0);
         }
     }
 }

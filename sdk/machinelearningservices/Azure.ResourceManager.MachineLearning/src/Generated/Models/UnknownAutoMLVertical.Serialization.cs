@@ -17,37 +17,68 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogVerbosity))
             {
-                writer.WritePropertyName("logVerbosity");
+                writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            writer.WritePropertyName("taskType");
+            if (Optional.IsDefined(TargetColumnName))
+            {
+                if (TargetColumnName != null)
+                {
+                    writer.WritePropertyName("targetColumnName"u8);
+                    writer.WriteStringValue(TargetColumnName);
+                }
+                else
+                {
+                    writer.WriteNull("targetColumnName");
+                }
+            }
+            writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
+            writer.WritePropertyName("trainingData"u8);
+            writer.WriteObjectValue(TrainingData);
             writer.WriteEndObject();
         }
 
         internal static UnknownAutoMLVertical DeserializeUnknownAutoMLVertical(JsonElement element)
         {
-            Optional<LogVerbosity> logVerbosity = default;
+            Optional<MachineLearningLogVerbosity> logVerbosity = default;
+            Optional<string> targetColumnName = default;
             TaskType taskType = "Unknown";
+            MachineLearningTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logVerbosity"))
+                if (property.NameEquals("logVerbosity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    logVerbosity = new LogVerbosity(property.Value.GetString());
+                    logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("taskType"))
+                if (property.NameEquals("targetColumnName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        targetColumnName = null;
+                        continue;
+                    }
+                    targetColumnName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("taskType"u8))
                 {
                     taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("trainingData"u8))
+                {
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    continue;
+                }
             }
-            return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), taskType);
+            return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData);
         }
     }
 }

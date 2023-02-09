@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.Kusto
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ScriptUri))
             {
-                writer.WritePropertyName("scriptUrl");
+                writer.WritePropertyName("scriptUrl"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ScriptUriSasToken))
             {
-                writer.WritePropertyName("scriptUrlSasToken");
+                writer.WritePropertyName("scriptUrlSasToken"u8);
                 writer.WriteStringValue(ScriptUriSasToken);
             }
             if (Optional.IsDefined(ScriptContent))
             {
-                writer.WritePropertyName("scriptContent");
+                writer.WritePropertyName("scriptContent"u8);
                 writer.WriteStringValue(ScriptContent);
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {
-                writer.WritePropertyName("forceUpdateTag");
+                writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
             if (Optional.IsDefined(ShouldContinueOnErrors))
             {
-                writer.WritePropertyName("continueOnErrors");
+                writer.WritePropertyName("continueOnErrors"u8);
                 writer.WriteBooleanValue(ShouldContinueOnErrors.Value);
             }
             writer.WriteEndObject();
@@ -63,32 +63,32 @@ namespace Azure.ResourceManager.Kusto
             Optional<KustoProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Kusto
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("scriptUrl"))
+                        if (property0.NameEquals("scriptUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.Kusto
                             scriptUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("scriptUrlSasToken"))
+                        if (property0.NameEquals("scriptUrlSasToken"u8))
                         {
                             scriptUrlSasToken = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("scriptContent"))
+                        if (property0.NameEquals("scriptContent"u8))
                         {
                             scriptContent = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("forceUpdateTag"))
+                        if (property0.NameEquals("forceUpdateTag"u8))
                         {
                             forceUpdateTag = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("continueOnErrors"))
+                        if (property0.NameEquals("continueOnErrors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Kusto
                             continueOnErrors = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.DevSpaces
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.DevSpaces
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("targetContainerHostResourceId");
+            writer.WritePropertyName("targetContainerHostResourceId"u8);
             writer.WriteStringValue(TargetContainerHostResourceId);
-            writer.WritePropertyName("targetContainerHostCredentialsBase64");
+            writer.WritePropertyName("targetContainerHostCredentialsBase64"u8);
             writer.WriteStringValue(TargetContainerHostCredentialsBase64);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.DevSpaces
             string targetContainerHostCredentialsBase64 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = DevSpacesSku.DeserializeDevSpacesSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,37 +80,37 @@ namespace Azure.ResourceManager.DevSpaces
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevSpaces
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,27 +129,27 @@ namespace Azure.ResourceManager.DevSpaces
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hostSuffix"))
+                        if (property0.NameEquals("hostSuffix"u8))
                         {
                             hostSuffix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataPlaneFqdn"))
+                        if (property0.NameEquals("dataPlaneFqdn"u8))
                         {
                             dataPlaneFqdn = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetContainerHostApiServerFqdn"))
+                        if (property0.NameEquals("targetContainerHostApiServerFqdn"u8))
                         {
                             targetContainerHostApiServerFqdn = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetContainerHostResourceId"))
+                        if (property0.NameEquals("targetContainerHostResourceId"u8))
                         {
                             targetContainerHostResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetContainerHostCredentialsBase64"))
+                        if (property0.NameEquals("targetContainerHostCredentialsBase64"u8))
                         {
                             targetContainerHostCredentialsBase64 = property0.Value.GetString();
                             continue;

@@ -101,6 +101,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             {
                 callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
             }
+            //callAutomationClient = new CallAutomationClient(new Uri("https://pma-dev-fmorales.plat-dev.skype.net"), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
 
             return InstrumentClient(callAutomationClient);
         }
@@ -181,6 +182,28 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
                 await Task.Delay(milliSeconds);
+        }
+
+        protected async Task CleanUpCall(CallAutomationClient client, string? callConnectionId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    if (Mode != RecordedTestMode.Playback)
+                    {
+                        using (Recording.DisableRecording())
+                        {
+                            var hangUpOptions = new HangUpOptions(true);
+                            hangUpOptions.RepeatabilityHeaders = null;
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>

@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EnforcementMode))
             {
-                writer.WritePropertyName("enforcementMode");
+                writer.WritePropertyName("enforcementMode"u8);
                 writer.WriteStringValue(EnforcementMode.Value.ToString());
             }
             if (Optional.IsDefined(ProtectionMode))
             {
-                writer.WritePropertyName("protectionMode");
+                writer.WritePropertyName("protectionMode"u8);
                 writer.WriteObjectValue(ProtectionMode);
             }
             if (Optional.IsCollectionDefined(VmRecommendations))
             {
-                writer.WritePropertyName("vmRecommendations");
+                writer.WritePropertyName("vmRecommendations"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmRecommendations)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsCollectionDefined(PathRecommendations))
             {
-                writer.WritePropertyName("pathRecommendations");
+                writer.WritePropertyName("pathRecommendations"u8);
                 writer.WriteStartArray();
                 foreach (var item in PathRecommendations)
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<IList<PathRecommendation>> pathRecommendations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,32 +81,32 @@ namespace Azure.ResourceManager.SecurityCenter
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("enforcementMode"))
+                        if (property0.NameEquals("enforcementMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             enforcementMode = new AdaptiveApplicationControlEnforcementMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("protectionMode"))
+                        if (property0.NameEquals("protectionMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             protectionMode = SecurityCenterFileProtectionMode.DeserializeSecurityCenterFileProtectionMode(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("configurationStatus"))
+                        if (property0.NameEquals("configurationStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             configurationStatus = new SecurityCenterConfigurationStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("recommendationStatus"))
+                        if (property0.NameEquals("recommendationStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             recommendationStatus = new RecommendationStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("issues"))
+                        if (property0.NameEquals("issues"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             issues = array;
                             continue;
                         }
-                        if (property0.NameEquals("sourceSystem"))
+                        if (property0.NameEquals("sourceSystem"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             sourceSystem = new AdaptiveApplicationControlGroupSourceSystem(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("vmRecommendations"))
+                        if (property0.NameEquals("vmRecommendations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             vmRecommendations = array;
                             continue;
                         }
-                        if (property0.NameEquals("pathRecommendations"))
+                        if (property0.NameEquals("pathRecommendations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

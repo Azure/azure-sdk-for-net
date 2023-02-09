@@ -45,7 +45,8 @@ namespace Azure.Core.TestFramework
                     // copied from HttpClientTransport - not needed for HttpWebRequestTransport case as cookies are already off by default and can't be turned on
                     UseCookies = AppContextSwitchHelper.GetConfigValue(
                         "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
-                        "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES")
+                        "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES"),
+                    AllowAutoRedirect = false
                 };
                 _innerTransport = new HttpClientTransport(handler);
             }

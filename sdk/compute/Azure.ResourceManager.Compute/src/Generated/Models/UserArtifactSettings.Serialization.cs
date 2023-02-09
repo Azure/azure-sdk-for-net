@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PackageFileName))
             {
-                writer.WritePropertyName("packageFileName");
+                writer.WritePropertyName("packageFileName"u8);
                 writer.WriteStringValue(PackageFileName);
             }
             if (Optional.IsDefined(ConfigFileName))
             {
-                writer.WritePropertyName("configFileName");
+                writer.WritePropertyName("configFileName"u8);
                 writer.WriteStringValue(ConfigFileName);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> configFileName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("packageFileName"))
+                if (property.NameEquals("packageFileName"u8))
                 {
                     packageFileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configFileName"))
+                if (property.NameEquals("configFileName"u8))
                 {
                     configFileName = property.Value.GetString();
                     continue;

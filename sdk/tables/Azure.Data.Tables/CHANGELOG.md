@@ -1,15 +1,24 @@
 # Release History
 
-## 12.8.0-beta.1 (Unreleased)
+## 12.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 12.8.0 (2023-02-08)
+
+### Bugs Fixed
 - Fixed an issue where LINQ predicates containing New expressions, such as `ent => ent.TimeStamp > new DateTimeOffset(...)`, threw an exception.
 
 ### Other Changes
+- `TableClient.CreateIfNotExists` / `TableClient.CreateIfNotExistsAsync` documentation corrected (methods do not return `null` if the table already exists)
+- `TableClient` and `TableServiceClient` constructors that take SAS credentials no longer throw if the URI scheme is not https if it is a loopback host
+- Removed the `new()` constraint from methods on `TableClient`
 
 ## 12.7.1 (2022-12-06)
 

@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            if (message.TryGetInternalProperty(typeof(UserAgentValueKey), out var userAgent))
+            if (message.TryGetProperty(typeof(UserAgentValueKey), out var userAgent))
             {
                 message.Request.Headers.Add(HttpHeader.Names.UserAgent, ((string)userAgent!));
             }

@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation.Models;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The PlaySource. </summary>

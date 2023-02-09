@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -67,8 +66,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Add or Update ResourceGuardProxy under vault
         /// Secures vault critical operations
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}
-        /// Operation Id: ResourceGuardProxy_Put
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxy_Put</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceGuardProxyName"> The String to use. </param>
@@ -101,8 +108,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// Add or Update ResourceGuardProxy under vault
         /// Secures vault critical operations
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}
-        /// Operation Id: ResourceGuardProxy_Put
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxy_Put</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceGuardProxyName"> The String to use. </param>
@@ -134,8 +149,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Returns ResourceGuardProxy under vault and with the name referenced in request
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}
-        /// Operation Id: ResourceGuardProxy_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxy_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,8 +186,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Returns ResourceGuardProxy under vault and with the name referenced in request
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}
-        /// Operation Id: ResourceGuardProxy_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxy_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -192,92 +223,60 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// List the ResourceGuardProxies under vault
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies
-        /// Operation Id: ResourceGuardProxies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardProxyBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProxyBaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceGuardProxyBaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardProxyBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceGuardProxyBaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.GetNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardProxyBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyBaseResource(Client, ResourceGuardProxyBaseResourceData.DeserializeResourceGuardProxyBaseResourceData(e)), _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics, Pipeline, "ResourceGuardProxyBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List the ResourceGuardProxies under vault
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies
-        /// Operation Id: ResourceGuardProxies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProxyBaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProxyBaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ResourceGuardProxyBaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardProxyBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceGuardProxyBaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.GetNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGuardProxyBaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardProxyBaseResourceResourceGuardProxiesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGuardProxyBaseResource(Client, ResourceGuardProxyBaseResourceData.DeserializeResourceGuardProxyBaseResourceData(e)), _resourceGuardProxyBaseResourceResourceGuardProxiesClientDiagnostics, Pipeline, "ResourceGuardProxyBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}
-        /// Operation Id: ResourceGuardProxy_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxy_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -303,8 +302,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}
-        /// Operation Id: ResourceGuardProxy_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuardProxy_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGuardProxyName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

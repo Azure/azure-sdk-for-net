@@ -20,34 +20,34 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
-                writer.WritePropertyName("runtimeVersion");
+                writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
             if (Optional.IsDefined(UnauthenticatedClientAction))
             {
-                writer.WritePropertyName("unauthenticatedClientAction");
+                writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(IsTokenStoreEnabled))
             {
-                writer.WritePropertyName("tokenStoreEnabled");
+                writer.WritePropertyName("tokenStoreEnabled"u8);
                 writer.WriteBooleanValue(IsTokenStoreEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
-                writer.WritePropertyName("allowedExternalRedirectUrls");
+                writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedExternalRedirectUrls)
                 {
@@ -57,32 +57,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(DefaultProvider))
             {
-                writer.WritePropertyName("defaultProvider");
+                writer.WritePropertyName("defaultProvider"u8);
                 writer.WriteStringValue(DefaultProvider.Value.ToSerialString());
             }
             if (Optional.IsDefined(TokenRefreshExtensionHours))
             {
-                writer.WritePropertyName("tokenRefreshExtensionHours");
+                writer.WritePropertyName("tokenRefreshExtensionHours"u8);
                 writer.WriteNumberValue(TokenRefreshExtensionHours.Value);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
             if (Optional.IsDefined(ClientSecretSettingName))
             {
-                writer.WritePropertyName("clientSecretSettingName");
+                writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
             if (Optional.IsDefined(ClientSecretCertificateThumbprint))
             {
-                writer.WritePropertyName("clientSecretCertificateThumbprint");
+                writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ClientSecretCertificateThumbprint);
 #else
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(Issuer))
             {
-                writer.WritePropertyName("issuer");
+                writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
             if (Optional.IsDefined(ValidateIssuer))
             {
-                writer.WritePropertyName("validateIssuer");
+                writer.WritePropertyName("validateIssuer"u8);
                 writer.WriteBooleanValue(ValidateIssuer.Value);
             }
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
-                writer.WritePropertyName("allowedAudiences");
+                writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedAudiences)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(AdditionalLoginParams))
             {
-                writer.WritePropertyName("additionalLoginParams");
+                writer.WritePropertyName("additionalLoginParams"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLoginParams)
                 {
@@ -121,27 +121,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(AadClaimsAuthorization))
             {
-                writer.WritePropertyName("aadClaimsAuthorization");
+                writer.WritePropertyName("aadClaimsAuthorization"u8);
                 writer.WriteStringValue(AadClaimsAuthorization);
             }
             if (Optional.IsDefined(GoogleClientId))
             {
-                writer.WritePropertyName("googleClientId");
+                writer.WritePropertyName("googleClientId"u8);
                 writer.WriteStringValue(GoogleClientId);
             }
             if (Optional.IsDefined(GoogleClientSecret))
             {
-                writer.WritePropertyName("googleClientSecret");
+                writer.WritePropertyName("googleClientSecret"u8);
                 writer.WriteStringValue(GoogleClientSecret);
             }
             if (Optional.IsDefined(GoogleClientSecretSettingName))
             {
-                writer.WritePropertyName("googleClientSecretSettingName");
+                writer.WritePropertyName("googleClientSecretSettingName"u8);
                 writer.WriteStringValue(GoogleClientSecretSettingName);
             }
             if (Optional.IsCollectionDefined(GoogleOAuthScopes))
             {
-                writer.WritePropertyName("googleOAuthScopes");
+                writer.WritePropertyName("googleOAuthScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in GoogleOAuthScopes)
                 {
@@ -151,22 +151,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(FacebookAppId))
             {
-                writer.WritePropertyName("facebookAppId");
+                writer.WritePropertyName("facebookAppId"u8);
                 writer.WriteStringValue(FacebookAppId);
             }
             if (Optional.IsDefined(FacebookAppSecret))
             {
-                writer.WritePropertyName("facebookAppSecret");
+                writer.WritePropertyName("facebookAppSecret"u8);
                 writer.WriteStringValue(FacebookAppSecret);
             }
             if (Optional.IsDefined(FacebookAppSecretSettingName))
             {
-                writer.WritePropertyName("facebookAppSecretSettingName");
+                writer.WritePropertyName("facebookAppSecretSettingName"u8);
                 writer.WriteStringValue(FacebookAppSecretSettingName);
             }
             if (Optional.IsCollectionDefined(FacebookOAuthScopes))
             {
-                writer.WritePropertyName("facebookOAuthScopes");
+                writer.WritePropertyName("facebookOAuthScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in FacebookOAuthScopes)
                 {
@@ -176,22 +176,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(GitHubClientId))
             {
-                writer.WritePropertyName("gitHubClientId");
+                writer.WritePropertyName("gitHubClientId"u8);
                 writer.WriteStringValue(GitHubClientId);
             }
             if (Optional.IsDefined(GitHubClientSecret))
             {
-                writer.WritePropertyName("gitHubClientSecret");
+                writer.WritePropertyName("gitHubClientSecret"u8);
                 writer.WriteStringValue(GitHubClientSecret);
             }
             if (Optional.IsDefined(GitHubClientSecretSettingName))
             {
-                writer.WritePropertyName("gitHubClientSecretSettingName");
+                writer.WritePropertyName("gitHubClientSecretSettingName"u8);
                 writer.WriteStringValue(GitHubClientSecretSettingName);
             }
             if (Optional.IsCollectionDefined(GitHubOAuthScopes))
             {
-                writer.WritePropertyName("gitHubOAuthScopes");
+                writer.WritePropertyName("gitHubOAuthScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in GitHubOAuthScopes)
                 {
@@ -201,37 +201,37 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(TwitterConsumerKey))
             {
-                writer.WritePropertyName("twitterConsumerKey");
+                writer.WritePropertyName("twitterConsumerKey"u8);
                 writer.WriteStringValue(TwitterConsumerKey);
             }
             if (Optional.IsDefined(TwitterConsumerSecret))
             {
-                writer.WritePropertyName("twitterConsumerSecret");
+                writer.WritePropertyName("twitterConsumerSecret"u8);
                 writer.WriteStringValue(TwitterConsumerSecret);
             }
             if (Optional.IsDefined(TwitterConsumerSecretSettingName))
             {
-                writer.WritePropertyName("twitterConsumerSecretSettingName");
+                writer.WritePropertyName("twitterConsumerSecretSettingName"u8);
                 writer.WriteStringValue(TwitterConsumerSecretSettingName);
             }
             if (Optional.IsDefined(MicrosoftAccountClientId))
             {
-                writer.WritePropertyName("microsoftAccountClientId");
+                writer.WritePropertyName("microsoftAccountClientId"u8);
                 writer.WriteStringValue(MicrosoftAccountClientId);
             }
             if (Optional.IsDefined(MicrosoftAccountClientSecret))
             {
-                writer.WritePropertyName("microsoftAccountClientSecret");
+                writer.WritePropertyName("microsoftAccountClientSecret"u8);
                 writer.WriteStringValue(MicrosoftAccountClientSecret);
             }
             if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName))
             {
-                writer.WritePropertyName("microsoftAccountClientSecretSettingName");
+                writer.WritePropertyName("microsoftAccountClientSecretSettingName"u8);
                 writer.WriteStringValue(MicrosoftAccountClientSecretSettingName);
             }
             if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes))
             {
-                writer.WritePropertyName("microsoftAccountOAuthScopes");
+                writer.WritePropertyName("microsoftAccountOAuthScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in MicrosoftAccountOAuthScopes)
                 {
@@ -241,17 +241,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(IsAuthFromFile))
             {
-                writer.WritePropertyName("isAuthFromFile");
+                writer.WritePropertyName("isAuthFromFile"u8);
                 writer.WriteStringValue(IsAuthFromFile);
             }
             if (Optional.IsDefined(AuthFilePath))
             {
-                writer.WritePropertyName("authFilePath");
+                writer.WritePropertyName("authFilePath"u8);
                 writer.WriteStringValue(AuthFilePath);
             }
             if (Optional.IsDefined(ConfigVersion))
             {
-                writer.WritePropertyName("configVersion");
+                writer.WritePropertyName("configVersion"u8);
                 writer.WriteStringValue(ConfigVersion);
             }
             writer.WriteEndObject();
@@ -305,37 +305,37 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> configVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -354,12 +354,12 @@ namespace Azure.ResourceManager.AppService.Models
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("runtimeVersion"))
+                        if (property0.NameEquals("runtimeVersion"u8))
                         {
                             runtimeVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("unauthenticatedClientAction"))
+                        if (property0.NameEquals("unauthenticatedClientAction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppService.Models
                             unauthenticatedClientAction = property0.Value.GetString().ToUnauthenticatedClientAction();
                             continue;
                         }
-                        if (property0.NameEquals("tokenStoreEnabled"))
+                        if (property0.NameEquals("tokenStoreEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.AppService.Models
                             tokenStoreEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowedExternalRedirectUrls"))
+                        if (property0.NameEquals("allowedExternalRedirectUrls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.AppService.Models
                             allowedExternalRedirectUrls = array;
                             continue;
                         }
-                        if (property0.NameEquals("defaultProvider"))
+                        if (property0.NameEquals("defaultProvider"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppService.Models
                             defaultProvider = property0.Value.GetString().ToBuiltInAuthenticationProvider();
                             continue;
                         }
-                        if (property0.NameEquals("tokenRefreshExtensionHours"))
+                        if (property0.NameEquals("tokenRefreshExtensionHours"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -414,22 +414,22 @@ namespace Azure.ResourceManager.AppService.Models
                             tokenRefreshExtensionHours = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("clientId"))
+                        if (property0.NameEquals("clientId"u8))
                         {
                             clientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecret"))
+                        if (property0.NameEquals("clientSecret"u8))
                         {
                             clientSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecretSettingName"))
+                        if (property0.NameEquals("clientSecretSettingName"u8))
                         {
                             clientSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecretCertificateThumbprint"))
+                        if (property0.NameEquals("clientSecretCertificateThumbprint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -439,12 +439,12 @@ namespace Azure.ResourceManager.AppService.Models
                             clientSecretCertificateThumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("issuer"))
+                        if (property0.NameEquals("issuer"u8))
                         {
                             issuer = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("validateIssuer"))
+                        if (property0.NameEquals("validateIssuer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.AppService.Models
                             validateIssuer = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allowedAudiences"))
+                        if (property0.NameEquals("allowedAudiences"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.AppService.Models
                             allowedAudiences = array;
                             continue;
                         }
-                        if (property0.NameEquals("additionalLoginParams"))
+                        if (property0.NameEquals("additionalLoginParams"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -484,27 +484,27 @@ namespace Azure.ResourceManager.AppService.Models
                             additionalLoginParams = array;
                             continue;
                         }
-                        if (property0.NameEquals("aadClaimsAuthorization"))
+                        if (property0.NameEquals("aadClaimsAuthorization"u8))
                         {
                             aadClaimsAuthorization = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("googleClientId"))
+                        if (property0.NameEquals("googleClientId"u8))
                         {
                             googleClientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("googleClientSecret"))
+                        if (property0.NameEquals("googleClientSecret"u8))
                         {
                             googleClientSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("googleClientSecretSettingName"))
+                        if (property0.NameEquals("googleClientSecretSettingName"u8))
                         {
                             googleClientSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("googleOAuthScopes"))
+                        if (property0.NameEquals("googleOAuthScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -519,22 +519,22 @@ namespace Azure.ResourceManager.AppService.Models
                             googleOAuthScopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("facebookAppId"))
+                        if (property0.NameEquals("facebookAppId"u8))
                         {
                             facebookAppId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("facebookAppSecret"))
+                        if (property0.NameEquals("facebookAppSecret"u8))
                         {
                             facebookAppSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("facebookAppSecretSettingName"))
+                        if (property0.NameEquals("facebookAppSecretSettingName"u8))
                         {
                             facebookAppSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("facebookOAuthScopes"))
+                        if (property0.NameEquals("facebookOAuthScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -549,22 +549,22 @@ namespace Azure.ResourceManager.AppService.Models
                             facebookOAuthScopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("gitHubClientId"))
+                        if (property0.NameEquals("gitHubClientId"u8))
                         {
                             gitHubClientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("gitHubClientSecret"))
+                        if (property0.NameEquals("gitHubClientSecret"u8))
                         {
                             gitHubClientSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("gitHubClientSecretSettingName"))
+                        if (property0.NameEquals("gitHubClientSecretSettingName"u8))
                         {
                             gitHubClientSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("gitHubOAuthScopes"))
+                        if (property0.NameEquals("gitHubOAuthScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -579,37 +579,37 @@ namespace Azure.ResourceManager.AppService.Models
                             gitHubOAuthScopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("twitterConsumerKey"))
+                        if (property0.NameEquals("twitterConsumerKey"u8))
                         {
                             twitterConsumerKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("twitterConsumerSecret"))
+                        if (property0.NameEquals("twitterConsumerSecret"u8))
                         {
                             twitterConsumerSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("twitterConsumerSecretSettingName"))
+                        if (property0.NameEquals("twitterConsumerSecretSettingName"u8))
                         {
                             twitterConsumerSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("microsoftAccountClientId"))
+                        if (property0.NameEquals("microsoftAccountClientId"u8))
                         {
                             microsoftAccountClientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("microsoftAccountClientSecret"))
+                        if (property0.NameEquals("microsoftAccountClientSecret"u8))
                         {
                             microsoftAccountClientSecret = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("microsoftAccountClientSecretSettingName"))
+                        if (property0.NameEquals("microsoftAccountClientSecretSettingName"u8))
                         {
                             microsoftAccountClientSecretSettingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("microsoftAccountOAuthScopes"))
+                        if (property0.NameEquals("microsoftAccountOAuthScopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -624,17 +624,17 @@ namespace Azure.ResourceManager.AppService.Models
                             microsoftAccountOAuthScopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("isAuthFromFile"))
+                        if (property0.NameEquals("isAuthFromFile"u8))
                         {
                             isAuthFromFile = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authFilePath"))
+                        if (property0.NameEquals("authFilePath"u8))
                         {
                             authFilePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("configVersion"))
+                        if (property0.NameEquals("configVersion"u8))
                         {
                             configVersion = property0.Value.GetString();
                             continue;

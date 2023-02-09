@@ -11,7 +11,7 @@ using Azure.Security.KeyVault.Administration.Models;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
-    /// The KeyVaultBackupClient provides synchronous and asynchronous methods to perform full backup and restore of the Azure Key Vault.
+    /// The KeyVaultBackupClient provides synchronous and asynchronous methods to perform full and selective key backup and restore of the Azure Managed HSM.
     /// </summary>
     public class KeyVaultBackupClient
     {
@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultBackupClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal. You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details.</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal. You should validate that this URI references a valid Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
         public KeyVaultBackupClient(Uri vaultUri, TokenCredential credential)
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultBackupClient"/> class for the specified vault.
         /// </summary>
-        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal You should validate that this URI references a valid Key Vault or Managed HSM resource. See https://aka.ms/azsdk/blog/vault-uri for details..</param>
+        /// <param name="vaultUri">A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal You should validate that this URI references a valid Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details..</param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="KeyVaultAdministrationClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initiates a full backup of the Key Vault.
+        /// Initiates a full key backup of the Key Vault.
         /// </summary>
         /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initiates a full backup of the Key Vault.
+        /// Initiates a full key backup of the Key Vault.
         /// </summary>
         /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
         /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
@@ -124,7 +124,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initiates a full restore of the Key Vault.
+        /// Initiates a full key restore of the Key Vault.
         /// </summary>
         /// <param name="folderUri">
         /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
@@ -163,7 +163,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initiates a full Restore of the Key Vault.
+        /// Initiates a full key restore of the Key Vault.
         /// </summary>
         /// <param name="folderUri">
         /// The <see cref="Uri"/> for the blob storage resource, including the path to the blob container where the backup resides.
@@ -202,7 +202,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initiates a selective restore of the Key Vault.
+        /// Initiates a selective key restore of the Key Vault.
         /// </summary>
         /// <param name="keyName">The name of the key to be restored from the supplied backup.</param>
         /// <param name="folderUri">
@@ -214,7 +214,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
+        /// <returns>A <see cref="KeyVaultSelectiveKeyRestoreOperation"/> to wait on this long-running operation.</returns>
         public virtual async Task<KeyVaultSelectiveKeyRestoreOperation> StartSelectiveKeyRestoreAsync(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");
@@ -245,7 +245,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initiates a selective Restore of the Key Vault.
+        /// Initiates a selective key restore of the Key Vault.
         /// </summary>
         /// <param name="keyName">The name of the key to be restored from the supplied backup.</param>
         /// <param name="folderUri">
@@ -257,7 +257,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
+        /// <returns>A <see cref="KeyVaultSelectiveKeyRestoreOperation"/> to wait on this long-running operation.</returns>
         public virtual KeyVaultSelectiveKeyRestoreOperation StartSelectiveKeyRestore(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");
@@ -288,7 +288,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Returns the details of full restore operation.
+        /// Returns the details of a full key restore operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -310,7 +310,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Returns the details of full restore operation.
+        /// Returns the details of a full key restore operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -332,7 +332,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Returns the details of selective restore operation.
+        /// Returns the details of a selective key restore operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -355,7 +355,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Returns the details of selective restore operation.
+        /// Returns the details of a selective key restore operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -378,7 +378,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Returns the details of full backup operation.
+        /// Returns the details of a full key backup operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full backup operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -400,7 +400,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Returns the details of full backup operation.
+        /// Returns the details of a full key backup operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full backup operation. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

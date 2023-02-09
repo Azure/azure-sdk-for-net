@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IngestionType))
             {
-                writer.WritePropertyName("ingestionType");
+                writer.WritePropertyName("ingestionType"u8);
                 writer.WriteStringValue(IngestionType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(IngestionSources))
             {
-                writer.WritePropertyName("ingestionSources");
+                writer.WritePropertyName("ingestionSources"u8);
                 writer.WriteStartArray();
                 foreach (var item in IngestionSources)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             Optional<IList<IngestionSourcesPropertiesFormat>> ingestionSources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ingestionType"))
+                if (property.NameEquals("ingestionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     ingestionType = new IngestionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ingestionSources"))
+                if (property.NameEquals("ingestionSources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

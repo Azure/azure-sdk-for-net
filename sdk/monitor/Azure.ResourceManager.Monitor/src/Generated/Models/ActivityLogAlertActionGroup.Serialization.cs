@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("actionGroupId");
+            writer.WritePropertyName("actionGroupId"u8);
             writer.WriteStringValue(ActionGroupId);
             if (Optional.IsCollectionDefined(WebhookProperties))
             {
-                writer.WritePropertyName("webhookProperties");
+                writer.WritePropertyName("webhookProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in WebhookProperties)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IDictionary<string, string>> webhookProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionGroupId"))
+                if (property.NameEquals("actionGroupId"u8))
                 {
                     actionGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("webhookProperties"))
+                if (property.NameEquals("webhookProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

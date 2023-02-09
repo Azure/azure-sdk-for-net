@@ -47,7 +47,7 @@ When deployed use the [application settings](https://docs.microsoft.com/azure/az
 
 If your environment has [managed identity](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet) enabled you can use it to authenticate the Event Hubs extension.  Before doing so, you will need to ensure that permissions have been configured as described in the [Azure Functions developer guide]( https://docs.microsoft.com/azure/azure-functions/functions-reference#grant-permission-to-the-identity).
 
-To use managed identity provide the `<connection_name>__fullyQualifiedNamespace` configuration setting.  
+To use managed identity provide the `<connection_name>__fullyQualifiedNamespace` configuration setting.
 
 ```json
 {
@@ -86,7 +86,7 @@ The following types are supported for trigger and output bindings:
 - `string` - value would be encoded using UTF8 encoding
 - `BinaryData`
 - `byte[]`
-- Custom model types will be JSON-serialized using Newtonsoft.Json 
+- Custom model types will be JSON-serialized using Newtonsoft.Json
 - `IAsyncCollector<T>` of any of the above types for batch triggers
 - `EventHubProducerClient` for output bindings
 
@@ -94,7 +94,7 @@ The following types are supported for trigger and output bindings:
 
 ### Sending individual event
 
-You can send individual events to an Event Hub by applying the `EventHubAttribute` the function return value. The return value can be of `string` or `EventData` type.
+You can send individual events to an Event Hub by applying the `EventHubAttribute` the function return value. The return value can be of `string` or `EventData` type.  A partition keys may not be specified when using a return value; to do so, you'll need to bind to the `IAsyncCollector<EventData>`, as shown in [Sending multiple events](#sending-multiple-events).
 
 ```C# Snippet:BindingToReturnValue
 [FunctionName("BindingToReturnValue")]
@@ -109,7 +109,7 @@ public static string Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer)
 
 ### Sending multiple events
 
-To send multiple events from a single Azure Function invocation you can apply the `EventHubAttribute` to the `IAsyncCollector<string>` or `IAsyncCollector<EventData>` parameter.
+To send multiple events from a single Azure Function invocation you can apply the `EventHubAttribute` to the `IAsyncCollector<string>` or `IAsyncCollector<EventData>` parameter.  Partition keys may only be used when binding to `IAsyncCollector<EventData>`.
 
 ```C# Snippet:BindingToCollector
 [FunctionName("BindingToCollector")]
@@ -117,9 +117,14 @@ public static async Task Run(
     [TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
     [EventHub("<event_hub_name>", Connection = "<connection_name>")] IAsyncCollector<EventData> collector)
 {
-    // IAsyncCollector allows sending multiple events in a single function invocation
-    await collector.AddAsync(new EventData(new BinaryData($"Event 1 added at: {DateTime.Now}")));
-    await collector.AddAsync(new EventData(new BinaryData($"Event 2 added at: {DateTime.Now}")));
+    // When no partition key is used, partitions will be assigned per-batch via round-robin.
+    await collector.AddAsync(new EventData($"Event 1 added at: {DateTime.Now}"));
+    await collector.AddAsync(new EventData($"Event 2 added at: {DateTime.Now}"));
+
+    // Using a partition key will help group events together; events with the same key
+    // will always be assigned to the same partition.
+    await collector.AddAsync(new EventData($"Event 3 added at: {DateTime.Now}"), "sample-key");
+    await collector.AddAsync(new EventData($"Event 4 added at: {DateTime.Now}"), "sample-key");
 }
 ```
 
@@ -150,8 +155,8 @@ public static async Task Run(
     // IAsyncCollector allows sending multiple events in a single function invocation
     await eventHubProducerClient.SendAsync(new[]
     {
-        new EventData(new BinaryData($"Event 1 added at: {DateTime.Now}")),
-        new EventData(new BinaryData($"Event 2 added at: {DateTime.Now}"))
+        new EventData($"Event 1 added at: {DateTime.Now}"),
+        new EventData($"Event 2 added at: {DateTime.Now}")
     });
 }
 ```

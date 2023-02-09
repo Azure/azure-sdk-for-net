@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountType))
             {
-                writer.WritePropertyName("storageAccountType");
+                writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
             if (Optional.IsDefined(DiskEncryptionSet))
             {
-                writer.WritePropertyName("diskEncryptionSet");
+                writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
-                writer.WritePropertyName("securityProfile");
+                writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineDiskSecurityProfile> securityProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Compute.Models
                     storageAccountType = new StorageAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSet"))
+                if (property.NameEquals("diskEncryptionSet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("securityProfile"))
+                if (property.NameEquals("securityProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

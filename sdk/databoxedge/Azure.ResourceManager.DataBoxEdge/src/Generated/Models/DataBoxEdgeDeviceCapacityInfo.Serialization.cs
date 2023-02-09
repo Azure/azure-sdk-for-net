@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeStamp))
             {
-                writer.WritePropertyName("timeStamp");
+                writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
             if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
-                writer.WritePropertyName("clusterStorageCapacityInfo");
+                writer.WritePropertyName("clusterStorageCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterStorageCapacityInfo);
             }
             if (Optional.IsDefined(ClusterComputeCapacityInfo))
             {
-                writer.WritePropertyName("clusterComputeCapacityInfo");
+                writer.WritePropertyName("clusterComputeCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterComputeCapacityInfo);
             }
             if (Optional.IsCollectionDefined(NodeCapacityInfos))
             {
-                writer.WritePropertyName("nodeCapacityInfos");
+                writer.WritePropertyName("nodeCapacityInfos"u8);
                 writer.WriteStartObject();
                 foreach (var item in NodeCapacityInfos)
                 {
@@ -62,32 +62,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<IDictionary<string, HostCapacity>> nodeCapacityInfos = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("timeStamp"))
+                        if (property0.NameEquals("timeStamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             timeStamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("clusterStorageCapacityInfo"))
+                        if (property0.NameEquals("clusterStorageCapacityInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("clusterComputeCapacityInfo"))
+                        if (property0.NameEquals("clusterComputeCapacityInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("nodeCapacityInfos"))
+                        if (property0.NameEquals("nodeCapacityInfos"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

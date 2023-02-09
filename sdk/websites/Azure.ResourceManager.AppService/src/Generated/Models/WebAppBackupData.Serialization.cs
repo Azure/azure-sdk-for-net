@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -53,37 +53,37 @@ namespace Azure.ResourceManager.AppService
             Optional<long> websiteSizeInBytes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                             id0 = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountUrl"))
+                        if (property0.NameEquals("storageAccountUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.AppService
                             storageAccountUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("blobName"))
+                        if (property0.NameEquals("blobName"u8))
                         {
                             blobName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("name"))
+                        if (property0.NameEquals("name"u8))
                         {
                             name0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService
                             status = property0.Value.GetString().ToWebAppBackupStatus();
                             continue;
                         }
-                        if (property0.NameEquals("sizeInBytes"))
+                        if (property0.NameEquals("sizeInBytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService
                             sizeInBytes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.AppService
                             created = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("log"))
+                        if (property0.NameEquals("log"u8))
                         {
                             log = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("databases"))
+                        if (property0.NameEquals("databases"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                             databases = array;
                             continue;
                         }
-                        if (property0.NameEquals("scheduled"))
+                        if (property0.NameEquals("scheduled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
                             scheduled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("lastRestoreTimeStamp"))
+                        if (property0.NameEquals("lastRestoreTimeStamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService
                             lastRestoreTimeStamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("finishedTimeStamp"))
+                        if (property0.NameEquals("finishedTimeStamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.AppService
                             finishedTimeStamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("correlationId"))
+                        if (property0.NameEquals("correlationId"u8))
                         {
                             correlationId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("websiteSizeInBytes"))
+                        if (property0.NameEquals("websiteSizeInBytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -21,12 +21,15 @@ namespace Azure.AI.TextAnalytics
             string id,
             TextDocumentStatistics statistics,
             IList<SummarySentence> sentences,
+            DetectedLanguage? detectedLanguage,
             IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _sentences = (sentences is not null)
                 ? new ReadOnlyCollection<SummarySentence>(sentences)
                 : new List<SummarySentence>();
+
+            DetectedLanguage = detectedLanguage;
 
             Warnings = (warnings is not null)
                 ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
@@ -42,6 +45,12 @@ namespace Azure.AI.TextAnalytics
         /// The warnings that resulted from processing the document.
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
+
+        /// <summary>
+        /// The language of the input document as detected by the service when requested to perform automatic language
+        /// detection, which is possible by specifying "auto" as the language of the input document.
+        /// </summary>
+        public DetectedLanguage? DetectedLanguage { get; }
 
         /// <summary>
         /// The collection of summary sentences extracted from the input document.

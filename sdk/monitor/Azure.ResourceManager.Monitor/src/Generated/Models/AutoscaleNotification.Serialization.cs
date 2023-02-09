@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operation");
+            writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteObjectValue(Email);
             }
             if (Optional.IsCollectionDefined(Webhooks))
             {
-                writer.WritePropertyName("webhooks");
+                writer.WritePropertyName("webhooks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Webhooks)
                 {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<WebhookNotification>> webhooks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operation"))
+                if (property.NameEquals("operation"u8))
                 {
                     operation = new MonitorOperationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     email = EmailNotification.DeserializeEmailNotification(property.Value);
                     continue;
                 }
-                if (property.NameEquals("webhooks"))
+                if (property.NameEquals("webhooks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.DataBoxEdge
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ContactInformation))
             {
-                writer.WritePropertyName("contactInformation");
+                writer.WritePropertyName("contactInformation"u8);
                 writer.WriteObjectValue(ContactInformation);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
-                writer.WritePropertyName("shippingAddress");
+                writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
             if (Optional.IsDefined(ShipmentType))
             {
-                writer.WritePropertyName("shipmentType");
+                writer.WritePropertyName("shipmentType"u8);
                 writer.WriteStringValue(ShipmentType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -57,37 +57,37 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<DataBoxEdgeShipmentType> shipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("orderId"))
+                        if (property0.NameEquals("orderId"u8))
                         {
                             orderId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("contactInformation"))
+                        if (property0.NameEquals("contactInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             contactInformation = DataBoxEdgeContactDetails.DeserializeDataBoxEdgeContactDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("shippingAddress"))
+                        if (property0.NameEquals("shippingAddress"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             shippingAddress = DataBoxEdgeShippingAddress.DeserializeDataBoxEdgeShippingAddress(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("currentStatus"))
+                        if (property0.NameEquals("currentStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             currentStatus = DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("orderHistory"))
+                        if (property0.NameEquals("orderHistory"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                             orderHistory = array;
                             continue;
                         }
-                        if (property0.NameEquals("serialNumber"))
+                        if (property0.NameEquals("serialNumber"u8))
                         {
                             serialNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deliveryTrackingInfo"))
+                        if (property0.NameEquals("deliveryTrackingInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             deliveryTrackingInfo = array;
                             continue;
                         }
-                        if (property0.NameEquals("returnTrackingInfo"))
+                        if (property0.NameEquals("returnTrackingInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             returnTrackingInfo = array;
                             continue;
                         }
-                        if (property0.NameEquals("shipmentType"))
+                        if (property0.NameEquals("shipmentType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

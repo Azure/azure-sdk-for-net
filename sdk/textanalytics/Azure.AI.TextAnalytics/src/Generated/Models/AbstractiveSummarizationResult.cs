@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/>, <paramref name="errors"/> or <paramref name="modelVersion"/> is null. </exception>
-        public AbstractiveSummarizationResult(IEnumerable<AbstractiveSummarizationResultBaseDocumentsItem> documents, IEnumerable<InputError> errors, string modelVersion) : base(documents)
+        public AbstractiveSummarizationResult(IEnumerable<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents, IEnumerable<InputError> errors, string modelVersion) : base(documents)
         {
             Argument.AssertNotNull(documents, nameof(documents));
             Argument.AssertNotNull(errors, nameof(errors));
@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal AbstractiveSummarizationResult(IList<AbstractiveSummarizationResultBaseDocumentsItem> documents, IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion) : base(documents)
+        internal AbstractiveSummarizationResult(IList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents, IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion) : base(documents)
         {
             Errors = errors;
             Statistics = statistics;

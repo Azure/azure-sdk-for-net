@@ -1,52 +1,39 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jolovschemaregistry.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-23179:get-id?api-version=2021-10",
+      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-62213:get-id?api-version=2022-10",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "154",
-        "Content-Type": "application/json; serialization=JSON",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.2.0-alpha.20220321.1 (.NET 6.0.0-rtm.21522.10; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "c3f98b684a21e483e9fab85403d363e8",
+        "Content-Length": "5",
+        "Content-Type": "text/plain; charset=utf-8",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6af1970ba776818c21c4dfa6d82d3c1c",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "type": "record",
-        "namespace": "TestSchema",
-        "name": "Employee",
-        "fields": [
-          {
-            "name": "Name",
-            "type": "string"
-          },
-          {
-            "name": "Age",
-            "type": "int"
-          }
-        ]
-      },
-      "StatusCode": 415,
+      "RequestBody": "Hello",
+      "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 22 Mar 2022 01:54:12 GMT",
+        "Date": "Thu, 12 Jan 2023 19:02:20 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
-        "x-ms-error-code": "InvalidSchemaType"
+        "x-ms-error-code": "ItemNotFound"
       },
       "ResponseBody": {
         "error": {
-          "code": "InvalidSchemaType",
-          "message": "Invalid schema type for POST request. \u0027json\u0027 is not supported. TrackingId:66e34354-72a2-4efb-a481-ce38f062ce28_G28, SystemTracker:jolovschemaregistry.servicebus.windows.net:$schemaGroups/azsdk_net_test_group/schemas/test-23179:get-id, Timestamp:2022-03-22T01:54:12"
+          "code": "ItemNotFound",
+          "message": "Schema azsdk_net_test_group/test-62213 does not exist. TrackingId:0270aea2-8008-4be7-b943-899b9bc3617f_G12, SystemTracker:mreddingschemaregistry-avro.servicebus.windows.net:$schemaGroups/azsdk_net_test_group/schemas/test-62213:get-id, Timestamp:2023-01-12T19:02:21"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1460234207",
-    "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1139233183",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
 }

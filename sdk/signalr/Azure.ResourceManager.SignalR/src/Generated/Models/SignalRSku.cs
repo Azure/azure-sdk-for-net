@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Describes an available sku.&quot;. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
-        internal SignalRSku(string resourceType, ResourceSku sku, SkuCapacity capacity)
+        internal SignalRSku(ResourceType? resourceType, SignalRResourceSku sku, SignalRSkuCapacity capacity)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -27,10 +29,10 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The resource type that this object applies to. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The billing information of the resource. </summary>
-        public ResourceSku Sku { get; }
+        public SignalRResourceSku Sku { get; }
         /// <summary> Describes scaling information of a sku. </summary>
-        public SkuCapacity Capacity { get; }
+        public SignalRSkuCapacity Capacity { get; }
     }
 }

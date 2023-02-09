@@ -127,7 +127,7 @@ namespace Azure.Messaging.ServiceBus
             T1 t1,
             TransportConnectionScope scope,
             CancellationToken cancellationToken,
-            bool logRetriesAsVerbose = false)
+            bool logTimeoutRetriesAsVerbose = false)
       {
             var failedAttemptCount = 0;
 
@@ -168,7 +168,7 @@ namespace Azure.Messaging.ServiceBus
                     TimeSpan? retryDelay = CalculateRetryDelay(activeEx, failedAttemptCount);
                     if (retryDelay.HasValue && !scope.IsDisposed && !cancellationToken.IsCancellationRequested)
                     {
-                        if (logRetriesAsVerbose)
+                        if (logTimeoutRetriesAsVerbose && activeEx is ServiceBusException { Reason: ServiceBusFailureReason.ServiceTimeout })
                         {
                             Logger.RunOperationExceptionEncounteredVerbose(activeEx.ToString());
                         }

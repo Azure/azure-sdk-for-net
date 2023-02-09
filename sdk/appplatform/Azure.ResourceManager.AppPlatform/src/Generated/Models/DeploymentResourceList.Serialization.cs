@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static DeploymentResourceList DeserializeDeploymentResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<AppDeploymentResourceData>> value = default;
+            Optional<IReadOnlyList<AppPlatformDeploymentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AppDeploymentResourceData> array = new List<AppDeploymentResourceData>();
+                    List<AppPlatformDeploymentData> array = new List<AppPlatformDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppDeploymentResourceData.DeserializeAppDeploymentResourceData(item));
+                        array.Add(AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

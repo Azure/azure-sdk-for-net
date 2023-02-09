@@ -14,7 +14,7 @@ using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Certificate
 {
-    // Data plane generated client. The ConfidentialLedgerCertificate service client.
+    // Data plane generated client.
     /// <summary> The ConfidentialLedgerCertificate service client. </summary>
     public partial class ConfidentialLedgerCertificateClient
     {

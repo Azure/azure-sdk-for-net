@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayInfo))
             {
-                writer.WritePropertyName("displayInfo");
+                writer.WritePropertyName("displayInfo"u8);
                 writer.WriteObjectValue(DisplayInfo);
             }
-            writer.WritePropertyName("hierarchyInformation");
+            writer.WritePropertyName("hierarchyInformation"u8);
             writer.WriteObjectValue(HierarchyInformation);
             writer.WriteEndObject();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<IReadOnlyList<EdgeOrderProductDeviceDetails>> deviceDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayInfo"))
+                if (property.NameEquals("displayInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     displayInfo = ProductDisplayInfo.DeserializeProductDisplayInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("hierarchyInformation"))
+                if (property.NameEquals("hierarchyInformation"u8))
                 {
                     hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("productDoubleEncryptionStatus"))
+                if (property.NameEquals("productDoubleEncryptionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     productDoubleEncryptionStatus = new DoubleEncryptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deviceDetails"))
+                if (property.NameEquals("deviceDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

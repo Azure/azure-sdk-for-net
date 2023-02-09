@@ -39,11 +39,11 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesAsyncTest()
         {
-            var queryContent = new QueryContent("project id, tags, properties | limit 2") {
+            var queryContent = new ResourceQueryContent("project id, tags, properties | limit 2") {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId }
             };
 
-            var resultResponse = (await tenant.ResourcesAsync(queryContent)).Value;
+            var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             Assert.IsNotNull(resultResponse);
             //top response
             Assert.AreEqual(2, resultResponse.Count);
@@ -66,16 +66,16 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesBasicQueryTableAsyncTest()
         {
-            var queryContent = new QueryContent("project id, tags, properties | limit 2")
+            var queryContent = new ResourceQueryContent("project id, tags, properties | limit 2")
             {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId },
-                Options = new QueryRequestOptions
+                Options = new ResourceQueryRequestOptions
                 {
                     ResultFormat = ResultFormat.Table
                 }
             };
 
-            var resultResponse = (await tenant.ResourcesAsync(queryContent)).Value;
+            var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             Assert.IsNotNull(resultResponse);
             //top response
             Assert.AreEqual(2, resultResponse.Count);
@@ -114,10 +114,10 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesQueryOptionsTest()
         {
-            var queryContent = new QueryContent("project id")
+            var queryContent = new ResourceQueryContent("project id")
             {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId },
-                Options = new QueryRequestOptions
+                Options = new ResourceQueryRequestOptions
                 {
                     SkipToken = "ew0KICAiJGlkIjogIjEiLA0KICAiTWF4Um93cyI6IDQsDQogICJSb3dzVG9Ta2lwIjogNCwNCiAgIkt1c3RvQ2x1c3RlclVybCI6ICJodHRwczovL2FybXRvcG9sb2d5Lmt1c3RvLndpbmRvd3MubmV0Ig0KfQ==",
                     Top = 6,
@@ -125,7 +125,7 @@ namespace Azure.Management.ResourceGraph.Tests
                 }
             };
 
-            var resultResponse = (await tenant.ResourcesAsync(queryContent)).Value;
+            var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             Assert.IsNotNull(resultResponse);
             //top response
             Assert.AreEqual(6, resultResponse.Count);
@@ -147,7 +147,7 @@ namespace Azure.Management.ResourceGraph.Tests
         {
             var validExpression = "location";
             var invalidExpression = "nonExistingColumn";
-            var queryContent = new QueryContent("project id, location | limit 8")
+            var queryContent = new ResourceQueryContent("project id, location | limit 8")
             {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId },
                 Facets =
@@ -171,7 +171,7 @@ namespace Azure.Management.ResourceGraph.Tests
                 }
             };
 
-            var resultResponse = (await tenant.ResourcesAsync(queryContent)).Value;
+            var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             //top-level
             Assert.AreEqual(8, resultResponse.Count);
             Assert.AreEqual(8, resultResponse.TotalRecords);
@@ -209,11 +209,11 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public Task ResourcesMalformedQueryAsyncTest()
         {
-            var queryContent = new QueryContent("project id, location | where where")
+            var queryContent = new ResourceQueryContent("project id, location | where where")
             {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId }
             };
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await tenant.ResourcesAsync(queryContent); });
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await tenant.GetResourcesAsync(queryContent); });
             Assert.IsNotNull(exception);
             return Task.CompletedTask;
         }
@@ -221,9 +221,9 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesTenantLevelQueryAsyncTest()
         {
-            var queryContent = new QueryContent("project id, tags, properties | limit 2");
+            var queryContent = new ResourceQueryContent("project id, tags, properties | limit 2");
 
-            var resultResponse = (await tenant.ResourcesAsync(queryContent)).Value;
+            var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             // Top-level response fields
             Assert.AreEqual(2, resultResponse.Count);
             Assert.AreEqual(2, resultResponse.TotalRecords);
@@ -245,12 +245,12 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesManagementGroupLevelQueryAsyncTest()
         {
-            var queryContent = new QueryContent("project id, tags, properties | limit 2")
+            var queryContent = new ResourceQueryContent("project id, tags, properties | limit 2")
             {
                 ManagementGroups = { "91f5d6bc-f464-8343-5e53-3c3e3f99e5c4" }
             };
 
-            var resultResponse = (await tenant.ResourcesAsync(queryContent)).Value;
+            var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             // Top-level response fields
             Assert.AreEqual(2, resultResponse.Count);
             Assert.AreEqual(2, resultResponse.TotalRecords);
@@ -272,12 +272,12 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesMultiManagementGroupsLevelQueryTest()
         {
-            var queryContent = new QueryContent("project id, tags, properties | limit 2")
+            var queryContent = new ResourceQueryContent("project id, tags, properties | limit 2")
             {
                 ManagementGroups = { "91f5d6bc-f464-8343-5e53-3c3e3f99e5c4", "makharchMg" }
             };
 
-            var resultResponse = (await tenant.ResourcesAsync(queryContent)).Value;
+            var resultResponse = (await tenant.GetResourcesAsync(queryContent)).Value;
             // Top-level response fields
             Assert.AreEqual(2, resultResponse.Count);
             Assert.AreEqual(2, resultResponse.TotalRecords);
@@ -308,7 +308,7 @@ namespace Azure.Management.ResourceGraph.Tests
                     Interval = new DateTimeInterval(Recording.Now.AddDays(-1), Recording.Now)
                 }
             };
-            var result = (await tenant.ResourcesHistoryAsync(historyContent)).Value;
+            var result = (await tenant.GetResourceHistoryAsync(historyContent)).Value;
             var dict = result.ToObjectFromJson<Dictionary<string, object>>();
             Assert.AreEqual(dict.Count, 2);
             Assert.AreEqual(((JsonElement)dict["count"]).ValueKind,JsonValueKind.Number);

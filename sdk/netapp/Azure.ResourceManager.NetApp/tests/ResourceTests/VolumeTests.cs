@@ -337,6 +337,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         }
 
         [Test]
+        [Ignore("Ignore for now due to CI pipeline timeout.")]
         [RecordedTest]
         public async Task LongListVolumes()
         {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TerminateNotificationProfile))
             {
-                writer.WritePropertyName("terminateNotificationProfile");
+                writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("terminateNotificationProfile"))
+                if (property.NameEquals("terminateNotificationProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

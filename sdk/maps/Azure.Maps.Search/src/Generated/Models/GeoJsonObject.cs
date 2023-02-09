@@ -12,10 +12,10 @@ namespace Azure.Maps.Search.Models
     /// Please note <see cref="GeoJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="GeoJsonFeature"/>, <see cref="GeoJsonFeatureCollection"/>, <see cref="GeoJsonGeometry"/>, <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
     /// </summary>
-    public partial class GeoJsonObject
+    public abstract partial class GeoJsonObject
     {
         /// <summary> Initializes a new instance of GeoJsonObject. </summary>
-        public GeoJsonObject()
+        protected GeoJsonObject()
         {
         }
 

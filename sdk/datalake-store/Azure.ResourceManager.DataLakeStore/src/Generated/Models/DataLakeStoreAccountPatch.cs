@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public DataLakeStoreAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            FirewallRules = new ChangeTrackingList<UpdateFirewallRuleWithAccountParameters>();
-            VirtualNetworkRules = new ChangeTrackingList<UpdateVirtualNetworkRuleWithAccountParameters>();
-            TrustedIdProviders = new ChangeTrackingList<UpdateTrustedIdProviderWithAccountParameters>();
+            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountUpdateContent>();
+            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>();
+            TrustedIdProviders = new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountUpdateContent>();
         }
 
         /// <summary> Resource tags. </summary>
@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         }
 
         /// <summary> The list of firewall rules associated with this Data Lake Store account. </summary>
-        public IList<UpdateFirewallRuleWithAccountParameters> FirewallRules { get; }
+        public IList<FirewallRuleForDataLakeStoreAccountUpdateContent> FirewallRules { get; }
         /// <summary> The list of virtual network rules associated with this Data Lake Store account. </summary>
-        public IList<UpdateVirtualNetworkRuleWithAccountParameters> VirtualNetworkRules { get; }
+        public IList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent> VirtualNetworkRules { get; }
         /// <summary> The current state of the IP address firewall for this Data Lake Store account. Disabling the firewall does not remove existing rules, they will just be ignored until the firewall is re-enabled. </summary>
-        public FirewallState? FirewallState { get; set; }
+        public DataLakeStoreFirewallState? FirewallState { get; set; }
         /// <summary> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </summary>
-        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
+        public DataLakeStoreFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; set; }
         /// <summary> The list of trusted identity providers associated with this Data Lake Store account. </summary>
-        public IList<UpdateTrustedIdProviderWithAccountParameters> TrustedIdProviders { get; }
+        public IList<TrustedIdProviderForDataLakeStoreAccountUpdateContent> TrustedIdProviders { get; }
         /// <summary> The current state of the trusted identity provider feature for this Data Lake Store account. Disabling trusted identity provider functionality does not remove the providers, they will just be ignored until this feature is re-enabled. </summary>
-        public TrustedIdProviderState? TrustedIdProviderState { get; set; }
+        public DataLakeStoreTrustedIdProviderState? TrustedIdProviderState { get; set; }
         /// <summary> The commitment tier to use for next month. </summary>
-        public TierType? NewTier { get; set; }
+        public DataLakeStoreCommitmentTierType? NewTier { get; set; }
     }
 }

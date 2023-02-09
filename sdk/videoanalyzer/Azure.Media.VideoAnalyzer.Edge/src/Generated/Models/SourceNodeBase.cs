@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="SourceNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="IotHubMessageSource"/> and <see cref="RtspSource"/>.
     /// </summary>
-    public partial class SourceNodeBase
+    public abstract partial class SourceNodeBase
     {
         /// <summary> Initializes a new instance of SourceNodeBase. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SourceNodeBase(string name)
+        protected SourceNodeBase(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 

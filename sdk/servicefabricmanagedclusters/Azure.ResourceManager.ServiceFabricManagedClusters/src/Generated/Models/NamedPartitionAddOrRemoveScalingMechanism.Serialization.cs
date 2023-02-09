@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("minPartitionCount");
+            writer.WritePropertyName("minPartitionCount"u8);
             writer.WriteNumberValue(MinPartitionCount);
-            writer.WritePropertyName("maxPartitionCount");
+            writer.WritePropertyName("maxPartitionCount"u8);
             writer.WriteNumberValue(MaxPartitionCount);
-            writer.WritePropertyName("scaleIncrement");
+            writer.WritePropertyName("scaleIncrement"u8);
             writer.WriteNumberValue(ScaleIncrement);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServiceScalingMechanismKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minPartitionCount"))
+                if (property.NameEquals("minPartitionCount"u8))
                 {
                     minPartitionCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPartitionCount"))
+                if (property.NameEquals("maxPartitionCount"u8))
                 {
                     maxPartitionCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scaleIncrement"))
+                if (property.NameEquals("scaleIncrement"u8))
                 {
                     scaleIncrement = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new ServiceScalingMechanismKind(property.Value.GetString());
                     continue;

@@ -8,16 +8,21 @@
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Common field for data type in data connectors. </summary>
-    public partial class DataConnectorDataTypeCommon
+    internal partial class DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of DataConnectorDataTypeCommon. </summary>
+        public DataConnectorDataTypeCommon()
+        {
+        }
+
+        /// <summary> Initializes a new instance of DataConnectorDataTypeCommon. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        public DataConnectorDataTypeCommon(DataTypeState state)
+        internal DataConnectorDataTypeCommon(SecurityInsightsDataTypeConnectionState? state)
         {
             State = state;
         }
 
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public DataTypeState State { get; set; }
+        public SecurityInsightsDataTypeConnectionState? State { get; set; }
     }
 }

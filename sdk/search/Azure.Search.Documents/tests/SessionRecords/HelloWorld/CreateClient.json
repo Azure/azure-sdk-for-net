@@ -1,37 +1,35 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-heathsrchtst.search.windows.net/servicestats?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/servicestats?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.0.0-dev.20200625.1",
-          "(.NET Core 4.6.28928.01; Microsoft Windows 10.0.19041 )"
-        ],
-        "x-ms-client-request-id": "4b6405bb4fdcb9544c0fdf174384b8eb",
+        "Connection": "keep-alive",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "8e29cc6210990270de3f9c8594261f1b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "4b6405bb-4fdc-b954-4c0f-df174384b8eb",
-        "Content-Length": "544",
+        "client-request-id": "8e29cc62-1099-0270-de3f-9c8594261f1b",
+        "Content-Length": "591",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 26 Jun 2020 06:20:13 GMT",
-        "elapsed-time": "226",
+        "Date": "Mon, 09 Jan 2023 18:03:23 GMT",
+        "elapsed-time": "96",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "4b6405bb-4fdc-b954-4c0f-df174384b8eb",
+        "request-id": "8e29cc62-1099-0270-de3f-9c8594261f1b",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "4b6405bb-4fdc-b954-4c0f-df174384b8eb"
+        "x-ms-client-request-id": "8e29cc62-1099-0270-de3f-9c8594261f1b"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-heathsrchtst.search.windows.net/$metadata#Microsoft.Azure.Search.V2020_06_30.ServiceStatistics",
+        "@odata.context": "https://azs-net-shrejaazsearch.search.windows.net/$metadata#Microsoft.Azure.Search.V2020_06_30.ServiceStatistics",
         "counters": {
           "documentCount": {
             "usage": 10,
@@ -39,27 +37,31 @@
           },
           "indexesCount": {
             "usage": 1,
-            "quota": 3
+            "quota": 50
           },
           "indexersCount": {
             "usage": 0,
-            "quota": 3
+            "quota": 50
           },
           "dataSourcesCount": {
             "usage": 0,
-            "quota": 3
+            "quota": 50
           },
           "storageSize": {
-            "usage": 37093,
-            "quota": 52428800
+            "usage": 79406,
+            "quota": 26843545600
           },
           "synonymMaps": {
             "usage": 0,
-            "quota": 3
+            "quota": 5
+          },
+          "skillsetCount": {
+            "usage": 0,
+            "quota": 50
           }
         },
         "limits": {
-          "maxFieldsPerIndex": 1000,
+          "maxFieldsPerIndex": 3000,
           "maxFieldNestingDepthPerIndex": 10,
           "maxComplexCollectionFieldsPerIndex": 40,
           "maxComplexObjectsInCollectionsPerDocument": 3000
@@ -68,9 +70,10 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2134332413",
-    "SearchIndexName": "josgoidr",
+    "RandomSeed": "853052468",
+    "SearchIndexName": "dlnpqugf",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "azs-net-heathsrchtst"
+    "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
+    "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"
   }
 }

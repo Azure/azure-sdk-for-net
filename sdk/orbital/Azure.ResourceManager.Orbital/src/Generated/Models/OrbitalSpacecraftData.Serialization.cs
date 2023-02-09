@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Orbital
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,38 +30,38 @@ namespace Azure.ResourceManager.Orbital
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(NoradId))
             {
-                writer.WritePropertyName("noradId");
+                writer.WritePropertyName("noradId"u8);
                 writer.WriteStringValue(NoradId);
             }
             if (Optional.IsDefined(TitleLine))
             {
-                writer.WritePropertyName("titleLine");
+                writer.WritePropertyName("titleLine"u8);
                 writer.WriteStringValue(TitleLine);
             }
             if (Optional.IsDefined(TleLine1))
             {
-                writer.WritePropertyName("tleLine1");
+                writer.WritePropertyName("tleLine1"u8);
                 writer.WriteStringValue(TleLine1);
             }
             if (Optional.IsDefined(TleLine2))
             {
-                writer.WritePropertyName("tleLine2");
+                writer.WritePropertyName("tleLine2"u8);
                 writer.WriteStringValue(TleLine2);
             }
             if (Optional.IsCollectionDefined(Links))
             {
-                writer.WritePropertyName("links");
+                writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Orbital
             Optional<IList<OrbitalSpacecraftLink>> links = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Orbital
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,37 +115,37 @@ namespace Azure.ResourceManager.Orbital
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Orbital
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,27 +164,27 @@ namespace Azure.ResourceManager.Orbital
                             provisioningState = new OrbitalProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("noradId"))
+                        if (property0.NameEquals("noradId"u8))
                         {
                             noradId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("titleLine"))
+                        if (property0.NameEquals("titleLine"u8))
                         {
                             titleLine = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tleLine1"))
+                        if (property0.NameEquals("tleLine1"u8))
                         {
                             tleLine1 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tleLine2"))
+                        if (property0.NameEquals("tleLine2"u8))
                         {
                             tleLine2 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("links"))
+                        if (property0.NameEquals("links"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

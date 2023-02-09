@@ -26,6 +26,15 @@ namespace Azure.AI.TextAnalytics
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// The two-letter ISO 639-1 representation of the default language to consider for automatic language
+        /// detection (for example, "en" for English or "fr" for French).
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/>, and newer.
+        /// </remarks>
+        public string AutoDetectionDefaultLanguage { get; set; }
+
+        /// <summary>
         /// The version of the FHIR specification that will be used to format the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/>
         /// in the result. If not set, the <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/> will not be produced. For additional information, see
         /// <see href="https://www.hl7.org/fhir/overview.html"/>.
@@ -52,6 +61,7 @@ namespace Azure.AI.TextAnalytics
             Validation.SupportsProperty(this, DisplayName, nameof(DisplayName), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, current);
             Validation.SupportsProperty(this, FhirVersion, nameof(FhirVersion), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, current);
             Validation.SupportsProperty(this, DocumentType, nameof(DocumentType), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, current);
+            Validation.SupportsProperty(this, AutoDetectionDefaultLanguage, nameof(AutoDetectionDefaultLanguage), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, current);
         }
     }
 }

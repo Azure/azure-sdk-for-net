@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ErrorCode))
             {
-                writer.WritePropertyName("errorCode");
+                writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
             if (Optional.IsDefined(ErrorString))
             {
-                writer.WritePropertyName("errorString");
+                writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
             if (Optional.IsDefined(ErrorTitle))
             {
-                writer.WritePropertyName("errorTitle");
+                writer.WritePropertyName("errorTitle"u8);
                 writer.WriteStringValue(ErrorTitle);
             }
             if (Optional.IsCollectionDefined(Recommendations))
             {
-                writer.WritePropertyName("recommendations");
+                writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Recommendations)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(AdditionalDetails))
             {
-                writer.WritePropertyName("additionalDetails");
+                writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStringValue(AdditionalDetails);
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> additionalDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     errorCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("errorString"))
+                if (property.NameEquals("errorString"u8))
                 {
                     errorString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorTitle"))
+                if (property.NameEquals("errorTitle"u8))
                 {
                     errorTitle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendations"))
+                if (property.NameEquals("recommendations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recommendations = array;
                     continue;
                 }
-                if (property.NameEquals("additionalDetails"))
+                if (property.NameEquals("additionalDetails"u8))
                 {
                     additionalDetails = property.Value.GetString();
                     continue;

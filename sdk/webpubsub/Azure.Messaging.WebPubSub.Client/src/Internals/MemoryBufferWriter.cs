@@ -197,11 +197,10 @@ namespace Azure.Messaging.WebPubSub.Clients
                 for (var i = 0; i < count; i++)
                 {
                     var segment = _completedSegments[i];
-                    await destination.WriteAsync(segment.Buffer.AsMemory(0, segment.Length), CancellationToken.None).ConfigureAwait(false);
+                    await destination.WriteAsync(segment.Buffer, 0, segment.Length, CancellationToken.None).ConfigureAwait(false);
                 }
             }
-
-            await destination.WriteAsync(_currentSegment.AsMemory(0, _position)).ConfigureAwait(false);
+            await destination.WriteAsync(_currentSegment, 0, _position).ConfigureAwait(false);
         }
 
         public byte[] ToArray()

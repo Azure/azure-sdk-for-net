@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static VirtualMachineSizeListResult DeserializeVirtualMachineSizeListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualMachineSize>> value = default;
+            Optional<IReadOnlyList<MachineLearningVmSize>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualMachineSize> array = new List<VirtualMachineSize>();
+                    List<MachineLearningVmSize> array = new List<MachineLearningVmSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineSize.DeserializeVirtualMachineSize(item));
+                        array.Add(MachineLearningVmSize.DeserializeMachineLearningVmSize(item));
                     }
                     value = array;
                     continue;

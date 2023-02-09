@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,15 +18,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> name = default;
             Optional<long> supportedIops = default;
             Optional<long> storageSizeMB = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability>> supportedUpgradableTierList = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedIops"))
+                if (property.NameEquals("supportedIops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedIops = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("storageSizeMB"))
+                if (property.NameEquals("storageSizeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,13 +47,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     storageSizeMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("supportedUpgradableTierList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<PostgreSqlFlexibleServerStorageTierCapability> array = new List<PostgreSqlFlexibleServerStorageTierCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PostgreSqlFlexibleServerStorageTierCapability.DeserializePostgreSqlFlexibleServerStorageTierCapability(item));
+                    }
+                    supportedUpgradableTierList = array;
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerStorageCapability(name.Value, Optional.ToNullable(supportedIops), Optional.ToNullable(storageSizeMB), status.Value);
+            return new PostgreSqlFlexibleServerStorageCapability(name.Value, Optional.ToNullable(supportedIops), Optional.ToNullable(storageSizeMB), Optional.ToList(supportedUpgradableTierList), status.Value);
         }
     }
 }

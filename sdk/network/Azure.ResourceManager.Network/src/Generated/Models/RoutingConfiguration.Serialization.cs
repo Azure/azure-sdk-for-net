@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AssociatedRouteTable))
             {
-                writer.WritePropertyName("associatedRouteTable");
+                writer.WritePropertyName("associatedRouteTable"u8);
                 JsonSerializer.Serialize(writer, AssociatedRouteTable);
             }
             if (Optional.IsDefined(PropagatedRouteTables))
             {
-                writer.WritePropertyName("propagatedRouteTables");
+                writer.WritePropertyName("propagatedRouteTables"u8);
                 writer.WriteObjectValue(PropagatedRouteTables);
             }
             if (Optional.IsDefined(VnetRoutes))
             {
-                writer.WritePropertyName("vnetRoutes");
+                writer.WritePropertyName("vnetRoutes"u8);
                 writer.WriteObjectValue(VnetRoutes);
             }
             writer.WriteEndObject();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<VnetRoute> vnetRoutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("associatedRouteTable"))
+                if (property.NameEquals("associatedRouteTable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    associatedRouteTable = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    associatedRouteTable = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("propagatedRouteTables"))
+                if (property.NameEquals("propagatedRouteTables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                     propagatedRouteTables = PropagatedRouteTable.DeserializePropagatedRouteTable(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vnetRoutes"))
+                if (property.NameEquals("vnetRoutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -1,0 +1,199 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7?api-version=7.4-preview.1",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "0",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20230105.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f4ec79332bc6dda05c97e4adc957875a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-request-id": "16f79024-8d52-11ed-9bd6-000d3a612dea",
+        "x-ms-server-latency": "1"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7?api-version=7.4-preview.1",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "244",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20230105.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f4ec79332bc6dda05c97e4adc957875a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "roleName": "Managed HSM Data Decryptor",
+          "description": "Can only decrypt data using the private key stored in Managed HSM",
+          "type": "CustomRole",
+          "permissions": [
+            {
+              "dataActions": [
+                "Microsoft.KeyVault/managedHsm/keys/decrypt/action"
+              ]
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "526",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=131.107.8.83;act_addr_fam=Ipv4;",
+        "x-ms-keyvault-region": "northcentralus",
+        "x-ms-request-id": "174d500e-8d52-11ed-9bd6-000d3a612dea",
+        "x-ms-server-latency": "84"
+      },
+      "ResponseBody": {
+        "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7",
+        "name": "bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7",
+        "properties": {
+          "assignableScopes": [
+            "/"
+          ],
+          "description": "Can only decrypt data using the private key stored in Managed HSM",
+          "permissions": [
+            {
+              "actions": [],
+              "dataActions": [
+                "Microsoft.KeyVault/managedHsm/keys/decrypt/action"
+              ],
+              "notActions": [],
+              "notDataActions": []
+            }
+          ],
+          "roleName": "Managed HSM Data Decryptor",
+          "type": "CustomRole"
+        },
+        "type": "Microsoft.Authorization/roleDefinitions"
+      }
+    },
+    {
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7?api-version=7.4-preview.1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20230105.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "26c7705844fed883d0fe096b51c69845",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "526",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-build-version": "1.0.20221228-2-cb319c1f-1.0.20221206-2-3d39cb0c-1.0.20221111-2-f532bd56-develop",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=131.107.8.83;act_addr_fam=Ipv4;",
+        "x-ms-keyvault-region": "northcentralus",
+        "x-ms-request-id": "1765344e-8d52-11ed-9bd6-000d3a612dea",
+        "x-ms-server-latency": "0"
+      },
+      "ResponseBody": {
+        "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7",
+        "name": "bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7",
+        "properties": {
+          "assignableScopes": [
+            "/"
+          ],
+          "description": "Can only decrypt data using the private key stored in Managed HSM",
+          "permissions": [
+            {
+              "actions": [],
+              "dataActions": [
+                "Microsoft.KeyVault/managedHsm/keys/decrypt/action"
+              ],
+              "notActions": [],
+              "notDataActions": []
+            }
+          ],
+          "roleName": "Managed HSM Data Decryptor",
+          "type": "CustomRole"
+        },
+        "type": "Microsoft.Authorization/roleDefinitions"
+      }
+    },
+    {
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/providers/Microsoft.Authorization/roleDefinitions/bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7?api-version=7.4-preview.1",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Security.KeyVault.Administration/4.3.0-alpha.20230105.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8f012ecbacbc43c1ba8e5eb37c04d658",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "526",
+        "Content-Security-Policy": "default-src \u0027self\u0027",
+        "Content-Type": "application/json; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=131.107.8.83;act_addr_fam=Ipv4;",
+        "x-ms-keyvault-region": "northcentralus",
+        "x-ms-request-id": "176e5614-8d52-11ed-9bd6-000d3a612dea",
+        "x-ms-server-latency": "40"
+      },
+      "ResponseBody": {
+        "id": "Microsoft.KeyVault/providers/Microsoft.Authorization/roleDefinitions/bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7",
+        "name": "bb6b5b6e-604a-9fb1-b00b-c3bd3603ffd7",
+        "properties": {
+          "assignableScopes": [
+            "/"
+          ],
+          "description": "Can only decrypt data using the private key stored in Managed HSM",
+          "permissions": [
+            {
+              "actions": [],
+              "dataActions": [
+                "Microsoft.KeyVault/managedHsm/keys/decrypt/action"
+              ],
+              "notActions": [],
+              "notDataActions": []
+            }
+          ],
+          "roleName": "Managed HSM Data Decryptor",
+          "type": "CustomRole"
+        },
+        "type": "Microsoft.Authorization/roleDefinitions"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "AZURE_MANAGEDHSM_URL": "https://heathskeyvaulthsm.managedhsm.azure.net/",
+    "CLIENT_OBJECTID": "15c75300-c9a4-47de-a1d9-c9f062406528",
+    "RandomSeed": "868864293"
+  }
+}

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("permissions");
+            writer.WritePropertyName("permissions"u8);
             writer.WriteStringValue(Permissions);
-            writer.WritePropertyName("service");
+            writer.WritePropertyName("service"u8);
             writer.WriteStringValue(Service);
-            writer.WritePropertyName("resourceName");
+            writer.WritePropertyName("resourceName"u8);
             writer.WriteStringValue(ResourceName);
             writer.WriteEndObject();
         }
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Storage.Models
             string resourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("permissions"))
+                if (property.NameEquals("permissions"u8))
                 {
                     permissions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("service"))
+                if (property.NameEquals("service"u8))
                 {
                     service = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("resourceName"u8))
                 {
                     resourceName = property.Value.GetString();
                     continue;

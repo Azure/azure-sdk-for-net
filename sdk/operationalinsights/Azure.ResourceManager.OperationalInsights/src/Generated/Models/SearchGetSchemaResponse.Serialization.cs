@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         internal static SearchGetSchemaResponse DeserializeSearchGetSchemaResponse(JsonElement element)
         {
             Optional<SearchMetadata> metadata = default;
-            Optional<IReadOnlyList<SearchSchemaValue>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsSearchSchemaValue>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     metadata = SearchMetadata.DeserializeSearchMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SearchSchemaValue> array = new List<SearchSchemaValue>();
+                    List<OperationalInsightsSearchSchemaValue> array = new List<OperationalInsightsSearchSchemaValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchSchemaValue.DeserializeSearchSchemaValue(item));
+                        array.Add(OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue(item));
                     }
                     value = array;
                     continue;

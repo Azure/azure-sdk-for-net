@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -50,172 +48,92 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary>
         /// List all the available Skus and information related to them.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/availableSkus
-        /// Operation Id: AvailableSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/availableSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableDataBoxEdgeSku> GetAvailableSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailableDataBoxEdgeSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableSkusRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailableDataBoxEdgeSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableSkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableSkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all the available Skus and information related to them.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/availableSkus
-        /// Operation Id: AvailableSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/availableSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableDataBoxEdgeSku> GetAvailableSkus(CancellationToken cancellationToken = default)
         {
-            Page<AvailableDataBoxEdgeSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = AvailableSkusRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailableDataBoxEdgeSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = AvailableSkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableSkusRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Data Box Edge/Data Box Gateway devices in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices
-        /// Operation Id: Devices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Devices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevicesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataBoxEdgeDeviceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices");
-                scope.Start();
-                try
-                {
-                    var response = await DataBoxEdgeDeviceDevicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeDeviceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataBoxEdgeDeviceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices");
-                scope.Start();
-                try
-                {
-                    var response = await DataBoxEdgeDeviceDevicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeDeviceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the Data Box Edge/Data Box Gateway devices in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices
-        /// Operation Id: Devices_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Devices_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<DataBoxEdgeDeviceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices");
-                scope.Start();
-                try
-                {
-                    var response = DataBoxEdgeDeviceDevicesRestClient.ListBySubscription(Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeDeviceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataBoxEdgeDeviceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DataBoxEdgeDeviceDevicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices");
-                scope.Start();
-                try
-                {
-                    var response = DataBoxEdgeDeviceDevicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataBoxEdgeDeviceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of UpdateWorkspaceQuotasResult. </summary>
         internal UpdateWorkspaceQuotasResult()
         {
-            Value = new ChangeTrackingList<UpdateWorkspaceQuotas>();
+            Value = new ChangeTrackingList<MachineLearningWorkspaceQuotaUpdate>();
         }
 
         /// <summary> Initializes a new instance of UpdateWorkspaceQuotasResult. </summary>
         /// <param name="value"> The list of workspace quota update result. </param>
         /// <param name="nextLink"> The URI to fetch the next page of workspace quota update result. Call ListNext() with this to fetch the next page of Workspace Quota update result. </param>
-        internal UpdateWorkspaceQuotasResult(IReadOnlyList<UpdateWorkspaceQuotas> value, string nextLink)
+        internal UpdateWorkspaceQuotasResult(IReadOnlyList<MachineLearningWorkspaceQuotaUpdate> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of workspace quota update result. </summary>
-        public IReadOnlyList<UpdateWorkspaceQuotas> Value { get; }
+        public IReadOnlyList<MachineLearningWorkspaceQuotaUpdate> Value { get; }
         /// <summary> The URI to fetch the next page of workspace quota update result. Call ListNext() with this to fetch the next page of Workspace Quota update result. </summary>
         public string NextLink { get; }
     }

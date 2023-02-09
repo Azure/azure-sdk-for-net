@@ -55,5 +55,10 @@ namespace Azure.Communication.CallAutomation
         /// Repeatability Headers.
         /// </summary>
         public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
+
+        /// <summary>
+        /// The endpoint URL of the Azure Cognitive Services resource attached
+        /// </summary>
+        public Uri AzureCognitiveServicesEndpointUrl { get; set; }
     }
 }

@@ -2,7 +2,7 @@ namespace Azure.Core.Expressions.DataFactory
 {
     public sealed partial class DataFactoryExpression<T>
     {
-        public DataFactoryExpression(T literal) { }
+        public DataFactoryExpression(T? literal) { }
         public bool HasLiteral { get { throw null; } }
         public T? Literal { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

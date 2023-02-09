@@ -12,6 +12,7 @@ using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Serverless.Protocols;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Options;
 using Moq;
 using SignalRServiceExtension.Tests.Utils;
 using Xunit;
@@ -44,11 +45,11 @@ namespace SignalRServiceExtension.Tests
             var executor = executorMoc.Object;
             if (throwException)
             {
-                Assert.ThrowsAny<Exception>(() => dispatcher.Map(key, new ExecutionContext { Executor = executor, AccessKeys = null }));
+                Assert.ThrowsAny<Exception>(() => dispatcher.Map(key, new ExecutionContext { Executor = executor, SignatureValidationOptions = null }));
                 return;
             }
 
-            dispatcher.Map(key, new ExecutionContext { Executor = executor, AccessKeys = null });
+            dispatcher.Map(key, new ExecutionContext { Executor = executor, SignatureValidationOptions = null });
             var request = TestHelpers.CreateHttpRequestMessage(key.hub, key.category, key.@event, Guid.NewGuid().ToString());
             await dispatcher.ExecuteAsync(request);
             executorMoc.Verify(e => e.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -75,7 +76,7 @@ namespace SignalRServiceExtension.Tests
             executorMoc.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new FunctionResult(true)));
             var executor = executorMoc.Object;
-            dispatcher.Map(key, new ExecutionContext { Executor = executor, AccessKeys = null });
+            dispatcher.Map(key, new ExecutionContext { Executor = executor, SignatureValidationOptions = null });
 
             // Test content type
             resolver.ValidateContentTypeResult = false;
@@ -109,7 +110,7 @@ namespace SignalRServiceExtension.Tests
 
             public bool ValidateContentType(HttpRequestMessage request) => ValidateContentTypeResult;
 
-            public bool ValidateSignature(HttpRequestMessage request, AccessKey[] accessKeys) => ValidateSignatureResult;
+            public bool ValidateSignature(HttpRequestMessage request, IOptionsMonitor<SignatureValidationOptions> signatureValidationOptions) => ValidateSignatureResult;
 
             public bool TryGetInvocationContext(HttpRequestMessage request, out InvocationContext context)
             {

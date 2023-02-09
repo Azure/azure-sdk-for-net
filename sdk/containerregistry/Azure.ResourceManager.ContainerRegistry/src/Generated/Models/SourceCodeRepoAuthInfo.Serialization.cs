@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tokenType");
+            writer.WritePropertyName("tokenType"u8);
             writer.WriteStringValue(TokenType.ToString());
-            writer.WritePropertyName("token");
+            writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
             if (Optional.IsDefined(RefreshToken))
             {
-                writer.WritePropertyName("refreshToken");
+                writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
             if (Optional.IsDefined(ExpireInSeconds))
             {
-                writer.WritePropertyName("expiresIn");
+                writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpireInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<int> expiresIn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tokenType"))
+                if (property.NameEquals("tokenType"u8))
                 {
                     tokenType = new SourceCodeRepoAuthTokenType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("token"))
+                if (property.NameEquals("token"u8))
                 {
                     token = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("refreshToken"))
+                if (property.NameEquals("refreshToken"u8))
                 {
                     refreshToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     scope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiresIn"))
+                if (property.NameEquals("expiresIn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

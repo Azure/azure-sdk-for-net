@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.DataBoxEdge
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("shareStatus");
+            writer.WritePropertyName("shareStatus"u8);
             writer.WriteStringValue(ShareStatus.ToString());
-            writer.WritePropertyName("monitoringStatus");
+            writer.WritePropertyName("monitoringStatus"u8);
             writer.WriteStringValue(MonitoringStatus.ToString());
             if (Optional.IsDefined(AzureContainerInfo))
             {
-                writer.WritePropertyName("azureContainerInfo");
+                writer.WritePropertyName("azureContainerInfo"u8);
                 writer.WriteObjectValue(AzureContainerInfo);
             }
-            writer.WritePropertyName("accessProtocol");
+            writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
             if (Optional.IsCollectionDefined(UserAccessRights))
             {
-                writer.WritePropertyName("userAccessRights");
+                writer.WritePropertyName("userAccessRights"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserAccessRights)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
             if (Optional.IsCollectionDefined(ClientAccessRights))
             {
-                writer.WritePropertyName("clientAccessRights");
+                writer.WritePropertyName("clientAccessRights"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClientAccessRights)
                 {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
             if (Optional.IsDefined(RefreshDetails))
             {
-                writer.WritePropertyName("refreshDetails");
+                writer.WritePropertyName("refreshDetails"u8);
                 writer.WriteObjectValue(RefreshDetails);
             }
             if (Optional.IsDefined(DataPolicy))
             {
-                writer.WritePropertyName("dataPolicy");
+                writer.WritePropertyName("dataPolicy"u8);
                 writer.WriteStringValue(DataPolicy.Value.ToString());
             }
             writer.WriteEndObject();
@@ -88,32 +88,32 @@ namespace Azure.ResourceManager.DataBoxEdge
             Optional<DataBoxEdgeDataPolicy> dataPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,22 +122,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("shareStatus"))
+                        if (property0.NameEquals("shareStatus"u8))
                         {
                             shareStatus = new ShareStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("monitoringStatus"))
+                        if (property0.NameEquals("monitoringStatus"u8))
                         {
                             monitoringStatus = new DataBoxEdgeShareMonitoringStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("azureContainerInfo"))
+                        if (property0.NameEquals("azureContainerInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                             azureContainerInfo = DataBoxEdgeStorageContainerInfo.DeserializeDataBoxEdgeStorageContainerInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("accessProtocol"))
+                        if (property0.NameEquals("accessProtocol"u8))
                         {
                             accessProtocol = new ShareAccessProtocol(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("userAccessRights"))
+                        if (property0.NameEquals("userAccessRights"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             userAccessRights = array;
                             continue;
                         }
-                        if (property0.NameEquals("clientAccessRights"))
+                        if (property0.NameEquals("clientAccessRights"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             clientAccessRights = array;
                             continue;
                         }
-                        if (property0.NameEquals("refreshDetails"))
+                        if (property0.NameEquals("refreshDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("shareMappings"))
+                        if (property0.NameEquals("shareMappings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             shareMappings = array;
                             continue;
                         }
-                        if (property0.NameEquals("dataPolicy"))
+                        if (property0.NameEquals("dataPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

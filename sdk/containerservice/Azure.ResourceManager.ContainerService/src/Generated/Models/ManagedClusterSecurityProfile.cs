@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Security profile for the container service cluster. </summary>
-    internal partial class ManagedClusterSecurityProfile
+    public partial class ManagedClusterSecurityProfile
     {
         /// <summary> Initializes a new instance of ManagedClusterSecurityProfile. </summary>
         public ManagedClusterSecurityProfile()
@@ -16,13 +16,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterSecurityProfile. </summary>
-        /// <param name="azureDefender"> Azure Defender settings for the security profile. </param>
-        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileAzureDefender azureDefender)
+        /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
+        /// <param name="azureKeyVaultKms"> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </param>
+        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms)
         {
-            AzureDefender = azureDefender;
+            Defender = defender;
+            AzureKeyVaultKms = azureKeyVaultKms;
         }
 
-        /// <summary> Azure Defender settings for the security profile. </summary>
-        public ManagedClusterSecurityProfileAzureDefender AzureDefender { get; set; }
+        /// <summary> Microsoft Defender settings for the security profile. </summary>
+        public ManagedClusterSecurityProfileDefender Defender { get; set; }
+        /// <summary> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </summary>
+        public ManagedClusterSecurityProfileKeyVaultKms AzureKeyVaultKms { get; set; }
     }
 }
