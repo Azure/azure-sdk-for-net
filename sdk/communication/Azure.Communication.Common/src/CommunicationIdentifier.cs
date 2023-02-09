@@ -61,7 +61,13 @@ namespace Azure.Communication
 
             var segments = rawId.Split(':');
             if (segments.Length < 3)
+            {
+                if (segments.Length == 2 && segments[0] == "28")
+                {
+                    return new MicrosoftBotIdentifier(segments[1], true, CommunicationCloudEnvironment.Public);
+                }
                 return new UnknownIdentifier(rawId);
+            }
 
             var prefix = $"{segments[0]}:{segments[1]}:";
             var suffix = rawId.Substring(prefix.Length);
@@ -73,6 +79,11 @@ namespace Azure.Communication
                 "8:dod:" => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
                 "8:gcch:" => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
                 "8:acs:" or "8:spool:" or "8:dod-acs:" or "8:gcch-acs:" => new CommunicationUserIdentifier(rawId),
+                "28:gcch-global:" => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Gcch),
+                "28:orgid:" => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
+                "28:dod-global:" => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Dod),
+                "28:gcch:" => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
+                "28:dod:" => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
                 _ => new UnknownIdentifier(rawId),
             };
         }

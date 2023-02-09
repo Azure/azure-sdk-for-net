@@ -26,6 +26,13 @@ namespace Azure.Communication
 
             Assert.AreEqual(new PhoneNumberIdentifier("+override", "4:14255550123"), new PhoneNumberIdentifier("14255550123"));
             Assert.AreEqual(new PhoneNumberIdentifier("14255550123"), new PhoneNumberIdentifier("+override", "4:14255550123"));
+
+            // Bots
+            Assert.AreEqual(new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true), new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true));
+            Assert.AreNotEqual(new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true, rawId: "Raw Id"), new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true, rawId: "Another Raw Id"));
+
+            Assert.AreEqual(new MicrosoftBotIdentifier("override", isGlobal: true, rawId: "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true));
+            Assert.AreEqual(new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isGlobal: true), new MicrosoftBotIdentifier("override", isGlobal: true, rawId: "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130"));
         }
 
         [Test]
@@ -49,7 +56,13 @@ namespace Azure.Communication
             AssertRawId(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", rawId: "8:orgid:legacyFormat", isAnonymous: true), "8:orgid:legacyFormat");
             AssertRawId(new PhoneNumberIdentifier("+112345556789"), "4:+112345556789");
             AssertRawId(new PhoneNumberIdentifier("+112345556789", rawId: "4:otherFormat"), "4:otherFormat");
-            AssertRawId(new UnknownIdentifier("28:45ab2481-1c1c-4005-be24-0ffb879b1130"), "28:45ab2481-1c1c-4005-be24-0ffb879b1130");
+            AssertRawId(new MicrosoftBotIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", true, CommunicationCloudEnvironment.Public), "28:45ab2481-1c1c-4005-be24-0ffb879b1130");
+            AssertRawId(new MicrosoftBotIdentifier("01234567-89ab-cdef-0123-456789abcdef", true, CommunicationCloudEnvironment.Gcch), "28:gcch-global:01234567-89ab-cdef-0123-456789abcdef");
+            AssertRawId(new MicrosoftBotIdentifier("01234567-89ab-cdef-0123-456789abcdef", true, CommunicationCloudEnvironment.Dod), "28:dod-global:01234567-89ab-cdef-0123-456789abcdef");
+            AssertRawId(new MicrosoftBotIdentifier("01234567-89ab-cdef-0123-456789abcdef", false, CommunicationCloudEnvironment.Public), "28:orgid:01234567-89ab-cdef-0123-456789abcdef");
+            AssertRawId(new MicrosoftBotIdentifier("01234567-89ab-cdef-0123-456789abcdef", false, CommunicationCloudEnvironment.Gcch), "28:gcch:01234567-89ab-cdef-0123-456789abcdef");
+            AssertRawId(new MicrosoftBotIdentifier("01234567-89ab-cdef-0123-456789abcdef", false, CommunicationCloudEnvironment.Dod), "28:dod:01234567-89ab-cdef-0123-456789abcdef");
+            AssertRawId(new UnknownIdentifier("28:ag08-global:01234567-89ab-cdef-0123-456789abcdef"), "28:ag08-global:01234567-89ab-cdef-0123-456789abcdef");
             AssertRawId(new PhoneNumberIdentifier("+112345556789"), "4:+112345556789");
             AssertRawId(new PhoneNumberIdentifier("112345556789"), "4:112345556789");
             AssertRawId(new PhoneNumberIdentifier("otherFormat", rawId: "4:207ffef6-9444-41fb-92ab-20eacaae2768"), "4:207ffef6-9444-41fb-92ab-20eacaae2768");
