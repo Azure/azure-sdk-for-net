@@ -241,11 +241,14 @@ namespace Azure.Monitor.Ingestion
                             var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                             // sync/async parameter in eventArgs
-                            var ex = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
+                            var exceptionOnUpload = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
-                            shouldAbort = ex != null;
-                            if (shouldAbort)
-                                AddException(ref exceptions, ex);
+                            // if exception is thrown stop processing future batches
+                            if (exceptionOnUpload != null)
+                            {
+                                shouldAbort = true;
+                                AddException(ref exceptions, exceptionOnUpload);
+                            }
                         }
                     }
                 }
@@ -266,9 +269,7 @@ namespace Azure.Monitor.Ingestion
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                         var exceptionOnUpload = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
-                        //shouldAbort = exceptionOnUpload != null;
-                        //if (shouldAbort)
-                       // AddException(ref exceptions, exceptionOnUpload);
+                        // if exception is thrown stop processing future batches
                         if (exceptionOnUpload != null)
                         {
                             shouldAbort = true;
@@ -378,9 +379,12 @@ namespace Azure.Monitor.Ingestion
                             else
                             {
                                 Exception exceptionEventHandler = await ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).ConfigureAwait(false);
-                                shouldAbort = exceptionEventHandler != null;
-                                if (shouldAbort)
+                                // if exception is thrown stop processing future batches
+                                if (exceptionEventHandler != null)
+                                {
+                                    shouldAbort = true;
                                     AddException(ref exceptions, exceptionEventHandler);
+                                }
                             }
 
                             // Remove completed task from task list
@@ -415,9 +419,12 @@ namespace Azure.Monitor.Ingestion
                 {
                     Exception exceptionEventHandler = await ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).ConfigureAwait(false);
                     logsFailed += task.Logs.Count;
-                    shouldAbort = exceptionEventHandler != null;
-                    if (shouldAbort)
+                    // if exception is thrown stop processing future batches
+                    if (exceptionEventHandler != null)
+                    {
+                        shouldAbort = true;
                         AddException(ref exceptions, exceptionEventHandler);
+                    }
                 }
             }
             if (exceptions?.Count > 0)
