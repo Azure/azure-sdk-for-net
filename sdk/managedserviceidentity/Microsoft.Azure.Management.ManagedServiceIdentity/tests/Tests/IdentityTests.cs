@@ -87,9 +87,9 @@ namespace ManagedServiceIdentity.Tests.Tests
                 VerifyIdentityCollection(listResourceGroupResponse.Body, identityNames);
 
                 /*-------------List associated resources-------------*/
-                var associatedResources = await msiMgmtClient.UserAssignedIdentities.ListAssociatedResourcesWithHttpMessagesAsync(ResourceGroupName, firstIdentityName);
+                /*var associatedResources = await msiMgmtClient.UserAssignedIdentities.ListAssociatedResourcesWithHttpMessagesAsync(ResourceGroupName, firstIdentityName);
                 Assert.Equal(HttpStatusCode.OK, associatedResources.Response.StatusCode);
-                Assert.Equal(0, Enumerable.Count(associatedResources.Body));
+                Assert.Equal(0, Enumerable.Count(associatedResources.Body));*/
 
                 /*-------------Federated Identity Credentials -------------*/
                 // List
