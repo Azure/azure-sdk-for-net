@@ -4,7 +4,7 @@
 
 ### Features Added
  - Allow `VisualStudioCredential` on non-Windows platforms
- - Added `AzureDeveloperCredential` for Azure Developer CLI
+ - Added `AzureDeveloperCliCredential` for Azure Developer CLI
 
 ### Breaking Changes
 - Previously, if environment variables for username and password auth are set in addition to the AZURE_CLIENT_CERTIFICATE_PATH, EnvironmentCredential would select the `UsernamePasswordCredential`. After this change, `ClientCertificateCredential` will be selected, which is consistent with all other languages. This is potentially a behavioral breaking change.

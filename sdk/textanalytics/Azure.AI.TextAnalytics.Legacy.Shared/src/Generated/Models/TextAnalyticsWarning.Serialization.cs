@@ -20,17 +20,17 @@ namespace Azure.AI.TextAnalytics.Legacy
             Optional<string> targetRef = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = new WarningCodeValue(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetRef"))
+                if (property.NameEquals("targetRef"u8))
                 {
                     targetRef = property.Value.GetString();
                     continue;

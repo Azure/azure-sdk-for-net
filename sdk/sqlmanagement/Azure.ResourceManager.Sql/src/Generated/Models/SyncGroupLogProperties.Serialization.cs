@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> operationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.Sql.Models
                     type = new SyncGroupLogType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     details = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tracingId"))
+                if (property.NameEquals("tracingId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
                     tracingId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("operationStatus"))
+                if (property.NameEquals("operationStatus"u8))
                 {
                     operationStatus = property.Value.GetString();
                     continue;

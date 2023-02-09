@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<float> bUpper95CI = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endDateTimeUTC"))
+                if (property.NameEquals("endDateTimeUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     endDateTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("aValue"))
+                if (property.NameEquals("aValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     aValue = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("bValue"))
+                if (property.NameEquals("bValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     bValue = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("delta"))
+                if (property.NameEquals("delta"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     delta = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("deltaPercent"))
+                if (property.NameEquals("deltaPercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     deltaPercent = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("aCLower95CI"))
+                if (property.NameEquals("aCLower95CI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     acLower95CI = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("aHUpper95CI"))
+                if (property.NameEquals("aHUpper95CI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     ahUpper95CI = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("bCLower95CI"))
+                if (property.NameEquals("bCLower95CI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     bcLower95CI = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("bUpper95CI"))
+                if (property.NameEquals("bUpper95CI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

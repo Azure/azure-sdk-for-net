@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IReadOnlyDictionary<string, string>> repairSchedules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("healthy"))
+                if (property.NameEquals("healthy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     healthy = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("repairRunIds"))
+                if (property.NameEquals("repairRunIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     repairRunIds = dictionary;
                     continue;
                 }
-                if (property.NameEquals("repairSchedules"))
+                if (property.NameEquals("repairSchedules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

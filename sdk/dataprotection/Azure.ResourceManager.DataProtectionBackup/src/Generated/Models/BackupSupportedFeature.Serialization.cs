@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<IReadOnlyList<string>> exposureControlledFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("featureName"))
+                if (property.NameEquals("featureName"u8))
                 {
                     featureName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportStatus"))
+                if (property.NameEquals("supportStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     supportStatus = new FeatureSupportStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("exposureControlledFeatures"))
+                if (property.NameEquals("exposureControlledFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

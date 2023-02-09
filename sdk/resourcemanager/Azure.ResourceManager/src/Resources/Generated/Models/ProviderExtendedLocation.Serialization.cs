@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<IReadOnlyList<string>> extendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Resources.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extendedLocations"))
+                if (property.NameEquals("extendedLocations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

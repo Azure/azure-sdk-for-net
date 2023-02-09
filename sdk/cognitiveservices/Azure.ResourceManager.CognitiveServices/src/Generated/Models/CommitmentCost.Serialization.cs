@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> overageMeterId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("commitmentMeterId"))
+                if (property.NameEquals("commitmentMeterId"u8))
                 {
                     commitmentMeterId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("overageMeterId"))
+                if (property.NameEquals("overageMeterId"u8))
                 {
                     overageMeterId = property.Value.GetString();
                     continue;

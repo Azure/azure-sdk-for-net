@@ -25,12 +25,12 @@ namespace Azure.Maps.Search.Models
             Optional<LatLongPairAbbreviated> geoBias = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryType"))
+                if (property.NameEquals("queryType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.Maps.Search.Models
                     queryType = new MapsQueryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queryTime"))
+                if (property.NameEquals("queryTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.Maps.Search.Models
                     queryTime = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numResults"))
+                if (property.NameEquals("numResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.Maps.Search.Models
                     numResults = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.Maps.Search.Models
                     limit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("offset"))
+                if (property.NameEquals("offset"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.Maps.Search.Models
                     offset = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalResults"))
+                if (property.NameEquals("totalResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.Maps.Search.Models
                     totalResults = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fuzzyLevel"))
+                if (property.NameEquals("fuzzyLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.Maps.Search.Models
                     fuzzyLevel = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("geoBias"))
+                if (property.NameEquals("geoBias"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

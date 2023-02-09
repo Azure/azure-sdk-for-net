@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("imageName");
+            writer.WritePropertyName("imageName"u8);
             writer.WriteStringValue(ImageName);
-            writer.WritePropertyName("tag");
+            writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
             if (Optional.IsDefined(ImageRepository))
             {
-                writer.WritePropertyName("imageRepository");
+                writer.WritePropertyName("imageRepository"u8);
                 writer.WriteObjectValue(ImageRepository);
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<ImageRepositoryCredential> imageRepository = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageRepository"))
+                if (property.NameEquals("imageRepository"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

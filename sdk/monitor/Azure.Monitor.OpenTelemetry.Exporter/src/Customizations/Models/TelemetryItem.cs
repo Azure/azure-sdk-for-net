@@ -90,13 +90,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
         }
 
-        public TelemetryItem(DateTime time, AzureMonitorResource resource, string instrumentationKey) : this("Metric", FormatUtcTimestamp(time))
+        public TelemetryItem(DateTime time, AzureMonitorResource? resource, string instrumentationKey) : this("Metric", FormatUtcTimestamp(time))
         {
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetResourceSdkVersionAndIkey(AzureMonitorResource resource, string instrumentationKey)
+        private void SetResourceSdkVersionAndIkey(AzureMonitorResource? resource, string instrumentationKey)
         {
             InstrumentationKey = instrumentationKey;
             Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName;

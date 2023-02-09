@@ -21,12 +21,12 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<IReadOnlyList<DataTable>> tables = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("page"))
+                if (property.NameEquals("page"u8))
                 {
                     page = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("clusterId"))
+                if (property.NameEquals("clusterId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Models
                     clusterId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("keyValuePairs"))
+                if (property.NameEquals("keyValuePairs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Models
                     keyValuePairs = array;
                     continue;
                 }
-                if (property.NameEquals("tables"))
+                if (property.NameEquals("tables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

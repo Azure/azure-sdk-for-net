@@ -19,22 +19,22 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             writer.WriteStartObject();
             if (Optional.IsDefined(ConversionStatus))
             {
-                writer.WritePropertyName("jobStatus");
+                writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(ConversionStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(AssetFileTypeString))
             {
-                writer.WritePropertyName("assetFileType");
+                writer.WritePropertyName("assetFileType"u8);
                 writer.WriteStringValue(AssetFileTypeString);
             }
             if (Optional.IsDefined(InputAssetUriString))
             {
-                writer.WritePropertyName("inputAssetUri");
+                writer.WritePropertyName("inputAssetUri"u8);
                 writer.WriteStringValue(InputAssetUriString);
             }
             if (Optional.IsDefined(ConversionConfiguration))
             {
-                writer.WritePropertyName("ingestionConfiguration");
+                writer.WritePropertyName("ingestionConfiguration"u8);
                 writer.WriteObjectValue(ConversionConfiguration);
             }
             writer.WriteEndObject();
@@ -55,17 +55,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Optional<Vector3> scaledAssetDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientErrorDetails"))
+                if (property.NameEquals("clientErrorDetails"u8))
                 {
                     clientErrorDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverErrorDetails"))
+                if (property.NameEquals("serverErrorDetails"u8))
                 {
                     serverErrorDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     errorCode = new ConversionErrorCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,12 +85,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     jobId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("outputModelUri"))
+                if (property.NameEquals("outputModelUri"u8))
                 {
                     outputModelUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobStatus"))
+                if (property.NameEquals("jobStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,17 +100,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     jobStatus = property.Value.GetString().ToAssetConversionStatus();
                     continue;
                 }
-                if (property.NameEquals("assetFileType"))
+                if (property.NameEquals("assetFileType"u8))
                 {
                     assetFileType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputAssetUri"))
+                if (property.NameEquals("inputAssetUri"u8))
                 {
                     inputAssetUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountId"))
+                if (property.NameEquals("accountId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     accountId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("ingestionConfiguration"))
+                if (property.NameEquals("ingestionConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     ingestionConfiguration = AssetConversionConfiguration.DeserializeAssetConversionConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scaledAssetDimensions"))
+                if (property.NameEquals("scaledAssetDimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

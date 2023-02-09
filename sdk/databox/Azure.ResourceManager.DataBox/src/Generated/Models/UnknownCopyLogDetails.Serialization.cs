@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("copyLogDetailsType"))
+                if (property.NameEquals("copyLogDetailsType"u8))
                 {
                     copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;

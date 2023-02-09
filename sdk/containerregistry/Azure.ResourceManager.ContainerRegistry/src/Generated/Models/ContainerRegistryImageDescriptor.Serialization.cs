@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Registry))
             {
-                writer.WritePropertyName("registry");
+                writer.WritePropertyName("registry"u8);
                 writer.WriteStringValue(Registry);
             }
             if (Optional.IsDefined(Repository))
             {
-                writer.WritePropertyName("repository");
+                writer.WritePropertyName("repository"u8);
                 writer.WriteStringValue(Repository);
             }
             if (Optional.IsDefined(Tag))
             {
-                writer.WritePropertyName("tag");
+                writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
             if (Optional.IsDefined(Digest))
             {
-                writer.WritePropertyName("digest");
+                writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
             writer.WriteEndObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> digest = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registry"))
+                if (property.NameEquals("registry"u8))
                 {
                     registry = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("repository"))
+                if (property.NameEquals("repository"u8))
                 {
                     repository = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("digest"))
+                if (property.NameEquals("digest"u8))
                 {
                     digest = property.Value.GetString();
                     continue;

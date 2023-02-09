@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (ConnectionString != null)
                 {
-                    writer.WritePropertyName("connectionString");
+                    writer.WritePropertyName("connectionString"u8);
                     writer.WriteStringValue(ConnectionString);
                 }
                 else
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (SqlQuery != null)
             {
-                writer.WritePropertyName("sqlQuery");
+                writer.WritePropertyName("sqlQuery"u8);
                 writer.WriteStringValue(SqlQuery);
             }
             else
@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Database != null)
             {
-                writer.WritePropertyName("database");
+                writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
             else
@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (CollectionId != null)
             {
-                writer.WritePropertyName("collectionId");
+                writer.WritePropertyName("collectionId"u8);
                 writer.WriteStringValue(CollectionId);
             }
             else
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string collectionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sqlQuery"))
+                if (property.NameEquals("sqlQuery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     sqlQuery = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("database"))
+                if (property.NameEquals("database"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     database = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("collectionId"))
+                if (property.NameEquals("collectionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (KeyId != null)
             {
-                writer.WritePropertyName("keyId");
+                writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId.Value);
             }
             else
             {
                 writer.WriteNull("keyId");
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyId"))
+                if (property.NameEquals("keyId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Media.Models
                     keyId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

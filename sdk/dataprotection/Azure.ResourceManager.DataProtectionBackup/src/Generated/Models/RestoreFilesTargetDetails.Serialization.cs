@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("filePrefix");
+            writer.WritePropertyName("filePrefix"u8);
             writer.WriteStringValue(FilePrefix);
-            writer.WritePropertyName("restoreTargetLocationType");
+            writer.WritePropertyName("restoreTargetLocationType"u8);
             writer.WriteStringValue(RestoreTargetLocationType.ToString());
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(TargetResourceArmId))
             {
-                writer.WritePropertyName("targetResourceArmId");
+                writer.WritePropertyName("targetResourceArmId"u8);
                 writer.WriteStringValue(TargetResourceArmId);
             }
             writer.WriteEndObject();

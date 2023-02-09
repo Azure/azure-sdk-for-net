@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NodeName))
             {
-                writer.WritePropertyName("nodeName");
+                writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
             if (Optional.IsDefined(IntegrationRuntimeName))
             {
-                writer.WritePropertyName("integrationRuntimeName");
+                writer.WritePropertyName("integrationRuntimeName"u8);
                 writer.WriteStringValue(IntegrationRuntimeName);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> integrationRuntimeName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeName"))
+                if (property.NameEquals("nodeName"u8))
                 {
                     nodeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("integrationRuntimeName"))
+                if (property.NameEquals("integrationRuntimeName"u8))
                 {
                     integrationRuntimeName = property.Value.GetString();
                     continue;

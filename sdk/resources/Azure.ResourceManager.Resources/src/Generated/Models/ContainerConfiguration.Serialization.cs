@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerGroupName))
             {
-                writer.WritePropertyName("containerGroupName");
+                writer.WritePropertyName("containerGroupName"u8);
                 writer.WriteStringValue(ContainerGroupName);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> containerGroupName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("containerGroupName"))
+                if (property.NameEquals("containerGroupName"u8))
                 {
                     containerGroupName = property.Value.GetString();
                     continue;

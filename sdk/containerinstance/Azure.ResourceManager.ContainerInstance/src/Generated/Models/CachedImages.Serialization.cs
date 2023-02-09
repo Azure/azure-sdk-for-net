@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string image = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("image"))
+                if (property.NameEquals("image"u8))
                 {
                     image = property.Value.GetString();
                     continue;

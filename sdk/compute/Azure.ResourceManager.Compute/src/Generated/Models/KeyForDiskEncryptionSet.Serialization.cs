@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceVault))
             {
-                writer.WritePropertyName("sourceVault");
+                writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);
             }
-            writer.WritePropertyName("keyUrl");
+            writer.WritePropertyName("keyUrl"u8);
             writer.WriteStringValue(KeyUri.AbsoluteUri);
             writer.WriteEndObject();
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
             Uri keyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceVault"))
+                if (property.NameEquals("sourceVault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
                     sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("keyUrl"))
+                if (property.NameEquals("keyUrl"u8))
                 {
                     keyUrl = new Uri(property.Value.GetString());
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.Maps.Routing
             writer.WriteStartObject();
             if (Optional.IsDefined(GeoJsonMultiPointOrigins))
             {
-                writer.WritePropertyName("origins");
+                writer.WritePropertyName("origins"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointOrigins);
             }
             if (Optional.IsDefined(GeoJsonMultiPointDestinations))
             {
-                writer.WritePropertyName("destinations");
+                writer.WritePropertyName("destinations"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointDestinations);
             }
             writer.WriteEndObject();

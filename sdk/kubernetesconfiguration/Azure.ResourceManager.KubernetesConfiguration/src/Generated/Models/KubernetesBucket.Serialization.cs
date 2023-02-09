@@ -18,24 +18,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(BucketName))
             {
-                writer.WritePropertyName("bucketName");
+                writer.WritePropertyName("bucketName"u8);
                 writer.WriteStringValue(BucketName);
             }
             if (Optional.IsDefined(UseInsecureCommunication))
             {
-                writer.WritePropertyName("insecure");
+                writer.WritePropertyName("insecure"u8);
                 writer.WriteBooleanValue(UseInsecureCommunication.Value);
             }
             if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
-                    writer.WritePropertyName("timeoutInSeconds");
+                    writer.WritePropertyName("timeoutInSeconds"u8);
                     writer.WriteNumberValue(TimeoutInSeconds.Value);
                 }
                 else
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SyncIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("syncIntervalInSeconds");
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
                     writer.WriteNumberValue(SyncIntervalInSeconds.Value);
                 }
                 else
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (AccessKey != null)
                 {
-                    writer.WritePropertyName("accessKey");
+                    writer.WritePropertyName("accessKey"u8);
                     writer.WriteStringValue(AccessKey);
                 }
                 else
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (LocalAuthRef != null)
                 {
-                    writer.WritePropertyName("localAuthRef");
+                    writer.WritePropertyName("localAuthRef"u8);
                     writer.WriteStringValue(LocalAuthRef);
                 }
                 else
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> localAuthRef = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bucketName"))
+                if (property.NameEquals("bucketName"u8))
                 {
                     bucketName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("insecure"))
+                if (property.NameEquals("insecure"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     insecure = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("timeoutInSeconds"))
+                if (property.NameEquals("timeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     timeoutInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("syncIntervalInSeconds"))
+                if (property.NameEquals("syncIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     syncIntervalInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("accessKey"))
+                if (property.NameEquals("accessKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     accessKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("localAuthRef"))
+                if (property.NameEquals("localAuthRef"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

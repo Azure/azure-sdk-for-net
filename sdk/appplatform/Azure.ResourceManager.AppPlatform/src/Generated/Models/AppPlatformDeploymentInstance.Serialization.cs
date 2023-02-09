@@ -23,27 +23,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> zone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("discoveryStatus"))
+                if (property.NameEquals("discoveryStatus"u8))
                 {
                     discoveryStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("zone"))
+                if (property.NameEquals("zone"u8))
                 {
                     zone = property.Value.GetString();
                     continue;

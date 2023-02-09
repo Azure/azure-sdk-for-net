@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher.Value.ToString());
             }
             if (Optional.IsDefined(Offer))
             {
-                writer.WritePropertyName("offer");
+                writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer.Value.ToString());
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku.Value.ToString());
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<OSImageVersion> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publisher"))
+                if (property.NameEquals("publisher"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     publisher = new OSImagePublisher(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("offer"))
+                if (property.NameEquals("offer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     offer = new OSImageOffer(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     sku = new OSImageSku(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

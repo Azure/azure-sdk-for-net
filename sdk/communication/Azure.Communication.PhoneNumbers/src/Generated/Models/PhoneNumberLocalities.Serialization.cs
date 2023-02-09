@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("phoneNumberLocalities"))
+                if (property.NameEquals("phoneNumberLocalities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.Communication.PhoneNumbers
                     phoneNumberLocalities = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

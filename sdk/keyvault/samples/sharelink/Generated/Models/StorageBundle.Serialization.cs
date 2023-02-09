@@ -24,22 +24,22 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activeKeyName"))
+                if (property.NameEquals("activeKeyName"u8))
                 {
                     activeKeyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoRegenerateKey"))
+                if (property.NameEquals("autoRegenerateKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,12 +49,12 @@ namespace Azure.Security.KeyVault.Storage.Models
                     autoRegenerateKey = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("regenerationPeriod"))
+                if (property.NameEquals("regenerationPeriod"u8))
                 {
                     regenerationPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     attributes = StorageAccountAttributes.DeserializeStorageAccountAttributes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

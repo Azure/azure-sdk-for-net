@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningCompute;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Samples

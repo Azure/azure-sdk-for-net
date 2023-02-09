@@ -26,17 +26,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> discontinuityGap = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackType"))
+                if (property.NameEquals("trackType"u8))
                 {
                     trackType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackName"))
+                if (property.NameEquals("trackName"u8))
                 {
                     trackName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,22 +46,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     bitrate = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("previousTimestamp"))
+                if (property.NameEquals("previousTimestamp"u8))
                 {
                     previousTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("newTimestamp"))
+                if (property.NameEquals("newTimestamp"u8))
                 {
                     newTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescale"))
+                if (property.NameEquals("timescale"u8))
                 {
                     timescale = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("discontinuityGap"))
+                if (property.NameEquals("discontinuityGap"u8))
                 {
                     discontinuityGap = property.Value.GetString();
                     continue;

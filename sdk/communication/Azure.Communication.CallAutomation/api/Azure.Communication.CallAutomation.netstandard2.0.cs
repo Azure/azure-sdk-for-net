@@ -669,6 +669,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.ReasonCode PlayDownloadFailed { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode PlayInvalidFileFormat { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeDtmfOptionMatched { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCode RecognizeIncorrectToneDetected { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeInitialSilenceTimedOut { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeInterDigitTimedOut { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCode RecognizeMaxDigitsReceived { get { throw null; } }
@@ -699,14 +700,11 @@ namespace Azure.Communication.CallAutomation
         public System.Collections.Generic.IList<string> Phrases { get { throw null; } }
         public Azure.Communication.CallAutomation.DtmfTone? Tone { get { throw null; } set { } }
     }
-    public partial class RecognizeCompleted : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
+    public partial class RecognizeCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
-        public RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, Azure.Communication.CallAutomation.ResultInformation resultInformation, Azure.Communication.CallAutomation.CallMediaRecognitionType recognitionType, Azure.Communication.CallAutomation.RecognizeResult recognizeResult) { }
-        public Azure.Communication.CallAutomation.ChoiceResult ChoiceResult { get { throw null; } }
-        public Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult { get { throw null; } }
-        public Azure.Communication.CallAutomation.CallMediaRecognitionType RecognitionType { get { throw null; } set { } }
+        internal RecognizeCompleted() { }
+        public Azure.Communication.CallAutomation.RecognizeResult RecognizeResult { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeCompleted Deserialize(string content) { throw null; }
-        public Azure.Communication.CallAutomation.RecognizeResult GetRecognizeResult() { throw null; }
     }
     public partial class RecognizeFailed : Azure.Communication.CallAutomation.CallAutomationEventWithReasonCodeName
     {

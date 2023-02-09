@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,53 +35,53 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxSizeBytes))
             {
-                writer.WritePropertyName("maxSizeBytes");
+                writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
             if (Optional.IsDefined(Collation))
             {
-                writer.WritePropertyName("collation");
+                writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
-                writer.WritePropertyName("sourceDatabaseId");
+                writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
             if (Optional.IsDefined(RecoverableDatabaseId))
             {
-                writer.WritePropertyName("recoverableDatabaseId");
+                writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(RestorePointInTime))
             {
-                writer.WritePropertyName("restorePointInTime");
+                writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime);
             }
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
             if (Optional.IsDefined(CreationDate))
             {
-                writer.WritePropertyName("creationDate");
+                writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreationDate.Value, "O");
             }
             writer.WriteEndObject();
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset> creationDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     sku = Sku.DeserializeSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,27 +132,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("maxSizeBytes"))
+                        if (property0.NameEquals("maxSizeBytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,37 +171,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             maxSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("collation"))
+                        if (property0.NameEquals("collation"u8))
                         {
                             collation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceDatabaseId"))
+                        if (property0.NameEquals("sourceDatabaseId"u8))
                         {
                             sourceDatabaseId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("recoverableDatabaseId"))
+                        if (property0.NameEquals("recoverableDatabaseId"u8))
                         {
                             recoverableDatabaseId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("restorePointInTime"))
+                        if (property0.NameEquals("restorePointInTime"u8))
                         {
                             restorePointInTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createMode"))
+                        if (property0.NameEquals("createMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             createMode = new CreateMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("creationDate"))
+                        if (property0.NameEquals("creationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

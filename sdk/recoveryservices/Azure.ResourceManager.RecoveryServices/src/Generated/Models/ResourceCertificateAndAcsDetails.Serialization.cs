@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<DateTimeOffset> validTo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("globalAcsNamespace"))
+                if (property.NameEquals("globalAcsNamespace"u8))
                 {
                     globalAcsNamespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("globalAcsHostName"))
+                if (property.NameEquals("globalAcsHostName"u8))
                 {
                     globalAcsHostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("globalAcsRPRealm"))
+                if (property.NameEquals("globalAcsRPRealm"u8))
                 {
                     globalAcsRPRealm = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authType"))
+                if (property.NameEquals("authType"u8))
                 {
                     authType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificate"))
+                if (property.NameEquals("certificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     certificate = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuer"))
+                if (property.NameEquals("issuer"u8))
                 {
                     issuer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     resourceId = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("subject"))
+                if (property.NameEquals("subject"u8))
                 {
                     subject = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validFrom"))
+                if (property.NameEquals("validFrom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     validFrom = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("validTo"))
+                if (property.NameEquals("validTo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

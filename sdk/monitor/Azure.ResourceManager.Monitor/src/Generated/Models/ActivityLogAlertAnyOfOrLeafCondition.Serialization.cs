@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AnyOf))
             {
-                writer.WritePropertyName("anyOf");
+                writer.WritePropertyName("anyOf"u8);
                 writer.WriteStartArray();
                 foreach (var item in AnyOf)
                 {
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Field))
             {
-                writer.WritePropertyName("field");
+                writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
             if (Optional.IsDefined(EqualsValue))
             {
-                writer.WritePropertyName("equals");
+                writer.WritePropertyName("equals"u8);
                 writer.WriteStringValue(EqualsValue);
             }
             if (Optional.IsCollectionDefined(ContainsAny))
             {
-                writer.WritePropertyName("containsAny");
+                writer.WritePropertyName("containsAny"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContainsAny)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<string>> containsAny = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("anyOf"))
+                if (property.NameEquals("anyOf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.Monitor.Models
                     anyOf = array;
                     continue;
                 }
-                if (property.NameEquals("field"))
+                if (property.NameEquals("field"u8))
                 {
                     field = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("equals"))
+                if (property.NameEquals("equals"u8))
                 {
                     @equals = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containsAny"))
+                if (property.NameEquals("containsAny"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

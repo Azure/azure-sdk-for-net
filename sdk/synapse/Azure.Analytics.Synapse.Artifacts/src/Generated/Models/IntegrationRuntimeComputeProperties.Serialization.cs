@@ -21,32 +21,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
             if (Optional.IsDefined(NodeSize))
             {
-                writer.WritePropertyName("nodeSize");
+                writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
             if (Optional.IsDefined(NumberOfNodes))
             {
-                writer.WritePropertyName("numberOfNodes");
+                writer.WritePropertyName("numberOfNodes"u8);
                 writer.WriteNumberValue(NumberOfNodes.Value);
             }
             if (Optional.IsDefined(MaxParallelExecutionsPerNode))
             {
-                writer.WritePropertyName("maxParallelExecutionsPerNode");
+                writer.WritePropertyName("maxParallelExecutionsPerNode"u8);
                 writer.WriteNumberValue(MaxParallelExecutionsPerNode.Value);
             }
             if (Optional.IsDefined(DataFlowProperties))
             {
-                writer.WritePropertyName("dataFlowProperties");
+                writer.WritePropertyName("dataFlowProperties"u8);
                 writer.WriteObjectValue(DataFlowProperties);
             }
             if (Optional.IsDefined(VNetProperties))
             {
-                writer.WritePropertyName("vNetProperties");
+                writer.WritePropertyName("vNetProperties"u8);
                 writer.WriteObjectValue(VNetProperties);
             }
             foreach (var item in AdditionalProperties)
@@ -69,17 +69,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodeSize"))
+                if (property.NameEquals("nodeSize"u8))
                 {
                     nodeSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberOfNodes"))
+                if (property.NameEquals("numberOfNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     numberOfNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxParallelExecutionsPerNode"))
+                if (property.NameEquals("maxParallelExecutionsPerNode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     maxParallelExecutionsPerNode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dataFlowProperties"))
+                if (property.NameEquals("dataFlowProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dataFlowProperties = IntegrationRuntimeDataFlowProperties.DeserializeIntegrationRuntimeDataFlowProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vNetProperties"))
+                if (property.NameEquals("vNetProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

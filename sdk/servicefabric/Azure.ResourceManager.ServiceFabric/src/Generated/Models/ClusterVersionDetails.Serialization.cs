@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<ClusterEnvironment> environment = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("codeVersion"))
+                if (property.NameEquals("codeVersion"u8))
                 {
                     codeVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportExpiryUtc"))
+                if (property.NameEquals("supportExpiryUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     supportExpiryUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("environment"))
+                if (property.NameEquals("environment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

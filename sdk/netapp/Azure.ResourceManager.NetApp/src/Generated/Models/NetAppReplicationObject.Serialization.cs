@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicationId))
             {
-                writer.WritePropertyName("replicationId");
+                writer.WritePropertyName("replicationId"u8);
                 writer.WriteStringValue(ReplicationId);
             }
             if (Optional.IsDefined(EndpointType))
             {
-                writer.WritePropertyName("endpointType");
+                writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
             if (Optional.IsDefined(ReplicationSchedule))
             {
-                writer.WritePropertyName("replicationSchedule");
+                writer.WritePropertyName("replicationSchedule"u8);
                 writer.WriteStringValue(ReplicationSchedule.Value.ToString());
             }
-            writer.WritePropertyName("remoteVolumeResourceId");
+            writer.WritePropertyName("remoteVolumeResourceId"u8);
             writer.WriteStringValue(RemoteVolumeResourceId);
             if (Optional.IsDefined(RemoteVolumeRegion))
             {
-                writer.WritePropertyName("remoteVolumeRegion");
+                writer.WritePropertyName("remoteVolumeRegion"u8);
                 writer.WriteStringValue(RemoteVolumeRegion);
             }
             writer.WriteEndObject();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> remoteVolumeRegion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("replicationId"))
+                if (property.NameEquals("replicationId"u8))
                 {
                     replicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointType"))
+                if (property.NameEquals("endpointType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     endpointType = new NetAppEndpointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("replicationSchedule"))
+                if (property.NameEquals("replicationSchedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     replicationSchedule = new NetAppReplicationSchedule(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("remoteVolumeResourceId"))
+                if (property.NameEquals("remoteVolumeResourceId"u8))
                 {
                     remoteVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("remoteVolumeRegion"))
+                if (property.NameEquals("remoteVolumeRegion"u8))
                 {
                     remoteVolumeRegion = property.Value.GetString();
                     continue;

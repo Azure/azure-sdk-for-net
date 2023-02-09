@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<string> errorCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("result"))
+                if (property.NameEquals("result"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     result = new LinkerValidationResultStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

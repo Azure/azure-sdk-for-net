@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("diskUri");
+            writer.WritePropertyName("diskUri"u8);
             writer.WriteStringValue(DiskUri.AbsoluteUri);
             if (Optional.IsDefined(RecoveryAzureStorageAccountCustomInput))
             {
-                writer.WritePropertyName("recoveryAzureStorageAccountCustomInput");
+                writer.WritePropertyName("recoveryAzureStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(RecoveryAzureStorageAccountCustomInput);
             }
             if (Optional.IsDefined(PrimaryStagingStorageAccountCustomInput))
             {
-                writer.WritePropertyName("primaryStagingStorageAccountCustomInput");
+                writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
                 writer.WriteObjectValue(PrimaryStagingStorageAccountCustomInput);
             }
             writer.WriteEndObject();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<StorageAccountCustomDetails> primaryStagingStorageAccountCustomInput = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskUri"))
+                if (property.NameEquals("diskUri"u8))
                 {
                     diskUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureStorageAccountCustomInput"))
+                if (property.NameEquals("recoveryAzureStorageAccountCustomInput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryAzureStorageAccountCustomInput = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("primaryStagingStorageAccountCustomInput"))
+                if (property.NameEquals("primaryStagingStorageAccountCustomInput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

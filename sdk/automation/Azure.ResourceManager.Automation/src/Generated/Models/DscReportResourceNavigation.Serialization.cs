@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;

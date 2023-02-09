@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<TagAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

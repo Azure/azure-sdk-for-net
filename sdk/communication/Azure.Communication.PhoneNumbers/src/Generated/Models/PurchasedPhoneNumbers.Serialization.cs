@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("phoneNumbers"))
+                if (property.NameEquals("phoneNumbers"u8))
                 {
                     List<PurchasedPhoneNumber> array = new List<PurchasedPhoneNumber>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +29,7 @@ namespace Azure.Communication.PhoneNumbers
                     phoneNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

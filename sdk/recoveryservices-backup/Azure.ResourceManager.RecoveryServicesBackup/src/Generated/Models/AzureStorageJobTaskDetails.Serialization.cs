@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TaskId))
             {
-                writer.WritePropertyName("taskId");
+                writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("taskId"))
+                if (property.NameEquals("taskId"u8))
                 {
                     taskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

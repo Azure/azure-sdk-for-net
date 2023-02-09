@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FilterType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FilterType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Items))
             {
-                writer.WritePropertyName("items");
+                writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
                 foreach (var item in Items)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<ConnectionMonitorEndpointFilterItem>> items = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                     type = new ConnectionMonitorEndpointFilterType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("items"))
+                if (property.NameEquals("items"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

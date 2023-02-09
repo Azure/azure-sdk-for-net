@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Extensions))
             {
-                writer.WritePropertyName("extensions");
+                writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<CloudServiceExtension>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extensions"))
+                if (property.NameEquals("extensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

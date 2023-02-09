@@ -18,7 +18,7 @@ namespace Azure.Maps.Routing.Models
             Optional<RouteMatrixResultResponse> response = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.Maps.Routing.Models
                     statusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("response"))
+                if (property.NameEquals("response"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

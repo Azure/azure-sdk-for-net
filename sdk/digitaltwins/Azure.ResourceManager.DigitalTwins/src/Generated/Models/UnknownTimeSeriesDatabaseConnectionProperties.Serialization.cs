@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionType");
+            writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
-                    writer.WritePropertyName("identity");
+                    writer.WritePropertyName("identity"u8);
                     writer.WriteObjectValue(Identity);
                 }
                 else
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionType"))
+                if (property.NameEquals("connectionType"u8))
                 {
                     connectionType = new ConnectionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     provisioningState = new TimeSeriesDatabaseConnectionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("delegatedSubnetsUsage"))
+                if (property.NameEquals("delegatedSubnetsUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     delegatedSubnetsUsage = array;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;

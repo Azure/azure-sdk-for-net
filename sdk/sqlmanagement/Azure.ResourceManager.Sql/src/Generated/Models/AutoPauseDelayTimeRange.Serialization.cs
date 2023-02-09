@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<int> doNotPauseValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minValue"))
+                if (property.NameEquals("minValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
                     minValue = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxValue"))
+                if (property.NameEquals("maxValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                     maxValue = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stepSize"))
+                if (property.NameEquals("stepSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                     stepSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
                     @default = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
                     unit = new PauseDelayTimeUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("doNotPauseValue"))
+                if (property.NameEquals("doNotPauseValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

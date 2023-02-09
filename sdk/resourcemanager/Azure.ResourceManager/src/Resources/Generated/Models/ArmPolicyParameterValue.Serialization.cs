@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<BinaryData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

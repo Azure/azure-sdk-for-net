@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Path != null)
                 {
-                    writer.WritePropertyName("path");
+                    writer.WritePropertyName("path"u8);
                     writer.WriteStringValue(Path);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (DependsOn != null)
                 {
-                    writer.WritePropertyName("dependsOn");
+                    writer.WritePropertyName("dependsOn"u8);
                     writer.WriteStartArray();
                     foreach (var item in DependsOn)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (TimeoutInSeconds != null)
                 {
-                    writer.WritePropertyName("timeoutInSeconds");
+                    writer.WritePropertyName("timeoutInSeconds"u8);
                     writer.WriteNumberValue(TimeoutInSeconds.Value);
                 }
                 else
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SyncIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("syncIntervalInSeconds");
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
                     writer.WriteNumberValue(SyncIntervalInSeconds.Value);
                 }
                 else
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (RetryIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("retryIntervalInSeconds");
+                    writer.WritePropertyName("retryIntervalInSeconds"u8);
                     writer.WriteNumberValue(RetryIntervalInSeconds.Value);
                 }
                 else
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Prune != null)
                 {
-                    writer.WritePropertyName("prune");
+                    writer.WritePropertyName("prune"u8);
                     writer.WriteBooleanValue(Prune.Value);
                 }
                 else
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Force != null)
                 {
-                    writer.WritePropertyName("force");
+                    writer.WritePropertyName("force"u8);
                     writer.WriteBooleanValue(Force.Value);
                 }
                 else

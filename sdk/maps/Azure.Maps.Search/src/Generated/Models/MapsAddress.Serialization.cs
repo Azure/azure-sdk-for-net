@@ -38,27 +38,27 @@ namespace Azure.Maps.Search.Models
             Optional<BoundingBoxCompassNotation> boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("buildingNumber"))
+                if (property.NameEquals("buildingNumber"u8))
                 {
                     buildingNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("street"))
+                if (property.NameEquals("street"u8))
                 {
                     street = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("crossStreet"))
+                if (property.NameEquals("crossStreet"u8))
                 {
                     crossStreet = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streetNumber"))
+                if (property.NameEquals("streetNumber"u8))
                 {
                     streetNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routeNumbers"))
+                if (property.NameEquals("routeNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,82 +73,82 @@ namespace Azure.Maps.Search.Models
                     routeNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("streetName"))
+                if (property.NameEquals("streetName"u8))
                 {
                     streetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streetNameAndNumber"))
+                if (property.NameEquals("streetNameAndNumber"u8))
                 {
                     streetNameAndNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("municipality"))
+                if (property.NameEquals("municipality"u8))
                 {
                     municipality = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("municipalitySubdivision"))
+                if (property.NameEquals("municipalitySubdivision"u8))
                 {
                     municipalitySubdivision = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryTertiarySubdivision"))
+                if (property.NameEquals("countryTertiarySubdivision"u8))
                 {
                     countryTertiarySubdivision = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countrySecondarySubdivision"))
+                if (property.NameEquals("countrySecondarySubdivision"u8))
                 {
                     countrySecondarySubdivision = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countrySubdivision"))
+                if (property.NameEquals("countrySubdivision"u8))
                 {
                     countrySubdivision = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"))
+                if (property.NameEquals("postalCode"u8))
                 {
                     postalCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extendedPostalCode"))
+                if (property.NameEquals("extendedPostalCode"u8))
                 {
                     extendedPostalCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCode"))
+                if (property.NameEquals("countryCode"u8))
                 {
                     countryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCodeISO3"))
+                if (property.NameEquals("countryCodeISO3"u8))
                 {
                     countryCodeISO3 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("freeformAddress"))
+                if (property.NameEquals("freeformAddress"u8))
                 {
                     freeformAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countrySubdivisionName"))
+                if (property.NameEquals("countrySubdivisionName"u8))
                 {
                     countrySubdivisionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("localName"))
+                if (property.NameEquals("localName"u8))
                 {
                     localName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("boundingBox"))
+                if (property.NameEquals("boundingBox"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

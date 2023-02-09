@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            writer.WritePropertyName("port");
+            writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
             if (Optional.IsDefined(Scheme))
             {
-                writer.WritePropertyName("scheme");
+                writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
             }
             if (Optional.IsCollectionDefined(HttpHeaders))
             {
-                writer.WritePropertyName("httpHeaders");
+                writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in HttpHeaders)
                 {
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<IList<ContainerHttpHeader>> httpHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scheme"))
+                if (property.NameEquals("scheme"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     scheme = new ContainerHttpGetScheme(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("httpHeaders"))
+                if (property.NameEquals("httpHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

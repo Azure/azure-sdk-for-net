@@ -19,12 +19,12 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             if (Optional.IsDefined(ModelState))
             {
-                writer.WritePropertyName("modelState");
+                writer.WritePropertyName("modelState"u8);
                 writer.WriteObjectValue(ModelState);
             }
             if (Optional.IsCollectionDefined(VariableStates))
             {
-                writer.WritePropertyName("variableStates");
+                writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
                 foreach (var item in VariableStates)
                 {
@@ -41,7 +41,7 @@ namespace Azure.AI.AnomalyDetector
             Optional<IList<VariableState>> variableStates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelState"))
+                if (property.NameEquals("modelState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.AI.AnomalyDetector
                     modelState = ModelState.DeserializeModelState(property.Value);
                     continue;
                 }
-                if (property.NameEquals("variableStates"))
+                if (property.NameEquals("variableStates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

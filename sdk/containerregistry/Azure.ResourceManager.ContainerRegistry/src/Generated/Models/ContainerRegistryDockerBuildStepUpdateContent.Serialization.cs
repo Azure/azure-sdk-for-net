@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ImageNames))
             {
-                writer.WritePropertyName("imageNames");
+                writer.WritePropertyName("imageNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in ImageNames)
                 {
@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(IsPushEnabled))
             {
-                writer.WritePropertyName("isPushEnabled");
+                writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
             if (Optional.IsDefined(NoCache))
             {
-                writer.WritePropertyName("noCache");
+                writer.WritePropertyName("noCache"u8);
                 writer.WriteBooleanValue(NoCache.Value);
             }
             if (Optional.IsDefined(DockerFilePath))
             {
-                writer.WritePropertyName("dockerFilePath");
+                writer.WritePropertyName("dockerFilePath"u8);
                 writer.WriteStringValue(DockerFilePath);
             }
             if (Optional.IsCollectionDefined(Arguments))
             {
-                writer.WritePropertyName("arguments");
+                writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
             if (Optional.IsDefined(ContextPath))
             {
-                writer.WritePropertyName("contextPath");
+                writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
             if (Optional.IsDefined(ContextAccessToken))
             {
-                writer.WritePropertyName("contextAccessToken");
+                writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
             }
             writer.WriteEndObject();

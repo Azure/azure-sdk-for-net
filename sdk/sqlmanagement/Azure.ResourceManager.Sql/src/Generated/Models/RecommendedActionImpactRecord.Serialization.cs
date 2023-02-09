@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<double> changeValueRelative = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimensionName"))
+                if (property.NameEquals("dimensionName"u8))
                 {
                     dimensionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("absoluteValue"))
+                if (property.NameEquals("absoluteValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                     absoluteValue = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("changeValueAbsolute"))
+                if (property.NameEquals("changeValueAbsolute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
                     changeValueAbsolute = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("changeValueRelative"))
+                if (property.NameEquals("changeValueRelative"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

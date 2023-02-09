@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualNetworkAddressSpace))
             {
-                writer.WritePropertyName("virtualNetworkAddressSpace");
+                writer.WritePropertyName("virtualNetworkAddressSpace"u8);
                 writer.WriteStringValue(VirtualNetworkAddressSpace);
             }
             if (Optional.IsDefined(AccessEndpoint))
             {
-                writer.WritePropertyName("accessEndpoint");
+                writer.WritePropertyName("accessEndpoint"u8);
                 writer.WriteObjectValue(AccessEndpoint);
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
-                writer.WritePropertyName("subnets");
+                writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IList<LogicResourceReference>> subnets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualNetworkAddressSpace"))
+                if (property.NameEquals("virtualNetworkAddressSpace"u8))
                 {
                     virtualNetworkAddressSpace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessEndpoint"))
+                if (property.NameEquals("accessEndpoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic.Models
                     accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subnets"))
+                if (property.NameEquals("subnets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
