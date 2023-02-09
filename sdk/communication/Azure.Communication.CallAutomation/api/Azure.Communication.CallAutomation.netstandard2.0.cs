@@ -1,13 +1,5 @@
 namespace Azure.Communication.CallAutomation
 {
-    public partial class AddParticipantRequest
-    {
-        internal AddParticipantRequest() { }
-        public Azure.Communication.CallAutomation.CustomContext CustomContext { get { throw null; } set { } }
-        public int? InvitationTimeoutInSeconds { get { throw null; } set { } }
-        public string OperationContext { get { throw null; } set { } }
-        public string SourceDisplayName { get { throw null; } set { } }
-    }
     public partial class AddParticipantsEventResult : Azure.Communication.CallAutomation.EventResultBase
     {
         internal AddParticipantsEventResult() { }
