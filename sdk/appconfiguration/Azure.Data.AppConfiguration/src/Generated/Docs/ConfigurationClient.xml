@@ -869,21 +869,21 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSnapshotAsync(String,RequestContent,MatchConditions,RequestContext)">
+    <member name="UpdateSnapshotStatusAsync(String,RequestContent,MatchConditions,RequestContext)">
 <example>
-This sample shows how to call UpdateSnapshotAsync with required parameters and parse the result.
+This sample shows how to call UpdateSnapshotStatusAsync with required parameters and parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
 
 var data = new {};
 
-Response response = await client.UpdateSnapshotAsync("<name>", RequestContent.Create(data));
+Response response = await client.UpdateSnapshotStatusAsync("<name>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
 ]]></code>
-This sample shows how to call UpdateSnapshotAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call UpdateSnapshotStatusAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
@@ -892,7 +892,7 @@ var data = new {
     status = "provisioning",
 };
 
-Response response = await client.UpdateSnapshotAsync("<name>", RequestContent.Create(data), new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+Response response = await client.UpdateSnapshotStatusAsync("<name>", RequestContent.Create(data), new MatchConditions { IfMatch = "<YOUR_ETAG>" });
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -947,21 +947,21 @@ Schema for <c>Snapshot</c>:
 
 </remarks>
     </member>
-    <member name="UpdateSnapshot(String,RequestContent,MatchConditions,RequestContext)">
+    <member name="UpdateSnapshotStatus(String,RequestContent,MatchConditions,RequestContext)">
 <example>
-This sample shows how to call UpdateSnapshot with required parameters and parse the result.
+This sample shows how to call UpdateSnapshotStatus with required parameters and parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
 
 var data = new {};
 
-Response response = client.UpdateSnapshot("<name>", RequestContent.Create(data));
+Response response = client.UpdateSnapshotStatus("<name>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("filters")[0].GetProperty("key").ToString());
 ]]></code>
-This sample shows how to call UpdateSnapshot with all parameters and request content, and how to parse the result.
+This sample shows how to call UpdateSnapshotStatus with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfigurationClient(endpoint);
@@ -970,7 +970,7 @@ var data = new {
     status = "provisioning",
 };
 
-Response response = client.UpdateSnapshot("<name>", RequestContent.Create(data), new MatchConditions { IfMatch = "<YOUR_ETAG>" });
+Response response = client.UpdateSnapshotStatus("<name>", RequestContent.Create(data), new MatchConditions { IfMatch = "<YOUR_ETAG>" });
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());

@@ -41,4 +41,7 @@ directive:
 - rename-operation:
     from: DeleteLock
     to: DeleteReadOnlyLock
+- rename-operation:
+    from: UpdateSnapshot
+    to: UpdateSnapshotStatus
 ```
