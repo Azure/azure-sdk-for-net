@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> sessionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"))
+                if (property.NameEquals("sessionId"u8))
                 {
                     sessionId = property.Value.GetString();
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PlatformUpdateDomainCount))
             {
-                writer.WritePropertyName("platformUpdateDomainCount");
+                writer.WritePropertyName("platformUpdateDomainCount"u8);
                 writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
             }
             if (Optional.IsDefined(PlatformFaultDomainCount))
             {
-                writer.WritePropertyName("platformFaultDomainCount");
+                writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
             if (Optional.IsCollectionDefined(VirtualMachines))
             {
-                writer.WritePropertyName("virtualMachines");
+                writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
-                writer.WritePropertyName("proximityPlacementGroup");
+                writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
             writer.WriteEndObject();

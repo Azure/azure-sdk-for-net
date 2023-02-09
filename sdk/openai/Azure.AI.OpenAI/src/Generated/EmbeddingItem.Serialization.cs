@@ -21,12 +21,12 @@ namespace Azure.AI.OpenAI
             int index = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("object"))
+                if (property.NameEquals("object"u8))
                 {
                     @object = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("embedding"))
+                if (property.NameEquals("embedding"u8))
                 {
                     List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI
                     embedding = array;
                     continue;
                 }
-                if (property.NameEquals("index"))
+                if (property.NameEquals("index"u8))
                 {
                     index = property.Value.GetInt32();
                     continue;

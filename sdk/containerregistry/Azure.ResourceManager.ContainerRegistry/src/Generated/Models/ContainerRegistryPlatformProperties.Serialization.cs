@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("os");
+            writer.WritePropertyName("os"u8);
             writer.WriteStringValue(OS.ToString());
             if (Optional.IsDefined(Architecture))
             {
-                writer.WritePropertyName("architecture");
+                writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
             if (Optional.IsDefined(Variant))
             {
-                writer.WritePropertyName("variant");
+                writer.WritePropertyName("variant"u8);
                 writer.WriteStringValue(Variant.Value.ToString());
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<ContainerRegistryCpuVariant> variant = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("os"))
+                if (property.NameEquals("os"u8))
                 {
                     os = new ContainerRegistryOS(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("architecture"))
+                if (property.NameEquals("architecture"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     architecture = new ContainerRegistryOSArchitecture(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("variant"))
+                if (property.NameEquals("variant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

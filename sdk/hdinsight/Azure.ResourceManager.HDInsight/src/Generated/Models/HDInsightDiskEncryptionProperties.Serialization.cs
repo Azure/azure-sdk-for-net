@@ -18,24 +18,24 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VaultUri))
             {
-                writer.WritePropertyName("vaultUri");
+                writer.WritePropertyName("vaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyName))
             {
-                writer.WritePropertyName("keyName");
+                writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
             if (Optional.IsDefined(KeyVersion))
             {
-                writer.WritePropertyName("keyVersion");
+                writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             if (Optional.IsDefined(EncryptionAlgorithm))
             {
                 if (EncryptionAlgorithm != null)
                 {
-                    writer.WritePropertyName("encryptionAlgorithm");
+                    writer.WritePropertyName("encryptionAlgorithm"u8);
                     writer.WriteStringValue(EncryptionAlgorithm.Value.ToString());
                 }
                 else
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 if (MsiResourceId != null)
                 {
-                    writer.WritePropertyName("msiResourceId");
+                    writer.WritePropertyName("msiResourceId"u8);
                     writer.WriteStringValue(MsiResourceId);
                 }
                 else
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
-                writer.WritePropertyName("encryptionAtHost");
+                writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
             }
             writer.WriteEndObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<bool> encryptionAtHost = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vaultUri"))
+                if (property.NameEquals("vaultUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                     vaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVersion"))
+                if (property.NameEquals("keyVersion"u8))
                 {
                     keyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionAlgorithm"))
+                if (property.NameEquals("encryptionAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     encryptionAlgorithm = new JsonWebKeyEncryptionAlgorithm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("msiResourceId"))
+                if (property.NameEquals("msiResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     msiResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("encryptionAtHost"))
+                if (property.NameEquals("encryptionAtHost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

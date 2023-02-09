@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(MacAddress))
             {
-                writer.WritePropertyName("macAddress");
+                writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
             if (Optional.IsDefined(VirtualNetworkId))
             {
-                writer.WritePropertyName("virtualNetworkId");
+                writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
             if (Optional.IsDefined(IPv4AddressType))
             {
-                writer.WritePropertyName("ipv4AddressType");
+                writer.WritePropertyName("ipv4AddressType"u8);
                 writer.WriteStringValue(IPv4AddressType.Value.ToString());
             }
             if (Optional.IsDefined(IPv6AddressType))
             {
-                writer.WritePropertyName("ipv6AddressType");
+                writer.WritePropertyName("ipv6AddressType"u8);
                 writer.WriteStringValue(IPv6AddressType.Value.ToString());
             }
             if (Optional.IsDefined(MacAddressType))
             {
-                writer.WritePropertyName("macAddressType");
+                writer.WritePropertyName("macAddressType"u8);
                 writer.WriteStringValue(MacAddressType.Value.ToString());
             }
             if (Optional.IsDefined(NicId))
             {
-                writer.WritePropertyName("nicId");
+                writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
             writer.WriteEndObject();

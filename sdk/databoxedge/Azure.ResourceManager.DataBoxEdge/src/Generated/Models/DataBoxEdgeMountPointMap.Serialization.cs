@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("shareId");
+            writer.WritePropertyName("shareId"u8);
             writer.WriteStringValue(ShareId);
             writer.WriteEndObject();
         }
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeRoleType> roleType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shareId"))
+                if (property.NameEquals("shareId"u8))
                 {
                     shareId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("roleId"))
+                if (property.NameEquals("roleId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     roleId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mountPoint"))
+                if (property.NameEquals("mountPoint"u8))
                 {
                     mountPoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountType"))
+                if (property.NameEquals("mountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     mountType = new DataBoxEdgeMountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("roleType"))
+                if (property.NameEquals("roleType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

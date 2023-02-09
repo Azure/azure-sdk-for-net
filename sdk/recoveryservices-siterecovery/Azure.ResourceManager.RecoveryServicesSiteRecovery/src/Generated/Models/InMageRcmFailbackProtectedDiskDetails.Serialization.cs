@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> lastSyncTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskName"))
+                if (property.NameEquals("diskName"u8))
                 {
                     diskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isOSDisk"))
+                if (property.NameEquals("isOSDisk"u8))
                 {
                     isOSDisk = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacityInBytes"))
+                if (property.NameEquals("capacityInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     capacityInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskUuid"))
+                if (property.NameEquals("diskUuid"u8))
                 {
                     diskUuid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataPendingInLogDataStoreInMB"))
+                if (property.NameEquals("dataPendingInLogDataStoreInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     dataPendingInLogDataStoreInMB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("dataPendingAtSourceAgentInMB"))
+                if (property.NameEquals("dataPendingAtSourceAgentInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     dataPendingAtSourceAgentInMB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("isInitialReplicationComplete"))
+                if (property.NameEquals("isInitialReplicationComplete"u8))
                 {
                     isInitialReplicationComplete = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("irDetails"))
+                if (property.NameEquals("irDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     irDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resyncDetails"))
+                if (property.NameEquals("resyncDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resyncDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastSyncTime"))
+                if (property.NameEquals("lastSyncTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

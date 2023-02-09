@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<long> negativesAboveThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scoreThreshold"))
+                if (property.NameEquals("scoreThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     scoreThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("positives"))
+                if (property.NameEquals("positives"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     positives = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("negatives"))
+                if (property.NameEquals("negatives"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     negatives = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("positivesAboveThreshold"))
+                if (property.NameEquals("positivesAboveThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     positivesAboveThreshold = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("negativesAboveThreshold"))
+                if (property.NameEquals("negativesAboveThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

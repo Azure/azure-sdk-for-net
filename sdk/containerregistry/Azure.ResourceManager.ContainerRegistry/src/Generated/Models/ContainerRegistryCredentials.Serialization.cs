@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceRegistry))
             {
-                writer.WritePropertyName("sourceRegistry");
+                writer.WritePropertyName("sourceRegistry"u8);
                 writer.WriteObjectValue(SourceRegistry);
             }
             if (Optional.IsCollectionDefined(CustomRegistries))
             {
-                writer.WritePropertyName("customRegistries");
+                writer.WritePropertyName("customRegistries"u8);
                 writer.WriteStartObject();
                 foreach (var item in CustomRegistries)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<IDictionary<string, CustomRegistryCredentials>> customRegistries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceRegistry"))
+                if (property.NameEquals("sourceRegistry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     sourceRegistry = SourceRegistryCredentials.DeserializeSourceRegistryCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("customRegistries"))
+                if (property.NameEquals("customRegistries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

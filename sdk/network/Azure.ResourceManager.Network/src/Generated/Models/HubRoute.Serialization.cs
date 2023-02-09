@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("destinationType");
+            writer.WritePropertyName("destinationType"u8);
             writer.WriteStringValue(DestinationType);
-            writer.WritePropertyName("destinations");
+            writer.WritePropertyName("destinations"u8);
             writer.WriteStartArray();
             foreach (var item in Destinations)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("nextHopType");
+            writer.WritePropertyName("nextHopType"u8);
             writer.WriteStringValue(NextHopType);
-            writer.WritePropertyName("nextHop");
+            writer.WritePropertyName("nextHop"u8);
             writer.WriteStringValue(NextHop);
             writer.WriteEndObject();
         }
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.Network.Models
             string nextHop = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationType"))
+                if (property.NameEquals("destinationType"u8))
                 {
                     destinationType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinations"))
+                if (property.NameEquals("destinations"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Network.Models
                     destinations = array;
                     continue;
                 }
-                if (property.NameEquals("nextHopType"))
+                if (property.NameEquals("nextHopType"u8))
                 {
                     nextHopType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextHop"))
+                if (property.NameEquals("nextHop"u8))
                 {
                     nextHop = property.Value.GetString();
                     continue;

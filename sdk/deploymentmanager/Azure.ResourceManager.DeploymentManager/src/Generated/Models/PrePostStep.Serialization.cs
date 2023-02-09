@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("stepId");
+            writer.WritePropertyName("stepId"u8);
             writer.WriteStringValue(StepId);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             string stepId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stepId"))
+                if (property.NameEquals("stepId"u8))
                 {
                     stepId = property.Value.GetString();
                     continue;

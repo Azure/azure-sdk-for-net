@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<SessionHostHealthCheckFailureDetails> additionalFailureDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("healthCheckName"))
+                if (property.NameEquals("healthCheckName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     healthCheckName = new SessionHostHealthCheckName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthCheckResult"))
+                if (property.NameEquals("healthCheckResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     healthCheckResult = new SessionHostHealthCheckResult(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("additionalFailureDetails"))
+                if (property.NameEquals("additionalFailureDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

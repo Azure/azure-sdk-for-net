@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keepWords");
+            writer.WritePropertyName("keepWords"u8);
             writer.WriteStartArray();
             foreach (var item in KeepWords)
             {
@@ -25,12 +25,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(LowerCaseKeepWords))
             {
-                writer.WritePropertyName("keepWordsCase");
+                writer.WritePropertyName("keepWordsCase"u8);
                 writer.WriteBooleanValue(LowerCaseKeepWords.Value);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keepWords"))
+                if (property.NameEquals("keepWords"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     keepWords = array;
                     continue;
                 }
-                if (property.NameEquals("keepWordsCase"))
+                if (property.NameEquals("keepWordsCase"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,12 +63,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     keepWordsCase = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> bitLockerKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskSerialNumber"))
+                if (property.NameEquals("diskSerialNumber"u8))
                 {
                     diskSerialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bitLockerKey"))
+                if (property.NameEquals("bitLockerKey"u8))
                 {
                     bitLockerKey = property.Value.GetString();
                     continue;

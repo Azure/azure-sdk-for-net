@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ExperimentalOptions))
             {
-                writer.WritePropertyName("experimentalOptions");
+                writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
                 foreach (var item in ExperimentalOptions)
                 {
@@ -29,24 +29,24 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
             }
-            writer.WritePropertyName("codecs");
+            writer.WritePropertyName("codecs"u8);
             writer.WriteStartArray();
             foreach (var item in Codecs)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("formats");
+            writer.WritePropertyName("formats"u8);
             writer.WriteStartArray();
             foreach (var item in Formats)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("experimentalOptions"))
+                if (property.NameEquals("experimentalOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
                     experimentalOptions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("filters"))
+                if (property.NameEquals("filters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media.Models
                     filters = FilteringOperations.DeserializeFilteringOperations(property.Value);
                     continue;
                 }
-                if (property.NameEquals("codecs"))
+                if (property.NameEquals("codecs"u8))
                 {
                     List<MediaCodecBase> array = new List<MediaCodecBase>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     codecs = array;
                     continue;
                 }
-                if (property.NameEquals("formats"))
+                if (property.NameEquals("formats"u8))
                 {
                     List<MediaFormatBase> array = new List<MediaFormatBase>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                     formats = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

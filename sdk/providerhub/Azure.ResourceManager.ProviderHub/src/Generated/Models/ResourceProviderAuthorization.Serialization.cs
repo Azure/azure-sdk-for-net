@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationId))
             {
-                writer.WritePropertyName("applicationId");
+                writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
             if (Optional.IsDefined(RoleDefinitionId))
             {
-                writer.WritePropertyName("roleDefinitionId");
+                writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
             if (Optional.IsDefined(ManagedByRoleDefinitionId))
             {
-                writer.WritePropertyName("managedByRoleDefinitionId");
+                writer.WritePropertyName("managedByRoleDefinitionId"u8);
                 writer.WriteStringValue(ManagedByRoleDefinitionId);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> managedByRoleDefinitionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
                     applicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleDefinitionId"))
+                if (property.NameEquals("roleDefinitionId"u8))
                 {
                     roleDefinitionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedByRoleDefinitionId"))
+                if (property.NameEquals("managedByRoleDefinitionId"u8))
                 {
                     managedByRoleDefinitionId = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Override))
             {
-                writer.WritePropertyName("override");
+                writer.WritePropertyName("override"u8);
                 writer.WriteBooleanValue(Override.Value);
             }
             writer.WriteEndObject();

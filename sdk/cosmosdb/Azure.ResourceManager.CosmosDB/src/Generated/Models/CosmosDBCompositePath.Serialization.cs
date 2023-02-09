@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(Order))
             {
-                writer.WritePropertyName("order");
+                writer.WritePropertyName("order"u8);
                 writer.WriteStringValue(Order.Value.ToString());
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<CompositePathSortOrder> order = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

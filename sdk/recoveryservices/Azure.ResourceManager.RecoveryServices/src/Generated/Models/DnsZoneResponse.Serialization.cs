@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
-                writer.WritePropertyName("requiredZoneNames");
+                writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredZoneNames)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             if (Optional.IsDefined(SubResource))
             {
-                writer.WritePropertyName("subResource");
+                writer.WritePropertyName("subResource"u8);
                 writer.WriteStringValue(SubResource.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<VaultSubResourceType> subResource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requiredZoneNames"))
+                if (property.NameEquals("requiredZoneNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     requiredZoneNames = array;
                     continue;
                 }
-                if (property.NameEquals("subResource"))
+                if (property.NameEquals("subResource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

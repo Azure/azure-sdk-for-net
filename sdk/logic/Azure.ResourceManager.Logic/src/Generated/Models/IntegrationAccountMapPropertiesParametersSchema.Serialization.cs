@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Ref))
             {
-                writer.WritePropertyName("ref");
+                writer.WritePropertyName("ref"u8);
                 writer.WriteStringValue(Ref);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> @ref = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ref"))
+                if (property.NameEquals("ref"u8))
                 {
                     @ref = property.Value.GetString();
                     continue;

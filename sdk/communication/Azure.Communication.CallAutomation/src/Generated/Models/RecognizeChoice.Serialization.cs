@@ -16,9 +16,9 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("label");
+            writer.WritePropertyName("label"u8);
             writer.WriteStringValue(Label);
-            writer.WritePropertyName("phrases");
+            writer.WritePropertyName("phrases"u8);
             writer.WriteStartArray();
             foreach (var item in Phrases)
             {
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteEndArray();
             if (Optional.IsDefined(Tone))
             {
-                writer.WritePropertyName("tone");
+                writer.WritePropertyName("tone"u8);
                 writer.WriteStringValue(Tone.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,12 +40,12 @@ namespace Azure.Communication.CallAutomation
             Optional<DtmfTone> tone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phrases"))
+                if (property.NameEquals("phrases"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
                     phrases = array;
                     continue;
                 }
-                if (property.NameEquals("tone"))
+                if (property.NameEquals("tone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

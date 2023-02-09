@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Server))
             {
-                writer.WritePropertyName("server");
+                writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
             if (Optional.IsDefined(Database))
             {
-                writer.WritePropertyName("database");
+                writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
             if (Optional.IsDefined(Table))
             {
-                writer.WritePropertyName("table");
+                writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
             if (Optional.IsDefined(User))
             {
-                writer.WritePropertyName("user");
+                writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(AuthenticationMode))
             {
-                writer.WritePropertyName("authenticationMode");
+                writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,32 +78,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("server"))
+                        if (property0.NameEquals("server"u8))
                         {
                             server = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("database"))
+                        if (property0.NameEquals("database"u8))
                         {
                             database = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("table"))
+                        if (property0.NameEquals("table"u8))
                         {
                             table = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("user"))
+                        if (property0.NameEquals("user"u8))
                         {
                             user = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("password"))
+                        if (property0.NameEquals("password"u8))
                         {
                             password = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationMode"))
+                        if (property0.NameEquals("authenticationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (FaultDomain != null)
                 {
-                    writer.WritePropertyName("faultDomain");
+                    writer.WritePropertyName("faultDomain"u8);
                     writer.WriteNumberValue(FaultDomain.Value);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 if (UpdateDomain != null)
                 {
-                    writer.WritePropertyName("updateDomain");
+                    writer.WritePropertyName("updateDomain"u8);
                     writer.WriteNumberValue(UpdateDomain.Value);
                 }
                 else
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("updateDomain");
                 }
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
+            writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
             writer.WriteEndObject();
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("faultDomain"))
+                if (property.NameEquals("faultDomain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     faultDomain = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("updateDomain"))
+                if (property.NameEquals("updateDomain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     updateDomain = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"))
+                if (property.NameEquals("targetResourceName"u8))
                 {
                     targetResourceName = property.Value.GetString();
                     continue;

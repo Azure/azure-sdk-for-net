@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

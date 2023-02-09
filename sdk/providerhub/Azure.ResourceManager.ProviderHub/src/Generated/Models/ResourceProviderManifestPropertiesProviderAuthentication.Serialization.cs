@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("allowedAudiences");
+            writer.WritePropertyName("allowedAudiences"u8);
             writer.WriteStartArray();
             foreach (var item in AllowedAudiences)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<string> allowedAudiences = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedAudiences"))
+                if (property.NameEquals("allowedAudiences"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

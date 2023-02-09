@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterID"))
+                if (property.NameEquals("meterID"u8))
                 {
                     meterId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quantity"))
+                if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                     quantity = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("extendedUnit"))
+                if (property.NameEquals("extendedUnit"u8))
                 {
                     extendedUnit = property.Value.GetString();
                     continue;

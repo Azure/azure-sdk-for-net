@@ -23,37 +23,37 @@ namespace Azure.AI.Translation.Document.Models
             long totalCharacterCharged = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     total = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failed"))
+                if (property.NameEquals("failed"u8))
                 {
                     failed = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("success"))
+                if (property.NameEquals("success"u8))
                 {
                     success = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inProgress"))
+                if (property.NameEquals("inProgress"u8))
                 {
                     inProgress = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("notYetStarted"))
+                if (property.NameEquals("notYetStarted"u8))
                 {
                     notYetStarted = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cancelled"))
+                if (property.NameEquals("cancelled"u8))
                 {
                     cancelled = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalCharacterCharged"))
+                if (property.NameEquals("totalCharacterCharged"u8))
                 {
                     totalCharacterCharged = property.Value.GetInt64();
                     continue;

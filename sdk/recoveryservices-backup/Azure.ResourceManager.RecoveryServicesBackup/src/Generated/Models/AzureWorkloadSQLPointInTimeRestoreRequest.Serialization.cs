@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PointInTime))
             {
-                writer.WritePropertyName("pointInTime");
+                writer.WritePropertyName("pointInTime"u8);
                 writer.WriteStringValue(PointInTime.Value, "O");
             }
             if (Optional.IsDefined(ShouldUseAlternateTargetLocation))
             {
-                writer.WritePropertyName("shouldUseAlternateTargetLocation");
+                writer.WritePropertyName("shouldUseAlternateTargetLocation"u8);
                 writer.WriteBooleanValue(ShouldUseAlternateTargetLocation.Value);
             }
             if (Optional.IsDefined(IsNonRecoverable))
             {
-                writer.WritePropertyName("isNonRecoverable");
+                writer.WritePropertyName("isNonRecoverable"u8);
                 writer.WriteBooleanValue(IsNonRecoverable.Value);
             }
             if (Optional.IsCollectionDefined(AlternateDirectoryPaths))
             {
-                writer.WritePropertyName("alternateDirectoryPaths");
+                writer.WritePropertyName("alternateDirectoryPaths"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlternateDirectoryPaths)
                 {
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(RecoveryType))
             {
-                writer.WritePropertyName("recoveryType");
+                writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
             if (Optional.IsDefined(SourceResourceId))
             {
-                writer.WritePropertyName("sourceResourceId");
+                writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
             if (Optional.IsCollectionDefined(PropertyBag))
             {
-                writer.WritePropertyName("propertyBag");
+                writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
                 foreach (var item in PropertyBag)
                 {
@@ -65,20 +65,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(TargetInfo))
             {
-                writer.WritePropertyName("targetInfo");
+                writer.WritePropertyName("targetInfo"u8);
                 writer.WriteObjectValue(TargetInfo);
             }
             if (Optional.IsDefined(RecoveryMode))
             {
-                writer.WritePropertyName("recoveryMode");
+                writer.WritePropertyName("recoveryMode"u8);
                 writer.WriteStringValue(RecoveryMode.Value.ToString());
             }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {
-                writer.WritePropertyName("targetVirtualMachineId");
+                writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = "AzureWorkloadSQLPointInTimeRestoreRequest";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pointInTime"))
+                if (property.NameEquals("pointInTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     pointInTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("shouldUseAlternateTargetLocation"))
+                if (property.NameEquals("shouldUseAlternateTargetLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     shouldUseAlternateTargetLocation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isNonRecoverable"))
+                if (property.NameEquals("isNonRecoverable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isNonRecoverable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("alternateDirectoryPaths"))
+                if (property.NameEquals("alternateDirectoryPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     alternateDirectoryPaths = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryType"))
+                if (property.NameEquals("recoveryType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryType = new RecoveryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceResourceId"))
+                if (property.NameEquals("sourceResourceId"u8))
                 {
                     sourceResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("propertyBag"))
+                if (property.NameEquals("propertyBag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     propertyBag = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetInfo"))
+                if (property.NameEquals("targetInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recoveryMode"))
+                if (property.NameEquals("recoveryMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryMode = new RecoveryMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetVirtualMachineId"))
+                if (property.NameEquals("targetVirtualMachineId"u8))
                 {
                     targetVirtualMachineId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

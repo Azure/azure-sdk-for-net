@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableDefaultValidation))
             {
-                writer.WritePropertyName("enableDefaultValidation");
+                writer.WritePropertyName("enableDefaultValidation"u8);
                 writer.WriteBooleanValue(EnableDefaultValidation.Value);
             }
             if (Optional.IsCollectionDefined(ResourceTypesWithCustomValidation))
             {
-                writer.WritePropertyName("resourceTypesWithCustomValidation");
+                writer.WritePropertyName("resourceTypesWithCustomValidation"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypesWithCustomValidation)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<string>> resourceTypesWithCustomValidation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableDefaultValidation"))
+                if (property.NameEquals("enableDefaultValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     enableDefaultValidation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resourceTypesWithCustomValidation"))
+                if (property.NameEquals("resourceTypesWithCustomValidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

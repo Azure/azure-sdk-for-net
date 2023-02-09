@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("serverName");
+            writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
-            writer.WritePropertyName("databaseName");
+            writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
-            writer.WritePropertyName("workspaceId");
+            writer.WritePropertyName("workspaceId"u8);
             writer.WriteStringValue(WorkspaceId);
-            writer.WritePropertyName("vmuuid");
+            writer.WritePropertyName("vmuuid"u8);
             writer.WriteStringValue(VmUuid);
-            writer.WritePropertyName("sourceComputerId");
+            writer.WritePropertyName("sourceComputerId"u8);
             writer.WriteStringValue(SourceComputerId);
-            writer.WritePropertyName("machineName");
+            writer.WritePropertyName("machineName"u8);
             writer.WriteStringValue(MachineName);
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
             writer.WriteEndObject();
         }
@@ -44,37 +44,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Source source = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverName"))
+                if (property.NameEquals("serverName"u8))
                 {
                     serverName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     workspaceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vmuuid"))
+                if (property.NameEquals("vmuuid"u8))
                 {
                     vmuuid = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("sourceComputerId"))
+                if (property.NameEquals("sourceComputerId"u8))
                 {
                     sourceComputerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineName"))
+                if (property.NameEquals("machineName"u8))
                 {
                     machineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = new Source(property.Value.GetString());
                     continue;

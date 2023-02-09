@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ObjectName))
             {
-                writer.WritePropertyName("objectName");
+                writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> objectName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("objectName"))
+                if (property.NameEquals("objectName"u8))
                 {
                     objectName = property.Value.GetString();
                     continue;

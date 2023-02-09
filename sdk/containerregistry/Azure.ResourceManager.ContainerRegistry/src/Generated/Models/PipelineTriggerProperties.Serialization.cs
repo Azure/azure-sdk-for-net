@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceTrigger))
             {
-                writer.WritePropertyName("sourceTrigger");
+                writer.WritePropertyName("sourceTrigger"u8);
                 writer.WriteObjectValue(SourceTrigger);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<PipelineSourceTriggerProperties> sourceTrigger = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceTrigger"))
+                if (property.NameEquals("sourceTrigger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

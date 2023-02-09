@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<double> total = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("average"))
+                if (property.NameEquals("average"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
                     average = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maximum"))
+                if (property.NameEquals("maximum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
                     maximum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("minimum"))
+                if (property.NameEquals("minimum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
                     minimum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

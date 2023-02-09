@@ -18,12 +18,12 @@ namespace Azure.Communication.CallAutomation
             Optional<string> recognizedPhrase = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recognizedPhrase"))
+                if (property.NameEquals("recognizedPhrase"u8))
                 {
                     recognizedPhrase = property.Value.GetString();
                     continue;

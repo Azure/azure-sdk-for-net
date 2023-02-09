@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<string>> schemas = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("database"))
+                if (property.NameEquals("database"u8))
                 {
                     database = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemas"))
+                if (property.NameEquals("schemas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

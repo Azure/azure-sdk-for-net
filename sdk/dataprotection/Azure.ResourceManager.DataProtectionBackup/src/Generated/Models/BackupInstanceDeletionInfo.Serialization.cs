@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> deleteActivityId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deletionTime"))
+                if (property.NameEquals("deletionTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     deletionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("billingEndDate"))
+                if (property.NameEquals("billingEndDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     billingEndDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("scheduledPurgeTime"))
+                if (property.NameEquals("scheduledPurgeTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     scheduledPurgeTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("deleteActivityID"))
+                if (property.NameEquals("deleteActivityID"u8))
                 {
                     deleteActivityId = property.Value.GetString();
                     continue;

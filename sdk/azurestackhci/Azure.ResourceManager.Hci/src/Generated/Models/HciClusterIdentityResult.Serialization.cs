@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<Guid> aadApplicationObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("aadClientId"))
+                        if (property0.NameEquals("aadClientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci.Models
                             aadClientId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("aadTenantId"))
+                        if (property0.NameEquals("aadTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Models
                             aadTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("aadServicePrincipalObjectId"))
+                        if (property0.NameEquals("aadServicePrincipalObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Models
                             aadServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("aadApplicationObjectId"))
+                        if (property0.NameEquals("aadApplicationObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

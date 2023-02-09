@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Exclusions))
             {
-                writer.WritePropertyName("exclusions");
+                writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("managedRuleSets");
+            writer.WritePropertyName("managedRuleSets"u8);
             writer.WriteStartArray();
             foreach (var item in ManagedRuleSets)
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<ManagedRuleSet> managedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exclusions"))
+                if (property.NameEquals("exclusions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     exclusions = array;
                     continue;
                 }
-                if (property.NameEquals("managedRuleSets"))
+                if (property.NameEquals("managedRuleSets"u8))
                 {
                     List<ManagedRuleSet> array = new List<ManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())

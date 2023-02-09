@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Resources))
             {
-                writer.WritePropertyName("resources");
+                writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             if (Optional.IsDefined(TargetResourceGroup))
             {
-                writer.WritePropertyName("targetResourceGroup");
+                writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroup);
             }
             writer.WriteEndObject();

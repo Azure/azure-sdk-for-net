@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisableTraceRoute))
             {
-                writer.WritePropertyName("disableTraceRoute");
+                writer.WritePropertyName("disableTraceRoute"u8);
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> disableTraceRoute = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disableTraceRoute"))
+                if (property.NameEquals("disableTraceRoute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

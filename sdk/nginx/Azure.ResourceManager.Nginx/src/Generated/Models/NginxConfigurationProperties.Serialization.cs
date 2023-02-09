@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("files");
+                writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             if (Optional.IsCollectionDefined(ProtectedFiles))
             {
-                writer.WritePropertyName("protectedFiles");
+                writer.WritePropertyName("protectedFiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProtectedFiles)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             if (Optional.IsDefined(Package))
             {
-                writer.WritePropertyName("package");
+                writer.WritePropertyName("package"u8);
                 writer.WriteObjectValue(Package);
             }
             if (Optional.IsDefined(RootFile))
             {
-                writer.WritePropertyName("rootFile");
+                writer.WritePropertyName("rootFile"u8);
                 writer.WriteStringValue(RootFile);
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Nginx.Models
             Optional<string> rootFile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("files"))
+                if (property.NameEquals("files"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     files = array;
                     continue;
                 }
-                if (property.NameEquals("protectedFiles"))
+                if (property.NameEquals("protectedFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     protectedFiles = array;
                     continue;
                 }
-                if (property.NameEquals("package"))
+                if (property.NameEquals("package"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     package = NginxConfigurationPackage.DeserializeNginxConfigurationPackage(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rootFile"))
+                if (property.NameEquals("rootFile"u8))
                 {
                     rootFile = property.Value.GetString();
                     continue;

@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RestoreMode))
             {
-                writer.WritePropertyName("restoreMode");
+                writer.WritePropertyName("restoreMode"u8);
                 writer.WriteStringValue(RestoreMode.Value.ToString());
             }
             if (Optional.IsDefined(RestoreSource))
             {
-                writer.WritePropertyName("restoreSource");
+                writer.WritePropertyName("restoreSource"u8);
                 writer.WriteStringValue(RestoreSource);
             }
             if (Optional.IsDefined(RestoreTimestampInUtc))
             {
-                writer.WritePropertyName("restoreTimestampInUtc");
+                writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
             if (Optional.IsCollectionDefined(DatabasesToRestore))
             {
-                writer.WritePropertyName("databasesToRestore");
+                writer.WritePropertyName("databasesToRestore"u8);
                 writer.WriteStartArray();
                 foreach (var item in DatabasesToRestore)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IList<DatabaseRestoreResourceInfo>> databasesToRestore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("restoreMode"))
+                if (property.NameEquals("restoreMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     restoreMode = new CosmosDBAccountRestoreMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("restoreSource"))
+                if (property.NameEquals("restoreSource"u8))
                 {
                     restoreSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restoreTimestampInUtc"))
+                if (property.NameEquals("restoreTimestampInUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     restoreTimestampInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("databasesToRestore"))
+                if (property.NameEquals("databasesToRestore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

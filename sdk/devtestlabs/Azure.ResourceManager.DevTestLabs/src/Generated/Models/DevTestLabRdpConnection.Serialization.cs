@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> contents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contents"))
+                if (property.NameEquals("contents"u8))
                 {
                     contents = property.Value.GetString();
                     continue;

@@ -16,33 +16,33 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("serviceUri");
+            writer.WritePropertyName("serviceUri"u8);
             writer.WriteStringValue(ServiceUri.AbsoluteUri);
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
-                writer.WritePropertyName("useCommonAlertSchema");
+                writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
             if (Optional.IsDefined(UseAadAuth))
             {
-                writer.WritePropertyName("useAadAuth");
+                writer.WritePropertyName("useAadAuth"u8);
                 writer.WriteBooleanValue(UseAadAuth.Value);
             }
             if (Optional.IsDefined(ObjectId))
             {
-                writer.WritePropertyName("objectId");
+                writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
             if (Optional.IsDefined(IdentifierUri))
             {
-                writer.WritePropertyName("identifierUri");
+                writer.WritePropertyName("identifierUri"u8);
                 writer.WriteStringValue(IdentifierUri.AbsoluteUri);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             writer.WriteEndObject();
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceUri"))
+                if (property.NameEquals("serviceUri"u8))
                 {
                     serviceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("useCommonAlertSchema"))
+                if (property.NameEquals("useCommonAlertSchema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     useCommonAlertSchema = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("useAadAuth"))
+                if (property.NameEquals("useAadAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     useAadAuth = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("objectId"))
+                if (property.NameEquals("objectId"u8))
                 {
                     objectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identifierUri"))
+                if (property.NameEquals("identifierUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     identifierUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

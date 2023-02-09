@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ArcScVmm
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("extendedLocation");
+            writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation); if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            writer.WritePropertyName("fqdn");
+            writer.WritePropertyName("fqdn"u8);
             writer.WriteStringValue(Fqdn);
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             writer.WriteEndObject();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.ArcScVmm
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,27 +90,27 @@ namespace Azure.ResourceManager.ArcScVmm
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ArcScVmm
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ArcScVmm
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("credentials"))
+                        if (property0.NameEquals("credentials"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.ArcScVmm
                             credentials = VmmServerPropertiesCredentials.DeserializeVmmServerPropertiesCredentials(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("fqdn"))
+                        if (property0.NameEquals("fqdn"u8))
                         {
                             fqdn = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("port"))
+                        if (property0.NameEquals("port"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,27 +154,27 @@ namespace Azure.ResourceManager.ArcScVmm
                             port = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("connectionStatus"))
+                        if (property0.NameEquals("connectionStatus"u8))
                         {
                             connectionStatus = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("errorMessage"))
+                        if (property0.NameEquals("errorMessage"u8))
                         {
                             errorMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("uuid"))
+                        if (property0.NameEquals("uuid"u8))
                         {
                             uuid = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;

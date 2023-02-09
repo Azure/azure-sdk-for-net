@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AdminUsername))
             {
-                writer.WritePropertyName("adminUsername");
+                writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
             if (Optional.IsDefined(AdminPassword))
             {
-                writer.WritePropertyName("adminPassword");
+                writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
             if (Optional.IsDefined(OSConfiguration))
             {
-                writer.WritePropertyName("osConfiguration");
+                writer.WritePropertyName("osConfiguration"u8);
                 writer.WriteObjectValue(OSConfiguration);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<OSConfiguration> osConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("adminUsername"))
+                if (property.NameEquals("adminUsername"u8))
                 {
                     adminUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminPassword"))
+                if (property.NameEquals("adminPassword"u8))
                 {
                     adminPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osConfiguration"))
+                if (property.NameEquals("osConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

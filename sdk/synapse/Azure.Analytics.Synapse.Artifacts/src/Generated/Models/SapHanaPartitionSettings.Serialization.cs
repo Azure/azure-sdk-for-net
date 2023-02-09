@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionColumnName))
             {
-                writer.WritePropertyName("partitionColumnName");
+                writer.WritePropertyName("partitionColumnName"u8);
                 writer.WriteObjectValue(PartitionColumnName);
             }
             writer.WriteEndObject();
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> partitionColumnName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionColumnName"))
+                if (property.NameEquals("partitionColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

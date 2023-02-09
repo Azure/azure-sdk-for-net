@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<AutoProtectionOfDataDisk> diskAutoProtectionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskLunId"))
+                if (property.NameEquals("diskLunId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskLunId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskAutoProtectionStatus"))
+                if (property.NameEquals("diskAutoProtectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

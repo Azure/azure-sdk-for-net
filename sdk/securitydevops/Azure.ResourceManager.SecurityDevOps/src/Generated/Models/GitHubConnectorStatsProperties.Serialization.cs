@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(OwnersCount))
             {
-                writer.WritePropertyName("ownersCount");
+                writer.WritePropertyName("ownersCount"u8);
                 writer.WriteNumberValue(OwnersCount.Value);
             }
             if (Optional.IsDefined(ReposCount))
             {
-                writer.WritePropertyName("reposCount");
+                writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             Optional<long> reposCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ownersCount"))
+                if (property.NameEquals("ownersCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     ownersCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("reposCount"))
+                if (property.NameEquals("reposCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

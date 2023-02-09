@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Monitor.Models
             double value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeStamp"))
+                if (property.NameEquals("timeStamp"u8))
                 {
                     timeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetDouble();
                     continue;

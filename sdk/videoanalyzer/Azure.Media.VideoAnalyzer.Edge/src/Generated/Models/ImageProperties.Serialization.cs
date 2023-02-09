@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Scale))
             {
-                writer.WritePropertyName("scale");
+                writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
             }
             if (Optional.IsDefined(Format))
             {
-                writer.WritePropertyName("format");
+                writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<ImageFormatProperties> format = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scale"))
+                if (property.NameEquals("scale"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     scale = ImageScale.DeserializeImageScale(property.Value);
                     continue;
                 }
-                if (property.NameEquals("format"))
+                if (property.NameEquals("format"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

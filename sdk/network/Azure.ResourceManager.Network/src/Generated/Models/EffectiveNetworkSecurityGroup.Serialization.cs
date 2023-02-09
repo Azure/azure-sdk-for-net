@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> tagMap = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkSecurityGroup"))
+                if (property.NameEquals("networkSecurityGroup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                     networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("association"))
+                if (property.NameEquals("association"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                     association = EffectiveNetworkSecurityGroupAssociation.DeserializeEffectiveNetworkSecurityGroupAssociation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("effectiveSecurityRules"))
+                if (property.NameEquals("effectiveSecurityRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     effectiveSecurityRules = array;
                     continue;
                 }
-                if (property.NameEquals("tagMap"))
+                if (property.NameEquals("tagMap"u8))
                 {
                     tagMap = property.Value.GetString();
                     continue;

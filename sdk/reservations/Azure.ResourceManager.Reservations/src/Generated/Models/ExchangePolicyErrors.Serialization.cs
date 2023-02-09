@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<IReadOnlyList<ExchangePolicyError>> policyErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyErrors"))
+                if (property.NameEquals("policyErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

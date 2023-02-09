@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccessToken))
             {
-                writer.WritePropertyName("accessToken");
+                writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
             if (Optional.IsDefined(RefreshToken))
             {
-                writer.WritePropertyName("refreshToken");
+                writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
             if (Optional.IsDefined(TokenType))
             {
-                writer.WritePropertyName("tokenType");
+                writer.WritePropertyName("tokenType"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());
             }
             writer.WriteEndObject();

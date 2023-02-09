@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
-                writer.WritePropertyName("partnerRegistrationImmutableId");
+                writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
             if (Optional.IsDefined(PartnerName))
             {
-                writer.WritePropertyName("partnerName");
+                writer.WritePropertyName("partnerName"u8);
                 writer.WriteStringValue(PartnerName);
             }
             if (Optional.IsDefined(AuthorizationExpireOn))
             {
-                writer.WritePropertyName("authorizationExpirationTimeInUtc");
+                writer.WritePropertyName("authorizationExpirationTimeInUtc"u8);
                 writer.WriteStringValue(AuthorizationExpireOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<DateTimeOffset> authorizationExpirationTimeInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partnerRegistrationImmutableId"))
+                if (property.NameEquals("partnerRegistrationImmutableId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                     partnerRegistrationImmutableId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("partnerName"))
+                if (property.NameEquals("partnerName"u8))
                 {
                     partnerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authorizationExpirationTimeInUtc"))
+                if (property.NameEquals("authorizationExpirationTimeInUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

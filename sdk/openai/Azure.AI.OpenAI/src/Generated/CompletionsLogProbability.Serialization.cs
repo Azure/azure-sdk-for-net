@@ -22,7 +22,7 @@ namespace Azure.AI.OpenAI
             Optional<IReadOnlyList<int>> textOffset = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tokens"))
+                if (property.NameEquals("tokens"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI
                     tokens = array;
                     continue;
                 }
-                if (property.NameEquals("token_logprobs"))
+                if (property.NameEquals("token_logprobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.AI.OpenAI
                     tokenLogprobs = array;
                     continue;
                 }
-                if (property.NameEquals("top_logprobs"))
+                if (property.NameEquals("top_logprobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.AI.OpenAI
                     topLogprobs = array;
                     continue;
                 }
-                if (property.NameEquals("text_offset"))
+                if (property.NameEquals("text_offset"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

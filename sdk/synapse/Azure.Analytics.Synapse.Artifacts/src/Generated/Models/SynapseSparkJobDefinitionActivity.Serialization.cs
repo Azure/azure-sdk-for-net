@@ -21,26 +21,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -58,13 +58,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("sparkJob");
+            writer.WritePropertyName("sparkJob"u8);
             writer.WriteObjectValue(SparkJob);
             if (Optional.IsCollectionDefined(Arguments))
             {
-                writer.WritePropertyName("args");
+                writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
@@ -74,22 +74,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(File))
             {
-                writer.WritePropertyName("file");
+                writer.WritePropertyName("file"u8);
                 writer.WriteObjectValue(File);
             }
             if (Optional.IsDefined(ScanFolder))
             {
-                writer.WritePropertyName("scanFolder");
+                writer.WritePropertyName("scanFolder"u8);
                 writer.WriteObjectValue(ScanFolder);
             }
             if (Optional.IsDefined(ClassName))
             {
-                writer.WritePropertyName("className");
+                writer.WritePropertyName("className"u8);
                 writer.WriteObjectValue(ClassName);
             }
             if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("files");
+                writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(PythonCodeReference))
             {
-                writer.WritePropertyName("pythonCodeReference");
+                writer.WritePropertyName("pythonCodeReference"u8);
                 writer.WriteStartArray();
                 foreach (var item in PythonCodeReference)
                 {
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(FilesV2))
             {
-                writer.WritePropertyName("filesV2");
+                writer.WritePropertyName("filesV2"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilesV2)
                 {
@@ -119,42 +119,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(TargetBigDataPool))
             {
-                writer.WritePropertyName("targetBigDataPool");
+                writer.WritePropertyName("targetBigDataPool"u8);
                 writer.WriteObjectValue(TargetBigDataPool);
             }
             if (Optional.IsDefined(ExecutorSize))
             {
-                writer.WritePropertyName("executorSize");
+                writer.WritePropertyName("executorSize"u8);
                 writer.WriteObjectValue(ExecutorSize);
             }
             if (Optional.IsDefined(Conf))
             {
-                writer.WritePropertyName("conf");
+                writer.WritePropertyName("conf"u8);
                 writer.WriteObjectValue(Conf);
             }
             if (Optional.IsDefined(DriverSize))
             {
-                writer.WritePropertyName("driverSize");
+                writer.WritePropertyName("driverSize"u8);
                 writer.WriteObjectValue(DriverSize);
             }
             if (Optional.IsDefined(NumExecutors))
             {
-                writer.WritePropertyName("numExecutors");
+                writer.WritePropertyName("numExecutors"u8);
                 writer.WriteObjectValue(NumExecutors);
             }
             if (Optional.IsDefined(ConfigurationType))
             {
-                writer.WritePropertyName("configurationType");
+                writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
-                writer.WritePropertyName("targetSparkConfiguration");
+                writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {
-                writer.WritePropertyName("sparkConfig");
+                writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();
                 foreach (var item in SparkConfig)
                 {
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -221,22 +221,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -251,7 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -275,12 +275,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sparkJob"))
+                        if (property0.NameEquals("sparkJob"u8))
                         {
                             sparkJob = SynapseSparkJobReference.DeserializeSynapseSparkJobReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("args"))
+                        if (property0.NameEquals("args"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -295,7 +295,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             args = array;
                             continue;
                         }
-                        if (property0.NameEquals("file"))
+                        if (property0.NameEquals("file"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -305,7 +305,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             file = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("scanFolder"))
+                        if (property0.NameEquals("scanFolder"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -315,7 +315,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             scanFolder = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("className"))
+                        if (property0.NameEquals("className"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -325,7 +325,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             className = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("files"))
+                        if (property0.NameEquals("files"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             files = array;
                             continue;
                         }
-                        if (property0.NameEquals("pythonCodeReference"))
+                        if (property0.NameEquals("pythonCodeReference"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -355,7 +355,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             pythonCodeReference = array;
                             continue;
                         }
-                        if (property0.NameEquals("filesV2"))
+                        if (property0.NameEquals("filesV2"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -370,7 +370,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             filesV2 = array;
                             continue;
                         }
-                        if (property0.NameEquals("targetBigDataPool"))
+                        if (property0.NameEquals("targetBigDataPool"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -380,7 +380,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             targetBigDataPool = BigDataPoolParametrizationReference.DeserializeBigDataPoolParametrizationReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("executorSize"))
+                        if (property0.NameEquals("executorSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -390,7 +390,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             executorSize = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("conf"))
+                        if (property0.NameEquals("conf"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -400,7 +400,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             conf = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("driverSize"))
+                        if (property0.NameEquals("driverSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -410,7 +410,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             driverSize = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("numExecutors"))
+                        if (property0.NameEquals("numExecutors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -420,7 +420,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             numExecutors = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("configurationType"))
+                        if (property0.NameEquals("configurationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -430,7 +430,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             configurationType = new ConfigurationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("targetSparkConfiguration"))
+                        if (property0.NameEquals("targetSparkConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -440,7 +440,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             targetSparkConfiguration = SparkConfigurationParametrizationReference.DeserializeSparkConfigurationParametrizationReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("sparkConfig"))
+                        if (property0.NameEquals("sparkConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
