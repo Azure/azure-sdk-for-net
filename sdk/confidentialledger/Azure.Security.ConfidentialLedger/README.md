@@ -188,18 +188,7 @@ while (!loaded)
 {
     dynamic json = getResponse.Content.ToDynamic();
 
-    // TODO: Not currently handled
-    //loaded = (LedgerEntry)json.entry != null;
-
-    try
-    {
-        loaded = (LedgerEntry)json.entry != null;
-    }
-    catch (InvalidOperationException)
-    {
-        loaded = false;
-    }
-
+    loaded = (LedgerEntry)json.entry != null;
     if (loaded)
     {
         contents = json.entry.contents;
@@ -247,18 +236,7 @@ while (!loaded)
 {
     dynamic json = getResponse.Content.ToDynamic();
 
-    // TODO: Not currently handled
-    //loaded = (LedgerEntry)json.entry != null;
-
-    try
-    {
-        loaded = (LedgerEntry)json.entry != null;
-    }
-    catch (InvalidOperationException)
-    {
-        loaded = false;
-    }
-
+    loaded = (LedgerEntry)json.entry != null;
     if (loaded)
     {
         collectionEntry = json.entry.contents;
@@ -273,7 +251,8 @@ Console.WriteLine(collectionEntry); // "Hello world collection 0"
 
 // This will return the latest entry available in the collection.
 getResponse = ledgerClient.GetCurrentLedgerEntry("my collection");
-string latestCollection = getResponse.Content.ToDynamic().contents;
+dynamic currentEntry = getResponse.Content.ToDynamic();
+string latestCollection = currentEntry.contents;
 
 Console.WriteLine($"The latest ledger entry from the collection is {latestCollection}"); // "Hello world collection 1"
 ```

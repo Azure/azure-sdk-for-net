@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.ConfidentialLedger", "src\Azure.Security.ConfidentialLedger.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.ConfidentialLedger.Tests", "tests\Azure.Security.ConfidentialLedger.Tests.csproj", "{953B33C8-42F0-45BF-B6A4-46D80D39A9E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.ConfidentialLedger.Tests", "tests\Azure.Security.ConfidentialLedger.Tests.csproj", "{953B33C8-42F0-45BF-B6A4-46D80D39A9E3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental", "..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{CED4AE46-1545-4D01-9069-366C8E290764}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +29,10 @@ Global
 		{953B33C8-42F0-45BF-B6A4-46D80D39A9E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{953B33C8-42F0-45BF-B6A4-46D80D39A9E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{953B33C8-42F0-45BF-B6A4-46D80D39A9E3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF8F81A5-B1E7-41B3-BBAD-819F10F3C501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF8F81A5-B1E7-41B3-BBAD-819F10F3C501}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF8F81A5-B1E7-41B3-BBAD-819F10F3C501}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF8F81A5-B1E7-41B3-BBAD-819F10F3C501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CED4AE46-1545-4D01-9069-366C8E290764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED4AE46-1545-4D01-9069-366C8E290764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CED4AE46-1545-4D01-9069-366C8E290764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CED4AE46-1545-4D01-9069-366C8E290764}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
