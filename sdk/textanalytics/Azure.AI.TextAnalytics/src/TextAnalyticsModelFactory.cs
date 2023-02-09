@@ -1952,7 +1952,7 @@ namespace Azure.AI.TextAnalytics
         public static ExtractiveSummarizeResult ExtractiveSummarizeResult(
             string id,
             TextDocumentStatistics statistics,
-            IEnumerable<SummarySentence> sentences,
+            IEnumerable<ExtractiveSummarySentence> sentences,
             DetectedLanguage? detectedLanguage = default,
             IEnumerable<TextAnalyticsWarning> warnings = default)
         {
@@ -1991,18 +1991,18 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.SummarySentence"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.ExtractiveSummarySentence"/> for mocking purposes.
         /// </summary>
-        /// <param name="text">Sets the <see cref="SummarySentence.Text"/> property.</param>
-        /// <param name="rankScore">Sets the <see cref="SummarySentence.RankScore"/> property.</param>
-        /// <param name="offset">Sets the <see cref="SummarySentence.Offset"/> property.</param>
-        /// <param name="length">Sets the <see cref="SummarySentence.Length"/> property.</param>
+        /// <param name="text">Sets the <see cref="ExtractiveSummarySentence.Text"/> property.</param>
+        /// <param name="rankScore">Sets the <see cref="ExtractiveSummarySentence.RankScore"/> property.</param>
+        /// <param name="offset">Sets the <see cref="ExtractiveSummarySentence.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="ExtractiveSummarySentence.Length"/> property.</param>
         /// <returns>
-        /// A new instance of <see cref="TextAnalytics.SummarySentence"/> for mocking purposes.
+        /// A new instance of <see cref="TextAnalytics.ExtractiveSummarySentence"/> for mocking purposes.
         /// </returns>
-        public static SummarySentence SummarySentence(string text, double rankScore, int offset, int length)
+        public static ExtractiveSummarySentence ExtractiveSummarySentence(string text, double rankScore, int offset, int length)
         {
-            return new SummarySentence(new ExtractedSummarySentence(text, rankScore, offset, length));
+            return new ExtractiveSummarySentence(new ExtractedSummarySentence(text, rankScore, offset, length));
         }
 
         #endregion
@@ -2062,16 +2062,16 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.SummaryContext"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.AbstractiveSummaryContext"/> for mocking purposes.
         /// </summary>
-        /// <param name="offset">Sets the <see cref="SummaryContext.Offset"/> property.</param>
-        /// <param name="length">Sets the <see cref="SummaryContext.Length"/> property.</param>
+        /// <param name="offset">Sets the <see cref="AbstractiveSummaryContext.Offset"/> property.</param>
+        /// <param name="length">Sets the <see cref="AbstractiveSummaryContext.Length"/> property.</param>
         /// <returns>
-        /// A new instance of <see cref="TextAnalytics.SummaryContext"/> for mocking purposes.
+        /// A new instance of <see cref="TextAnalytics.AbstractiveSummaryContext"/> for mocking purposes.
         /// </returns>
-        public static SummaryContext SummaryContext(int offset, int length)
+        public static AbstractiveSummaryContext AbstractiveSummaryContext(int offset, int length)
         {
-            return new SummaryContext(new SummaryContextInternal(offset, length));
+            return new AbstractiveSummaryContext(new SummaryContextInternal(offset, length));
         }
 
         /// <summary>
@@ -2082,10 +2082,10 @@ namespace Azure.AI.TextAnalytics
         /// <returns>
         /// A new instance of <see cref="TextAnalytics.AbstractiveSummary"/> for mocking purposes.
         /// </returns>
-        public static AbstractiveSummary AbstractiveSummary(string text, IEnumerable<SummaryContext> contexts)
+        public static AbstractiveSummary AbstractiveSummary(string text, IEnumerable<AbstractiveSummaryContext> contexts)
         {
             List<SummaryContextInternal> internalContexts = new();
-            foreach (SummaryContext context in contexts)
+            foreach (AbstractiveSummaryContext context in contexts)
             {
                 internalContexts.Add(new SummaryContextInternal(context.Offset, context.Length));
             }

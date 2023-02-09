@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public partial class ExtractiveSummarizeResult : TextAnalyticsResult
     {
-        private readonly IReadOnlyCollection<SummarySentence> _sentences;
+        private readonly IReadOnlyCollection<ExtractiveSummarySentence> _sentences;
 
         /// <summary>
         /// Initializes a successful <see cref="ExtractiveSummarizeResult"/>.
@@ -20,14 +20,14 @@ namespace Azure.AI.TextAnalytics
         internal ExtractiveSummarizeResult(
             string id,
             TextDocumentStatistics statistics,
-            IList<SummarySentence> sentences,
+            IList<ExtractiveSummarySentence> sentences,
             DetectedLanguage? detectedLanguage,
             IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _sentences = (sentences is not null)
-                ? new ReadOnlyCollection<SummarySentence>(sentences)
-                : new List<SummarySentence>();
+                ? new ReadOnlyCollection<ExtractiveSummarySentence>(sentences)
+                : new List<ExtractiveSummarySentence>();
 
             DetectedLanguage = detectedLanguage;
 
@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// The collection of summary sentences extracted from the input document.
         /// </summary>
-        public IReadOnlyCollection<SummarySentence> Sentences
+        public IReadOnlyCollection<ExtractiveSummarySentence> Sentences
         {
             get
             {

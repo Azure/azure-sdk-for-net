@@ -9,9 +9,9 @@ namespace Azure.AI.TextAnalytics
     /// A sentence extracted from a given document as a result of performing extractive summarization on it. The
     /// sentence receives a rank score based on its relevance, as determined by the service.
     /// </summary>
-    public readonly struct SummarySentence
+    public readonly struct ExtractiveSummarySentence
     {
-        internal SummarySentence(ExtractedSummarySentence sentence)
+        internal ExtractiveSummarySentence(ExtractedSummarySentence sentence)
         {
             Text = sentence.Text;
             RankScore = sentence.RankScore;

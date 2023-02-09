@@ -327,7 +327,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.IsNotNull(summary.Contexts);
                     Assert.Greater(summary.Contexts.Count, 0);
 
-                    foreach (SummaryContext context in summary.Contexts)
+                    foreach (AbstractiveSummaryContext context in summary.Contexts)
                     {
                         Assert.GreaterOrEqual(context.Offset, 0);
                         Assert.GreaterOrEqual(context.Length, 0);

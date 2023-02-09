@@ -90,7 +90,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     Console.WriteLine($"  Extracted the following {documentResult.Sentences.Count} sentence(s):");
                     Console.WriteLine();
 
-                    foreach (SummarySentence sentence in documentResult.Sentences)
+                    foreach (ExtractiveSummarySentence sentence in documentResult.Sentences)
                     {
                         Console.WriteLine($"  Sentence: {sentence.Text}");
                         Console.WriteLine($"  Rank Score: {sentence.RankScore}");

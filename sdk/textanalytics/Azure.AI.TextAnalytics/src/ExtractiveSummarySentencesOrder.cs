@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// The order in which the extracted sentences will be returned in the result of extractive summarization.
     /// </summary>
     [CodeGenModel("ExtractiveSummarizationSortingCriteria")]
-    public readonly partial struct SummarySentencesOrder
+    public readonly partial struct ExtractiveSummarySentencesOrder
     {
     }
 }

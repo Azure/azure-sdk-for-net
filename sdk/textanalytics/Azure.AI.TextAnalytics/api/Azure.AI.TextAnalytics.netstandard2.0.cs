@@ -61,8 +61,15 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.SummaryContext> Contexts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.AbstractiveSummaryContext> Contexts { get { throw null; } }
         public string Text { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AbstractiveSummaryContext
+    {
+        private readonly int _dummyPrimitive;
+        public int Length { get { throw null; } }
+        public int Offset { get { throw null; } }
     }
     public partial class AgeResolution : Azure.AI.TextAnalytics.BaseResolution
     {
@@ -516,7 +523,7 @@ namespace Azure.AI.TextAnalytics
         public bool? DisableServiceLogs { get { throw null; } set { } }
         public int? MaxSentenceCount { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.SummarySentencesOrder? OrderBy { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder? OrderBy { get { throw null; } set { } }
     }
     public partial class ExtractiveSummarizeActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
@@ -551,13 +558,13 @@ namespace Azure.AI.TextAnalytics
         public string AutoDetectionDefaultLanguage { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public int? MaxSentenceCount { get { throw null; } set { } }
-        public Azure.AI.TextAnalytics.SummarySentencesOrder? OrderBy { get { throw null; } set { } }
+        public Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder? OrderBy { get { throw null; } set { } }
     }
     public partial class ExtractiveSummarizeResult : Azure.AI.TextAnalytics.TextAnalyticsResult
     {
         internal ExtractiveSummarizeResult() { }
         public Azure.AI.TextAnalytics.DetectedLanguage? DetectedLanguage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.SummarySentence> Sentences { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.ExtractiveSummarySentence> Sentences { get { throw null; } }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
     public partial class ExtractiveSummarizeResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.ExtractiveSummarizeResult>
@@ -565,6 +572,34 @@ namespace Azure.AI.TextAnalytics
         internal ExtractiveSummarizeResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.ExtractiveSummarizeResult>)) { }
         public string ModelVersion { get { throw null; } }
         public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ExtractiveSummarySentence
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public int Length { get { throw null; } }
+        public int Offset { get { throw null; } }
+        public double RankScore { get { throw null; } }
+        public string Text { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ExtractiveSummarySentencesOrder : System.IEquatable<Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ExtractiveSummarySentencesOrder(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder Offset { get { throw null; } }
+        public static Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder Rank { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder left, Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder left, Azure.AI.TextAnalytics.ExtractiveSummarySentencesOrder right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ExtractKeyPhrasesAction
     {
@@ -1399,41 +1434,6 @@ namespace Azure.AI.TextAnalytics
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SummaryContext
-    {
-        private readonly int _dummyPrimitive;
-        public int Length { get { throw null; } }
-        public int Offset { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SummarySentence
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public int Length { get { throw null; } }
-        public int Offset { get { throw null; } }
-        public double RankScore { get { throw null; } }
-        public string Text { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SummarySentencesOrder : System.IEquatable<Azure.AI.TextAnalytics.SummarySentencesOrder>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SummarySentencesOrder(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.SummarySentencesOrder Offset { get { throw null; } }
-        public static Azure.AI.TextAnalytics.SummarySentencesOrder Rank { get { throw null; } }
-        public bool Equals(Azure.AI.TextAnalytics.SummarySentencesOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.TextAnalytics.SummarySentencesOrder left, Azure.AI.TextAnalytics.SummarySentencesOrder right) { throw null; }
-        public static implicit operator Azure.AI.TextAnalytics.SummarySentencesOrder (string value) { throw null; }
-        public static bool operator !=(Azure.AI.TextAnalytics.SummarySentencesOrder left, Azure.AI.TextAnalytics.SummarySentencesOrder right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetSentiment
     {
         private readonly object _dummy;
@@ -1719,7 +1719,8 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.AbstractiveSummarizeResult AbstractiveSummarizeResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AbstractiveSummary> summaries, Azure.AI.TextAnalytics.DetectedLanguage? detectedLanguage = default(Azure.AI.TextAnalytics.DetectedLanguage?), System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.AbstractiveSummarizeResult AbstractiveSummarizeResult(string id, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.AbstractiveSummarizeResultCollection AbstractiveSummarizeResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AbstractiveSummarizeResult> results, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
-        public static Azure.AI.TextAnalytics.AbstractiveSummary AbstractiveSummary(string text, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SummaryContext> contexts) { throw null; }
+        public static Azure.AI.TextAnalytics.AbstractiveSummary AbstractiveSummary(string text, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AbstractiveSummaryContext> contexts) { throw null; }
+        public static Azure.AI.TextAnalytics.AbstractiveSummaryContext AbstractiveSummaryContext(int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.AgeResolution AgeResolution(Azure.AI.TextAnalytics.AgeUnit unit, double value) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.AnalyzeActionsResult AnalyzeActionsResult(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeEntitiesActionResult> recognizeEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.AnalyzeSentimentActionResult> analyzeSentimentActionsResults) { throw null; }
@@ -1775,9 +1776,10 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.EntityDataSource EntityDataSource(string name = null, string entityId = null) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractiveSummarizeActionResult ExtractiveSummarizeActionResult(Azure.AI.TextAnalytics.ExtractiveSummarizeResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractiveSummarizeActionResult ExtractiveSummarizeActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
-        public static Azure.AI.TextAnalytics.ExtractiveSummarizeResult ExtractiveSummarizeResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SummarySentence> sentences, Azure.AI.TextAnalytics.DetectedLanguage? detectedLanguage = default(Azure.AI.TextAnalytics.DetectedLanguage?), System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
+        public static Azure.AI.TextAnalytics.ExtractiveSummarizeResult ExtractiveSummarizeResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractiveSummarySentence> sentences, Azure.AI.TextAnalytics.DetectedLanguage? detectedLanguage = default(Azure.AI.TextAnalytics.DetectedLanguage?), System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractiveSummarizeResult ExtractiveSummarizeResult(string id, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractiveSummarizeResultCollection ExtractiveSummarizeResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ExtractiveSummarizeResult> results, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string modelVersion) { throw null; }
+        public static Azure.AI.TextAnalytics.ExtractiveSummarySentence ExtractiveSummarySentence(string text, double rankScore, int offset, int length) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection result, System.DateTimeOffset completedOn) { throw null; }
         public static Azure.AI.TextAnalytics.ExtractKeyPhrasesActionResult ExtractKeyPhrasesActionResult(Azure.AI.TextAnalytics.ExtractKeyPhrasesResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
@@ -1868,8 +1870,6 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.SpeedResolution SpeedResolution(Azure.AI.TextAnalytics.SpeedUnit unit, double value) { throw null; }
-        public static Azure.AI.TextAnalytics.SummaryContext SummaryContext(int offset, int length) { throw null; }
-        public static Azure.AI.TextAnalytics.SummarySentence SummarySentence(string text, double rankScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.TargetSentiment TargetSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.TemperatureResolution TemperatureResolution(Azure.AI.TextAnalytics.TemperatureUnit unit, double value) { throw null; }
         public static Azure.AI.TextAnalytics.TemporalSpanResolution TemporalSpanResolution(string begin, string end, string duration, Azure.AI.TextAnalytics.TemporalModifier? modifier, string timex) { throw null; }

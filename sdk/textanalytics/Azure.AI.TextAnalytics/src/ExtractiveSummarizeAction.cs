@@ -59,10 +59,10 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// The order in which the extracted sentences will be returned in the result. Use
-        /// <see cref="SummarySentencesOrder.Offset"/> to keep the original order in which the sentences appear
-        /// in the input document. Use <see cref="SummarySentencesOrder.Rank"/> to order them according to their
+        /// <see cref="ExtractiveSummarySentencesOrder.Offset"/> to keep the original order in which the sentences appear
+        /// in the input document. Use <see cref="ExtractiveSummarySentencesOrder.Rank"/> to order them according to their
         /// relevance, as determined by the service. If not set, the service default is used.
         /// </summary>
-        public SummarySentencesOrder? OrderBy { get; set; }
+        public ExtractiveSummarySentencesOrder? OrderBy { get; set; }
     }
 }

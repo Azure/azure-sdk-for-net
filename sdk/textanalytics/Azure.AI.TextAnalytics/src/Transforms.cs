@@ -534,8 +534,8 @@ namespace Azure.AI.TextAnalytics
 
         #region Extractive Summarize
 
-        internal static List<SummarySentence> ConvertToSummarySentenceList(IEnumerable<ExtractedSummarySentence> sentences)
-            => sentences.Select((sentence) => new SummarySentence(sentence)).ToList();
+        internal static List<ExtractiveSummarySentence> ConvertToExtractiveSummarySentenceList(IEnumerable<ExtractedSummarySentence> sentences)
+            => sentences.Select((sentence) => new ExtractiveSummarySentence(sentence)).ToList();
 
         internal static ExtractiveSummarizeResultCollection ConvertToExtractiveSummarizeResultCollection(
             ExtractiveSummarizationResult results,
@@ -556,7 +556,7 @@ namespace Azure.AI.TextAnalytics
                     new ExtractiveSummarizeResult(
                         document.Id,
                         document.Statistics ?? default,
-                        ConvertToSummarySentenceList(document.Sentences),
+                        ConvertToExtractiveSummarySentenceList(document.Sentences),
                         ConvertToDetectedLanguage(document.DetectedLanguage),
                         ConvertToWarnings(document.Warnings)));
             }

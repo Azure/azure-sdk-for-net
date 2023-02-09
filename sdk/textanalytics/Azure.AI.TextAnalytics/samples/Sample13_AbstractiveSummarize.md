@@ -96,7 +96,7 @@ await foreach (AbstractiveSummarizeResultCollection documentsInPage in operation
             Console.WriteLine($"  Text: {summary.Text.Replace("\n", " ")}");
             Console.WriteLine($"  Contexts:");
 
-            foreach (SummaryContext context in summary.Contexts)
+            foreach (AbstractiveSummaryContext context in summary.Contexts)
             {
                 Console.WriteLine($"    Offset: {context.Offset}");
                 Console.WriteLine($"    Length: {context.Length}");
