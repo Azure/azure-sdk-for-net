@@ -200,6 +200,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType left, Azure.ResourceManager.TrafficManager.Models.AllowedEndpointRecordType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class ArmTrafficManagerModelFactory
+    {
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig TrafficManagerDnsConfig(string relativeName = null, string fqdn = null, long? ttl = default(long?)) { throw null; }
+        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult TrafficManagerNameAvailabilityResult(string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), bool? isNameAvailable = default(bool?), string unavailableReason = null, string message = null) { throw null; }
+    }
     public partial class ExpectedStatusCodeRangeInfo
     {
         public ExpectedStatusCodeRangeInfo() { }
@@ -321,11 +326,6 @@ namespace Azure.ResourceManager.TrafficManager.Models
         public static implicit operator Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType left, Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public static partial class TrafficManagerModelFactory
-    {
-        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig TrafficManagerDnsConfig(string relativeName = null, string fqdn = null, long? ttl = default(long?)) { throw null; }
-        public static Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult TrafficManagerNameAvailabilityResult(string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), bool? isNameAvailable = default(bool?), string unavailableReason = null, string message = null) { throw null; }
     }
     public partial class TrafficManagerMonitorConfig
     {

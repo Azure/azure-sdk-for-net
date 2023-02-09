@@ -153,12 +153,7 @@ namespace Azure.ResourceManager.Search
 }
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchManagementRequestOptions
-    {
-        public SearchManagementRequestOptions() { }
-        public System.Guid? ClientRequestId { get { throw null; } set { } }
-    }
-    public static partial class SearchModelFactory
+    public static partial class ArmSearchModelFactory
     {
         public static Azure.ResourceManager.Search.SearchPrivateEndpointConnectionData SearchPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Search.Models.SearchServicePrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.SearchPrivateLinkResource SearchPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Search.Models.SearchPrivateLinkResourceProperties properties = null) { throw null; }
@@ -171,6 +166,11 @@ namespace Azure.ResourceManager.Search.Models
         public static Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties ShareableSearchServicePrivateLinkResourceProperties(string shareablePrivateLinkResourcePropertiesType = null, string groupId = null, string description = null) { throw null; }
         public static Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceType ShareableSearchServicePrivateLinkResourceType(string name = null, Azure.ResourceManager.Search.Models.ShareableSearchServicePrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResourceData SharedSearchServicePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Search.Models.SharedSearchServicePrivateLinkResourceProperties properties = null) { throw null; }
+    }
+    public partial class SearchManagementRequestOptions
+    {
+        public SearchManagementRequestOptions() { }
+        public System.Guid? ClientRequestId { get { throw null; } set { } }
     }
     public partial class SearchPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {

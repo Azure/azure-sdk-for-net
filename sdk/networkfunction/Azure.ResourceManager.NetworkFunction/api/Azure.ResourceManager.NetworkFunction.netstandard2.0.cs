@@ -102,6 +102,11 @@ namespace Azure.ResourceManager.NetworkFunction
 }
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
+    public static partial class ArmNetworkFunctionModelFactory
+    {
+        public static Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorData AzureTrafficCollectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> collectorPolicies = null, Azure.Core.ResourceIdentifier virtualHubId = null, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.NetworkFunction.CollectorPolicyData CollectorPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat ingestionPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat> emissionPolicies = null, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState?)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CollectorProvisioningState : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState>
     {
@@ -212,11 +217,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public static implicit operator Azure.ResourceManager.NetworkFunction.Models.IngestionType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.IngestionType left, Azure.ResourceManager.NetworkFunction.Models.IngestionType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public static partial class NetworkFunctionModelFactory
-    {
-        public static Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorData AzureTrafficCollectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> collectorPolicies = null, Azure.Core.ResourceIdentifier virtualHubId = null, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.NetworkFunction.CollectorPolicyData CollectorPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat ingestionPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat> emissionPolicies = null, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState?)) { throw null; }
     }
     public partial class TagsObject
     {

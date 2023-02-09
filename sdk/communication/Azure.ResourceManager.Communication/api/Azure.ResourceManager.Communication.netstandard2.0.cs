@@ -171,18 +171,7 @@ namespace Azure.ResourceManager.Communication
 }
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class CommunicationAcceptTags
-    {
-        public CommunicationAcceptTags() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class CommunicationDomainResourcePatch : Azure.ResourceManager.Communication.Models.CommunicationAcceptTags
-    {
-        public CommunicationDomainResourcePatch() { }
-        public Azure.ResourceManager.Communication.Models.UserEngagementTracking? UserEngagementTracking { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> ValidSenderUsernames { get { throw null; } }
-    }
-    public static partial class CommunicationModelFactory
+    public static partial class ArmCommunicationModelFactory
     {
         public static Azure.ResourceManager.Communication.CommunicationDomainResourceData CommunicationDomainResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Communication.Models.DomainProvisioningState? provisioningState = default(Azure.ResourceManager.Communication.Models.DomainProvisioningState?), string dataLocation = null, string fromSenderDomain = null, string mailFromSenderDomain = null, Azure.ResourceManager.Communication.Models.DomainManagement? domainManagement = default(Azure.ResourceManager.Communication.Models.DomainManagement?), Azure.ResourceManager.Communication.Models.DomainPropertiesVerificationStates verificationStates = null, Azure.ResourceManager.Communication.Models.DomainPropertiesVerificationRecords verificationRecords = null, System.Collections.Generic.IDictionary<string, string> validSenderUsernames = null, Azure.ResourceManager.Communication.Models.UserEngagementTracking? userEngagementTracking = default(Azure.ResourceManager.Communication.Models.UserEngagementTracking?)) { throw null; }
         public static Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityResult CommunicationNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason? reason = default(Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityReason?), string message = null) { throw null; }
@@ -194,6 +183,17 @@ namespace Azure.ResourceManager.Communication.Models
         public static Azure.ResourceManager.Communication.EmailServiceResourceData EmailServiceResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState? provisioningState = default(Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState?), string dataLocation = null) { throw null; }
         public static Azure.ResourceManager.Communication.Models.LinkedNotificationHub LinkedNotificationHub(Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.Communication.Models.VerificationDnsRecord VerificationDnsRecord(string dnsRecordType = null, string name = null, string value = null, int? timeToLiveInSeconds = default(int?)) { throw null; }
+    }
+    public partial class CommunicationAcceptTags
+    {
+        public CommunicationAcceptTags() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class CommunicationDomainResourcePatch : Azure.ResourceManager.Communication.Models.CommunicationAcceptTags
+    {
+        public CommunicationDomainResourcePatch() { }
+        public Azure.ResourceManager.Communication.Models.UserEngagementTracking? UserEngagementTracking { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> ValidSenderUsernames { get { throw null; } }
     }
     public partial class CommunicationNameAvailabilityContent
     {

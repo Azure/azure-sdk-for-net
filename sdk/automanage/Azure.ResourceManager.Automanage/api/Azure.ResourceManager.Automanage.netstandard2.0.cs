@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Automanage
 }
 namespace Azure.ResourceManager.Automanage.Models
 {
-    public static partial class AutomanageModelFactory
+    public static partial class ArmAutomanageModelFactory
     {
         public static Azure.ResourceManager.Automanage.BestPracticeData BestPracticeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.BinaryData configuration = null) { throw null; }
         public static Azure.ResourceManager.Automanage.ConfigurationProfileAssignmentData ConfigurationProfileAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Automanage.Models.ConfigurationProfileAssignmentProperties properties = null, string managedBy = null) { throw null; }

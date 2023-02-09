@@ -12,7 +12,7 @@ using Azure.Maps.Search;
 
 namespace Azure.Maps.Search.Models
 {
-    /// <summary> Model factory for generated models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class MapsSearchModelFactory
     {
         /// <summary> Initializes a new instance of PolygonResult. </summary>

@@ -13,7 +13,7 @@ using Azure.AI.FormRecognizer.Training;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    /// <summary> Model factory for generated models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class FormRecognizerModelFactory
     {
     }

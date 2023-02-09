@@ -596,13 +596,7 @@ namespace Azure.ResourceManager.Authorization
 }
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class AuthorizationClassicAdministrator : Azure.ResourceManager.Models.ResourceData
-    {
-        internal AuthorizationClassicAdministrator() { }
-        public string EmailAddress { get { throw null; } }
-        public string Role { get { throw null; } }
-    }
-    public static partial class AuthorizationModelFactory
+    public static partial class ArmAuthorizationModelFactory
     {
         public static Azure.ResourceManager.Authorization.Models.AuthorizationClassicAdministrator AuthorizationClassicAdministrator(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string emailAddress = null, string role = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AuthorizationProviderOperationInfo AuthorizationProviderOperationInfo(string name = null, string displayName = null, string description = null, string origin = null, System.BinaryData properties = null, bool? isDataAction = default(bool?)) { throw null; }
@@ -624,6 +618,12 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.RoleManagementPolicyData RoleManagementPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, string displayName = null, string description = null, bool? isOrganizationDefault = default(bool?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal lastModifiedBy = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule> rules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule> effectiveRules = null, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyProperties policyProperties = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyProperties RoleManagementPolicyProperties(Azure.Core.ResourceIdentifier scopeId = null, string scopeDisplayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType? scopeType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal RoleManagementPrincipal(string id = null, string displayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), string email = null) { throw null; }
+    }
+    public partial class AuthorizationClassicAdministrator : Azure.ResourceManager.Models.ResourceData
+    {
+        internal AuthorizationClassicAdministrator() { }
+        public string EmailAddress { get { throw null; } }
+        public string Role { get { throw null; } }
     }
     public partial class AuthorizationProviderOperationInfo
     {

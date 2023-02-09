@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Maps.Routing.Models
 {
-    /// <summary> Model factory for generated models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class RouteModelFactory
     {
         /// <summary> Initializes a new instance of RouteMatrixResult. </summary>

@@ -304,21 +304,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public string Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties> Targets { get { throw null; } }
     }
-    public partial class Branch
-    {
-        public Branch(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Action> actions) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Action> Actions { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-    }
-    public partial class BranchStatus
-    {
-        internal BranchStatus() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ActionStatus> Actions { get { throw null; } }
-        public string BranchId { get { throw null; } }
-        public string BranchName { get { throw null; } }
-        public string Status { get { throw null; } }
-    }
-    public static partial class ChaosModelFactory
+    public static partial class ArmChaosModelFactory
     {
         public static Azure.ResourceManager.Chaos.Models.ActionStatus ActionStatus(string actionName = null, string actionId = null, string status = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties> targets = null) { throw null; }
         public static Azure.ResourceManager.Chaos.Models.BranchStatus BranchStatus(string branchName = null, string branchId = null, string status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.ActionStatus> actions = null) { throw null; }
@@ -334,6 +320,20 @@ namespace Azure.ResourceManager.Chaos.Models
         public static Azure.ResourceManager.Chaos.Models.StepStatus StepStatus(string stepName = null, string stepId = null, string status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.BranchStatus> branches = null) { throw null; }
         public static Azure.ResourceManager.Chaos.TargetData TargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, System.BinaryData> properties = null) { throw null; }
         public static Azure.ResourceManager.Chaos.TargetTypeData TargetTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string displayName = null, string description = null, string propertiesSchema = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
+    }
+    public partial class Branch
+    {
+        public Branch(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Action> actions) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Action> Actions { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class BranchStatus
+    {
+        internal BranchStatus() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ActionStatus> Actions { get { throw null; } }
+        public string BranchId { get { throw null; } }
+        public string BranchName { get { throw null; } }
+        public string Status { get { throw null; } }
     }
     public partial class ContinuousAction : Azure.ResourceManager.Chaos.Models.Action
     {

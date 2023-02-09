@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.DigitalTwins.Core
 {
-    /// <summary> Model factory for generated models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class DigitalTwinsModelFactory
     {
         /// <summary> Initializes a new instance of DigitalTwinsModelData. </summary>

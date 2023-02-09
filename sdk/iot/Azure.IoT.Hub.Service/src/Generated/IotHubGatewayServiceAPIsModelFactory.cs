@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    /// <summary> Model factory for generated models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class IotHubGatewayServiceAPIsModelFactory
     {
         /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>

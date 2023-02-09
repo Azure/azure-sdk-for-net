@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Advisor
 }
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public static partial class AdvisorModelFactory
+    public static partial class ArmAdvisorModelFactory
     {
         public static Azure.ResourceManager.Advisor.Models.ConfigData ConfigData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? exclude = default(bool?), Azure.ResourceManager.Advisor.Models.CpuThreshold? lowCpuThreshold = default(Azure.ResourceManager.Advisor.Models.CpuThreshold?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.Models.DigestConfig> digests = null) { throw null; }
         public static Azure.ResourceManager.Advisor.MetadataEntityData MetadataEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<string> dependsOn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.Models.Scenario> applicableScenarios = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Advisor.Models.MetadataSupportedValueDetail> supportedValues = null) { throw null; }

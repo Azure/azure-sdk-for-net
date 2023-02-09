@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> Model factory for generated models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class ManagementGroupsModelFactory
     {
         /// <summary> Initializes a new instance of ManagementGroupData. </summary>

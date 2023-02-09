@@ -670,27 +670,7 @@ namespace Azure.ResourceManager.DevCenter
 }
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class Capability
-    {
-        internal Capability() { }
-        public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    public partial class CatalogPatch
-    {
-        public CatalogPatch() { }
-        public Azure.ResourceManager.DevCenter.Models.GitCatalog AdoGit { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.GitCatalog GitHub { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class DevBoxDefinitionPatch : Azure.ResourceManager.DevCenter.Models.TrackedResourceUpdate
-    {
-        public DevBoxDefinitionPatch() { }
-        public Azure.ResourceManager.DevCenter.Models.ImageReference ImageReference { get { throw null; } set { } }
-        public string OSStorageType { get { throw null; } set { } }
-        public Azure.ResourceManager.DevCenter.Models.DevCenterSku Sku { get { throw null; } set { } }
-    }
-    public static partial class DevCenterModelFactory
+    public static partial class ArmDevCenterModelFactory
     {
         public static Azure.ResourceManager.DevCenter.AttachedNetworkConnectionData AttachedNetworkConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provisioningState = null, string networkConnectionId = null, string networkConnectionLocation = null, Azure.ResourceManager.DevCenter.Models.HealthCheckStatus? healthCheckStatus = default(Azure.ResourceManager.DevCenter.Models.HealthCheckStatus?), Azure.ResourceManager.DevCenter.Models.DomainJoinType? domainJoinType = default(Azure.ResourceManager.DevCenter.Models.DomainJoinType?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.Capability Capability(string name = null, string value = null) { throw null; }
@@ -718,6 +698,26 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static Azure.ResourceManager.DevCenter.Models.ResourceRange ResourceRange(int? min = default(int?), int? max = default(int?)) { throw null; }
         public static Azure.ResourceManager.DevCenter.ScheduleData ScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DevCenter.Models.ScheduledType? typePropertiesType = default(Azure.ResourceManager.DevCenter.Models.ScheduledType?), Azure.ResourceManager.DevCenter.Models.ScheduledFrequency? frequency = default(Azure.ResourceManager.DevCenter.Models.ScheduledFrequency?), string time = null, string timeZone = null, Azure.ResourceManager.DevCenter.Models.EnableStatus? state = default(Azure.ResourceManager.DevCenter.Models.EnableStatus?), string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.DevCenter.Models.UsageName UsageName(string localizedValue = null, string value = null) { throw null; }
+    }
+    public partial class Capability
+    {
+        internal Capability() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    public partial class CatalogPatch
+    {
+        public CatalogPatch() { }
+        public Azure.ResourceManager.DevCenter.Models.GitCatalog AdoGit { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.GitCatalog GitHub { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class DevBoxDefinitionPatch : Azure.ResourceManager.DevCenter.Models.TrackedResourceUpdate
+    {
+        public DevBoxDefinitionPatch() { }
+        public Azure.ResourceManager.DevCenter.Models.ImageReference ImageReference { get { throw null; } set { } }
+        public string OSStorageType { get { throw null; } set { } }
+        public Azure.ResourceManager.DevCenter.Models.DevCenterSku Sku { get { throw null; } set { } }
     }
     public partial class DevCenterPatch : Azure.ResourceManager.DevCenter.Models.TrackedResourceUpdate
     {

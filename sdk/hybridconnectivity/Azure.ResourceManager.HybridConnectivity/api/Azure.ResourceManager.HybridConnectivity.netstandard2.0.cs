@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.HybridConnectivity
 }
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
+    public static partial class ArmHybridConnectivityModelFactory
+    {
+        public static Azure.ResourceManager.HybridConnectivity.EndpointResourceData EndpointResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.EndpointType? endpointType = default(Azure.ResourceManager.HybridConnectivity.Models.EndpointType?), string resourceId = null, string provisioningState = null, string createdBy = null, Azure.ResourceManager.HybridConnectivity.Models.CreatedByType? createdByType = default(Azure.ResourceManager.HybridConnectivity.Models.CreatedByType?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.ResourceManager.HybridConnectivity.Models.CreatedByType? lastModifiedByType = default(Azure.ResourceManager.HybridConnectivity.Models.CreatedByType?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess TargetResourceEndpointAccess(string namespaceName = null, string namespaceNameSuffix = null, string hybridConnectionName = null, string accessKey = null, long? expiresOn = default(long?)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.HybridConnectivity.Models.CreatedByType>
     {
@@ -91,11 +96,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static implicit operator Azure.ResourceManager.HybridConnectivity.Models.EndpointType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridConnectivity.Models.EndpointType left, Azure.ResourceManager.HybridConnectivity.Models.EndpointType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public static partial class HybridConnectivityModelFactory
-    {
-        public static Azure.ResourceManager.HybridConnectivity.EndpointResourceData EndpointResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridConnectivity.Models.EndpointType? endpointType = default(Azure.ResourceManager.HybridConnectivity.Models.EndpointType?), string resourceId = null, string provisioningState = null, string createdBy = null, Azure.ResourceManager.HybridConnectivity.Models.CreatedByType? createdByType = default(Azure.ResourceManager.HybridConnectivity.Models.CreatedByType?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string lastModifiedBy = null, Azure.ResourceManager.HybridConnectivity.Models.CreatedByType? lastModifiedByType = default(Azure.ResourceManager.HybridConnectivity.Models.CreatedByType?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess TargetResourceEndpointAccess(string namespaceName = null, string namespaceNameSuffix = null, string hybridConnectionName = null, string accessKey = null, long? expiresOn = default(long?)) { throw null; }
     }
     public partial class TargetResourceEndpointAccess
     {

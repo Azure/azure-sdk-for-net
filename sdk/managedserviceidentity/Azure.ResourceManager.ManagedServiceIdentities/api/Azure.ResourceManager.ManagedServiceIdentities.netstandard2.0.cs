@@ -137,20 +137,20 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 }
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
-    public partial class IdentityAssociatedResourceData : Azure.ResourceManager.Models.ResourceData
-    {
-        internal IdentityAssociatedResourceData() { }
-        public string ResourceGroup { get { throw null; } }
-        public string SubscriptionDisplayName { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
-    }
-    public static partial class ManagedServiceIdentitiesModelFactory
+    public static partial class ArmManagedServiceIdentitiesModelFactory
     {
         public static Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData FederatedIdentityCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri issuerUri = null, string subject = null, System.Collections.Generic.IEnumerable<string> audiences = null) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.Models.IdentityAssociatedResourceData IdentityAssociatedResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string resourceGroup = null, string subscriptionId = null, string subscriptionDisplayName = null) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData SystemAssignedIdentityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), System.Uri clientSecretUri = null) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData UserAssignedIdentityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch UserAssignedIdentityPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?)) { throw null; }
+    }
+    public partial class IdentityAssociatedResourceData : Azure.ResourceManager.Models.ResourceData
+    {
+        internal IdentityAssociatedResourceData() { }
+        public string ResourceGroup { get { throw null; } }
+        public string SubscriptionDisplayName { get { throw null; } }
+        public string SubscriptionId { get { throw null; } }
     }
     public partial class UserAssignedIdentityPatch : Azure.ResourceManager.Models.TrackedResourceData
     {

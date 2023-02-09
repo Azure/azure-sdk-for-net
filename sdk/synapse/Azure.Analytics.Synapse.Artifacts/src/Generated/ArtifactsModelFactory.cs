@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Model factory for generated models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class ArtifactsModelFactory
     {
         /// <summary> Initializes a new instance of CloudError. </summary>

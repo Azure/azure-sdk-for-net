@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.WorkloadMonitor
 }
 namespace Azure.ResourceManager.WorkloadMonitor.Models
 {
+    public static partial class ArmWorkloadMonitorModelFactory
+    {
+        public static Azure.ResourceManager.WorkloadMonitor.HealthMonitorData HealthMonitorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string monitorName = null, string monitorType = null, string monitoredObject = null, string parentMonitorName = null, Azure.ResourceManager.WorkloadMonitor.Models.HealthState? previousMonitorState = default(Azure.ResourceManager.WorkloadMonitor.Models.HealthState?), Azure.ResourceManager.WorkloadMonitor.Models.HealthState? currentMonitorState = default(Azure.ResourceManager.WorkloadMonitor.Models.HealthState?), string evaluationTimestamp = null, string currentStateFirstObservedTimestamp = null, string lastReportedTimestamp = null, System.BinaryData evidence = null, System.BinaryData monitorConfiguration = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData HealthMonitorStateChangeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string monitorName = null, string monitorType = null, string monitoredObject = null, string evaluationTimestamp = null, string currentStateFirstObservedTimestamp = null, Azure.ResourceManager.WorkloadMonitor.Models.HealthState? previousMonitorState = default(Azure.ResourceManager.WorkloadMonitor.Models.HealthState?), Azure.ResourceManager.WorkloadMonitor.Models.HealthState? currentMonitorState = default(Azure.ResourceManager.WorkloadMonitor.Models.HealthState?), System.BinaryData evidence = null, System.BinaryData monitorConfiguration = null) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HealthState : System.IEquatable<Azure.ResourceManager.WorkloadMonitor.Models.HealthState>
     {
@@ -109,10 +114,5 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
         public static implicit operator Azure.ResourceManager.WorkloadMonitor.Models.HealthState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.WorkloadMonitor.Models.HealthState left, Azure.ResourceManager.WorkloadMonitor.Models.HealthState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public static partial class WorkloadMonitorModelFactory
-    {
-        public static Azure.ResourceManager.WorkloadMonitor.HealthMonitorData HealthMonitorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string monitorName = null, string monitorType = null, string monitoredObject = null, string parentMonitorName = null, Azure.ResourceManager.WorkloadMonitor.Models.HealthState? previousMonitorState = default(Azure.ResourceManager.WorkloadMonitor.Models.HealthState?), Azure.ResourceManager.WorkloadMonitor.Models.HealthState? currentMonitorState = default(Azure.ResourceManager.WorkloadMonitor.Models.HealthState?), string evaluationTimestamp = null, string currentStateFirstObservedTimestamp = null, string lastReportedTimestamp = null, System.BinaryData evidence = null, System.BinaryData monitorConfiguration = null) { throw null; }
-        public static Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeData HealthMonitorStateChangeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string monitorName = null, string monitorType = null, string monitoredObject = null, string evaluationTimestamp = null, string currentStateFirstObservedTimestamp = null, Azure.ResourceManager.WorkloadMonitor.Models.HealthState? previousMonitorState = default(Azure.ResourceManager.WorkloadMonitor.Models.HealthState?), Azure.ResourceManager.WorkloadMonitor.Models.HealthState? currentMonitorState = default(Azure.ResourceManager.WorkloadMonitor.Models.HealthState?), System.BinaryData evidence = null, System.BinaryData monitorConfiguration = null) { throw null; }
     }
 }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagementPartner
 }
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
-    public static partial class ManagementPartnerModelFactory
+    public static partial class ArmManagementPartnerModelFactory
     {
         public static Azure.ResourceManager.ManagementPartner.Models.OperationDisplay OperationDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
         public static Azure.ResourceManager.ManagementPartner.Models.OperationResponse OperationResponse(string name = null, Azure.ResourceManager.ManagementPartner.Models.OperationDisplay display = null, string origin = null) { throw null; }

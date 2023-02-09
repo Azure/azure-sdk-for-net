@@ -15,34 +15,9 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Model factory for generated models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class ResourcesModelFactory
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
-        /// <param name="managedIdentity"> The managed identity associated with the policy assignment. </param>
-        /// <param name="displayName"> The display name of the policy assignment. </param>
-        /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
-        /// <param name="scope"> The scope for the policy assignment. </param>
-        /// <param name="excludedScopes"> The policy&apos;s excluded scopes. </param>
-        /// <param name="parameters"> The parameter values for the assigned policy rule. The keys are the parameter names. </param>
-        /// <param name="description"> This message will be part of response in case of policy violation. </param>
-        /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
-        /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
-        /// <returns> A new <see cref="Resources.PolicyAssignmentData"/> instance for mocking. </returns>
-        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity managedIdentity = null, string displayName = null, string policyDefinitionId = null, string scope = null, IEnumerable<string> excludedScopes = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string description = null, BinaryData metadata = null, EnforcementMode? enforcementMode = null, IEnumerable<NonComplianceMessage> nonComplianceMessages = null)
-        {
-            excludedScopes ??= new List<string>();
-            parameters ??= new Dictionary<string, ArmPolicyParameterValue>();
-            nonComplianceMessages ??= new List<NonComplianceMessage>();
-
-            return new PolicyAssignmentData(id, name, resourceType, systemData, location, managedIdentity, displayName, policyDefinitionId, scope, excludedScopes?.ToList(), parameters, description, metadata, enforcementMode, nonComplianceMessages?.ToList());
-        }
 
         /// <summary> Initializes a new instance of ResourceProviderData. </summary>
         /// <param name="id"> The provider ID. </param>
@@ -445,23 +420,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, LocationType? locationType = null, string displayName = null, string regionalDisplayName = null, LocationMetadata metadata = null)
         {
             return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata);
-        }
-
-        /// <summary> Initializes a new instance of LocationMetadata. </summary>
-        /// <param name="regionType"> The type of the region. </param>
-        /// <param name="regionCategory"> The category of the region. </param>
-        /// <param name="geographyGroup"> The geography group of the location. </param>
-        /// <param name="longitude"> The longitude of the location. </param>
-        /// <param name="latitude"> The latitude of the location. </param>
-        /// <param name="physicalLocation"> The physical location of the Azure location. </param>
-        /// <param name="pairedRegion"> The regions paired to this region. </param>
-        /// <param name="homeLocation"> The home location of an edge zone. </param>
-        /// <returns> A new <see cref="Models.LocationMetadata"/> instance for mocking. </returns>
-        public static LocationMetadata LocationMetadata(RegionType? regionType = null, RegionCategory? regionCategory = null, string geographyGroup = null, double? longitude = null, double? latitude = null, string physicalLocation = null, IEnumerable<PairedRegion> pairedRegion = null, string homeLocation = null)
-        {
-            pairedRegion ??= new List<PairedRegion>();
-
-            return new LocationMetadata(regionType, regionCategory, geographyGroup, longitude, latitude, physicalLocation, pairedRegion?.ToList(), homeLocation);
         }
 
         /// <summary> Initializes a new instance of PairedRegion. </summary>

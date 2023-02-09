@@ -493,13 +493,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 }
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class DesktopVirtualizationMigrationProperties
-    {
-        public DesktopVirtualizationMigrationProperties() { }
-        public string MigrationPath { get { throw null; } set { } }
-        public Azure.ResourceManager.DesktopVirtualization.Models.MigrationOperation? Operation { get { throw null; } set { } }
-    }
-    public static partial class DesktopVirtualizationModelFactory
+    public static partial class ArmDesktopVirtualizationModelFactory
     {
         public static Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationStartMenuItem DesktopVirtualizationStartMenuItem(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string appAlias = null, string filePath = null, string commandLineArguments = null, string iconPath = null, int? iconIndex = default(int?)) { throw null; }
         public static Azure.ResourceManager.DesktopVirtualization.Models.ExpandMsixImage ExpandMsixImage(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string packageAlias = null, string imagePath = null, string packageName = null, string packageFamilyName = null, string packageFullName = null, string displayName = null, string packageRelativePath = null, bool? isRegularRegistration = default(bool?), bool? isActive = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageDependencies> packageDependencies = null, string version = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DesktopVirtualization.Models.MsixPackageApplications> packageApplications = null) { throw null; }
@@ -518,6 +512,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupPatch VirtualApplicationGroupPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, string friendlyName = null) { throw null; }
         public static Azure.ResourceManager.DesktopVirtualization.VirtualDesktopData VirtualDesktopData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string objectId = null, string description = null, string friendlyName = null, string iconHash = null, System.BinaryData iconContent = null) { throw null; }
         public static Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceData VirtualWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string objectId = null, string description = null, string friendlyName = null, System.Collections.Generic.IEnumerable<string> applicationGroupReferences = null, bool? isCloudPCResource = default(bool?), Azure.Core.ResourceIdentifier managedBy = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSku sku = null, Azure.ResourceManager.Models.ArmPlan plan = null) { throw null; }
+    }
+    public partial class DesktopVirtualizationMigrationProperties
+    {
+        public DesktopVirtualizationMigrationProperties() { }
+        public string MigrationPath { get { throw null; } set { } }
+        public Azure.ResourceManager.DesktopVirtualization.Models.MigrationOperation? Operation { get { throw null; } set { } }
     }
     public partial class DesktopVirtualizationSku
     {

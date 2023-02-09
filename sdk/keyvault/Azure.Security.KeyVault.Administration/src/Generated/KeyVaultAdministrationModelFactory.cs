@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Model factory for generated models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class KeyVaultAdministrationModelFactory
     {
         /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>

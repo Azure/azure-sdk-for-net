@@ -294,11 +294,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public abstract partial class Authentication
-    {
-        protected Authentication() { }
-    }
-    public static partial class DeploymentManagerModelFactory
+    public static partial class ArmDeploymentManagerModelFactory
     {
         public static Azure.ResourceManager.DeploymentManager.ArtifactSourceData ArtifactSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string sourceType = null, string artifactRoot = null, Azure.ResourceManager.DeploymentManager.Models.Authentication authentication = null) { throw null; }
         public static Azure.ResourceManager.DeploymentManager.Models.Message Message(System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), string messageValue = null) { throw null; }
@@ -316,6 +312,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         public static Azure.ResourceManager.DeploymentManager.ServiceUnitResourceData ServiceUnitResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string targetResourceGroup = null, Azure.ResourceManager.DeploymentManager.Models.DeploymentMode deploymentMode = Azure.ResourceManager.DeploymentManager.Models.DeploymentMode.Incremental, Azure.ResourceManager.DeploymentManager.Models.ServiceUnitArtifacts artifacts = null) { throw null; }
         public static Azure.ResourceManager.DeploymentManager.Models.StepOperationInfo StepOperationInfo(string deploymentName = null, string correlationId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.DeploymentManager.StepResourceData StepResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeploymentManager.Models.StepProperties properties = null) { throw null; }
+    }
+    public abstract partial class Authentication
+    {
+        protected Authentication() { }
     }
     public enum DeploymentMode
     {

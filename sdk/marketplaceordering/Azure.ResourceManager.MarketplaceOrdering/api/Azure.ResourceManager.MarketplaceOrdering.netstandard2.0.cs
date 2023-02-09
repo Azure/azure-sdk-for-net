@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Models
         public static bool operator !=(Azure.ResourceManager.MarketplaceOrdering.Models.AgreementOfferType left, Azure.ResourceManager.MarketplaceOrdering.Models.AgreementOfferType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public static partial class MarketplaceOrderingModelFactory
+    public static partial class ArmMarketplaceOrderingModelFactory
     {
         public static Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData MarketplaceAgreementTermData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string publisher = null, string product = null, string plan = null, System.Uri licenseTextLink = null, System.Uri privacyPolicyLink = null, System.Uri marketplaceTermsLink = null, System.DateTimeOffset? retrievedOn = default(System.DateTimeOffset?), string signature = null, bool? isAccepted = default(bool?)) { throw null; }
     }

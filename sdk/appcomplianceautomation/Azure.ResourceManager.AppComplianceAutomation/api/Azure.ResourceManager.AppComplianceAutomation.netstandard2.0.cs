@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 }
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public static partial class AppComplianceAutomationModelFactory
+    public static partial class ArmAppComplianceAutomationModelFactory
     {
         public static Azure.ResourceManager.AppComplianceAutomation.Models.Assessment Assessment(string name = null, Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentSeverity? severity = default(Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentSeverity?), string description = null, string remediation = null, Azure.ResourceManager.AppComplianceAutomation.Models.IsPass? isPass = default(Azure.ResourceManager.AppComplianceAutomation.Models.IsPass?), string policyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentResource> resourceList = null) { throw null; }
         public static Azure.ResourceManager.AppComplianceAutomation.Models.AssessmentResource AssessmentResource(string resourceId = null, Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus? resourceStatus = default(Azure.ResourceManager.AppComplianceAutomation.Models.ResourceStatus?), string reason = null, string statusChangeDate = null) { throw null; }

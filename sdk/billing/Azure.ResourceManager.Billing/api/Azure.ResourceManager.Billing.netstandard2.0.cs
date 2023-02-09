@@ -261,13 +261,7 @@ namespace Azure.ResourceManager.Billing
 }
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingAmount
-    {
-        internal BillingAmount() { }
-        public string Currency { get { throw null; } }
-        public float? Value { get { throw null; } }
-    }
-    public static partial class BillingModelFactory
+    public static partial class ArmBillingModelFactory
     {
         public static Azure.ResourceManager.Billing.Models.BillingAmount BillingAmount(string currency = null, float? value = default(float?)) { throw null; }
         public static Azure.ResourceManager.Billing.BillingPaymentMethodData BillingPaymentMethodData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Models.PaymentMethodFamily? family = default(Azure.ResourceManager.Billing.Models.PaymentMethodFamily?), string paymentMethodType = null, string accountHolderName = null, string expiration = null, string lastFourDigits = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.PaymentMethodLogo> logos = null, Azure.ResourceManager.Billing.Models.PaymentMethodStatus? status = default(Azure.ResourceManager.Billing.Models.PaymentMethodStatus?)) { throw null; }
@@ -280,6 +274,12 @@ namespace Azure.ResourceManager.Billing.Models
         public static Azure.ResourceManager.Billing.Models.PaymentMethodLogo PaymentMethodLogo(string mimeType = null, System.Uri uri = null) { throw null; }
         public static Azure.ResourceManager.Billing.Models.PaymentMethodProjectionProperties PaymentMethodProjectionProperties(Azure.Core.ResourceIdentifier paymentMethodId = null, Azure.ResourceManager.Billing.Models.PaymentMethodFamily? family = default(Azure.ResourceManager.Billing.Models.PaymentMethodFamily?), string paymentMethodProjectionPropertiesType = null, string accountHolderName = null, string expiration = null, string lastFourDigits = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Models.PaymentMethodLogo> logos = null, Azure.ResourceManager.Billing.Models.PaymentMethodStatus? status = default(Azure.ResourceManager.Billing.Models.PaymentMethodStatus?)) { throw null; }
         public static Azure.ResourceManager.Billing.Models.SubscriptionRenewalTermDetails SubscriptionRenewalTermDetails(string billingFrequency = null, string productTypeId = null, long? quantity = default(long?), string skuId = null, System.TimeSpan? termDuration = default(System.TimeSpan?)) { throw null; }
+    }
+    public partial class BillingAmount
+    {
+        internal BillingAmount() { }
+        public string Currency { get { throw null; } }
+        public float? Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BillingSubscriptionAutoRenewState : System.IEquatable<Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState>

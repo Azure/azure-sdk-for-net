@@ -102,6 +102,18 @@ namespace Azure.ResourceManager.Elastic
 }
 namespace Azure.ResourceManager.Elastic.Models
 {
+    public static partial class ArmElasticModelFactory
+    {
+        public static Azure.ResourceManager.Elastic.Models.DeploymentInfoResponse DeploymentInfoResponse(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus? status = default(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus?), string version = null, string memoryCapacity = null, string diskCapacity = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment ElasticCloudDeployment(string name = null, string deploymentId = null, string azureSubscriptionId = null, string elasticsearchRegion = null, System.Uri elasticsearchServiceUri = null, System.Uri kibanaServiceUri = null, System.Uri kibanaSsoUri = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.ElasticCloudUser ElasticCloudUser(string emailAddress = null, string id = null, System.Uri elasticCloudSsoDefaultUri = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.ElasticMonitorResourceData ElasticMonitorResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string skuName = null, Azure.ResourceManager.Elastic.Models.MonitorProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.MonitoredResource MonitoredResource(string id = null, Azure.ResourceManager.Elastic.Models.SendingLog? sendingLogs = default(Azure.ResourceManager.Elastic.Models.SendingLog?), string reasonForLogsStatus = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.MonitoringTagRuleData MonitoringTagRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.MonitorProperties MonitorProperties(Azure.ResourceManager.Elastic.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ProvisioningState?), Azure.ResourceManager.Elastic.Models.MonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Elastic.Models.MonitoringStatus?), Azure.ResourceManager.Elastic.Models.ElasticProperties elasticProperties = null, Azure.ResourceManager.Elastic.Models.UserInfo userInfo = null, Azure.ResourceManager.Elastic.Models.LiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Elastic.Models.LiftrResourceCategory?), int? liftrResourcePreference = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.VmIngestionDetailsResponse VmIngestionDetailsResponse(string cloudId = null, string ingestionKey = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.VmResources VmResources(string vmResourceId = null) { throw null; }
+    }
     public partial class CompanyInfo
     {
         public CompanyInfo() { }
@@ -154,18 +166,6 @@ namespace Azure.ResourceManager.Elastic.Models
         public static implicit operator Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus left, Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public static partial class ElasticModelFactory
-    {
-        public static Azure.ResourceManager.Elastic.Models.DeploymentInfoResponse DeploymentInfoResponse(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus? status = default(Azure.ResourceManager.Elastic.Models.ElasticDeploymentStatus?), string version = null, string memoryCapacity = null, string diskCapacity = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment ElasticCloudDeployment(string name = null, string deploymentId = null, string azureSubscriptionId = null, string elasticsearchRegion = null, System.Uri elasticsearchServiceUri = null, System.Uri kibanaServiceUri = null, System.Uri kibanaSsoUri = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.ElasticCloudUser ElasticCloudUser(string emailAddress = null, string id = null, System.Uri elasticCloudSsoDefaultUri = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.ElasticMonitorResourceData ElasticMonitorResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string skuName = null, Azure.ResourceManager.Elastic.Models.MonitorProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.MonitoredResource MonitoredResource(string id = null, Azure.ResourceManager.Elastic.Models.SendingLog? sendingLogs = default(Azure.ResourceManager.Elastic.Models.SendingLog?), string reasonForLogsStatus = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.MonitoringTagRuleData MonitoringTagRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.MonitorProperties MonitorProperties(Azure.ResourceManager.Elastic.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ProvisioningState?), Azure.ResourceManager.Elastic.Models.MonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Elastic.Models.MonitoringStatus?), Azure.ResourceManager.Elastic.Models.ElasticProperties elasticProperties = null, Azure.ResourceManager.Elastic.Models.UserInfo userInfo = null, Azure.ResourceManager.Elastic.Models.LiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Elastic.Models.LiftrResourceCategory?), int? liftrResourcePreference = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.VmIngestionDetailsResponse VmIngestionDetailsResponse(string cloudId = null, string ingestionKey = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.VmResources VmResources(string vmResourceId = null) { throw null; }
     }
     public partial class ElasticMonitorResourcePatch
     {

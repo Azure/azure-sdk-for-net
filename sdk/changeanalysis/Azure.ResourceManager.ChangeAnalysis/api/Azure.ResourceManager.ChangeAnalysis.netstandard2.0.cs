@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
 }
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
-    public static partial class ChangeAnalysisModelFactory
+    public static partial class ArmChangeAnalysisModelFactory
     {
         public static Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties ChangeProperties(Azure.Core.ResourceIdentifier resourceId = null, System.DateTimeOffset? changeDetectedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> initiatedByList = null, Azure.ResourceManager.ChangeAnalysis.Models.ChangeType? changeType = default(Azure.ResourceManager.ChangeAnalysis.Models.ChangeType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ChangeAnalysis.Models.PropertyChange> propertyChanges = null) { throw null; }
         public static Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData DetectedChangeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ChangeAnalysis.Models.ChangeProperties properties = null) { throw null; }
