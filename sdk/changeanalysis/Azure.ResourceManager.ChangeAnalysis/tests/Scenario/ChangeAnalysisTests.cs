@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
         {
             var resourceGroup = await CreateResourceGroup();
             var list = await resourceGroup.GetChangesByResourceGroupAsync(StartTime, EndTime).ToEnumerableAsync();
+            Assert.IsEmpty(list);
         }
 
         [RecordedTest]
