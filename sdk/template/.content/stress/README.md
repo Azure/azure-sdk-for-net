@@ -1,0 +1,1 @@
+For information on reliability testing with the Azure SDK stress test framework, please refer to the [Reliability testing wiki](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/463/Reliability-Testing).
