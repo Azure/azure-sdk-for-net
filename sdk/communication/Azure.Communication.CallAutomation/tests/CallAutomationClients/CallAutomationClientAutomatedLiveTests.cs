@@ -146,41 +146,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 }
                 catch (Exception)
                 {
-                    // setup service bus
-                    var uniqueId = await ServiceBusWithNewCall(user, target);
-
-                    // create call and assert response
-                    var createCallOptions = new CreateCallOptions(
-                        new CallInvite(target),
-                        new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-                    CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
-                    callConnectionId = response.CallConnectionProperties.CallConnectionId;
-                    Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
-
-                    // wait for incomingcall context
-                    string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-                    Assert.IsNotNull(incomingCallContext);
-
-                    // answer the call
-                    var rejectCallOptions = new RejectCallOptions(incomingCallContext);
-                    Response rejectResponse = await client.RejectCallAsync(rejectCallOptions);
-
-                    // check reject response
-                    Assert.IsFalse(rejectResponse.IsError);
-
-                    try
-                    {
-                        // test get properties
-                        Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-                    }
-                    catch (RequestFailedException ex)
-                    {
-                        if (ex.Status == 404)
-                        {
-                            callConnectionId = null;
-                            return;
-                        }
-                    }
+                    throw;
                 }
                 finally
                 {
