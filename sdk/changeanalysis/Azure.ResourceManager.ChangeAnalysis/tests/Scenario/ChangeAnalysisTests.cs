@@ -12,9 +12,9 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
 {
     internal class ChangeAnalysisTests : ChangeAnalysisManagementTestBase
     {
-        private DateTimeOffset EndTime;
-        private DateTimeOffset StartTime;
-        protected long TotalSecondsInAWeek = 604800;
+        private DateTimeOffset _startTime;
+        private DateTimeOffset _endTime;
+        private long _totalSecondsInAWeek = 604800;
 
         public ChangeAnalysisTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
         [SetUp]
         public void SetUp()
         {
-            EndTime = Recording.Now;
-            StartTime = DateTimeOffset.FromUnixTimeSeconds(EndTime.ToUnixTimeSeconds() - TotalSecondsInAWeek);
+            _endTime = Recording.Now;
+            _startTime = DateTimeOffset.FromUnixTimeSeconds(_endTime.ToUnixTimeSeconds() - _totalSecondsInAWeek);
         }
 
         [RecordedTest]
         public async Task GetChangesBySubscription()
         {
-            var list = await DefaultSubscription.GetChangesBySubscriptionAsync(StartTime, EndTime).ToEnumerableAsync();
+            var list = await DefaultSubscription.GetChangesBySubscriptionAsync(_startTime, _endTime).ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateDetectedChangeData(list.FirstOrDefault());
             Assert.AreEqual(list.FirstOrDefault().ResourceType, "Microsoft.ChangeAnalysis/changes");
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
         public async Task GetChangesByResourceGroup()
         {
             var resourceGroup = await CreateResourceGroup();
-            var list = await resourceGroup.GetChangesByResourceGroupAsync(StartTime, EndTime).ToEnumerableAsync();
+            var list = await resourceGroup.GetChangesByResourceGroupAsync(_startTime, _endTime).ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
 
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Tests.Scenario
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
             var tenant = tenants.FirstOrDefault();
 
-            var subscriptionChanges = await DefaultSubscription.GetChangesBySubscriptionAsync(StartTime, EndTime).ToEnumerableAsync();
+            var subscriptionChanges = await DefaultSubscription.GetChangesBySubscriptionAsync(_startTime, _endTime).ToEnumerableAsync();
             string changeId = subscriptionChanges.FirstOrDefault().Id.ToString();
             string resourceId = changeId.Substring(0, changeId.IndexOf("/providers/Microsoft.ChangeAnalysis/"));
-            var list = await tenant.GetResourceChangesAsync(resourceId, StartTime, EndTime).ToEnumerableAsync();
+            var list = await tenant.GetResourceChangesAsync(resourceId, _startTime, _endTime).ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateDetectedChangeData(list.FirstOrDefault());
             Assert.AreEqual(list.FirstOrDefault().ResourceType, "Microsoft.ChangeAnalysis/resourceChanges");
