@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("publicAzure"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
                     {
                         publicAzure = null;
                         continue;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("governmentCloud"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
                     {
                         governmentCloud = null;
                         continue;
