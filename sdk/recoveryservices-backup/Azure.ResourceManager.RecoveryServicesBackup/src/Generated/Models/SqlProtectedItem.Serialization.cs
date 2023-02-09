@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("createMode");
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(DeferredDeleteTimeInUTC))
+            if (Optional.IsDefined(DeferredDeletedOn))
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC");
-                writer.WriteStringValue(DeferredDeleteTimeInUTC.Value, "O");
+                writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(IsScheduledForDeferredDelete))
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupManagementType> backupManagementType = default;
             Optional<BackupDataSourceType> workloadType = default;
             Optional<string> containerName = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> policyId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> policyId = default;
             Optional<DateTimeOffset> lastRecoveryPoint = default;
             Optional<string> backupSetName = default;
             Optional<BackupCreateMode> createMode = default;
@@ -199,12 +199,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyId"))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastRecoveryPoint"))

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Simple policy retention.
-    /// Serialized Name: SimpleRetentionPolicy
-    /// </summary>
+    /// <summary> Simple policy retention. </summary>
     public partial class SimpleRetentionPolicy : RetentionPolicy
     {
         /// <summary> Initializes a new instance of SimpleRetentionPolicy. </summary>
@@ -20,24 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of SimpleRetentionPolicy. </summary>
-        /// <param name="retentionPolicyType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RetentionPolicy.retentionPolicyType
-        /// </param>
-        /// <param name="retentionDuration">
-        /// Retention duration of the protection policy.
-        /// Serialized Name: SimpleRetentionPolicy.retentionDuration
-        /// </param>
+        /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="retentionDuration"> Retention duration of the protection policy. </param>
         internal SimpleRetentionPolicy(string retentionPolicyType, RetentionDuration retentionDuration) : base(retentionPolicyType)
         {
             RetentionDuration = retentionDuration;
             RetentionPolicyType = retentionPolicyType ?? "SimpleRetentionPolicy";
         }
 
-        /// <summary>
-        /// Retention duration of the protection policy.
-        /// Serialized Name: SimpleRetentionPolicy.retentionDuration
-        /// </summary>
+        /// <summary> Retention duration of the protection policy. </summary>
         public RetentionDuration RetentionDuration { get; set; }
     }
 }

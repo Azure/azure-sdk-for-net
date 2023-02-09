@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<UnlockDeleteResponse>> UnlockDeleteAsync(UnlockDeleteContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UnlockDeleteResult>> UnlockDeleteAsync(UnlockDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<UnlockDeleteResponse> UnlockDelete(UnlockDeleteContent content, CancellationToken cancellationToken = default)
+        public virtual Response<UnlockDeleteResult> UnlockDelete(UnlockDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

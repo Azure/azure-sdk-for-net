@@ -11,62 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Prepare DataMove Request
-    /// Serialized Name: PrepareDataMoveRequest
-    /// </summary>
+    /// <summary> Prepare DataMove Request. </summary>
     public partial class PrepareDataMoveContent
     {
         /// <summary> Initializes a new instance of PrepareDataMoveContent. </summary>
-        /// <param name="targetResourceId">
-        /// ARM Id of target vault
-        /// Serialized Name: PrepareDataMoveRequest.targetResourceId
-        /// </param>
-        /// <param name="targetRegion">
-        /// Target Region
-        /// Serialized Name: PrepareDataMoveRequest.targetRegion
-        /// </param>
-        /// <param name="dataMoveLevel">
-        /// DataMove Level
-        /// Serialized Name: PrepareDataMoveRequest.dataMoveLevel
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="targetRegion"/> is null. </exception>
-        public PrepareDataMoveContent(string targetResourceId, string targetRegion, DataMoveLevel dataMoveLevel)
+        /// <param name="targetResourceId"> ARM Id of target vault. </param>
+        /// <param name="targetRegion"> Target Region. </param>
+        /// <param name="dataMoveLevel"> DataMove Level. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
+        public PrepareDataMoveContent(ResourceIdentifier targetResourceId, AzureLocation targetRegion, DataMoveLevel dataMoveLevel)
         {
             Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(targetRegion, nameof(targetRegion));
 
             TargetResourceId = targetResourceId;
             TargetRegion = targetRegion;
             DataMoveLevel = dataMoveLevel;
-            SourceContainerArmIds = new ChangeTrackingList<string>();
+            SourceContainerArmIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary>
-        /// ARM Id of target vault
-        /// Serialized Name: PrepareDataMoveRequest.targetResourceId
-        /// </summary>
-        public string TargetResourceId { get; }
-        /// <summary>
-        /// Target Region
-        /// Serialized Name: PrepareDataMoveRequest.targetRegion
-        /// </summary>
-        public string TargetRegion { get; }
-        /// <summary>
-        /// DataMove Level
-        /// Serialized Name: PrepareDataMoveRequest.dataMoveLevel
-        /// </summary>
+        /// <summary> ARM Id of target vault. </summary>
+        public ResourceIdentifier TargetResourceId { get; }
+        /// <summary> Target Region. </summary>
+        public AzureLocation TargetRegion { get; }
+        /// <summary> DataMove Level. </summary>
         public DataMoveLevel DataMoveLevel { get; }
         /// <summary>
         /// Source Container ArmIds
         /// This needs to be populated only if DataMoveLevel is set to container
-        /// Serialized Name: PrepareDataMoveRequest.sourceContainerArmIds
         /// </summary>
-        public IList<string> SourceContainerArmIds { get; }
-        /// <summary>
-        /// Ignore the artifacts which are already moved.
-        /// Serialized Name: PrepareDataMoveRequest.ignoreMoved
-        /// </summary>
+        public IList<ResourceIdentifier> SourceContainerArmIds { get; }
+        /// <summary> Ignore the artifacts which are already moved. </summary>
         public bool? IgnoreMoved { get; set; }
     }
 }

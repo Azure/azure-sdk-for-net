@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Backup state of this backup item.
-    /// Serialized Name: ProtectionState
-    /// </summary>
+    /// <summary> Backup state of this backup item. </summary>
     public readonly partial struct ProtectionState : IEquatable<ProtectionState>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string ProtectionPausedValue = "ProtectionPaused";
         private const string BackupsSuspendedValue = "BackupsSuspended";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: ProtectionState.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static ProtectionState Invalid { get; } = new ProtectionState(InvalidValue);
-        /// <summary>
-        /// IRPending
-        /// Serialized Name: ProtectionState.IRPending
-        /// </summary>
+        /// <summary> IRPending. </summary>
         public static ProtectionState IRPending { get; } = new ProtectionState(IRPendingValue);
-        /// <summary>
-        /// Protected
-        /// Serialized Name: ProtectionState.Protected
-        /// </summary>
+        /// <summary> Protected. </summary>
         public static ProtectionState Protected { get; } = new ProtectionState(ProtectedValue);
-        /// <summary>
-        /// ProtectionError
-        /// Serialized Name: ProtectionState.ProtectionError
-        /// </summary>
+        /// <summary> ProtectionError. </summary>
         public static ProtectionState ProtectionError { get; } = new ProtectionState(ProtectionErrorValue);
-        /// <summary>
-        /// ProtectionStopped
-        /// Serialized Name: ProtectionState.ProtectionStopped
-        /// </summary>
+        /// <summary> ProtectionStopped. </summary>
         public static ProtectionState ProtectionStopped { get; } = new ProtectionState(ProtectionStoppedValue);
-        /// <summary>
-        /// ProtectionPaused
-        /// Serialized Name: ProtectionState.ProtectionPaused
-        /// </summary>
+        /// <summary> ProtectionPaused. </summary>
         public static ProtectionState ProtectionPaused { get; } = new ProtectionState(ProtectionPausedValue);
-        /// <summary>
-        /// BackupsSuspended
-        /// Serialized Name: ProtectionState.BackupsSuspended
-        /// </summary>
+        /// <summary> BackupsSuspended. </summary>
         public static ProtectionState BackupsSuspended { get; } = new ProtectionState(BackupsSuspendedValue);
         /// <summary> Determines if two <see cref="ProtectionState"/> values are the same. </summary>
         public static bool operator ==(ProtectionState left, ProtectionState right) => left.Equals(right);

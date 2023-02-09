@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Encapsulates information regarding data directory
-    /// Serialized Name: SQLDataDirectoryMapping
-    /// </summary>
+    /// <summary> Encapsulates information regarding data directory. </summary>
     public partial class SqlDataDirectoryMapping
     {
         /// <summary> Initializes a new instance of SqlDataDirectoryMapping. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of SqlDataDirectoryMapping. </summary>
-        /// <param name="mappingType">
-        /// Type of data directory mapping
-        /// Serialized Name: SQLDataDirectoryMapping.mappingType
-        /// </param>
-        /// <param name="sourceLogicalName">
-        /// Restore source logical name path
-        /// Serialized Name: SQLDataDirectoryMapping.sourceLogicalName
-        /// </param>
-        /// <param name="sourcePath">
-        /// Restore source path
-        /// Serialized Name: SQLDataDirectoryMapping.sourcePath
-        /// </param>
-        /// <param name="targetPath">
-        /// Target path
-        /// Serialized Name: SQLDataDirectoryMapping.targetPath
-        /// </param>
+        /// <param name="mappingType"> Type of data directory mapping. </param>
+        /// <param name="sourceLogicalName"> Restore source logical name path. </param>
+        /// <param name="sourcePath"> Restore source path. </param>
+        /// <param name="targetPath"> Target path. </param>
         internal SqlDataDirectoryMapping(SqlDataDirectoryType? mappingType, string sourceLogicalName, string sourcePath, string targetPath)
         {
             MappingType = mappingType;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TargetPath = targetPath;
         }
 
-        /// <summary>
-        /// Type of data directory mapping
-        /// Serialized Name: SQLDataDirectoryMapping.mappingType
-        /// </summary>
+        /// <summary> Type of data directory mapping. </summary>
         public SqlDataDirectoryType? MappingType { get; set; }
-        /// <summary>
-        /// Restore source logical name path
-        /// Serialized Name: SQLDataDirectoryMapping.sourceLogicalName
-        /// </summary>
+        /// <summary> Restore source logical name path. </summary>
         public string SourceLogicalName { get; set; }
-        /// <summary>
-        /// Restore source path
-        /// Serialized Name: SQLDataDirectoryMapping.sourcePath
-        /// </summary>
+        /// <summary> Restore source path. </summary>
         public string SourcePath { get; set; }
-        /// <summary>
-        /// Target path
-        /// Serialized Name: SQLDataDirectoryMapping.targetPath
-        /// </summary>
+        /// <summary> Target path. </summary>
         public string TargetPath { get; set; }
     }
 }

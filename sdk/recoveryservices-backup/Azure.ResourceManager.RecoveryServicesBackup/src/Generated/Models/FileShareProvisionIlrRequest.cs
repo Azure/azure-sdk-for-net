@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Update snapshot Uri with the correct friendly Name of the source Azure file share.
-    /// Serialized Name: AzureFileShareProvisionILRRequest
-    /// </summary>
+    /// <summary> Update snapshot Uri with the correct friendly Name of the source Azure file share. </summary>
     public partial class FileShareProvisionIlrRequest : IlrRequestProperties
     {
         /// <summary> Initializes a new instance of FileShareProvisionIlrRequest. </summary>
@@ -20,34 +19,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of FileShareProvisionIlrRequest. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: ILRRequest.objectType
-        /// </param>
-        /// <param name="recoveryPointId">
-        /// Recovery point ID.
-        /// Serialized Name: AzureFileShareProvisionILRRequest.recoveryPointId
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// Source Storage account ARM Id
-        /// Serialized Name: AzureFileShareProvisionILRRequest.sourceResourceId
-        /// </param>
-        internal FileShareProvisionIlrRequest(string objectType, string recoveryPointId, string sourceResourceId) : base(objectType)
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryPointId"> Recovery point ID. </param>
+        /// <param name="sourceResourceId"> Source Storage account ARM Id. </param>
+        internal FileShareProvisionIlrRequest(string objectType, string recoveryPointId, ResourceIdentifier sourceResourceId) : base(objectType)
         {
             RecoveryPointId = recoveryPointId;
             SourceResourceId = sourceResourceId;
             ObjectType = objectType ?? "AzureFileShareProvisionILRRequest";
         }
 
-        /// <summary>
-        /// Recovery point ID.
-        /// Serialized Name: AzureFileShareProvisionILRRequest.recoveryPointId
-        /// </summary>
+        /// <summary> Recovery point ID. </summary>
         public string RecoveryPointId { get; set; }
-        /// <summary>
-        /// Source Storage account ARM Id
-        /// Serialized Name: AzureFileShareProvisionILRRequest.sourceResourceId
-        /// </summary>
-        public string SourceResourceId { get; set; }
+        /// <summary> Source Storage account ARM Id. </summary>
+        public ResourceIdentifier SourceResourceId { get; set; }
     }
 }

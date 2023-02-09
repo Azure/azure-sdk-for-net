@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup schedule.
-    /// Serialized Name: SchedulePolicy
     /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of SchedulePolicy. </summary>
-        /// <param name="schedulePolicyType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: SchedulePolicy.schedulePolicyType
-        /// </param>
+        /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal SchedulePolicy(string schedulePolicyType)
         {
             SchedulePolicyType = schedulePolicyType;
         }
 
-        /// <summary>
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: SchedulePolicy.schedulePolicyType
-        /// </summary>
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
         internal string SchedulePolicyType { get; set; }
     }
 }

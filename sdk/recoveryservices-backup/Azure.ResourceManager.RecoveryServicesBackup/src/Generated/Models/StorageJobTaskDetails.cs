@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure storage workload specific job task details.
-    /// Serialized Name: AzureStorageJobTaskDetails
-    /// </summary>
+    /// <summary> Azure storage workload specific job task details. </summary>
     public partial class StorageJobTaskDetails
     {
         /// <summary> Initializes a new instance of StorageJobTaskDetails. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of StorageJobTaskDetails. </summary>
-        /// <param name="taskId">
-        /// The task display name.
-        /// Serialized Name: AzureStorageJobTaskDetails.taskId
-        /// </param>
-        /// <param name="status">
-        /// The status.
-        /// Serialized Name: AzureStorageJobTaskDetails.status
-        /// </param>
+        /// <param name="taskId"> The task display name. </param>
+        /// <param name="status"> The status. </param>
         internal StorageJobTaskDetails(string taskId, string status)
         {
             TaskId = taskId;
             Status = status;
         }
 
-        /// <summary>
-        /// The task display name.
-        /// Serialized Name: AzureStorageJobTaskDetails.taskId
-        /// </summary>
+        /// <summary> The task display name. </summary>
         public string TaskId { get; set; }
-        /// <summary>
-        /// The status.
-        /// Serialized Name: AzureStorageJobTaskDetails.status
-        /// </summary>
+        /// <summary> The status. </summary>
         public string Status { get; set; }
     }
 }

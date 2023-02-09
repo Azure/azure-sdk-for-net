@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("extendedInfo");
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsDefined(RecoveryPointTimeInUTC))
+            if (Optional.IsDefined(RecoveryPointCreatedOn))
             {
                 writer.WritePropertyName("recoveryPointTimeInUTC");
-                writer.WriteStringValue(RecoveryPointTimeInUTC.Value, "O");
+                writer.WriteStringValue(RecoveryPointCreatedOn.Value, "O");
             }
             if (Optional.IsDefined(RestorePointType))
             {

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupStatusResponse
+    public partial class BackupStatusResult
     {
-        internal static BackupStatusResponse DeserializeBackupStatusResponse(JsonElement element)
+        internal static BackupStatusResult DeserializeBackupStatusResult(JsonElement element)
         {
             Optional<ProtectionStatus> protectionStatus = default;
-            Optional<string> vaultId = default;
+            Optional<ResourceIdentifier> vaultId = default;
             Optional<BackupFabricName> fabricName = default;
             Optional<string> containerName = default;
             Optional<string> protectedItemName = default;
@@ -37,7 +37,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("vaultId"))
                 {
-                    vaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fabricName"))
@@ -81,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupStatusResponse(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value);
+            return new BackupStatusResult(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value);
         }
     }
 }

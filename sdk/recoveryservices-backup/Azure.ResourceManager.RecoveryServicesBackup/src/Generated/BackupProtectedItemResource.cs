@@ -454,13 +454,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="BackupRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupRecoveryPointResource> GetRecoveryPointsRecommendedForMovesAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BackupRecoveryPointResource> GetRecoveryPointsRecommendedForMoveAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMoves", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -480,13 +480,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BackupRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupRecoveryPointResource> GetRecoveryPointsRecommendedForMoves(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<BackupRecoveryPointResource> GetRecoveryPointsRecommendedForMove(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMoves", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupRecoveryPointResource(Client, BackupRecoveryPointData.DeserializeBackupRecoveryPointData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "BackupProtectedItemResource.GetRecoveryPointsRecommendedForMove", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

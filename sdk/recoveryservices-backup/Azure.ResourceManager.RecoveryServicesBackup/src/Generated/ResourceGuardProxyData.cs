@@ -29,29 +29,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// ResourceGuardProxyBaseResource properties
-        /// Serialized Name: ResourceGuardProxyBaseResource.properties
-        /// </param>
-        /// <param name="eTag">
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </param>
+        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         internal ResourceGuardProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProxyProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary>
-        /// ResourceGuardProxyBaseResource properties
-        /// Serialized Name: ResourceGuardProxyBaseResource.properties
-        /// </summary>
+        /// <summary> ResourceGuardProxyBaseResource properties. </summary>
         public ResourceGuardProxyProperties Properties { get; set; }
-        /// <summary>
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </summary>
+        /// <summary> Optional ETag. </summary>
         public ETag? ETag { get; set; }
     }
 }

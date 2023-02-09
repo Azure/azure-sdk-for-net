@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure VM (Mercury) workload-specific backup policy.
-    /// Serialized Name: AzureVmWorkloadProtectionPolicy
-    /// </summary>
+    /// <summary> Azure VM (Mercury) workload-specific backup policy. </summary>
     public partial class VmWorkloadProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of VmWorkloadProtectionPolicy. </summary>
@@ -24,62 +21,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of VmWorkloadProtectionPolicy. </summary>
-        /// <param name="protectedItemsCount">
-        /// Number of items associated with this policy.
-        /// Serialized Name: ProtectionPolicy.protectedItemsCount
-        /// </param>
-        /// <param name="backupManagementType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: ProtectionPolicy.backupManagementType
-        /// </param>
-        /// <param name="resourceGuardOperationRequests">
-        /// ResourceGuard Operation Requests
-        /// Serialized Name: ProtectionPolicy.resourceGuardOperationRequests
-        /// </param>
-        /// <param name="workLoadType">
-        /// Type of workload for the backup management
-        /// Serialized Name: AzureVmWorkloadProtectionPolicy.workLoadType
-        /// </param>
-        /// <param name="settings">
-        /// Common settings for the backup management
-        /// Serialized Name: AzureVmWorkloadProtectionPolicy.settings
-        /// </param>
-        /// <param name="subProtectionPolicy">
-        /// List of sub-protection policies which includes schedule and retention
-        /// Serialized Name: AzureVmWorkloadProtectionPolicy.subProtectionPolicy
-        /// </param>
-        /// <param name="makePolicyConsistent">
-        /// Fix the policy inconsistency
-        /// Serialized Name: AzureVmWorkloadProtectionPolicy.makePolicyConsistent
-        /// </param>
-        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? makePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
+        /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="workLoadType"> Type of workload for the backup management. </param>
+        /// <param name="settings"> Common settings for the backup management. </param>
+        /// <param name="subProtectionPolicy"> List of sub-protection policies which includes schedule and retention. </param>
+        /// <param name="doesMakePolicyConsistent"> Fix the policy inconsistency. </param>
+        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? doesMakePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
         {
             WorkLoadType = workLoadType;
             Settings = settings;
             SubProtectionPolicy = subProtectionPolicy;
-            MakePolicyConsistent = makePolicyConsistent;
+            DoesMakePolicyConsistent = doesMakePolicyConsistent;
             BackupManagementType = backupManagementType ?? "AzureWorkload";
         }
 
-        /// <summary>
-        /// Type of workload for the backup management
-        /// Serialized Name: AzureVmWorkloadProtectionPolicy.workLoadType
-        /// </summary>
+        /// <summary> Type of workload for the backup management. </summary>
         public BackupWorkloadType? WorkLoadType { get; set; }
-        /// <summary>
-        /// Common settings for the backup management
-        /// Serialized Name: AzureVmWorkloadProtectionPolicy.settings
-        /// </summary>
+        /// <summary> Common settings for the backup management. </summary>
         public BackupCommonSettings Settings { get; set; }
-        /// <summary>
-        /// List of sub-protection policies which includes schedule and retention
-        /// Serialized Name: AzureVmWorkloadProtectionPolicy.subProtectionPolicy
-        /// </summary>
+        /// <summary> List of sub-protection policies which includes schedule and retention. </summary>
         public IList<SubProtectionPolicy> SubProtectionPolicy { get; }
-        /// <summary>
-        /// Fix the policy inconsistency
-        /// Serialized Name: AzureVmWorkloadProtectionPolicy.makePolicyConsistent
-        /// </summary>
-        public bool? MakePolicyConsistent { get; set; }
+        /// <summary> Fix the policy inconsistency. </summary>
+        public bool? DoesMakePolicyConsistent { get; set; }
     }
 }

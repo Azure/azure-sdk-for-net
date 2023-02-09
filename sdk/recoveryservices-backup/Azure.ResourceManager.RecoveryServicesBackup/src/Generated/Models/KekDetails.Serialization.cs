@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static KekDetails DeserializeKekDetails(JsonElement element)
         {
             Optional<Uri> keyUrl = default;
-            Optional<string> keyVaultId = default;
+            Optional<ResourceIdentifier> keyVaultId = default;
             Optional<string> keyBackupData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("keyVaultId"))
                 {
-                    keyVaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    keyVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyBackupData"))

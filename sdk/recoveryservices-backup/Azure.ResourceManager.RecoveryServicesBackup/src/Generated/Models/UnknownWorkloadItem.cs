@@ -7,33 +7,15 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The UnknownWorkloadItem.
-    /// Serialized Name: UnknownWorkloadItem
-    /// </summary>
+    /// <summary> The UnknownWorkloadItem. </summary>
     internal partial class UnknownWorkloadItem : WorkloadItem
     {
         /// <summary> Initializes a new instance of UnknownWorkloadItem. </summary>
-        /// <param name="backupManagementType">
-        /// Type of backup management to backup an item.
-        /// Serialized Name: WorkloadItem.backupManagementType
-        /// </param>
-        /// <param name="workloadType">
-        /// Type of workload for the backup management
-        /// Serialized Name: WorkloadItem.workloadType
-        /// </param>
-        /// <param name="workloadItemType">
-        /// Type of the backup item.
-        /// Serialized Name: WorkloadItem.workloadItemType
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the backup item.
-        /// Serialized Name: WorkloadItem.friendlyName
-        /// </param>
-        /// <param name="protectionState">
-        /// State of the back up item.
-        /// Serialized Name: WorkloadItem.protectionState
-        /// </param>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="workloadItemType"> Type of the backup item. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
         internal UnknownWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, ProtectionStatus? protectionState) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState)
         {
             WorkloadItemType = workloadItemType ?? "Unknown";

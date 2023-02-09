@@ -31,14 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// BackupEngineBaseResource properties
-        /// Serialized Name: BackupEngineBaseResource.properties
         /// Please note <see cref="BackupEngineProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
         /// </param>
-        /// <param name="eTag">
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
         internal BackupEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupEngineProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -47,15 +43,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// BackupEngineBaseResource properties
-        /// Serialized Name: BackupEngineBaseResource.properties
         /// Please note <see cref="BackupEngineProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
         /// </summary>
         public BackupEngineProperties Properties { get; set; }
-        /// <summary>
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </summary>
+        /// <summary> Optional ETag. </summary>
         public ETag? ETag { get; set; }
     }
 }

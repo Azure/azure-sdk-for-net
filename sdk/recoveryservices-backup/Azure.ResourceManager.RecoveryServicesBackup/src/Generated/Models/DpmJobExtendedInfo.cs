@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Additional information on the DPM workload-specific job.
-    /// Serialized Name: DpmJobExtendedInfo
-    /// </summary>
+    /// <summary> Additional information on the DPM workload-specific job. </summary>
     public partial class DpmJobExtendedInfo
     {
         /// <summary> Initializes a new instance of DpmJobExtendedInfo. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DpmJobExtendedInfo. </summary>
-        /// <param name="tasksList">
-        /// List of tasks associated with this job.
-        /// Serialized Name: DpmJobExtendedInfo.tasksList
-        /// </param>
-        /// <param name="propertyBag">
-        /// The job properties.
-        /// Serialized Name: DpmJobExtendedInfo.propertyBag
-        /// </param>
-        /// <param name="dynamicErrorMessage">
-        /// Non localized error message on job execution.
-        /// Serialized Name: DpmJobExtendedInfo.dynamicErrorMessage
-        /// </param>
+        /// <param name="tasksList"> List of tasks associated with this job. </param>
+        /// <param name="propertyBag"> The job properties. </param>
+        /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
         internal DpmJobExtendedInfo(IList<DpmJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, string dynamicErrorMessage)
         {
             TasksList = tasksList;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DynamicErrorMessage = dynamicErrorMessage;
         }
 
-        /// <summary>
-        /// List of tasks associated with this job.
-        /// Serialized Name: DpmJobExtendedInfo.tasksList
-        /// </summary>
+        /// <summary> List of tasks associated with this job. </summary>
         public IList<DpmJobTaskDetails> TasksList { get; }
-        /// <summary>
-        /// The job properties.
-        /// Serialized Name: DpmJobExtendedInfo.propertyBag
-        /// </summary>
+        /// <summary> The job properties. </summary>
         public IDictionary<string, string> PropertyBag { get; }
-        /// <summary>
-        /// Non localized error message on job execution.
-        /// Serialized Name: DpmJobExtendedInfo.dynamicErrorMessage
-        /// </summary>
+        /// <summary> Non localized error message on job execution. </summary>
         public string DynamicErrorMessage { get; set; }
     }
 }

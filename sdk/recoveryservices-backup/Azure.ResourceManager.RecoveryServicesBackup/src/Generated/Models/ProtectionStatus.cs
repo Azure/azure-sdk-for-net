@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Specifies whether the container is registered or not
-    /// Serialized Name: ProtectionStatus
-    /// </summary>
+    /// <summary> Specifies whether the container is registered or not. </summary>
     public readonly partial struct ProtectionStatus : IEquatable<ProtectionStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string ProtectedValue = "Protected";
         private const string ProtectionFailedValue = "ProtectionFailed";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: ProtectionStatus.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static ProtectionStatus Invalid { get; } = new ProtectionStatus(InvalidValue);
-        /// <summary>
-        /// NotProtected
-        /// Serialized Name: ProtectionStatus.NotProtected
-        /// </summary>
+        /// <summary> NotProtected. </summary>
         public static ProtectionStatus NotProtected { get; } = new ProtectionStatus(NotProtectedValue);
-        /// <summary>
-        /// Protecting
-        /// Serialized Name: ProtectionStatus.Protecting
-        /// </summary>
+        /// <summary> Protecting. </summary>
         public static ProtectionStatus Protecting { get; } = new ProtectionStatus(ProtectingValue);
-        /// <summary>
-        /// Protected
-        /// Serialized Name: ProtectionStatus.Protected
-        /// </summary>
+        /// <summary> Protected. </summary>
         public static ProtectionStatus Protected { get; } = new ProtectionStatus(ProtectedValue);
-        /// <summary>
-        /// ProtectionFailed
-        /// Serialized Name: ProtectionStatus.ProtectionFailed
-        /// </summary>
+        /// <summary> ProtectionFailed. </summary>
         public static ProtectionStatus ProtectionFailed { get; } = new ProtectionStatus(ProtectionFailedValue);
         /// <summary> Determines if two <see cref="ProtectionStatus"/> values are the same. </summary>
         public static bool operator ==(ProtectionStatus left, ProtectionStatus right) => left.Equals(right);

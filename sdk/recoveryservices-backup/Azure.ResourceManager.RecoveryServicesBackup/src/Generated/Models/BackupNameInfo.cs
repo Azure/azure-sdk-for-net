@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The name of usage.
-    /// Serialized Name: NameInfo
-    /// </summary>
+    /// <summary> The name of usage. </summary>
     public partial class BackupNameInfo
     {
         /// <summary> Initializes a new instance of BackupNameInfo. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupNameInfo. </summary>
-        /// <param name="value">
-        /// Value of usage.
-        /// Serialized Name: NameInfo.value
-        /// </param>
-        /// <param name="localizedValue">
-        /// Localized value of usage.
-        /// Serialized Name: NameInfo.localizedValue
-        /// </param>
+        /// <param name="value"> Value of usage. </param>
+        /// <param name="localizedValue"> Localized value of usage. </param>
         internal BackupNameInfo(string value, string localizedValue)
         {
             Value = value;
             LocalizedValue = localizedValue;
         }
 
-        /// <summary>
-        /// Value of usage.
-        /// Serialized Name: NameInfo.value
-        /// </summary>
+        /// <summary> Value of usage. </summary>
         public string Value { get; }
-        /// <summary>
-        /// Localized value of usage.
-        /// Serialized Name: NameInfo.localizedValue
-        /// </summary>
+        /// <summary> Localized value of usage. </summary>
         public string LocalizedValue { get; }
     }
 }

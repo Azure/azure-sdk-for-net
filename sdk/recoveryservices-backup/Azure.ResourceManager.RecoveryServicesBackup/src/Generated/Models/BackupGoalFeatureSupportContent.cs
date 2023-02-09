@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure backup goal feature specific request.
-    /// Serialized Name: AzureBackupGoalFeatureSupportRequest
-    /// </summary>
+    /// <summary> Azure backup goal feature specific request. </summary>
     public partial class BackupGoalFeatureSupportContent : FeatureSupportContent
     {
         /// <summary> Initializes a new instance of BackupGoalFeatureSupportContent. </summary>

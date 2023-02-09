@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// AzureWorkload-specific restore.
-    /// Serialized Name: AzureWorkloadRestoreRequest
     /// Please note <see cref="WorkloadRestoreRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WorkloadPointInTimeRestoreRequest"/>, <see cref="WorkloadSapHanaPointInTimeRestoreRequest"/>, <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateRequest"/>, <see cref="WorkloadSapHanaRestoreRequest"/>, <see cref="WorkloadSapHanaRestoreWithRehydrateRequest"/>, <see cref="WorkloadSqlPointInTimeRestoreRequest"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateRequest"/>, <see cref="WorkloadSqlRestoreRequest"/> and <see cref="WorkloadSqlRestoreWithRehydrateRequest"/>.
     /// </summary>
@@ -26,36 +25,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadRestoreRequest. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RestoreRequest.objectType
-        /// </param>
-        /// <param name="recoveryType">
-        /// Type of this recovery.
-        /// Serialized Name: AzureWorkloadRestoreRequest.recoveryType
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// Fully qualified ARM ID of the VM on which workload that was running is being recovered.
-        /// Serialized Name: AzureWorkloadRestoreRequest.sourceResourceId
-        /// </param>
-        /// <param name="propertyBag">
-        /// Workload specific property bag.
-        /// Serialized Name: AzureWorkloadRestoreRequest.propertyBag
-        /// </param>
-        /// <param name="targetInfo">
-        /// Details of target database
-        /// Serialized Name: AzureWorkloadRestoreRequest.targetInfo
-        /// </param>
-        /// <param name="recoveryMode">
-        /// Defines whether the current recovery mode is file restore or database restore
-        /// Serialized Name: AzureWorkloadRestoreRequest.recoveryMode
-        /// </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryType"> Type of this recovery. </param>
+        /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
+        /// <param name="propertyBag"> Workload specific property bag. </param>
+        /// <param name="targetInfo"> Details of target database. </param>
+        /// <param name="recoveryMode"> Defines whether the current recovery mode is file restore or database restore. </param>
         /// <param name="targetVirtualMachineId">
         /// This is the complete ARM Id of the target VM
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
-        /// Serialized Name: AzureWorkloadRestoreRequest.targetVirtualMachineId
         /// </param>
-        internal WorkloadRestoreRequest(string objectType, RecoveryType? recoveryType, string sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetVirtualMachineId) : base(objectType)
+        internal WorkloadRestoreRequest(string objectType, RecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId) : base(objectType)
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
@@ -66,36 +46,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "AzureWorkloadRestoreRequest";
         }
 
-        /// <summary>
-        /// Type of this recovery.
-        /// Serialized Name: AzureWorkloadRestoreRequest.recoveryType
-        /// </summary>
+        /// <summary> Type of this recovery. </summary>
         public RecoveryType? RecoveryType { get; set; }
-        /// <summary>
-        /// Fully qualified ARM ID of the VM on which workload that was running is being recovered.
-        /// Serialized Name: AzureWorkloadRestoreRequest.sourceResourceId
-        /// </summary>
-        public string SourceResourceId { get; set; }
-        /// <summary>
-        /// Workload specific property bag.
-        /// Serialized Name: AzureWorkloadRestoreRequest.propertyBag
-        /// </summary>
+        /// <summary> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </summary>
+        public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary> Workload specific property bag. </summary>
         public IDictionary<string, string> PropertyBag { get; }
-        /// <summary>
-        /// Details of target database
-        /// Serialized Name: AzureWorkloadRestoreRequest.targetInfo
-        /// </summary>
+        /// <summary> Details of target database. </summary>
         public TargetRestoreInfo TargetInfo { get; set; }
-        /// <summary>
-        /// Defines whether the current recovery mode is file restore or database restore
-        /// Serialized Name: AzureWorkloadRestoreRequest.recoveryMode
-        /// </summary>
+        /// <summary> Defines whether the current recovery mode is file restore or database restore. </summary>
         public RecoveryMode? RecoveryMode { get; set; }
         /// <summary>
         /// This is the complete ARM Id of the target VM
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
-        /// Serialized Name: AzureWorkloadRestoreRequest.targetVirtualMachineId
         /// </summary>
-        public string TargetVirtualMachineId { get; set; }
+        public ResourceIdentifier TargetVirtualMachineId { get; set; }
     }
 }

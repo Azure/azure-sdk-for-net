@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Whether storage account lock is to be acquired for this container or not.
-    /// Serialized Name: AcquireStorageAccountLock
-    /// </summary>
+    /// <summary> Whether storage account lock is to be acquired for this container or not. </summary>
     public readonly partial struct AcquireStorageAccountLock : IEquatable<AcquireStorageAccountLock>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string AcquireValue = "Acquire";
         private const string NotAcquireValue = "NotAcquire";
 
-        /// <summary>
-        /// Acquire
-        /// Serialized Name: AcquireStorageAccountLock.Acquire
-        /// </summary>
+        /// <summary> Acquire. </summary>
         public static AcquireStorageAccountLock Acquire { get; } = new AcquireStorageAccountLock(AcquireValue);
-        /// <summary>
-        /// NotAcquire
-        /// Serialized Name: AcquireStorageAccountLock.NotAcquire
-        /// </summary>
+        /// <summary> NotAcquire. </summary>
         public static AcquireStorageAccountLock NotAcquire { get; } = new AcquireStorageAccountLock(NotAcquireValue);
         /// <summary> Determines if two <see cref="AcquireStorageAccountLock"/> values are the same. </summary>
         public static bool operator ==(AcquireStorageAccountLock left, AcquireStorageAccountLock right) => left.Equals(right);

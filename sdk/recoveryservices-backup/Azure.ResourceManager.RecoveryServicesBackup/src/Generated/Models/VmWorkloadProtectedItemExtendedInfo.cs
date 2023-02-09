@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Additional information on Azure Workload for SQL specific backup item.
-    /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo
-    /// </summary>
+    /// <summary> Additional information on Azure Workload for SQL specific backup item. </summary>
     public partial class VmWorkloadProtectedItemExtendedInfo
     {
         /// <summary> Initializes a new instance of VmWorkloadProtectedItemExtendedInfo. </summary>
@@ -21,34 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of VmWorkloadProtectedItemExtendedInfo. </summary>
-        /// <param name="oldestRecoveryPoint">
-        /// The oldest backup copy available for this backup item across all tiers.
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.oldestRecoveryPoint
-        /// </param>
-        /// <param name="oldestRecoveryPointInVault">
-        /// The oldest backup copy available for this backup item in vault tier
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.oldestRecoveryPointInVault
-        /// </param>
-        /// <param name="oldestRecoveryPointInArchive">
-        /// The oldest backup copy available for this backup item in archive tier
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.oldestRecoveryPointInArchive
-        /// </param>
-        /// <param name="newestRecoveryPointInArchive">
-        /// The latest backup copy available for this backup item in archive tier
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.newestRecoveryPointInArchive
-        /// </param>
-        /// <param name="recoveryPointCount">
-        /// Number of backup copies available for this backup item.
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.recoveryPointCount
-        /// </param>
-        /// <param name="policyState">
-        /// Indicates consistency of policy object and policy applied to this backup item.
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.policyState
-        /// </param>
-        /// <param name="recoveryModel">
-        /// Indicates consistency of policy object and policy applied to this backup item.
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.recoveryModel
-        /// </param>
+        /// <param name="oldestRecoveryPoint"> The oldest backup copy available for this backup item across all tiers. </param>
+        /// <param name="oldestRecoveryPointInVault"> The oldest backup copy available for this backup item in vault tier. </param>
+        /// <param name="oldestRecoveryPointInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
+        /// <param name="newestRecoveryPointInArchive"> The latest backup copy available for this backup item in archive tier. </param>
+        /// <param name="recoveryPointCount"> Number of backup copies available for this backup item. </param>
+        /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
+        /// <param name="recoveryModel"> Indicates consistency of policy object and policy applied to this backup item. </param>
         internal VmWorkloadProtectedItemExtendedInfo(DateTimeOffset? oldestRecoveryPoint, DateTimeOffset? oldestRecoveryPointInVault, DateTimeOffset? oldestRecoveryPointInArchive, DateTimeOffset? newestRecoveryPointInArchive, int? recoveryPointCount, string policyState, string recoveryModel)
         {
             OldestRecoveryPoint = oldestRecoveryPoint;
@@ -60,40 +36,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryModel = recoveryModel;
         }
 
-        /// <summary>
-        /// The oldest backup copy available for this backup item across all tiers.
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.oldestRecoveryPoint
-        /// </summary>
+        /// <summary> The oldest backup copy available for this backup item across all tiers. </summary>
         public DateTimeOffset? OldestRecoveryPoint { get; set; }
-        /// <summary>
-        /// The oldest backup copy available for this backup item in vault tier
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.oldestRecoveryPointInVault
-        /// </summary>
+        /// <summary> The oldest backup copy available for this backup item in vault tier. </summary>
         public DateTimeOffset? OldestRecoveryPointInVault { get; set; }
-        /// <summary>
-        /// The oldest backup copy available for this backup item in archive tier
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.oldestRecoveryPointInArchive
-        /// </summary>
+        /// <summary> The oldest backup copy available for this backup item in archive tier. </summary>
         public DateTimeOffset? OldestRecoveryPointInArchive { get; set; }
-        /// <summary>
-        /// The latest backup copy available for this backup item in archive tier
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.newestRecoveryPointInArchive
-        /// </summary>
+        /// <summary> The latest backup copy available for this backup item in archive tier. </summary>
         public DateTimeOffset? NewestRecoveryPointInArchive { get; set; }
-        /// <summary>
-        /// Number of backup copies available for this backup item.
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.recoveryPointCount
-        /// </summary>
+        /// <summary> Number of backup copies available for this backup item. </summary>
         public int? RecoveryPointCount { get; set; }
-        /// <summary>
-        /// Indicates consistency of policy object and policy applied to this backup item.
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.policyState
-        /// </summary>
+        /// <summary> Indicates consistency of policy object and policy applied to this backup item. </summary>
         public string PolicyState { get; set; }
-        /// <summary>
-        /// Indicates consistency of policy object and policy applied to this backup item.
-        /// Serialized Name: AzureVmWorkloadProtectedItemExtendedInfo.recoveryModel
-        /// </summary>
+        /// <summary> Indicates consistency of policy object and policy applied to this backup item. </summary>
         public string RecoveryModel { get; set; }
     }
 }

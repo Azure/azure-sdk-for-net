@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Status of protectable item, i.e. InProgress,Succeeded,Failed
-    /// Serialized Name: InquiryStatus
-    /// </summary>
+    /// <summary> Status of protectable item, i.e. InProgress,Succeeded,Failed. </summary>
     public readonly partial struct InquiryStatus : IEquatable<InquiryStatus>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SuccessValue = "Success";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: InquiryStatus.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static InquiryStatus Invalid { get; } = new InquiryStatus(InvalidValue);
-        /// <summary>
-        /// Success
-        /// Serialized Name: InquiryStatus.Success
-        /// </summary>
+        /// <summary> Success. </summary>
         public static InquiryStatus Success { get; } = new InquiryStatus(SuccessValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: InquiryStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static InquiryStatus Failed { get; } = new InquiryStatus(FailedValue);
         /// <summary> Determines if two <see cref="InquiryStatus"/> values are the same. </summary>
         public static bool operator ==(InquiryStatus left, InquiryStatus right) => left.Equals(right);

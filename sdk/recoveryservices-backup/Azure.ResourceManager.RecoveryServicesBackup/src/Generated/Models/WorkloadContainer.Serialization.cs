@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "VMAppContainer": return VmAppContainerProtectionContainer.DeserializeVmAppContainerProtectionContainer(element);
                 }
             }
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<WorkloadContainerExtendedInfo> extendedInfo = default;
             Optional<BackupWorkloadType> workloadType = default;
@@ -96,7 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedTime"))

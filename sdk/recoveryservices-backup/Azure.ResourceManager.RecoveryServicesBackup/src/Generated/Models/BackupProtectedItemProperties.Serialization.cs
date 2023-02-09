@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("createMode");
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(DeferredDeleteTimeInUTC))
+            if (Optional.IsDefined(DeferredDeletedOn))
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC");
-                writer.WriteStringValue(DeferredDeleteTimeInUTC.Value, "O");
+                writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(IsScheduledForDeferredDelete))
             {

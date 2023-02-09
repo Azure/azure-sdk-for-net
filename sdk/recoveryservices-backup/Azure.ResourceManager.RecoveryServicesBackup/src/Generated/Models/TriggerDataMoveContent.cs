@@ -11,72 +11,38 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Trigger DataMove Request
-    /// Serialized Name: TriggerDataMoveRequest
-    /// </summary>
+    /// <summary> Trigger DataMove Request. </summary>
     public partial class TriggerDataMoveContent
     {
         /// <summary> Initializes a new instance of TriggerDataMoveContent. </summary>
-        /// <param name="sourceResourceId">
-        /// ARM Id of source vault
-        /// Serialized Name: TriggerDataMoveRequest.sourceResourceId
-        /// </param>
-        /// <param name="sourceRegion">
-        /// Source Region
-        /// Serialized Name: TriggerDataMoveRequest.sourceRegion
-        /// </param>
-        /// <param name="dataMoveLevel">
-        /// DataMove Level
-        /// Serialized Name: TriggerDataMoveRequest.dataMoveLevel
-        /// </param>
-        /// <param name="correlationId">
-        /// Correlation Id
-        /// Serialized Name: TriggerDataMoveRequest.correlationId
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/>, <paramref name="sourceRegion"/> or <paramref name="correlationId"/> is null. </exception>
-        public TriggerDataMoveContent(string sourceResourceId, string sourceRegion, DataMoveLevel dataMoveLevel, string correlationId)
+        /// <param name="sourceResourceId"> ARM Id of source vault. </param>
+        /// <param name="sourceRegion"> Source Region. </param>
+        /// <param name="dataMoveLevel"> DataMove Level. </param>
+        /// <param name="correlationId"> Correlation Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> or <paramref name="correlationId"/> is null. </exception>
+        public TriggerDataMoveContent(ResourceIdentifier sourceResourceId, AzureLocation sourceRegion, DataMoveLevel dataMoveLevel, string correlationId)
         {
             Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
-            Argument.AssertNotNull(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNull(correlationId, nameof(correlationId));
 
             SourceResourceId = sourceResourceId;
             SourceRegion = sourceRegion;
             DataMoveLevel = dataMoveLevel;
             CorrelationId = correlationId;
-            SourceContainerArmIds = new ChangeTrackingList<string>();
+            SourceContainerArmIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary>
-        /// ARM Id of source vault
-        /// Serialized Name: TriggerDataMoveRequest.sourceResourceId
-        /// </summary>
-        public string SourceResourceId { get; }
-        /// <summary>
-        /// Source Region
-        /// Serialized Name: TriggerDataMoveRequest.sourceRegion
-        /// </summary>
-        public string SourceRegion { get; }
-        /// <summary>
-        /// DataMove Level
-        /// Serialized Name: TriggerDataMoveRequest.dataMoveLevel
-        /// </summary>
+        /// <summary> ARM Id of source vault. </summary>
+        public ResourceIdentifier SourceResourceId { get; }
+        /// <summary> Source Region. </summary>
+        public AzureLocation SourceRegion { get; }
+        /// <summary> DataMove Level. </summary>
         public DataMoveLevel DataMoveLevel { get; }
-        /// <summary>
-        /// Correlation Id
-        /// Serialized Name: TriggerDataMoveRequest.correlationId
-        /// </summary>
+        /// <summary> Correlation Id. </summary>
         public string CorrelationId { get; }
-        /// <summary>
-        /// Source Container ArmIds
-        /// Serialized Name: TriggerDataMoveRequest.sourceContainerArmIds
-        /// </summary>
-        public IList<string> SourceContainerArmIds { get; }
-        /// <summary>
-        /// Pause GC
-        /// Serialized Name: TriggerDataMoveRequest.pauseGC
-        /// </summary>
-        public bool? PauseGC { get; set; }
+        /// <summary> Source Container ArmIds. </summary>
+        public IList<ResourceIdentifier> SourceContainerArmIds { get; }
+        /// <summary> Pause GC. </summary>
+        public bool? DoesPauseGC { get; set; }
     }
 }

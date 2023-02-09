@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static FileShareRestoreRequest DeserializeFileShareRestoreRequest(JsonElement element)
         {
             Optional<RecoveryType> recoveryType = default;
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<CopyOption> copyOptions = default;
             Optional<RestoreRequestType> restoreRequestType = default;
             Optional<IList<RestoreFileSpecs>> restoreFileSpecs = default;
@@ -79,7 +79,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("copyOptions"))

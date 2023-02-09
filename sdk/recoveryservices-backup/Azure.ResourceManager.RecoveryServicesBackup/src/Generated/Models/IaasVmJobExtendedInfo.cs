@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure IaaS VM workload-specific additional information for job.
-    /// Serialized Name: AzureIaaSVMJobExtendedInfo
-    /// </summary>
+    /// <summary> Azure IaaS VM workload-specific additional information for job. </summary>
     public partial class IaasVmJobExtendedInfo
     {
         /// <summary> Initializes a new instance of IaasVmJobExtendedInfo. </summary>
@@ -25,30 +22,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IaasVmJobExtendedInfo. </summary>
-        /// <param name="tasksList">
-        /// List of tasks associated with this job.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.tasksList
-        /// </param>
-        /// <param name="propertyBag">
-        /// Job properties.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.propertyBag
-        /// </param>
-        /// <param name="internalPropertyBag">
-        /// Job internal properties.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.internalPropertyBag
-        /// </param>
-        /// <param name="progressPercentage">
-        /// Indicates progress of the job. Null if it has not started or completed.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.progressPercentage
-        /// </param>
-        /// <param name="estimatedRemainingDurationValue">
-        /// Time remaining for execution of this job.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.estimatedRemainingDuration
-        /// </param>
-        /// <param name="dynamicErrorMessage">
-        /// Non localized error message on job execution.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.dynamicErrorMessage
-        /// </param>
+        /// <param name="tasksList"> List of tasks associated with this job. </param>
+        /// <param name="propertyBag"> Job properties. </param>
+        /// <param name="internalPropertyBag"> Job internal properties. </param>
+        /// <param name="progressPercentage"> Indicates progress of the job. Null if it has not started or completed. </param>
+        /// <param name="estimatedRemainingDurationValue"> Time remaining for execution of this job. </param>
+        /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
         internal IaasVmJobExtendedInfo(IList<IaasVmJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, IDictionary<string, string> internalPropertyBag, double? progressPercentage, string estimatedRemainingDurationValue, string dynamicErrorMessage)
         {
             TasksList = tasksList;
@@ -59,35 +38,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DynamicErrorMessage = dynamicErrorMessage;
         }
 
-        /// <summary>
-        /// List of tasks associated with this job.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.tasksList
-        /// </summary>
+        /// <summary> List of tasks associated with this job. </summary>
         public IList<IaasVmJobTaskDetails> TasksList { get; }
-        /// <summary>
-        /// Job properties.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.propertyBag
-        /// </summary>
+        /// <summary> Job properties. </summary>
         public IDictionary<string, string> PropertyBag { get; }
-        /// <summary>
-        /// Job internal properties.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.internalPropertyBag
-        /// </summary>
+        /// <summary> Job internal properties. </summary>
         public IDictionary<string, string> InternalPropertyBag { get; }
-        /// <summary>
-        /// Indicates progress of the job. Null if it has not started or completed.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.progressPercentage
-        /// </summary>
+        /// <summary> Indicates progress of the job. Null if it has not started or completed. </summary>
         public double? ProgressPercentage { get; set; }
-        /// <summary>
-        /// Time remaining for execution of this job.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.estimatedRemainingDuration
-        /// </summary>
+        /// <summary> Time remaining for execution of this job. </summary>
         public string EstimatedRemainingDurationValue { get; set; }
-        /// <summary>
-        /// Non localized error message on job execution.
-        /// Serialized Name: AzureIaaSVMJobExtendedInfo.dynamicErrorMessage
-        /// </summary>
+        /// <summary> Non localized error message on job execution. </summary>
         public string DynamicErrorMessage { get; set; }
     }
 }

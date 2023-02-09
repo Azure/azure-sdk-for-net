@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Enabled or Disabled.
-    /// Serialized Name: EnhancedSecurityState
-    /// </summary>
+    /// <summary> Enabled or Disabled. </summary>
     public readonly partial struct EnhancedSecurityState : IEquatable<EnhancedSecurityState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: EnhancedSecurityState.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static EnhancedSecurityState Invalid { get; } = new EnhancedSecurityState(InvalidValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: EnhancedSecurityState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static EnhancedSecurityState Enabled { get; } = new EnhancedSecurityState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: EnhancedSecurityState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static EnhancedSecurityState Disabled { get; } = new EnhancedSecurityState(DisabledValue);
         /// <summary> Determines if two <see cref="EnhancedSecurityState"/> values are the same. </summary>
         public static bool operator ==(EnhancedSecurityState left, EnhancedSecurityState right) => left.Equals(right);

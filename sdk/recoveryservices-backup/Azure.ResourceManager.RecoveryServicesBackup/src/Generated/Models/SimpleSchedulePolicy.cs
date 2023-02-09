@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Simple policy schedule.
-    /// Serialized Name: SimpleSchedulePolicy
-    /// </summary>
+    /// <summary> Simple policy schedule. </summary>
     public partial class SimpleSchedulePolicy : SchedulePolicy
     {
         /// <summary> Initializes a new instance of SimpleSchedulePolicy. </summary>
@@ -26,30 +23,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of SimpleSchedulePolicy. </summary>
-        /// <param name="schedulePolicyType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: SchedulePolicy.schedulePolicyType
-        /// </param>
-        /// <param name="scheduleRunFrequency">
-        /// Frequency of the schedule operation of this policy.
-        /// Serialized Name: SimpleSchedulePolicy.scheduleRunFrequency
-        /// </param>
-        /// <param name="scheduleRunDays">
-        /// List of days of week this schedule has to be run.
-        /// Serialized Name: SimpleSchedulePolicy.scheduleRunDays
-        /// </param>
-        /// <param name="scheduleRunTimes">
-        /// List of times of day this schedule has to be run.
-        /// Serialized Name: SimpleSchedulePolicy.scheduleRunTimes
-        /// </param>
-        /// <param name="hourlySchedule">
-        /// Hourly Schedule of this Policy
-        /// Serialized Name: SimpleSchedulePolicy.hourlySchedule
-        /// </param>
-        /// <param name="scheduleWeeklyFrequency">
-        /// At every number weeks this schedule has to be run.
-        /// Serialized Name: SimpleSchedulePolicy.scheduleWeeklyFrequency
-        /// </param>
+        /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="scheduleRunFrequency"> Frequency of the schedule operation of this policy. </param>
+        /// <param name="scheduleRunDays"> List of days of week this schedule has to be run. </param>
+        /// <param name="scheduleRunTimes"> List of times of day this schedule has to be run. </param>
+        /// <param name="hourlySchedule"> Hourly Schedule of this Policy. </param>
+        /// <param name="scheduleWeeklyFrequency"> At every number weeks this schedule has to be run. </param>
         internal SimpleSchedulePolicy(string schedulePolicyType, ScheduleRunType? scheduleRunFrequency, IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, BackupHourlySchedule hourlySchedule, int? scheduleWeeklyFrequency) : base(schedulePolicyType)
         {
             ScheduleRunFrequency = scheduleRunFrequency;
@@ -60,30 +39,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SchedulePolicyType = schedulePolicyType ?? "SimpleSchedulePolicy";
         }
 
-        /// <summary>
-        /// Frequency of the schedule operation of this policy.
-        /// Serialized Name: SimpleSchedulePolicy.scheduleRunFrequency
-        /// </summary>
+        /// <summary> Frequency of the schedule operation of this policy. </summary>
         public ScheduleRunType? ScheduleRunFrequency { get; set; }
-        /// <summary>
-        /// List of days of week this schedule has to be run.
-        /// Serialized Name: SimpleSchedulePolicy.scheduleRunDays
-        /// </summary>
+        /// <summary> List of days of week this schedule has to be run. </summary>
         public IList<BackupDayOfWeek> ScheduleRunDays { get; }
-        /// <summary>
-        /// List of times of day this schedule has to be run.
-        /// Serialized Name: SimpleSchedulePolicy.scheduleRunTimes
-        /// </summary>
+        /// <summary> List of times of day this schedule has to be run. </summary>
         public IList<DateTimeOffset> ScheduleRunTimes { get; }
-        /// <summary>
-        /// Hourly Schedule of this Policy
-        /// Serialized Name: SimpleSchedulePolicy.hourlySchedule
-        /// </summary>
+        /// <summary> Hourly Schedule of this Policy. </summary>
         public BackupHourlySchedule HourlySchedule { get; set; }
-        /// <summary>
-        /// At every number weeks this schedule has to be run.
-        /// Serialized Name: SimpleSchedulePolicy.scheduleWeeklyFrequency
-        /// </summary>
+        /// <summary> At every number weeks this schedule has to be run. </summary>
         public int? ScheduleWeeklyFrequency { get; set; }
     }
 }

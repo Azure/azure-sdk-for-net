@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Type of the backup engine.
-    /// Serialized Name: BackupEngineType
-    /// </summary>
+    /// <summary> Type of the backup engine. </summary>
     internal readonly partial struct BackupEngineType : IEquatable<BackupEngineType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string DpmBackupEngineValue = "DpmBackupEngine";
         private const string AzureBackupServerEngineValue = "AzureBackupServerEngine";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: BackupEngineType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static BackupEngineType Invalid { get; } = new BackupEngineType(InvalidValue);
-        /// <summary>
-        /// DpmBackupEngine
-        /// Serialized Name: BackupEngineType.DpmBackupEngine
-        /// </summary>
+        /// <summary> DpmBackupEngine. </summary>
         public static BackupEngineType DpmBackupEngine { get; } = new BackupEngineType(DpmBackupEngineValue);
-        /// <summary>
-        /// AzureBackupServerEngine
-        /// Serialized Name: BackupEngineType.AzureBackupServerEngine
-        /// </summary>
+        /// <summary> AzureBackupServerEngine. </summary>
         public static BackupEngineType AzureBackupServerEngine { get; } = new BackupEngineType(AzureBackupServerEngineValue);
         /// <summary> Determines if two <see cref="BackupEngineType"/> values are the same. </summary>
         public static bool operator ==(BackupEngineType left, BackupEngineType right) => left.Equals(right);

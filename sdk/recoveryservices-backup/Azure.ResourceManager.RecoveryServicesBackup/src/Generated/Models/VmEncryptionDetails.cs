@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Details needed if the VM was encrypted at the time of backup.
-    /// Serialized Name: EncryptionDetails
-    /// </summary>
+    /// <summary> Details needed if the VM was encrypted at the time of backup. </summary>
     public partial class VmEncryptionDetails
     {
         /// <summary> Initializes a new instance of VmEncryptionDetails. </summary>
@@ -21,59 +19,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of VmEncryptionDetails. </summary>
-        /// <param name="encryptionEnabled">
-        /// Identifies whether this backup copy represents an encrypted VM at the time of backup.
-        /// Serialized Name: EncryptionDetails.encryptionEnabled
-        /// </param>
-        /// <param name="kekUri">
-        /// Key Url.
-        /// Serialized Name: EncryptionDetails.kekUrl
-        /// </param>
-        /// <param name="secretKeyUri">
-        /// Secret Url.
-        /// Serialized Name: EncryptionDetails.secretKeyUrl
-        /// </param>
-        /// <param name="kekVaultId">
-        /// ID of Key Vault where KEK is stored.
-        /// Serialized Name: EncryptionDetails.kekVaultId
-        /// </param>
-        /// <param name="secretKeyVaultId">
-        /// ID of Key Vault where Secret is stored.
-        /// Serialized Name: EncryptionDetails.secretKeyVaultId
-        /// </param>
-        internal VmEncryptionDetails(bool? encryptionEnabled, Uri kekUri, Uri secretKeyUri, string kekVaultId, string secretKeyVaultId)
+        /// <param name="isEncryptionEnabled"> Identifies whether this backup copy represents an encrypted VM at the time of backup. </param>
+        /// <param name="kekUri"> Key Url. </param>
+        /// <param name="secretKeyUri"> Secret Url. </param>
+        /// <param name="kekVaultId"> ID of Key Vault where KEK is stored. </param>
+        /// <param name="secretKeyVaultId"> ID of Key Vault where Secret is stored. </param>
+        internal VmEncryptionDetails(bool? isEncryptionEnabled, Uri kekUri, Uri secretKeyUri, ResourceIdentifier kekVaultId, ResourceIdentifier secretKeyVaultId)
         {
-            EncryptionEnabled = encryptionEnabled;
+            IsEncryptionEnabled = isEncryptionEnabled;
             KekUri = kekUri;
             SecretKeyUri = secretKeyUri;
             KekVaultId = kekVaultId;
             SecretKeyVaultId = secretKeyVaultId;
         }
 
-        /// <summary>
-        /// Identifies whether this backup copy represents an encrypted VM at the time of backup.
-        /// Serialized Name: EncryptionDetails.encryptionEnabled
-        /// </summary>
-        public bool? EncryptionEnabled { get; set; }
-        /// <summary>
-        /// Key Url.
-        /// Serialized Name: EncryptionDetails.kekUrl
-        /// </summary>
+        /// <summary> Identifies whether this backup copy represents an encrypted VM at the time of backup. </summary>
+        public bool? IsEncryptionEnabled { get; set; }
+        /// <summary> Key Url. </summary>
         public Uri KekUri { get; set; }
-        /// <summary>
-        /// Secret Url.
-        /// Serialized Name: EncryptionDetails.secretKeyUrl
-        /// </summary>
+        /// <summary> Secret Url. </summary>
         public Uri SecretKeyUri { get; set; }
-        /// <summary>
-        /// ID of Key Vault where KEK is stored.
-        /// Serialized Name: EncryptionDetails.kekVaultId
-        /// </summary>
-        public string KekVaultId { get; set; }
-        /// <summary>
-        /// ID of Key Vault where Secret is stored.
-        /// Serialized Name: EncryptionDetails.secretKeyVaultId
-        /// </summary>
-        public string SecretKeyVaultId { get; set; }
+        /// <summary> ID of Key Vault where KEK is stored. </summary>
+        public ResourceIdentifier KekVaultId { get; set; }
+        /// <summary> ID of Key Vault where Secret is stored. </summary>
+        public ResourceIdentifier SecretKeyVaultId { get; set; }
     }
 }

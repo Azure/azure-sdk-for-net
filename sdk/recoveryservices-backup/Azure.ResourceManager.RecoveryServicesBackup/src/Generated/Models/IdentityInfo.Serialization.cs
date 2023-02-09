@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static IdentityInfo DeserializeIdentityInfo(JsonElement element)
         {
             Optional<bool> isSystemAssignedIdentity = default;
-            Optional<string> managedIdentityResourceId = default;
+            Optional<ResourceIdentifier> managedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSystemAssignedIdentity"))
@@ -46,7 +46,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("managedIdentityResourceId"))
                 {
-                    managedIdentityResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    managedIdentityResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

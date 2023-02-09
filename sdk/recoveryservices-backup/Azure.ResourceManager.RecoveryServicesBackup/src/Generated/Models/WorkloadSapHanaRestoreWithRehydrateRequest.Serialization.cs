@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
             Optional<RecoveryType> recoveryType = default;
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<TargetRestoreInfo> targetInfo = default;
             Optional<RecoveryMode> recoveryMode = default;
-            Optional<string> targetVirtualMachineId = default;
+            Optional<ResourceIdentifier> targetVirtualMachineId = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -96,7 +96,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("propertyBag"))
@@ -136,7 +141,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("targetVirtualMachineId"))
                 {
-                    targetVirtualMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetVirtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("objectType"))

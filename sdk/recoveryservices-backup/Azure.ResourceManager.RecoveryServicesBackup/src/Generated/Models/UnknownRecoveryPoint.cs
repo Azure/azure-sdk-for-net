@@ -7,17 +7,11 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The UnknownRecoveryPoint.
-    /// Serialized Name: UnknownRecoveryPoint
-    /// </summary>
+    /// <summary> The UnknownRecoveryPoint. </summary>
     internal partial class UnknownRecoveryPoint : BackupRecoveryPointProperties
     {
         /// <summary> Initializes a new instance of UnknownRecoveryPoint. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RecoveryPoint.objectType
-        /// </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal UnknownRecoveryPoint(string objectType) : base(objectType)
         {
             ObjectType = objectType ?? "Unknown";

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The BackupDailySchedule.
-    /// Serialized Name: DailySchedule
-    /// </summary>
+    /// <summary> The BackupDailySchedule. </summary>
     internal partial class BackupDailySchedule
     {
         /// <summary> Initializes a new instance of BackupDailySchedule. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupDailySchedule. </summary>
-        /// <param name="scheduleRunTimes">
-        /// List of times of day this schedule has to be run.
-        /// Serialized Name: DailySchedule.scheduleRunTimes
-        /// </param>
+        /// <param name="scheduleRunTimes"> List of times of day this schedule has to be run. </param>
         internal BackupDailySchedule(IList<DateTimeOffset> scheduleRunTimes)
         {
             ScheduleRunTimes = scheduleRunTimes;
         }
 
-        /// <summary>
-        /// List of times of day this schedule has to be run.
-        /// Serialized Name: DailySchedule.scheduleRunTimes
-        /// </summary>
+        /// <summary> List of times of day this schedule has to be run. </summary>
         public IList<DateTimeOffset> ScheduleRunTimes { get; }
     }
 }

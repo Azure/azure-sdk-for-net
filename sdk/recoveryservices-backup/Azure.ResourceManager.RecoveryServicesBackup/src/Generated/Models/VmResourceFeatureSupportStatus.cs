@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Support status of feature
-    /// Serialized Name: SupportStatus
-    /// </summary>
+    /// <summary> Support status of feature. </summary>
     public readonly partial struct VmResourceFeatureSupportStatus : IEquatable<VmResourceFeatureSupportStatus>
     {
         private readonly string _value;
@@ -27,34 +24,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         private const string InvalidValue = "Invalid";
         private const string SupportedValue = "Supported";
-        private const string DefaultOFFValue = "DefaultOFF";
-        private const string DefaultONValue = "DefaultON";
+        private const string DefaultOffValue = "DefaultOFF";
+        private const string DefaultOnValue = "DefaultON";
         private const string NotSupportedValue = "NotSupported";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: SupportStatus.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static VmResourceFeatureSupportStatus Invalid { get; } = new VmResourceFeatureSupportStatus(InvalidValue);
-        /// <summary>
-        /// Supported
-        /// Serialized Name: SupportStatus.Supported
-        /// </summary>
+        /// <summary> Supported. </summary>
         public static VmResourceFeatureSupportStatus Supported { get; } = new VmResourceFeatureSupportStatus(SupportedValue);
-        /// <summary>
-        /// DefaultOFF
-        /// Serialized Name: SupportStatus.DefaultOFF
-        /// </summary>
-        public static VmResourceFeatureSupportStatus DefaultOFF { get; } = new VmResourceFeatureSupportStatus(DefaultOFFValue);
-        /// <summary>
-        /// DefaultON
-        /// Serialized Name: SupportStatus.DefaultON
-        /// </summary>
-        public static VmResourceFeatureSupportStatus DefaultON { get; } = new VmResourceFeatureSupportStatus(DefaultONValue);
-        /// <summary>
-        /// NotSupported
-        /// Serialized Name: SupportStatus.NotSupported
-        /// </summary>
+        /// <summary> DefaultOFF. </summary>
+        public static VmResourceFeatureSupportStatus DefaultOff { get; } = new VmResourceFeatureSupportStatus(DefaultOffValue);
+        /// <summary> DefaultON. </summary>
+        public static VmResourceFeatureSupportStatus DefaultOn { get; } = new VmResourceFeatureSupportStatus(DefaultOnValue);
+        /// <summary> NotSupported. </summary>
         public static VmResourceFeatureSupportStatus NotSupported { get; } = new VmResourceFeatureSupportStatus(NotSupportedValue);
         /// <summary> Determines if two <see cref="VmResourceFeatureSupportStatus"/> values are the same. </summary>
         public static bool operator ==(VmResourceFeatureSupportStatus left, VmResourceFeatureSupportStatus right) => left.Equals(right);

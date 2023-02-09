@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Long term policy schedule.
-    /// Serialized Name: LongTermSchedulePolicy
-    /// </summary>
+    /// <summary> Long term policy schedule. </summary>
     public partial class LongTermSchedulePolicy : SchedulePolicy
     {
         /// <summary> Initializes a new instance of LongTermSchedulePolicy. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of LongTermSchedulePolicy. </summary>
-        /// <param name="schedulePolicyType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: SchedulePolicy.schedulePolicyType
-        /// </param>
+        /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal LongTermSchedulePolicy(string schedulePolicyType) : base(schedulePolicyType)
         {
             SchedulePolicyType = schedulePolicyType ?? "LongTermSchedulePolicy";

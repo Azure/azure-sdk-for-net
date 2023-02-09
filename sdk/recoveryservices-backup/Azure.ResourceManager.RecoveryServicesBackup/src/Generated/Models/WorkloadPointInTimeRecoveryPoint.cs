@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Recovery point specific to PointInTime
-    /// Serialized Name: AzureWorkloadPointInTimeRecoveryPoint
     /// Please note <see cref="WorkloadPointInTimeRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>.
     /// </summary>
@@ -27,44 +26,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadPointInTimeRecoveryPoint. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RecoveryPoint.objectType
-        /// </param>
-        /// <param name="recoveryPointTimeInUTC">
-        /// UTC time at which recovery point was created
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTimeInUTC
-        /// </param>
-        /// <param name="restorePointType">
-        /// Type of restore point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.type
-        /// </param>
-        /// <param name="recoveryPointTierDetails">
-        /// Recovery point tier information.
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTierDetails
-        /// </param>
-        /// <param name="recoveryPointMoveReadinessInfo">
-        /// Eligibility of RP to be moved to another tier
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointMoveReadinessInfo
-        /// </param>
-        /// <param name="recoveryPointProperties">
-        /// Properties of Recovery Point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointProperties
-        /// </param>
-        /// <param name="timeRanges">
-        /// List of log ranges
-        /// Serialized Name: AzureWorkloadPointInTimeRecoveryPoint.timeRanges
-        /// </param>
-        internal WorkloadPointInTimeRecoveryPoint(string objectType, DateTimeOffset? recoveryPointTimeInUTC, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, IList<PointInTimeRange> timeRanges) : base(objectType, recoveryPointTimeInUTC, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
+        /// <param name="restorePointType"> Type of restore point. </param>
+        /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
+        /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
+        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        /// <param name="timeRanges"> List of log ranges. </param>
+        internal WorkloadPointInTimeRecoveryPoint(string objectType, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, IList<PointInTimeRange> timeRanges) : base(objectType, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
         {
             TimeRanges = timeRanges;
             ObjectType = objectType ?? "AzureWorkloadPointInTimeRecoveryPoint";
         }
 
-        /// <summary>
-        /// List of log ranges
-        /// Serialized Name: AzureWorkloadPointInTimeRecoveryPoint.timeRanges
-        /// </summary>
+        /// <summary> List of log ranges. </summary>
         public IList<PointInTimeRange> TimeRanges { get; }
     }
 }

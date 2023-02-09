@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Vault x-cool state
-    /// Serialized Name: XcoolState
-    /// </summary>
+    /// <summary> Vault x-cool state. </summary>
     public readonly partial struct VaultXcoolState : IEquatable<VaultXcoolState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: XcoolState.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static VaultXcoolState Invalid { get; } = new VaultXcoolState(InvalidValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: XcoolState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static VaultXcoolState Enabled { get; } = new VaultXcoolState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: XcoolState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static VaultXcoolState Disabled { get; } = new VaultXcoolState(DisabledValue);
         /// <summary> Determines if two <see cref="VaultXcoolState"/> values are the same. </summary>
         public static bool operator ==(VaultXcoolState left, VaultXcoolState right) => left.Equals(right);

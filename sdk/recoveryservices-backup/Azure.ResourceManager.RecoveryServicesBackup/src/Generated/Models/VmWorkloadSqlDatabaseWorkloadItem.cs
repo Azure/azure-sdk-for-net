@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure VM workload-specific workload item representing SQL Database.
-    /// Serialized Name: AzureVmWorkloadSQLDatabaseWorkloadItem
-    /// </summary>
+    /// <summary> Azure VM workload-specific workload item representing SQL Database. </summary>
     public partial class VmWorkloadSqlDatabaseWorkloadItem : VmWorkloadItem
     {
         /// <summary> Initializes a new instance of VmWorkloadSqlDatabaseWorkloadItem. </summary>
@@ -20,46 +17,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of VmWorkloadSqlDatabaseWorkloadItem. </summary>
-        /// <param name="backupManagementType">
-        /// Type of backup management to backup an item.
-        /// Serialized Name: WorkloadItem.backupManagementType
-        /// </param>
-        /// <param name="workloadType">
-        /// Type of workload for the backup management
-        /// Serialized Name: WorkloadItem.workloadType
-        /// </param>
-        /// <param name="workloadItemType">
-        /// Type of the backup item.
-        /// Serialized Name: WorkloadItem.workloadItemType
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the backup item.
-        /// Serialized Name: WorkloadItem.friendlyName
-        /// </param>
-        /// <param name="protectionState">
-        /// State of the back up item.
-        /// Serialized Name: WorkloadItem.protectionState
-        /// </param>
-        /// <param name="parentName">
-        /// Name for instance or AG
-        /// Serialized Name: AzureVmWorkloadItem.parentName
-        /// </param>
-        /// <param name="serverName">
-        /// Host/Cluster Name for instance or AG
-        /// Serialized Name: AzureVmWorkloadItem.serverName
-        /// </param>
-        /// <param name="isAutoProtectable">
-        /// Indicates if workload item is auto-protectable
-        /// Serialized Name: AzureVmWorkloadItem.isAutoProtectable
-        /// </param>
-        /// <param name="subinquireditemcount">
-        /// For instance or AG, indicates number of DB&apos;s present
-        /// Serialized Name: AzureVmWorkloadItem.subinquireditemcount
-        /// </param>
-        /// <param name="subWorkloadItemCount">
-        /// For instance or AG, indicates number of DB&apos;s to be protected
-        /// Serialized Name: AzureVmWorkloadItem.subWorkloadItemCount
-        /// </param>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="workloadItemType"> Type of the backup item. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentName"> Name for instance or AG. </param>
+        /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
+        /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
+        /// <param name="subinquireditemcount"> For instance or AG, indicates number of DB&apos;s present. </param>
+        /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB&apos;s to be protected. </param>
         internal VmWorkloadSqlDatabaseWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, ProtectionStatus? protectionState, string parentName, string serverName, bool? isAutoProtectable, int? subinquireditemcount, int? subWorkloadItemCount) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, parentName, serverName, isAutoProtectable, subinquireditemcount, subWorkloadItemCount)
         {
             WorkloadItemType = workloadItemType ?? "SQLDataBase";

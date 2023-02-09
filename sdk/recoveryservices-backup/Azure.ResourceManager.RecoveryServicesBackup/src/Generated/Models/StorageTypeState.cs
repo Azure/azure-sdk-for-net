@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked.
-    /// Serialized Name: StorageTypeState
-    /// </summary>
+    /// <summary> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </summary>
     public readonly partial struct StorageTypeState : IEquatable<StorageTypeState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string LockedValue = "Locked";
         private const string UnlockedValue = "Unlocked";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: StorageTypeState.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static StorageTypeState Invalid { get; } = new StorageTypeState(InvalidValue);
-        /// <summary>
-        /// Locked
-        /// Serialized Name: StorageTypeState.Locked
-        /// </summary>
+        /// <summary> Locked. </summary>
         public static StorageTypeState Locked { get; } = new StorageTypeState(LockedValue);
-        /// <summary>
-        /// Unlocked
-        /// Serialized Name: StorageTypeState.Unlocked
-        /// </summary>
+        /// <summary> Unlocked. </summary>
         public static StorageTypeState Unlocked { get; } = new StorageTypeState(UnlockedValue);
         /// <summary> Determines if two <see cref="StorageTypeState"/> values are the same. </summary>
         public static bool operator ==(StorageTypeState left, StorageTypeState right) => left.Equals(right);

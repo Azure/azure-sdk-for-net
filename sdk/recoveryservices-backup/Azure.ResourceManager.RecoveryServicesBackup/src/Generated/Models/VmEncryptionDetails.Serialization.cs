@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptionEnabled))
+            if (Optional.IsDefined(IsEncryptionEnabled))
             {
                 writer.WritePropertyName("encryptionEnabled");
-                writer.WriteBooleanValue(EncryptionEnabled.Value);
+                writer.WriteBooleanValue(IsEncryptionEnabled.Value);
             }
             if (Optional.IsDefined(KekUri))
             {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> encryptionEnabled = default;
             Optional<Uri> kekUrl = default;
             Optional<Uri> secretKeyUrl = default;
-            Optional<string> kekVaultId = default;
-            Optional<string> secretKeyVaultId = default;
+            Optional<ResourceIdentifier> kekVaultId = default;
+            Optional<ResourceIdentifier> secretKeyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryptionEnabled"))
@@ -85,12 +85,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("kekVaultId"))
                 {
-                    kekVaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    kekVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secretKeyVaultId"))
                 {
-                    secretKeyVaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    secretKeyVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

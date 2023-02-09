@@ -5,15 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The ResourceGuardProxyProperties.
-    /// Serialized Name: ResourceGuardProxyBase
-    /// </summary>
+    /// <summary> The ResourceGuardProxyProperties. </summary>
     public partial class ResourceGuardProxyProperties
     {
         /// <summary> Initializes a new instance of ResourceGuardProxyProperties. </summary>
@@ -23,25 +21,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ResourceGuardProxyProperties. </summary>
-        /// <param name="resourceGuardResourceId"> Serialized Name: ResourceGuardProxyBase.resourceGuardResourceId. </param>
-        /// <param name="resourceGuardOperationDetails"> Serialized Name: ResourceGuardProxyBase.resourceGuardOperationDetails. </param>
-        /// <param name="lastUpdatedTime"> Serialized Name: ResourceGuardProxyBase.lastUpdatedTime. </param>
-        /// <param name="description"> Serialized Name: ResourceGuardProxyBase.description. </param>
-        internal ResourceGuardProxyProperties(string resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, string lastUpdatedTime, string description)
+        /// <param name="resourceGuardResourceId"></param>
+        /// <param name="resourceGuardOperationDetails"></param>
+        /// <param name="lastUpdatedOn"></param>
+        /// <param name="description"></param>
+        internal ResourceGuardProxyProperties(ResourceIdentifier resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, DateTimeOffset? lastUpdatedOn, string description)
         {
             ResourceGuardResourceId = resourceGuardResourceId;
             ResourceGuardOperationDetails = resourceGuardOperationDetails;
-            LastUpdatedTime = lastUpdatedTime;
+            LastUpdatedOn = lastUpdatedOn;
             Description = description;
         }
 
-        /// <summary> Serialized Name: ResourceGuardProxyBase.resourceGuardResourceId. </summary>
-        public string ResourceGuardResourceId { get; set; }
-        /// <summary> Serialized Name: ResourceGuardProxyBase.resourceGuardOperationDetails. </summary>
+        /// <summary> Gets or sets the resource guard resource id. </summary>
+        public ResourceIdentifier ResourceGuardResourceId { get; set; }
+        /// <summary> Gets the resource guard operation details. </summary>
         public IList<ResourceGuardOperationDetail> ResourceGuardOperationDetails { get; }
-        /// <summary> Serialized Name: ResourceGuardProxyBase.lastUpdatedTime. </summary>
-        public string LastUpdatedTime { get; set; }
-        /// <summary> Serialized Name: ResourceGuardProxyBase.description. </summary>
+        /// <summary> Gets or sets the last updated on. </summary>
+        public DateTimeOffset? LastUpdatedOn { get; set; }
+        /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }
 }

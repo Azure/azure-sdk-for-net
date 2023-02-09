@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("storageTypeState");
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
-            if (Optional.IsDefined(CrossRegionRestoreFlag))
+            if (Optional.IsDefined(EnableCrossRegionRestore))
             {
                 writer.WritePropertyName("crossRegionRestoreFlag");
-                writer.WriteBooleanValue(CrossRegionRestoreFlag.Value);
+                writer.WriteBooleanValue(EnableCrossRegionRestore.Value);
             }
             if (Optional.IsDefined(DedupState))
             {

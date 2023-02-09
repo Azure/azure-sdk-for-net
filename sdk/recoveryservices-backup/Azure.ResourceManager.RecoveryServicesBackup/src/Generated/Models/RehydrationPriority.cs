@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Rehydration Priority
-    /// Serialized Name: RehydrationPriority
-    /// </summary>
+    /// <summary> Rehydration Priority. </summary>
     public readonly partial struct RehydrationPriority : IEquatable<RehydrationPriority>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string StandardValue = "Standard";
         private const string HighValue = "High";
 
-        /// <summary>
-        /// Standard
-        /// Serialized Name: RehydrationPriority.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         public static RehydrationPriority Standard { get; } = new RehydrationPriority(StandardValue);
-        /// <summary>
-        /// High
-        /// Serialized Name: RehydrationPriority.High
-        /// </summary>
+        /// <summary> High. </summary>
         public static RehydrationPriority High { get; } = new RehydrationPriority(HighValue);
         /// <summary> Determines if two <see cref="RehydrationPriority"/> values are the same. </summary>
         public static bool operator ==(RehydrationPriority left, RehydrationPriority right) => left.Equals(right);

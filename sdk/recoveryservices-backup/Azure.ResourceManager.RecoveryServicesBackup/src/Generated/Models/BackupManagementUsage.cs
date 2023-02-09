@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Backup management usages of a vault.
-    /// Serialized Name: BackupManagementUsage
-    /// </summary>
+    /// <summary> Backup management usages of a vault. </summary>
     public partial class BackupManagementUsage
     {
         /// <summary> Initializes a new instance of BackupManagementUsage. </summary>
@@ -21,30 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupManagementUsage. </summary>
-        /// <param name="unit">
-        /// Unit of the usage.
-        /// Serialized Name: BackupManagementUsage.unit
-        /// </param>
-        /// <param name="quotaPeriod">
-        /// Quota period of usage.
-        /// Serialized Name: BackupManagementUsage.quotaPeriod
-        /// </param>
-        /// <param name="nextResetOn">
-        /// Next reset time of usage.
-        /// Serialized Name: BackupManagementUsage.nextResetTime
-        /// </param>
-        /// <param name="currentValue">
-        /// Current value of usage.
-        /// Serialized Name: BackupManagementUsage.currentValue
-        /// </param>
-        /// <param name="limit">
-        /// Limit of usage.
-        /// Serialized Name: BackupManagementUsage.limit
-        /// </param>
-        /// <param name="name">
-        /// Name of usage.
-        /// Serialized Name: BackupManagementUsage.name
-        /// </param>
+        /// <param name="unit"> Unit of the usage. </param>
+        /// <param name="quotaPeriod"> Quota period of usage. </param>
+        /// <param name="nextResetOn"> Next reset time of usage. </param>
+        /// <param name="currentValue"> Current value of usage. </param>
+        /// <param name="limit"> Limit of usage. </param>
+        /// <param name="name"> Name of usage. </param>
         internal BackupManagementUsage(BackupUsagesUnit? unit, string quotaPeriod, DateTimeOffset? nextResetOn, long? currentValue, long? limit, BackupNameInfo name)
         {
             Unit = unit;
@@ -55,35 +34,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Name = name;
         }
 
-        /// <summary>
-        /// Unit of the usage.
-        /// Serialized Name: BackupManagementUsage.unit
-        /// </summary>
+        /// <summary> Unit of the usage. </summary>
         public BackupUsagesUnit? Unit { get; }
-        /// <summary>
-        /// Quota period of usage.
-        /// Serialized Name: BackupManagementUsage.quotaPeriod
-        /// </summary>
+        /// <summary> Quota period of usage. </summary>
         public string QuotaPeriod { get; }
-        /// <summary>
-        /// Next reset time of usage.
-        /// Serialized Name: BackupManagementUsage.nextResetTime
-        /// </summary>
+        /// <summary> Next reset time of usage. </summary>
         public DateTimeOffset? NextResetOn { get; }
-        /// <summary>
-        /// Current value of usage.
-        /// Serialized Name: BackupManagementUsage.currentValue
-        /// </summary>
+        /// <summary> Current value of usage. </summary>
         public long? CurrentValue { get; }
-        /// <summary>
-        /// Limit of usage.
-        /// Serialized Name: BackupManagementUsage.limit
-        /// </summary>
+        /// <summary> Limit of usage. </summary>
         public long? Limit { get; }
-        /// <summary>
-        /// Name of usage.
-        /// Serialized Name: BackupManagementUsage.name
-        /// </summary>
+        /// <summary> Name of usage. </summary>
         public BackupNameInfo Name { get; }
     }
 }

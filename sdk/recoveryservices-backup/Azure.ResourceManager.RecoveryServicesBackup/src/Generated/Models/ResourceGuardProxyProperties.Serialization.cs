@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -31,10 +32,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastUpdatedTime))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime");
-                writer.WriteStringValue(LastUpdatedTime);
+                writer.WriteStringValue(LastUpdatedOn.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -46,15 +47,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ResourceGuardProxyProperties DeserializeResourceGuardProxyProperties(JsonElement element)
         {
-            Optional<string> resourceGuardResourceId = default;
+            Optional<ResourceIdentifier> resourceGuardResourceId = default;
             Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
-            Optional<string> lastUpdatedTime = default;
+            Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGuardResourceId"))
                 {
-                    resourceGuardResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceGuardResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceGuardOperationDetails"))
@@ -74,7 +80,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("lastUpdatedTime"))
                 {
-                    lastUpdatedTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastUpdatedTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -83,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new ResourceGuardProxyProperties(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), lastUpdatedTime.Value, description.Value);
+            return new ResourceGuardProxyProperties(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), Optional.ToNullable(lastUpdatedTime), description.Value);
         }
     }
 }

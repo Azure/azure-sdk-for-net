@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The resource storage details.
-    /// Serialized Name: BackupResourceConfig
-    /// </summary>
+    /// <summary> The resource storage details. </summary>
     public partial class BackupResourceConfigProperties
     {
         /// <summary> Initializes a new instance of BackupResourceConfigProperties. </summary>
@@ -19,69 +16,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupResourceConfigProperties. </summary>
-        /// <param name="storageModelType">
-        /// Storage type
-        /// Serialized Name: BackupResourceConfig.storageModelType
-        /// </param>
-        /// <param name="storageType">
-        /// Storage type.
-        /// Serialized Name: BackupResourceConfig.storageType
-        /// </param>
-        /// <param name="storageTypeState">
-        /// Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked.
-        /// Serialized Name: BackupResourceConfig.storageTypeState
-        /// </param>
-        /// <param name="crossRegionRestoreFlag">
-        /// Opt in details of Cross Region Restore feature.
-        /// Serialized Name: BackupResourceConfig.crossRegionRestoreFlag
-        /// </param>
-        /// <param name="dedupState">
-        /// Vault Dedup state
-        /// Serialized Name: BackupResourceConfig.dedupState
-        /// </param>
-        /// <param name="xcoolState">
-        /// Vault x-cool state
-        /// Serialized Name: BackupResourceConfig.xcoolState
-        /// </param>
-        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, StorageTypeState? storageTypeState, bool? crossRegionRestoreFlag, VaultDedupState? dedupState, VaultXcoolState? xcoolState)
+        /// <param name="storageModelType"> Storage type. </param>
+        /// <param name="storageType"> Storage type. </param>
+        /// <param name="storageTypeState"> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </param>
+        /// <param name="enableCrossRegionRestore"> Opt in details of Cross Region Restore feature. </param>
+        /// <param name="dedupState"> Vault Dedup state. </param>
+        /// <param name="xcoolState"> Vault x-cool state. </param>
+        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, StorageTypeState? storageTypeState, bool? enableCrossRegionRestore, VaultDedupState? dedupState, VaultXcoolState? xcoolState)
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
             StorageTypeState = storageTypeState;
-            CrossRegionRestoreFlag = crossRegionRestoreFlag;
+            EnableCrossRegionRestore = enableCrossRegionRestore;
             DedupState = dedupState;
             XcoolState = xcoolState;
         }
 
-        /// <summary>
-        /// Storage type
-        /// Serialized Name: BackupResourceConfig.storageModelType
-        /// </summary>
+        /// <summary> Storage type. </summary>
         public BackupStorageType? StorageModelType { get; set; }
-        /// <summary>
-        /// Storage type.
-        /// Serialized Name: BackupResourceConfig.storageType
-        /// </summary>
+        /// <summary> Storage type. </summary>
         public BackupStorageType? StorageType { get; set; }
-        /// <summary>
-        /// Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked.
-        /// Serialized Name: BackupResourceConfig.storageTypeState
-        /// </summary>
+        /// <summary> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </summary>
         public StorageTypeState? StorageTypeState { get; set; }
-        /// <summary>
-        /// Opt in details of Cross Region Restore feature.
-        /// Serialized Name: BackupResourceConfig.crossRegionRestoreFlag
-        /// </summary>
-        public bool? CrossRegionRestoreFlag { get; set; }
-        /// <summary>
-        /// Vault Dedup state
-        /// Serialized Name: BackupResourceConfig.dedupState
-        /// </summary>
+        /// <summary> Opt in details of Cross Region Restore feature. </summary>
+        public bool? EnableCrossRegionRestore { get; set; }
+        /// <summary> Vault Dedup state. </summary>
         public VaultDedupState? DedupState { get; set; }
-        /// <summary>
-        /// Vault x-cool state
-        /// Serialized Name: BackupResourceConfig.xcoolState
-        /// </summary>
+        /// <summary> Vault x-cool state. </summary>
         public VaultXcoolState? XcoolState { get; set; }
     }
 }

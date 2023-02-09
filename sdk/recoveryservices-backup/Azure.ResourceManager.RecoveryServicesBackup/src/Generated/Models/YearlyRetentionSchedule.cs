@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Yearly retention schedule.
-    /// Serialized Name: YearlyRetentionSchedule
-    /// </summary>
+    /// <summary> Yearly retention schedule. </summary>
     public partial class YearlyRetentionSchedule
     {
         /// <summary> Initializes a new instance of YearlyRetentionSchedule. </summary>
@@ -25,30 +22,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of YearlyRetentionSchedule. </summary>
-        /// <param name="retentionScheduleFormatType">
-        /// Retention schedule format for yearly retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionScheduleFormatType
-        /// </param>
-        /// <param name="monthsOfYear">
-        /// List of months of year of yearly retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.monthsOfYear
-        /// </param>
-        /// <param name="retentionScheduleDaily">
-        /// Daily retention format for yearly retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionScheduleDaily
-        /// </param>
-        /// <param name="retentionScheduleWeekly">
-        /// Weekly retention format for yearly retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionScheduleWeekly
-        /// </param>
-        /// <param name="retentionTimes">
-        /// Retention times of retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionTimes
-        /// </param>
-        /// <param name="retentionDuration">
-        /// Retention duration of retention Policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionDuration
-        /// </param>
+        /// <param name="retentionScheduleFormatType"> Retention schedule format for yearly retention policy. </param>
+        /// <param name="monthsOfYear"> List of months of year of yearly retention policy. </param>
+        /// <param name="retentionScheduleDaily"> Daily retention format for yearly retention policy. </param>
+        /// <param name="retentionScheduleWeekly"> Weekly retention format for yearly retention policy. </param>
+        /// <param name="retentionTimes"> Retention times of retention policy. </param>
+        /// <param name="retentionDuration"> Retention duration of retention Policy. </param>
         internal YearlyRetentionSchedule(RetentionScheduleFormat? retentionScheduleFormatType, IList<BackupMonthOfYear> monthsOfYear, DailyRetentionFormat retentionScheduleDaily, WeeklyRetentionFormat retentionScheduleWeekly, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
         {
             RetentionScheduleFormatType = retentionScheduleFormatType;
@@ -59,25 +38,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RetentionDuration = retentionDuration;
         }
 
-        /// <summary>
-        /// Retention schedule format for yearly retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionScheduleFormatType
-        /// </summary>
+        /// <summary> Retention schedule format for yearly retention policy. </summary>
         public RetentionScheduleFormat? RetentionScheduleFormatType { get; set; }
-        /// <summary>
-        /// List of months of year of yearly retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.monthsOfYear
-        /// </summary>
+        /// <summary> List of months of year of yearly retention policy. </summary>
         public IList<BackupMonthOfYear> MonthsOfYear { get; }
-        /// <summary>
-        /// Daily retention format for yearly retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionScheduleDaily
-        /// </summary>
+        /// <summary> Daily retention format for yearly retention policy. </summary>
         internal DailyRetentionFormat RetentionScheduleDaily { get; set; }
-        /// <summary>
-        /// List of days of the month.
-        /// Serialized Name: DailyRetentionFormat.daysOfTheMonth
-        /// </summary>
+        /// <summary> List of days of the month. </summary>
         public IList<BackupDay> RetentionScheduleDailyDaysOfTheMonth
         {
             get
@@ -88,20 +55,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        /// <summary>
-        /// Weekly retention format for yearly retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionScheduleWeekly
-        /// </summary>
+        /// <summary> Weekly retention format for yearly retention policy. </summary>
         public WeeklyRetentionFormat RetentionScheduleWeekly { get; set; }
-        /// <summary>
-        /// Retention times of retention policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionTimes
-        /// </summary>
+        /// <summary> Retention times of retention policy. </summary>
         public IList<DateTimeOffset> RetentionTimes { get; }
-        /// <summary>
-        /// Retention duration of retention Policy.
-        /// Serialized Name: YearlyRetentionSchedule.retentionDuration
-        /// </summary>
+        /// <summary> Retention duration of retention Policy. </summary>
         public RetentionDuration RetentionDuration { get; set; }
     }
 }

@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// The base backup engine class. All workload specific backup engines derive from this class.
-    /// Serialized Name: BackupEngineBase
     /// Please note <see cref="BackupEngineProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
     /// </summary>
@@ -21,58 +20,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupEngineProperties. </summary>
-        /// <param name="friendlyName">
-        /// Friendly name of the backup engine.
-        /// Serialized Name: BackupEngineBase.friendlyName
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Type of backup management for the backup engine.
-        /// Serialized Name: BackupEngineBase.backupManagementType
-        /// </param>
-        /// <param name="registrationStatus">
-        /// Registration status of the backup engine with the Recovery Services Vault.
-        /// Serialized Name: BackupEngineBase.registrationStatus
-        /// </param>
-        /// <param name="backupEngineState">
-        /// Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}
-        /// Serialized Name: BackupEngineBase.backupEngineState
-        /// </param>
-        /// <param name="healthStatus">
-        /// Backup status of the backup engine.
-        /// Serialized Name: BackupEngineBase.healthStatus
-        /// </param>
-        /// <param name="backupEngineType">
-        /// Type of the backup engine.
-        /// Serialized Name: BackupEngineBase.backupEngineType
-        /// </param>
-        /// <param name="canReRegister">
-        /// Flag indicating if the backup engine be registered, once already registered.
-        /// Serialized Name: BackupEngineBase.canReRegister
-        /// </param>
-        /// <param name="backupEngineId">
-        /// ID of the backup engine.
-        /// Serialized Name: BackupEngineBase.backupEngineId
-        /// </param>
-        /// <param name="dpmVersion">
-        /// Backup engine version
-        /// Serialized Name: BackupEngineBase.dpmVersion
-        /// </param>
-        /// <param name="azureBackupAgentVersion">
-        /// Backup agent version
-        /// Serialized Name: BackupEngineBase.azureBackupAgentVersion
-        /// </param>
-        /// <param name="isAzureBackupAgentUpgradeAvailable">
-        /// To check if backup agent upgrade available
-        /// Serialized Name: BackupEngineBase.isAzureBackupAgentUpgradeAvailable
-        /// </param>
-        /// <param name="isDpmUpgradeAvailable">
-        /// To check if backup engine upgrade available
-        /// Serialized Name: BackupEngineBase.isDpmUpgradeAvailable
-        /// </param>
-        /// <param name="extendedInfo">
-        /// Extended info of the backupengine
-        /// Serialized Name: BackupEngineBase.extendedInfo
-        /// </param>
+        /// <param name="friendlyName"> Friendly name of the backup engine. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
+        /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>
+        /// <param name="backupEngineState"> Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}. </param>
+        /// <param name="healthStatus"> Backup status of the backup engine. </param>
+        /// <param name="backupEngineType"> Type of the backup engine. </param>
+        /// <param name="canReRegister"> Flag indicating if the backup engine be registered, once already registered. </param>
+        /// <param name="backupEngineId"> ID of the backup engine. </param>
+        /// <param name="dpmVersion"> Backup engine version. </param>
+        /// <param name="azureBackupAgentVersion"> Backup agent version. </param>
+        /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
+        /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
+        /// <param name="extendedInfo"> Extended info of the backupengine. </param>
         internal BackupEngineProperties(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo)
         {
             FriendlyName = friendlyName;
@@ -90,70 +50,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ExtendedInfo = extendedInfo;
         }
 
-        /// <summary>
-        /// Friendly name of the backup engine.
-        /// Serialized Name: BackupEngineBase.friendlyName
-        /// </summary>
+        /// <summary> Friendly name of the backup engine. </summary>
         public string FriendlyName { get; set; }
-        /// <summary>
-        /// Type of backup management for the backup engine.
-        /// Serialized Name: BackupEngineBase.backupManagementType
-        /// </summary>
+        /// <summary> Type of backup management for the backup engine. </summary>
         public BackupManagementType? BackupManagementType { get; set; }
-        /// <summary>
-        /// Registration status of the backup engine with the Recovery Services Vault.
-        /// Serialized Name: BackupEngineBase.registrationStatus
-        /// </summary>
+        /// <summary> Registration status of the backup engine with the Recovery Services Vault. </summary>
         public string RegistrationStatus { get; set; }
-        /// <summary>
-        /// Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}
-        /// Serialized Name: BackupEngineBase.backupEngineState
-        /// </summary>
+        /// <summary> Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}. </summary>
         public string BackupEngineState { get; set; }
-        /// <summary>
-        /// Backup status of the backup engine.
-        /// Serialized Name: BackupEngineBase.healthStatus
-        /// </summary>
+        /// <summary> Backup status of the backup engine. </summary>
         public string HealthStatus { get; set; }
-        /// <summary>
-        /// Type of the backup engine.
-        /// Serialized Name: BackupEngineBase.backupEngineType
-        /// </summary>
+        /// <summary> Type of the backup engine. </summary>
         internal BackupEngineType BackupEngineType { get; set; }
-        /// <summary>
-        /// Flag indicating if the backup engine be registered, once already registered.
-        /// Serialized Name: BackupEngineBase.canReRegister
-        /// </summary>
+        /// <summary> Flag indicating if the backup engine be registered, once already registered. </summary>
         public bool? CanReRegister { get; set; }
-        /// <summary>
-        /// ID of the backup engine.
-        /// Serialized Name: BackupEngineBase.backupEngineId
-        /// </summary>
+        /// <summary> ID of the backup engine. </summary>
         public string BackupEngineId { get; set; }
-        /// <summary>
-        /// Backup engine version
-        /// Serialized Name: BackupEngineBase.dpmVersion
-        /// </summary>
+        /// <summary> Backup engine version. </summary>
         public string DpmVersion { get; set; }
-        /// <summary>
-        /// Backup agent version
-        /// Serialized Name: BackupEngineBase.azureBackupAgentVersion
-        /// </summary>
+        /// <summary> Backup agent version. </summary>
         public string AzureBackupAgentVersion { get; set; }
-        /// <summary>
-        /// To check if backup agent upgrade available
-        /// Serialized Name: BackupEngineBase.isAzureBackupAgentUpgradeAvailable
-        /// </summary>
+        /// <summary> To check if backup agent upgrade available. </summary>
         public bool? IsAzureBackupAgentUpgradeAvailable { get; set; }
-        /// <summary>
-        /// To check if backup engine upgrade available
-        /// Serialized Name: BackupEngineBase.isDpmUpgradeAvailable
-        /// </summary>
+        /// <summary> To check if backup engine upgrade available. </summary>
         public bool? IsDpmUpgradeAvailable { get; set; }
-        /// <summary>
-        /// Extended info of the backupengine
-        /// Serialized Name: BackupEngineBase.extendedInfo
-        /// </summary>
+        /// <summary> Extended info of the backupengine. </summary>
         public BackupEngineExtendedInfo ExtendedInfo { get; set; }
     }
 }

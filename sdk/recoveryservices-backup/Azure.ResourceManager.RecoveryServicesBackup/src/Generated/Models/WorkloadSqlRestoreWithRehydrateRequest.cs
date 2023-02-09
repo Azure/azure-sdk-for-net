@@ -6,13 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// AzureWorkload SQL-specific restore with integrated rehydration of recovery point
-    /// Serialized Name: AzureWorkloadSQLRestoreWithRehydrateRequest
-    /// </summary>
+    /// <summary> AzureWorkload SQL-specific restore with integrated rehydration of recovery point. </summary>
     public partial class WorkloadSqlRestoreWithRehydrateRequest : WorkloadSqlRestoreRequest
     {
         /// <summary> Initializes a new instance of WorkloadSqlRestoreWithRehydrateRequest. </summary>
@@ -22,61 +20,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadSqlRestoreWithRehydrateRequest. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RestoreRequest.objectType
-        /// </param>
-        /// <param name="recoveryType">
-        /// Type of this recovery.
-        /// Serialized Name: AzureWorkloadRestoreRequest.recoveryType
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// Fully qualified ARM ID of the VM on which workload that was running is being recovered.
-        /// Serialized Name: AzureWorkloadRestoreRequest.sourceResourceId
-        /// </param>
-        /// <param name="propertyBag">
-        /// Workload specific property bag.
-        /// Serialized Name: AzureWorkloadRestoreRequest.propertyBag
-        /// </param>
-        /// <param name="targetInfo">
-        /// Details of target database
-        /// Serialized Name: AzureWorkloadRestoreRequest.targetInfo
-        /// </param>
-        /// <param name="recoveryMode">
-        /// Defines whether the current recovery mode is file restore or database restore
-        /// Serialized Name: AzureWorkloadRestoreRequest.recoveryMode
-        /// </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryType"> Type of this recovery. </param>
+        /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
+        /// <param name="propertyBag"> Workload specific property bag. </param>
+        /// <param name="targetInfo"> Details of target database. </param>
+        /// <param name="recoveryMode"> Defines whether the current recovery mode is file restore or database restore. </param>
         /// <param name="targetVirtualMachineId">
         /// This is the complete ARM Id of the target VM
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
-        /// Serialized Name: AzureWorkloadRestoreRequest.targetVirtualMachineId
         /// </param>
-        /// <param name="shouldUseAlternateTargetLocation">
-        /// Default option set to true. If this is set to false, alternate data directory must be provided
-        /// Serialized Name: AzureWorkloadSQLRestoreRequest.shouldUseAlternateTargetLocation
-        /// </param>
-        /// <param name="isNonRecoverable">
-        /// SQL specific property where user can chose to set no-recovery when restore operation is tried
-        /// Serialized Name: AzureWorkloadSQLRestoreRequest.isNonRecoverable
-        /// </param>
-        /// <param name="alternateDirectoryPaths">
-        /// Data directory details
-        /// Serialized Name: AzureWorkloadSQLRestoreRequest.alternateDirectoryPaths
-        /// </param>
-        /// <param name="recoveryPointRehydrationInfo">
-        /// RP Rehydration Info
-        /// Serialized Name: AzureWorkloadSQLRestoreWithRehydrateRequest.recoveryPointRehydrationInfo
-        /// </param>
-        internal WorkloadSqlRestoreWithRehydrateRequest(string objectType, RecoveryType? recoveryType, string sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
+        /// <param name="shouldUseAlternateTargetLocation"> Default option set to true. If this is set to false, alternate data directory must be provided. </param>
+        /// <param name="isNonRecoverable"> SQL specific property where user can chose to set no-recovery when restore operation is tried. </param>
+        /// <param name="alternateDirectoryPaths"> Data directory details. </param>
+        /// <param name="recoveryPointRehydrationInfo"> RP Rehydration Info. </param>
+        internal WorkloadSqlRestoreWithRehydrateRequest(string objectType, RecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, RecoveryPointRehydrationInfo recoveryPointRehydrationInfo) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
         {
             RecoveryPointRehydrationInfo = recoveryPointRehydrationInfo;
             ObjectType = objectType ?? "AzureWorkloadSQLRestoreWithRehydrateRequest";
         }
 
-        /// <summary>
-        /// RP Rehydration Info
-        /// Serialized Name: AzureWorkloadSQLRestoreWithRehydrateRequest.recoveryPointRehydrationInfo
-        /// </summary>
+        /// <summary> RP Rehydration Info. </summary>
         public RecoveryPointRehydrationInfo RecoveryPointRehydrationInfo { get; set; }
     }
 }

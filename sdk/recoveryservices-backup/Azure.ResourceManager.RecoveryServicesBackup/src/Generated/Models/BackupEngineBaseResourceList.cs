@@ -11,10 +11,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// List of BackupEngineBase resources
-    /// Serialized Name: BackupEngineBaseResourceList
-    /// </summary>
+    /// <summary> List of BackupEngineBase resources. </summary>
     internal partial class BackupEngineBaseResourceList
     {
         /// <summary> Initializes a new instance of BackupEngineBaseResourceList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupEngineBaseResourceList. </summary>
-        /// <param name="value">
-        /// List of resources.
-        /// Serialized Name: BackupEngineBaseResourceList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The uri to fetch the next page of resources.
-        /// Serialized Name: BackupEngineBaseResourceList.nextLink
-        /// </param>
+        /// <param name="value"> List of resources. </param>
+        /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         internal BackupEngineBaseResourceList(IReadOnlyList<BackupEngineData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of resources.
-        /// Serialized Name: BackupEngineBaseResourceList.value
-        /// </summary>
+        /// <summary> List of resources. </summary>
         public IReadOnlyList<BackupEngineData> Value { get; }
-        /// <summary>
-        /// The uri to fetch the next page of resources.
-        /// Serialized Name: BackupEngineBaseResourceList.nextLink
-        /// </summary>
+        /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }
 }

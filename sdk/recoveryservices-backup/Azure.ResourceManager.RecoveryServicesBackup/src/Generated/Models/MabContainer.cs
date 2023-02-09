@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Container with items backed up using MAB backup engine.
-    /// Serialized Name: MabContainer
-    /// </summary>
+    /// <summary> Container with items backed up using MAB backup engine. </summary>
     public partial class MabContainer : BackupProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of MabContainer. </summary>
@@ -24,61 +21,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of MabContainer. </summary>
-        /// <param name="friendlyName">
-        /// Friendly name of the container.
-        /// Serialized Name: ProtectionContainer.friendlyName
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Type of backup management for the container.
-        /// Serialized Name: ProtectionContainer.backupManagementType
-        /// </param>
-        /// <param name="registrationStatus">
-        /// Status of registration of the container with the Recovery Services Vault.
-        /// Serialized Name: ProtectionContainer.registrationStatus
-        /// </param>
-        /// <param name="healthStatus">
-        /// Status of health of the container.
-        /// Serialized Name: ProtectionContainer.healthStatus
-        /// </param>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerType">
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
-        /// Serialized Name: ProtectionContainer.containerType
         /// </param>
-        /// <param name="protectableObjectType">
-        /// Type of the protectable object associated with this container
-        /// Serialized Name: ProtectionContainer.protectableObjectType
-        /// </param>
-        /// <param name="canReRegister">
-        /// Can the container be registered one more time.
-        /// Serialized Name: MabContainer.canReRegister
-        /// </param>
-        /// <param name="containerId">
-        /// ContainerID represents the container.
-        /// Serialized Name: MabContainer.containerId
-        /// </param>
-        /// <param name="protectedItemCount">
-        /// Number of items backed up in this container.
-        /// Serialized Name: MabContainer.protectedItemCount
-        /// </param>
-        /// <param name="agentVersion">
-        /// Agent version of this container.
-        /// Serialized Name: MabContainer.agentVersion
-        /// </param>
-        /// <param name="extendedInfo">
-        /// Additional information for this container
-        /// Serialized Name: MabContainer.extendedInfo
-        /// </param>
-        /// <param name="mabContainerHealthDetails">
-        /// Health details on this mab container.
-        /// Serialized Name: MabContainer.mabContainerHealthDetails
-        /// </param>
-        /// <param name="containerHealthState">
-        /// Health state of mab container.
-        /// Serialized Name: MabContainer.containerHealthState
-        /// </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="canReRegister"> Can the container be registered one more time. </param>
+        /// <param name="containerId"> ContainerID represents the container. </param>
+        /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
+        /// <param name="agentVersion"> Agent version of this container. </param>
+        /// <param name="extendedInfo"> Additional information for this container. </param>
+        /// <param name="mabContainerHealthDetails"> Health details on this mab container. </param>
+        /// <param name="containerHealthState"> Health state of mab container. </param>
         internal MabContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, long? containerId, long? protectedItemCount, string agentVersion, MabContainerExtendedInfo extendedInfo, IList<MabContainerHealthDetails> mabContainerHealthDetails, string containerHealthState) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             CanReRegister = canReRegister;
@@ -91,40 +51,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerType = containerType;
         }
 
-        /// <summary>
-        /// Can the container be registered one more time.
-        /// Serialized Name: MabContainer.canReRegister
-        /// </summary>
+        /// <summary> Can the container be registered one more time. </summary>
         public bool? CanReRegister { get; set; }
-        /// <summary>
-        /// ContainerID represents the container.
-        /// Serialized Name: MabContainer.containerId
-        /// </summary>
+        /// <summary> ContainerID represents the container. </summary>
         public long? ContainerId { get; set; }
-        /// <summary>
-        /// Number of items backed up in this container.
-        /// Serialized Name: MabContainer.protectedItemCount
-        /// </summary>
+        /// <summary> Number of items backed up in this container. </summary>
         public long? ProtectedItemCount { get; set; }
-        /// <summary>
-        /// Agent version of this container.
-        /// Serialized Name: MabContainer.agentVersion
-        /// </summary>
+        /// <summary> Agent version of this container. </summary>
         public string AgentVersion { get; set; }
-        /// <summary>
-        /// Additional information for this container
-        /// Serialized Name: MabContainer.extendedInfo
-        /// </summary>
+        /// <summary> Additional information for this container. </summary>
         public MabContainerExtendedInfo ExtendedInfo { get; set; }
-        /// <summary>
-        /// Health details on this mab container.
-        /// Serialized Name: MabContainer.mabContainerHealthDetails
-        /// </summary>
+        /// <summary> Health details on this mab container. </summary>
         public IList<MabContainerHealthDetails> MabContainerHealthDetails { get; }
-        /// <summary>
-        /// Health state of mab container.
-        /// Serialized Name: MabContainer.containerHealthState
-        /// </summary>
+        /// <summary> Health state of mab container. </summary>
         public string ContainerHealthState { get; set; }
     }
 }

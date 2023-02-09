@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The DiskExclusionProperties.
-    /// Serialized Name: DiskExclusionProperties
-    /// </summary>
+    /// <summary> The DiskExclusionProperties. </summary>
     public partial class DiskExclusionProperties
     {
         /// <summary> Initializes a new instance of DiskExclusionProperties. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DiskExclusionProperties. </summary>
-        /// <param name="diskLunList">
-        /// List of Disks&apos; Logical Unit Numbers (LUN) to be used for VM Protection.
-        /// Serialized Name: DiskExclusionProperties.diskLunList
-        /// </param>
-        /// <param name="isInclusionList">
-        /// Flag to indicate whether DiskLunList is to be included/ excluded from backup.
-        /// Serialized Name: DiskExclusionProperties.isInclusionList
-        /// </param>
+        /// <param name="diskLunList"> List of Disks&apos; Logical Unit Numbers (LUN) to be used for VM Protection. </param>
+        /// <param name="isInclusionList"> Flag to indicate whether DiskLunList is to be included/ excluded from backup. </param>
         internal DiskExclusionProperties(IList<int> diskLunList, bool? isInclusionList)
         {
             DiskLunList = diskLunList;
             IsInclusionList = isInclusionList;
         }
 
-        /// <summary>
-        /// List of Disks&apos; Logical Unit Numbers (LUN) to be used for VM Protection.
-        /// Serialized Name: DiskExclusionProperties.diskLunList
-        /// </summary>
+        /// <summary> List of Disks&apos; Logical Unit Numbers (LUN) to be used for VM Protection. </summary>
         public IList<int> DiskLunList { get; }
-        /// <summary>
-        /// Flag to indicate whether DiskLunList is to be included/ excluded from backup.
-        /// Serialized Name: DiskExclusionProperties.isInclusionList
-        /// </summary>
+        /// <summary> Flag to indicate whether DiskLunList is to be included/ excluded from backup. </summary>
         public bool? IsInclusionList { get; set; }
     }
 }

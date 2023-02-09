@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("createMode");
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(DeferredDeleteTimeInUTC))
+            if (Optional.IsDefined(DeferredDeletedOn))
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC");
-                writer.WriteStringValue(DeferredDeleteTimeInUTC.Value, "O");
+                writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(IsScheduledForDeferredDelete))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static IaasComputeVmProtectedItem DeserializeIaasComputeVmProtectedItem(JsonElement element)
         {
             Optional<string> friendlyName = default;
-            Optional<string> virtualMachineId = default;
+            Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<string> protectionStatus = default;
             Optional<ProtectionState> protectionState = default;
             Optional<IaasVmProtectedItemHealthStatus> healthStatus = default;
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupManagementType> backupManagementType = default;
             Optional<BackupDataSourceType> workloadType = default;
             Optional<string> containerName = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> policyId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> policyId = default;
             Optional<DateTimeOffset> lastRecoveryPoint = default;
             Optional<string> backupSetName = default;
             Optional<BackupCreateMode> createMode = default;
@@ -189,7 +189,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("virtualMachineId"))
                 {
-                    virtualMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protectionStatus"))
@@ -319,12 +324,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyId"))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastRecoveryPoint"))

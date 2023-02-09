@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// AzureFileShare workload-specific backup request.
-    /// Serialized Name: AzureFileShareBackupRequest
-    /// </summary>
+    /// <summary> AzureFileShare workload-specific backup request. </summary>
     public partial class FileShareBackupRequest : BackupRequestProperties
     {
         /// <summary> Initializes a new instance of FileShareBackupRequest. </summary>
@@ -22,24 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of FileShareBackupRequest. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: BackupRequest.objectType
-        /// </param>
-        /// <param name="recoveryPointExpiryTimeInUTC">
-        /// Backup copy will expire after the time specified (UTC).
-        /// Serialized Name: AzureFileShareBackupRequest.recoveryPointExpiryTimeInUTC
-        /// </param>
-        internal FileShareBackupRequest(string objectType, DateTimeOffset? recoveryPointExpiryTimeInUTC) : base(objectType)
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryPointExpiryOn"> Backup copy will expire after the time specified (UTC). </param>
+        internal FileShareBackupRequest(string objectType, DateTimeOffset? recoveryPointExpiryOn) : base(objectType)
         {
-            RecoveryPointExpiryTimeInUTC = recoveryPointExpiryTimeInUTC;
+            RecoveryPointExpiryOn = recoveryPointExpiryOn;
             ObjectType = objectType ?? "AzureFileShareBackupRequest";
         }
 
-        /// <summary>
-        /// Backup copy will expire after the time specified (UTC).
-        /// Serialized Name: AzureFileShareBackupRequest.recoveryPointExpiryTimeInUTC
-        /// </summary>
-        public DateTimeOffset? RecoveryPointExpiryTimeInUTC { get; set; }
+        /// <summary> Backup copy will expire after the time specified (UTC). </summary>
+        public DateTimeOffset? RecoveryPointExpiryOn { get; set; }
     }
 }

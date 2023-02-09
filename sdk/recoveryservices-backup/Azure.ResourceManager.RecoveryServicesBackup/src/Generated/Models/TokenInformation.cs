@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The token information details.
-    /// Serialized Name: TokenInformation
-    /// </summary>
+    /// <summary> The token information details. </summary>
     public partial class TokenInformation
     {
         /// <summary> Initializes a new instance of TokenInformation. </summary>
@@ -19,39 +16,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of TokenInformation. </summary>
-        /// <param name="token">
-        /// Token value.
-        /// Serialized Name: TokenInformation.token
-        /// </param>
-        /// <param name="expiryTimeInUtcTicks">
-        /// Expiry time of token.
-        /// Serialized Name: TokenInformation.expiryTimeInUtcTicks
-        /// </param>
-        /// <param name="securityPIN">
-        /// Security PIN
-        /// Serialized Name: TokenInformation.securityPIN
-        /// </param>
-        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPIN)
+        /// <param name="token"> Token value. </param>
+        /// <param name="expiryTimeInUtcTicks"> Expiry time of token. </param>
+        /// <param name="securityPin"> Security PIN. </param>
+        internal TokenInformation(string token, long? expiryTimeInUtcTicks, string securityPin)
         {
             Token = token;
             ExpiryTimeInUtcTicks = expiryTimeInUtcTicks;
-            SecurityPIN = securityPIN;
+            SecurityPin = securityPin;
         }
 
-        /// <summary>
-        /// Token value.
-        /// Serialized Name: TokenInformation.token
-        /// </summary>
+        /// <summary> Token value. </summary>
         public string Token { get; }
-        /// <summary>
-        /// Expiry time of token.
-        /// Serialized Name: TokenInformation.expiryTimeInUtcTicks
-        /// </summary>
+        /// <summary> Expiry time of token. </summary>
         public long? ExpiryTimeInUtcTicks { get; }
-        /// <summary>
-        /// Security PIN
-        /// Serialized Name: TokenInformation.securityPIN
-        /// </summary>
-        public string SecurityPIN { get; }
+        /// <summary> Security PIN. </summary>
+        public string SecurityPin { get; }
     }
 }

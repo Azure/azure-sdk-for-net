@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// AzureWorkload workload-specific backup request.
-    /// Serialized Name: AzureWorkloadBackupRequest
-    /// </summary>
+    /// <summary> AzureWorkload workload-specific backup request. </summary>
     public partial class WorkloadBackupRequest : BackupRequestProperties
     {
         /// <summary> Initializes a new instance of WorkloadBackupRequest. </summary>
@@ -22,44 +19,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadBackupRequest. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: BackupRequest.objectType
-        /// </param>
-        /// <param name="backupType">
-        /// Type of backup, viz. Full, Differential, Log or CopyOnlyFull
-        /// Serialized Name: AzureWorkloadBackupRequest.backupType
-        /// </param>
-        /// <param name="enableCompression">
-        /// Bool for Compression setting
-        /// Serialized Name: AzureWorkloadBackupRequest.enableCompression
-        /// </param>
-        /// <param name="recoveryPointExpiryTimeInUTC">
-        /// Backup copy will expire after the time specified (UTC).
-        /// Serialized Name: AzureWorkloadBackupRequest.recoveryPointExpiryTimeInUTC
-        /// </param>
-        internal WorkloadBackupRequest(string objectType, BackupType? backupType, bool? enableCompression, DateTimeOffset? recoveryPointExpiryTimeInUTC) : base(objectType)
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="backupType"> Type of backup, viz. Full, Differential, Log or CopyOnlyFull. </param>
+        /// <param name="enableCompression"> Bool for Compression setting. </param>
+        /// <param name="recoveryPointExpiryOn"> Backup copy will expire after the time specified (UTC). </param>
+        internal WorkloadBackupRequest(string objectType, BackupType? backupType, bool? enableCompression, DateTimeOffset? recoveryPointExpiryOn) : base(objectType)
         {
             BackupType = backupType;
             EnableCompression = enableCompression;
-            RecoveryPointExpiryTimeInUTC = recoveryPointExpiryTimeInUTC;
+            RecoveryPointExpiryOn = recoveryPointExpiryOn;
             ObjectType = objectType ?? "AzureWorkloadBackupRequest";
         }
 
-        /// <summary>
-        /// Type of backup, viz. Full, Differential, Log or CopyOnlyFull
-        /// Serialized Name: AzureWorkloadBackupRequest.backupType
-        /// </summary>
+        /// <summary> Type of backup, viz. Full, Differential, Log or CopyOnlyFull. </summary>
         public BackupType? BackupType { get; set; }
-        /// <summary>
-        /// Bool for Compression setting
-        /// Serialized Name: AzureWorkloadBackupRequest.enableCompression
-        /// </summary>
+        /// <summary> Bool for Compression setting. </summary>
         public bool? EnableCompression { get; set; }
-        /// <summary>
-        /// Backup copy will expire after the time specified (UTC).
-        /// Serialized Name: AzureWorkloadBackupRequest.recoveryPointExpiryTimeInUTC
-        /// </summary>
-        public DateTimeOffset? RecoveryPointExpiryTimeInUTC { get; set; }
+        /// <summary> Backup copy will expire after the time specified (UTC). </summary>
+        public DateTimeOffset? RecoveryPointExpiryOn { get; set; }
     }
 }

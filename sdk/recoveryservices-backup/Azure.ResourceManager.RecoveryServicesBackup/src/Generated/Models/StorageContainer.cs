@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure Storage Account workload-specific container.
-    /// Serialized Name: AzureStorageContainer
-    /// </summary>
+    /// <summary> Azure Storage Account workload-specific container. </summary>
     public partial class StorageContainer : BackupProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of StorageContainer. </summary>
@@ -20,54 +19,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of StorageContainer. </summary>
-        /// <param name="friendlyName">
-        /// Friendly name of the container.
-        /// Serialized Name: ProtectionContainer.friendlyName
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Type of backup management for the container.
-        /// Serialized Name: ProtectionContainer.backupManagementType
-        /// </param>
-        /// <param name="registrationStatus">
-        /// Status of registration of the container with the Recovery Services Vault.
-        /// Serialized Name: ProtectionContainer.registrationStatus
-        /// </param>
-        /// <param name="healthStatus">
-        /// Status of health of the container.
-        /// Serialized Name: ProtectionContainer.healthStatus
-        /// </param>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerType">
         /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
         /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
         /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
         /// Backup is VMAppContainer
-        /// Serialized Name: ProtectionContainer.containerType
         /// </param>
-        /// <param name="protectableObjectType">
-        /// Type of the protectable object associated with this container
-        /// Serialized Name: ProtectionContainer.protectableObjectType
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// Fully qualified ARM url.
-        /// Serialized Name: AzureStorageContainer.sourceResourceId
-        /// </param>
-        /// <param name="storageAccountVersion">
-        /// Storage account version.
-        /// Serialized Name: AzureStorageContainer.storageAccountVersion
-        /// </param>
-        /// <param name="resourceGroup">
-        /// Resource group name of Recovery Services Vault.
-        /// Serialized Name: AzureStorageContainer.resourceGroup
-        /// </param>
-        /// <param name="protectedItemCount">
-        /// Number of items backed up in this container.
-        /// Serialized Name: AzureStorageContainer.protectedItemCount
-        /// </param>
-        /// <param name="acquireStorageAccountLock">
-        /// Whether storage account lock is to be acquired for this container or not.
-        /// Serialized Name: AzureStorageContainer.acquireStorageAccountLock
-        /// </param>
-        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceResourceId"> Fully qualified ARM url. </param>
+        /// <param name="storageAccountVersion"> Storage account version. </param>
+        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
+        /// <param name="acquireStorageAccountLock"> Whether storage account lock is to be acquired for this container or not. </param>
+        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, ResourceIdentifier sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             SourceResourceId = sourceResourceId;
             StorageAccountVersion = storageAccountVersion;
@@ -77,30 +45,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerType = containerType;
         }
 
-        /// <summary>
-        /// Fully qualified ARM url.
-        /// Serialized Name: AzureStorageContainer.sourceResourceId
-        /// </summary>
-        public string SourceResourceId { get; set; }
-        /// <summary>
-        /// Storage account version.
-        /// Serialized Name: AzureStorageContainer.storageAccountVersion
-        /// </summary>
+        /// <summary> Fully qualified ARM url. </summary>
+        public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary> Storage account version. </summary>
         public string StorageAccountVersion { get; set; }
-        /// <summary>
-        /// Resource group name of Recovery Services Vault.
-        /// Serialized Name: AzureStorageContainer.resourceGroup
-        /// </summary>
+        /// <summary> Resource group name of Recovery Services Vault. </summary>
         public string ResourceGroup { get; set; }
-        /// <summary>
-        /// Number of items backed up in this container.
-        /// Serialized Name: AzureStorageContainer.protectedItemCount
-        /// </summary>
+        /// <summary> Number of items backed up in this container. </summary>
         public long? ProtectedItemCount { get; set; }
-        /// <summary>
-        /// Whether storage account lock is to be acquired for this container or not.
-        /// Serialized Name: AzureStorageContainer.acquireStorageAccountLock
-        /// </summary>
+        /// <summary> Whether storage account lock is to be acquired for this container or not. </summary>
         public AcquireStorageAccountLock? AcquireStorageAccountLock { get; set; }
     }
 }

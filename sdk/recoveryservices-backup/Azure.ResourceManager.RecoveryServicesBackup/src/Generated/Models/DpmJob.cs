@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// DPM workload-specific job object.
-    /// Serialized Name: DpmJob
-    /// </summary>
+    /// <summary> DPM workload-specific job object. </summary>
     public partial class DpmJob : BackupJobProperties
     {
         /// <summary> Initializes a new instance of DpmJob. </summary>
@@ -26,70 +23,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DpmJob. </summary>
-        /// <param name="entityFriendlyName">
-        /// Friendly name of the entity on which the current job is executing.
-        /// Serialized Name: Job.entityFriendlyName
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Backup management type to execute the current job.
-        /// Serialized Name: Job.backupManagementType
-        /// </param>
-        /// <param name="operation">
-        /// The operation name.
-        /// Serialized Name: Job.operation
-        /// </param>
-        /// <param name="status">
-        /// Job status.
-        /// Serialized Name: Job.status
-        /// </param>
-        /// <param name="startOn">
-        /// The start time.
-        /// Serialized Name: Job.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time.
-        /// Serialized Name: Job.endTime
-        /// </param>
-        /// <param name="activityId">
-        /// ActivityId of job.
-        /// Serialized Name: Job.activityId
-        /// </param>
-        /// <param name="jobType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: Job.jobType
-        /// </param>
-        /// <param name="duration">
-        /// Time elapsed for job.
-        /// Serialized Name: DpmJob.duration
-        /// </param>
-        /// <param name="dpmServerName">
-        /// DPM server name managing the backup item or backup job.
-        /// Serialized Name: DpmJob.dpmServerName
-        /// </param>
-        /// <param name="containerName">
-        /// Name of cluster/server protecting current backup item, if any.
-        /// Serialized Name: DpmJob.containerName
-        /// </param>
-        /// <param name="containerType">
-        /// Type of container.
-        /// Serialized Name: DpmJob.containerType
-        /// </param>
-        /// <param name="workloadType">
-        /// Type of backup item.
-        /// Serialized Name: DpmJob.workloadType
-        /// </param>
-        /// <param name="actionsInfo">
-        /// The state/actions applicable on this job like cancel/retry.
-        /// Serialized Name: DpmJob.actionsInfo
-        /// </param>
-        /// <param name="errorDetails">
-        /// The errors.
-        /// Serialized Name: DpmJob.errorDetails
-        /// </param>
-        /// <param name="extendedInfo">
-        /// Additional information for this job.
-        /// Serialized Name: DpmJob.extendedInfo
-        /// </param>
+        /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
+        /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
+        /// <param name="operation"> The operation name. </param>
+        /// <param name="status"> Job status. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="activityId"> ActivityId of job. </param>
+        /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="duration"> Time elapsed for job. </param>
+        /// <param name="dpmServerName"> DPM server name managing the backup item or backup job. </param>
+        /// <param name="containerName"> Name of cluster/server protecting current backup item, if any. </param>
+        /// <param name="containerType"> Type of container. </param>
+        /// <param name="workloadType"> Type of backup item. </param>
+        /// <param name="actionsInfo"> The state/actions applicable on this job like cancel/retry. </param>
+        /// <param name="errorDetails"> The errors. </param>
+        /// <param name="extendedInfo"> Additional information for this job. </param>
         internal DpmJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, string dpmServerName, string containerName, string containerType, string workloadType, IList<JobSupportedAction> actionsInfo, IList<DpmErrorInfo> errorDetails, DpmJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
         {
             Duration = duration;
@@ -103,45 +52,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = jobType ?? "DpmJob";
         }
 
-        /// <summary>
-        /// Time elapsed for job.
-        /// Serialized Name: DpmJob.duration
-        /// </summary>
+        /// <summary> Time elapsed for job. </summary>
         public TimeSpan? Duration { get; set; }
-        /// <summary>
-        /// DPM server name managing the backup item or backup job.
-        /// Serialized Name: DpmJob.dpmServerName
-        /// </summary>
+        /// <summary> DPM server name managing the backup item or backup job. </summary>
         public string DpmServerName { get; set; }
-        /// <summary>
-        /// Name of cluster/server protecting current backup item, if any.
-        /// Serialized Name: DpmJob.containerName
-        /// </summary>
+        /// <summary> Name of cluster/server protecting current backup item, if any. </summary>
         public string ContainerName { get; set; }
-        /// <summary>
-        /// Type of container.
-        /// Serialized Name: DpmJob.containerType
-        /// </summary>
+        /// <summary> Type of container. </summary>
         public string ContainerType { get; set; }
-        /// <summary>
-        /// Type of backup item.
-        /// Serialized Name: DpmJob.workloadType
-        /// </summary>
+        /// <summary> Type of backup item. </summary>
         public string WorkloadType { get; set; }
-        /// <summary>
-        /// The state/actions applicable on this job like cancel/retry.
-        /// Serialized Name: DpmJob.actionsInfo
-        /// </summary>
+        /// <summary> The state/actions applicable on this job like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
-        /// <summary>
-        /// The errors.
-        /// Serialized Name: DpmJob.errorDetails
-        /// </summary>
+        /// <summary> The errors. </summary>
         public IList<DpmErrorInfo> ErrorDetails { get; }
-        /// <summary>
-        /// Additional information for this job.
-        /// Serialized Name: DpmJob.extendedInfo
-        /// </summary>
+        /// <summary> Additional information for this job. </summary>
         public DpmJobExtendedInfo ExtendedInfo { get; set; }
     }
 }

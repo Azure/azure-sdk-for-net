@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -13,7 +15,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// 1. Vault capacity
     /// 2. VM is already protected
     /// 3. Any VM related configuration passed in properties.
-    /// Serialized Name: PreValidateEnableBackupRequest
     /// </summary>
     public partial class PreValidateEnableBackupContent
     {
@@ -22,25 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
         }
 
-        /// <summary>
-        /// ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc
-        /// Serialized Name: PreValidateEnableBackupRequest.resourceType
-        /// </summary>
+        /// <summary> ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc. </summary>
         public BackupDataSourceType? ResourceType { get; set; }
-        /// <summary>
-        /// ARM Virtual Machine Id
-        /// Serialized Name: PreValidateEnableBackupRequest.resourceId
-        /// </summary>
-        public string ResourceId { get; set; }
-        /// <summary>
-        /// ARM id of the Recovery Services Vault
-        /// Serialized Name: PreValidateEnableBackupRequest.vaultId
-        /// </summary>
-        public string VaultId { get; set; }
-        /// <summary>
-        /// Configuration of VM if any needs to be validated like OS type etc
-        /// Serialized Name: PreValidateEnableBackupRequest.properties
-        /// </summary>
+        /// <summary> ARM Virtual Machine Id. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
+        /// <summary> ARM id of the Recovery Services Vault. </summary>
+        public ResourceIdentifier VaultId { get; set; }
+        /// <summary> Configuration of VM if any needs to be validated like OS type etc. </summary>
         public string Properties { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Health status of protected item.
-    /// Serialized Name: HealthStatus
-    /// </summary>
+    /// <summary> Health status of protected item. </summary>
     public readonly partial struct IaasVmProtectedItemHealthStatus : IEquatable<IaasVmProtectedItemHealthStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string ActionSuggestedValue = "ActionSuggested";
         private const string InvalidValue = "Invalid";
 
-        /// <summary>
-        /// Passed
-        /// Serialized Name: HealthStatus.Passed
-        /// </summary>
+        /// <summary> Passed. </summary>
         public static IaasVmProtectedItemHealthStatus Passed { get; } = new IaasVmProtectedItemHealthStatus(PassedValue);
-        /// <summary>
-        /// ActionRequired
-        /// Serialized Name: HealthStatus.ActionRequired
-        /// </summary>
+        /// <summary> ActionRequired. </summary>
         public static IaasVmProtectedItemHealthStatus ActionRequired { get; } = new IaasVmProtectedItemHealthStatus(ActionRequiredValue);
-        /// <summary>
-        /// ActionSuggested
-        /// Serialized Name: HealthStatus.ActionSuggested
-        /// </summary>
+        /// <summary> ActionSuggested. </summary>
         public static IaasVmProtectedItemHealthStatus ActionSuggested { get; } = new IaasVmProtectedItemHealthStatus(ActionSuggestedValue);
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: HealthStatus.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static IaasVmProtectedItemHealthStatus Invalid { get; } = new IaasVmProtectedItemHealthStatus(InvalidValue);
         /// <summary> Determines if two <see cref="IaasVmProtectedItemHealthStatus"/> values are the same. </summary>
         public static bool operator ==(IaasVmProtectedItemHealthStatus left, IaasVmProtectedItemHealthStatus right) => left.Equals(right);

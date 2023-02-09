@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Vault Job specific error information
-    /// Serialized Name: VaultJobErrorInfo
-    /// </summary>
+    /// <summary> Vault Job specific error information. </summary>
     public partial class VaultJobErrorInfo
     {
         /// <summary> Initializes a new instance of VaultJobErrorInfo. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of VaultJobErrorInfo. </summary>
-        /// <param name="errorCode">
-        /// Error code.
-        /// Serialized Name: VaultJobErrorInfo.errorCode
-        /// </param>
-        /// <param name="errorString">
-        /// Localized error string.
-        /// Serialized Name: VaultJobErrorInfo.errorString
-        /// </param>
-        /// <param name="recommendations">
-        /// List of localized recommendations for above error code.
-        /// Serialized Name: VaultJobErrorInfo.recommendations
-        /// </param>
+        /// <param name="errorCode"> Error code. </param>
+        /// <param name="errorString"> Localized error string. </param>
+        /// <param name="recommendations"> List of localized recommendations for above error code. </param>
         internal VaultJobErrorInfo(int? errorCode, string errorString, IList<string> recommendations)
         {
             ErrorCode = errorCode;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Recommendations = recommendations;
         }
 
-        /// <summary>
-        /// Error code.
-        /// Serialized Name: VaultJobErrorInfo.errorCode
-        /// </summary>
+        /// <summary> Error code. </summary>
         public int? ErrorCode { get; set; }
-        /// <summary>
-        /// Localized error string.
-        /// Serialized Name: VaultJobErrorInfo.errorString
-        /// </summary>
+        /// <summary> Localized error string. </summary>
         public string ErrorString { get; set; }
-        /// <summary>
-        /// List of localized recommendations for above error code.
-        /// Serialized Name: VaultJobErrorInfo.recommendations
-        /// </summary>
+        /// <summary> List of localized recommendations for above error code. </summary>
         public IList<string> Recommendations { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Protectable item for Azure Fileshare workloads.
-    /// Serialized Name: AzureFileShareProtectableItem
-    /// </summary>
+    /// <summary> Protectable item for Azure Fileshare workloads. </summary>
     public partial class FileShareProtectableItem : WorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of FileShareProtectableItem. </summary>
@@ -20,38 +17,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of FileShareProtectableItem. </summary>
-        /// <param name="backupManagementType">
-        /// Type of backup management to backup an item.
-        /// Serialized Name: WorkloadProtectableItem.backupManagementType
-        /// </param>
-        /// <param name="workloadType">
-        /// Type of workload for the backup management
-        /// Serialized Name: WorkloadProtectableItem.workloadType
-        /// </param>
-        /// <param name="protectableItemType">
-        /// Type of the backup item.
-        /// Serialized Name: WorkloadProtectableItem.protectableItemType
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the backup item.
-        /// Serialized Name: WorkloadProtectableItem.friendlyName
-        /// </param>
-        /// <param name="protectionState">
-        /// State of the back up item.
-        /// Serialized Name: WorkloadProtectableItem.protectionState
-        /// </param>
-        /// <param name="parentContainerFabricId">
-        /// Full Fabric ID of container to which this protectable item belongs. For example, ARM ID.
-        /// Serialized Name: AzureFileShareProtectableItem.parentContainerFabricId
-        /// </param>
-        /// <param name="parentContainerFriendlyName">
-        /// Friendly name of container to which this protectable item belongs.
-        /// Serialized Name: AzureFileShareProtectableItem.parentContainerFriendlyName
-        /// </param>
-        /// <param name="azureFileShareType">
-        /// File Share type XSync or XSMB.
-        /// Serialized Name: AzureFileShareProtectableItem.azureFileShareType
-        /// </param>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="protectableItemType"> Type of the backup item. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="parentContainerFabricId"> Full Fabric ID of container to which this protectable item belongs. For example, ARM ID. </param>
+        /// <param name="parentContainerFriendlyName"> Friendly name of container to which this protectable item belongs. </param>
+        /// <param name="azureFileShareType"> File Share type XSync or XSMB. </param>
         internal FileShareProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState, string parentContainerFabricId, string parentContainerFriendlyName, BackupFileShareType? azureFileShareType) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
         {
             ParentContainerFabricId = parentContainerFabricId;
@@ -60,20 +33,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectableItemType = protectableItemType ?? "AzureFileShare";
         }
 
-        /// <summary>
-        /// Full Fabric ID of container to which this protectable item belongs. For example, ARM ID.
-        /// Serialized Name: AzureFileShareProtectableItem.parentContainerFabricId
-        /// </summary>
+        /// <summary> Full Fabric ID of container to which this protectable item belongs. For example, ARM ID. </summary>
         public string ParentContainerFabricId { get; set; }
-        /// <summary>
-        /// Friendly name of container to which this protectable item belongs.
-        /// Serialized Name: AzureFileShareProtectableItem.parentContainerFriendlyName
-        /// </summary>
+        /// <summary> Friendly name of container to which this protectable item belongs. </summary>
         public string ParentContainerFriendlyName { get; set; }
-        /// <summary>
-        /// File Share type XSync or XSMB.
-        /// Serialized Name: AzureFileShareProtectableItem.azureFileShareType
-        /// </summary>
+        /// <summary> File Share type XSync or XSMB. </summary>
         public BackupFileShareType? AzureFileShareType { get; set; }
     }
 }

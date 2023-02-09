@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// AzureResource(IaaS VM) Specific feature support request
-    /// Serialized Name: AzureVMResourceFeatureSupportRequest
-    /// </summary>
+    /// <summary> AzureResource(IaaS VM) Specific feature support request. </summary>
     public partial class VmResourceFeatureSupportContent : FeatureSupportContent
     {
         /// <summary> Initializes a new instance of VmResourceFeatureSupportContent. </summary>
@@ -19,15 +16,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             FeatureType = "AzureVMResourceBackup";
         }
 
-        /// <summary>
-        /// Size of the resource: VM size(A/D series etc) in case of IaasVM
-        /// Serialized Name: AzureVMResourceFeatureSupportRequest.vmSize
-        /// </summary>
+        /// <summary> Size of the resource: VM size(A/D series etc) in case of IaasVM. </summary>
         public string VmSize { get; set; }
-        /// <summary>
-        /// SKUs (Premium/Managed etc) in case of IaasVM
-        /// Serialized Name: AzureVMResourceFeatureSupportRequest.vmSku
-        /// </summary>
+        /// <summary> SKUs (Premium/Managed etc) in case of IaasVM. </summary>
         public string VmSku { get; set; }
     }
 }

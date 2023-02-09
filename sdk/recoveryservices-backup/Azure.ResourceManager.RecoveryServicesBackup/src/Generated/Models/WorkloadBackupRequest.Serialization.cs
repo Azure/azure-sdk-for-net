@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("enableCompression");
                 writer.WriteBooleanValue(EnableCompression.Value);
             }
-            if (Optional.IsDefined(RecoveryPointExpiryTimeInUTC))
+            if (Optional.IsDefined(RecoveryPointExpiryOn))
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC");
-                writer.WriteStringValue(RecoveryPointExpiryTimeInUTC.Value, "O");
+                writer.WriteStringValue(RecoveryPointExpiryOn.Value, "O");
             }
             writer.WritePropertyName("objectType");
             writer.WriteStringValue(ObjectType);

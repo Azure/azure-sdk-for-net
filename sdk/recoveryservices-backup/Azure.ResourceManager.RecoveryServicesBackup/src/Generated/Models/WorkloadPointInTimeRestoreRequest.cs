@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// AzureWorkload SAP Hana -specific restore. Specifically for PointInTime/Log restore
-    /// Serialized Name: AzureWorkloadPointInTimeRestoreRequest
-    /// </summary>
+    /// <summary> AzureWorkload SAP Hana -specific restore. Specifically for PointInTime/Log restore. </summary>
     public partial class WorkloadPointInTimeRestoreRequest : WorkloadRestoreRequest
     {
         /// <summary> Initializes a new instance of WorkloadPointInTimeRestoreRequest. </summary>
@@ -23,49 +21,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadPointInTimeRestoreRequest. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RestoreRequest.objectType
-        /// </param>
-        /// <param name="recoveryType">
-        /// Type of this recovery.
-        /// Serialized Name: AzureWorkloadRestoreRequest.recoveryType
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// Fully qualified ARM ID of the VM on which workload that was running is being recovered.
-        /// Serialized Name: AzureWorkloadRestoreRequest.sourceResourceId
-        /// </param>
-        /// <param name="propertyBag">
-        /// Workload specific property bag.
-        /// Serialized Name: AzureWorkloadRestoreRequest.propertyBag
-        /// </param>
-        /// <param name="targetInfo">
-        /// Details of target database
-        /// Serialized Name: AzureWorkloadRestoreRequest.targetInfo
-        /// </param>
-        /// <param name="recoveryMode">
-        /// Defines whether the current recovery mode is file restore or database restore
-        /// Serialized Name: AzureWorkloadRestoreRequest.recoveryMode
-        /// </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryType"> Type of this recovery. </param>
+        /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
+        /// <param name="propertyBag"> Workload specific property bag. </param>
+        /// <param name="targetInfo"> Details of target database. </param>
+        /// <param name="recoveryMode"> Defines whether the current recovery mode is file restore or database restore. </param>
         /// <param name="targetVirtualMachineId">
         /// This is the complete ARM Id of the target VM
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
-        /// Serialized Name: AzureWorkloadRestoreRequest.targetVirtualMachineId
         /// </param>
-        /// <param name="pointInTime">
-        /// PointInTime value
-        /// Serialized Name: AzureWorkloadPointInTimeRestoreRequest.pointInTime
-        /// </param>
-        internal WorkloadPointInTimeRestoreRequest(string objectType, RecoveryType? recoveryType, string sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, string targetVirtualMachineId, DateTimeOffset? pointInTime) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId)
+        /// <param name="pointInTime"> PointInTime value. </param>
+        internal WorkloadPointInTimeRestoreRequest(string objectType, RecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, DateTimeOffset? pointInTime) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId)
         {
             PointInTime = pointInTime;
             ObjectType = objectType ?? "AzureWorkloadPointInTimeRestoreRequest";
         }
 
-        /// <summary>
-        /// PointInTime value
-        /// Serialized Name: AzureWorkloadPointInTimeRestoreRequest.pointInTime
-        /// </summary>
+        /// <summary> PointInTime value. </summary>
         public DateTimeOffset? PointInTime { get; set; }
     }
 }

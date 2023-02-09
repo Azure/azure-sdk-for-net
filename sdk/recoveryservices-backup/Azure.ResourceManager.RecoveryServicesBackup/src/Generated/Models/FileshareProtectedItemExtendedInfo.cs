@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Additional information about Azure File Share backup item.
-    /// Serialized Name: AzureFileshareProtectedItemExtendedInfo
-    /// </summary>
+    /// <summary> Additional information about Azure File Share backup item. </summary>
     public partial class FileshareProtectedItemExtendedInfo
     {
         /// <summary> Initializes a new instance of FileshareProtectedItemExtendedInfo. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of FileshareProtectedItemExtendedInfo. </summary>
-        /// <param name="oldestRecoveryPoint">
-        /// The oldest backup copy available for this item in the service.
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.oldestRecoveryPoint
-        /// </param>
-        /// <param name="recoveryPointCount">
-        /// Number of available backup copies associated with this backup item.
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.recoveryPointCount
-        /// </param>
-        /// <param name="policyState">
-        /// Indicates consistency of policy object and policy applied to this backup item.
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.policyState
-        /// </param>
-        /// <param name="resourceState">
-        /// Indicates the state of this resource. Possible values are from enum ResourceState {Invalid, Active, SoftDeleted, Deleted}
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.resourceState
-        /// </param>
-        /// <param name="resourceStateSyncOn">
-        /// The resource state sync time for this backup item.
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.resourceStateSyncTime
-        /// </param>
+        /// <param name="oldestRecoveryPoint"> The oldest backup copy available for this item in the service. </param>
+        /// <param name="recoveryPointCount"> Number of available backup copies associated with this backup item. </param>
+        /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
+        /// <param name="resourceState"> Indicates the state of this resource. Possible values are from enum ResourceState {Invalid, Active, SoftDeleted, Deleted}. </param>
+        /// <param name="resourceStateSyncOn"> The resource state sync time for this backup item. </param>
         internal FileshareProtectedItemExtendedInfo(DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount, string policyState, string resourceState, DateTimeOffset? resourceStateSyncOn)
         {
             OldestRecoveryPoint = oldestRecoveryPoint;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceStateSyncOn = resourceStateSyncOn;
         }
 
-        /// <summary>
-        /// The oldest backup copy available for this item in the service.
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.oldestRecoveryPoint
-        /// </summary>
+        /// <summary> The oldest backup copy available for this item in the service. </summary>
         public DateTimeOffset? OldestRecoveryPoint { get; set; }
-        /// <summary>
-        /// Number of available backup copies associated with this backup item.
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.recoveryPointCount
-        /// </summary>
+        /// <summary> Number of available backup copies associated with this backup item. </summary>
         public int? RecoveryPointCount { get; set; }
-        /// <summary>
-        /// Indicates consistency of policy object and policy applied to this backup item.
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.policyState
-        /// </summary>
+        /// <summary> Indicates consistency of policy object and policy applied to this backup item. </summary>
         public string PolicyState { get; set; }
-        /// <summary>
-        /// Indicates the state of this resource. Possible values are from enum ResourceState {Invalid, Active, SoftDeleted, Deleted}
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.resourceState
-        /// </summary>
+        /// <summary> Indicates the state of this resource. Possible values are from enum ResourceState {Invalid, Active, SoftDeleted, Deleted}. </summary>
         public string ResourceState { get; }
-        /// <summary>
-        /// The resource state sync time for this backup item.
-        /// Serialized Name: AzureFileshareProtectedItemExtendedInfo.resourceStateSyncTime
-        /// </summary>
+        /// <summary> The resource state sync time for this backup item. </summary>
         public DateTimeOffset? ResourceStateSyncOn { get; }
     }
 }

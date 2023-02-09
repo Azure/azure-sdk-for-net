@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Last backup operation status. Possible values: Healthy, Unhealthy.
-    /// Serialized Name: LastBackupStatus
-    /// </summary>
+    /// <summary> Last backup operation status. Possible values: Healthy, Unhealthy. </summary>
     public readonly partial struct LastBackupStatus : IEquatable<LastBackupStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string UnhealthyValue = "Unhealthy";
         private const string IRPendingValue = "IRPending";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: LastBackupStatus.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static LastBackupStatus Invalid { get; } = new LastBackupStatus(InvalidValue);
-        /// <summary>
-        /// Healthy
-        /// Serialized Name: LastBackupStatus.Healthy
-        /// </summary>
+        /// <summary> Healthy. </summary>
         public static LastBackupStatus Healthy { get; } = new LastBackupStatus(HealthyValue);
-        /// <summary>
-        /// Unhealthy
-        /// Serialized Name: LastBackupStatus.Unhealthy
-        /// </summary>
+        /// <summary> Unhealthy. </summary>
         public static LastBackupStatus Unhealthy { get; } = new LastBackupStatus(UnhealthyValue);
-        /// <summary>
-        /// IRPending
-        /// Serialized Name: LastBackupStatus.IRPending
-        /// </summary>
+        /// <summary> IRPending. </summary>
         public static LastBackupStatus IRPending { get; } = new LastBackupStatus(IRPendingValue);
         /// <summary> Determines if two <see cref="LastBackupStatus"/> values are the same. </summary>
         public static bool operator ==(LastBackupStatus left, LastBackupStatus right) => left.Equals(right);

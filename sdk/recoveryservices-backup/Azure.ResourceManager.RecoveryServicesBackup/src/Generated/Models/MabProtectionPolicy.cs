@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Mab container-specific backup policy.
-    /// Serialized Name: MabProtectionPolicy
-    /// </summary>
+    /// <summary> Mab container-specific backup policy. </summary>
     public partial class MabProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of MabProtectionPolicy. </summary>
@@ -22,27 +19,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of MabProtectionPolicy. </summary>
-        /// <param name="protectedItemsCount">
-        /// Number of items associated with this policy.
-        /// Serialized Name: ProtectionPolicy.protectedItemsCount
-        /// </param>
-        /// <param name="backupManagementType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: ProtectionPolicy.backupManagementType
-        /// </param>
-        /// <param name="resourceGuardOperationRequests">
-        /// ResourceGuard Operation Requests
-        /// Serialized Name: ProtectionPolicy.resourceGuardOperationRequests
-        /// </param>
+        /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
+        /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule of backup policy.
-        /// Serialized Name: MabProtectionPolicy.schedulePolicy
         /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </param>
         /// <param name="retentionPolicy">
         /// Retention policy details.
-        /// Serialized Name: MabProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
@@ -55,14 +41,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Backup schedule of backup policy.
-        /// Serialized Name: MabProtectionPolicy.schedulePolicy
         /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </summary>
         public SchedulePolicy SchedulePolicy { get; set; }
         /// <summary>
         /// Retention policy details.
-        /// Serialized Name: MabProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </summary>

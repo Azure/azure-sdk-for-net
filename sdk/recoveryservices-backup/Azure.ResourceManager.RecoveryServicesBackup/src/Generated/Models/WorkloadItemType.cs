@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Workload item type of the item for which intent is to be set
-    /// Serialized Name: WorkloadItemType
-    /// </summary>
+    /// <summary> Workload item type of the item for which intent is to be set. </summary>
     public readonly partial struct WorkloadItemType : IEquatable<WorkloadItemType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SapAseDatabaseValue = "SAPAseDatabase";
         private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: WorkloadItemType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static WorkloadItemType Invalid { get; } = new WorkloadItemType(InvalidValue);
-        /// <summary>
-        /// SQLInstance
-        /// Serialized Name: WorkloadItemType.SQLInstance
-        /// </summary>
+        /// <summary> SQLInstance. </summary>
         public static WorkloadItemType SqlInstance { get; } = new WorkloadItemType(SqlInstanceValue);
-        /// <summary>
-        /// SQLDataBase
-        /// Serialized Name: WorkloadItemType.SQLDataBase
-        /// </summary>
+        /// <summary> SQLDataBase. </summary>
         public static WorkloadItemType SqlDataBase { get; } = new WorkloadItemType(SqlDataBaseValue);
-        /// <summary>
-        /// SAPHanaSystem
-        /// Serialized Name: WorkloadItemType.SAPHanaSystem
-        /// </summary>
+        /// <summary> SAPHanaSystem. </summary>
         public static WorkloadItemType SapHanaSystem { get; } = new WorkloadItemType(SapHanaSystemValue);
-        /// <summary>
-        /// SAPHanaDatabase
-        /// Serialized Name: WorkloadItemType.SAPHanaDatabase
-        /// </summary>
+        /// <summary> SAPHanaDatabase. </summary>
         public static WorkloadItemType SapHanaDatabase { get; } = new WorkloadItemType(SapHanaDatabaseValue);
-        /// <summary>
-        /// SAPAseSystem
-        /// Serialized Name: WorkloadItemType.SAPAseSystem
-        /// </summary>
+        /// <summary> SAPAseSystem. </summary>
         public static WorkloadItemType SapAseSystem { get; } = new WorkloadItemType(SapAseSystemValue);
-        /// <summary>
-        /// SAPAseDatabase
-        /// Serialized Name: WorkloadItemType.SAPAseDatabase
-        /// </summary>
+        /// <summary> SAPAseDatabase. </summary>
         public static WorkloadItemType SapAseDatabase { get; } = new WorkloadItemType(SapAseDatabaseValue);
-        /// <summary>
-        /// SAPHanaDBInstance
-        /// Serialized Name: WorkloadItemType.SAPHanaDBInstance
-        /// </summary>
+        /// <summary> SAPHanaDBInstance. </summary>
         public static WorkloadItemType SapHanaDBInstance { get; } = new WorkloadItemType(SapHanaDBInstanceValue);
         /// <summary> Determines if two <see cref="WorkloadItemType"/> values are the same. </summary>
         public static bool operator ==(WorkloadItemType left, WorkloadItemType right) => left.Equals(right);

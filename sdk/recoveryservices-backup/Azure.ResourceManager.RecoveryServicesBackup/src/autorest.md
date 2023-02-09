@@ -8,16 +8,13 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
-# default tag is a preview version
+# tag: package-2023-01
 require: https://github.com/Azure/azure-rest-api-specs/blob/2d9846d81852452cf10270b18329ac382a881bf7/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-
-mgmt-debug: 
-  show-serialized-names: true
 
 rename-mapping:
   Job: BackupJobProperties
@@ -141,6 +138,7 @@ rename-mapping:
   AzureWorkloadSQLRestoreWithRehydrateRequest: WorkloadSqlRestoreWithRehydrateRequest
   BackupRequest: BackupRequestProperties
   BackupRequestResource: BackupRequestContent
+  BackupStatusResponse: BackupStatusResult
   CreateMode: BackupCreateMode
   DataSourceType: BackupDataSourceType
   DailySchedule: BackupDailySchedule
@@ -163,15 +161,79 @@ rename-mapping:
   OperationType: WorkloadOperationType
   OverwriteOptions: RestoreOverwriteOptions
   PolicyType: SubProtectionPolicyType
+  PreValidateEnableBackupResponse: PreValidateEnableBackupResult
   Settings: BackupCommonSettings
   SupportStatus: VmResourceFeatureSupportStatus
   StorageType: BackupStorageType
+  UnlockDeleteResponse: UnlockDeleteResult
   UsagesUnit: BackupUsagesUnit
   ValidationStatus: BackupValidationStatus
   WeekOfMonth: BackupWeekOfMonth
   WeeklySchedule: BackupWeeklySchedule
   WorkloadType: BackupWorkloadType
   XcoolState: VaultXcoolState
+  BackupResourceConfig.crossRegionRestoreFlag: EnableCrossRegionRestore
+  DpmContainer.upgradeAvailable: IsUpgradeAvailable
+  DPMProtectedItemExtendedInfo.protected: IsProtected
+  AzureIaaSVMProtectedItemExtendedInfo.policyInconsistent: IsPolicyInconsistent
+  IaasVMRestoreRequest.createNewCloudService: DoesCreateNewCloudService
+  IaasVMRestoreRequest.restoreWithManagedDisks: DoesRestoreWithManagedDisks
+  EncryptionDetails.encryptionEnabled: IsEncryptionEnabled
+  AzureVmWorkloadProtectionPolicy.makePolicyConsistent: DoesMakePolicyConsistent
+  TriggerDataMoveRequest.pauseGC: DoesPauseGC
+  ProtectedItem.sourceResourceId: -|arm-id
+  ProtectedItem.policyId: -|arm-id
+  ProtectionIntent.sourceResourceId: -|arm-id
+  ProtectionIntent.itemId: -|arm-id
+  ProtectionIntent.policyId: -|arm-id
+  BackupStatusRequest.resourceId: -|arm-id
+  BackupStatusResponse.vaultId: -|arm-id
+  BEKDetails.secretVaultId: -|arm-id
+  ContainerIdentityInfo.aadTenantId: -|uuid
+  ProtectableContainer.containerId: -|arm-id
+  AzureFileShareBackupRequest.recoveryPointExpiryTimeInUTC: RecoveryPointExpiryOn
+  AzureFileShareRestoreRequest.sourceResourceId: -|arm-id
+  IaasVMBackupRequest.recoveryPointExpiryTimeInUTC: RecoveryPointExpiryOn
+  IaaSVMContainer.virtualMachineId: -|arm-id
+  IaasVmilrRegistrationRequest.virtualMachineId: -|arm-id
+  IaaSVMProtectableItem.virtualMachineId: -|arm-id
+  AzureIaaSVMProtectedItem.virtualMachineId: -|arm-id
+  IaasVMRestoreRequest.sourceResourceId: -|arm-id
+  IaasVMRestoreRequest.targetVirtualMachineId: -|arm-id
+  IaasVMRestoreRequest.targetResourceGroupId: -|arm-id
+  IaasVMRestoreRequest.storageAccountId: -|arm-id
+  IaasVMRestoreRequest.virtualNetworkId: -|arm-id
+  IaasVMRestoreRequest.subnetId: -|arm-id
+  IaasVMRestoreRequest.targetDomainNameId: -|arm-id
+  IaasVMRestoreRequest.region: -|azure-location
+  IdentityBasedRestoreDetails.targetStorageAccountId: -|arm-id
+  IdentityInfo.managedIdentityResourceId: -|arm-id
+  KEKDetails.keyVaultId: -|arm-id
+  PrepareDataMoveRequest.targetResourceId: -|arm-id
+  PreValidateEnableBackupRequest.resourceId: -|arm-id
+  PreValidateEnableBackupRequest.vaultId: -|arm-id
+  ResourceGuardProxyBase.resourceGuardResourceId: -|arm-id
+  ResourceGuardProxyBase.lastUpdatedTime: LastUpdatedOn|datetime
+  AzureStorageContainer.sourceResourceId: -|arm-id
+  TargetAFSRestoreInfo.targetResourceId: -|arm-id
+  TriggerDataMoveRequest.sourceResourceId: -|arm-id
+  TriggerDataMoveRequest.sourceContainerArmIds: -|arm-id
+  TriggerDataMoveRequest.sourceRegion: -|azure-location
+  EncryptionDetails.kekVaultId: -|arm-id
+  EncryptionDetails.secretKeyVaultId: -|arm-id
+  SupportStatus.DefaultOFF: DefaultOff
+  SupportStatus.DefaultON: DefaultOn
+  AzureWorkloadBackupRequest.recoveryPointExpiryTimeInUTC: RecoveryPointExpiryOn
+  AzureWorkloadContainer.sourceResourceId: -|arm-id
+  AzureWorkloadRecoveryPoint.recoveryPointTimeInUTC: RecoveryPointCreatedOn
+  AzureWorkloadRestoreRequest.sourceResourceId: -|arm-id
+  AzureWorkloadRestoreRequest.targetVirtualMachineId: -|arm-id
+  AzureWorkloadSQLRecoveryPointExtendedInfo.dataDirectoryTimeInUTC: DataDirectoryInfoCapturedOn
+  ProtectedItem.deferredDeleteTimeInUTC: DeferredDeletedOn
+  AzureFileShareProvisionILRRequest.sourceResourceId: -|arm-id
+  PrepareDataMoveRequest.sourceContainerArmIds: -|arm-id
+  UnlockDeleteResponse.unlockDeleteExpiryTime: UnlockDeleteExpiryOn|datetime
+  PrepareDataMoveRequest.targetRegion: -|azure-location
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -218,10 +280,18 @@ rename-rules:
   KPI: Kpi
   AFS: Afs
   SAP: Sap
+  SqlDb: SqlDB
+  BMS: Bms
+  PIN: Pin
 
 override-operation-name:
   BackupStatus_Get: GetBackupStatus
   DeletedProtectionContainers_List: GetSoftDeletedProtectionContainers
+  RecoveryPointsRecommendedForMove_List: GetRecoveryPointsRecommendedForMove
+  BackupProtectionIntent_List: GetBackupProtectionIntents
+  BackupProtectedItems_List: GetBackupProtectedItems
+  BackupProtectionContainers_List: GetBackupProtectionContainers
+  SecurityPINs_Get: GetSecurityPin
 
 list-exception:
   - /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig

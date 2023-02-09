@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Details about inquired protectable items under a given container.
-    /// Serialized Name: InquiryInfo
-    /// </summary>
+    /// <summary> Details about inquired protectable items under a given container. </summary>
     public partial class InquiryInfo
     {
         /// <summary> Initializes a new instance of InquiryInfo. </summary>
@@ -26,16 +23,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="status">
         /// Inquiry Status for this container such as
         /// InProgress | Failed | Succeeded
-        /// Serialized Name: InquiryInfo.status
         /// </param>
-        /// <param name="errorDetail">
-        /// Error Details if the Status is non-success.
-        /// Serialized Name: InquiryInfo.errorDetail
-        /// </param>
+        /// <param name="errorDetail"> Error Details if the Status is non-success. </param>
         /// <param name="inquiryDetails">
         /// Inquiry Details which will have workload specific details.
         /// For e.g. - For SQL and oracle this will contain different details.
-        /// Serialized Name: InquiryInfo.inquiryDetails
         /// </param>
         internal InquiryInfo(string status, BackupErrorDetail errorDetail, IList<WorkloadInquiryDetails> inquiryDetails)
         {
@@ -47,18 +39,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary>
         /// Inquiry Status for this container such as
         /// InProgress | Failed | Succeeded
-        /// Serialized Name: InquiryInfo.status
         /// </summary>
         public string Status { get; set; }
-        /// <summary>
-        /// Error Details if the Status is non-success.
-        /// Serialized Name: InquiryInfo.errorDetail
-        /// </summary>
+        /// <summary> Error Details if the Status is non-success. </summary>
         public BackupErrorDetail ErrorDetail { get; set; }
         /// <summary>
         /// Inquiry Details which will have workload specific details.
         /// For e.g. - For SQL and oracle this will contain different details.
-        /// Serialized Name: InquiryInfo.inquiryDetails
         /// </summary>
         public IList<WorkloadInquiryDetails> InquiryDetails { get; }
     }

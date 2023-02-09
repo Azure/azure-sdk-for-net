@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// AzureFileShare Restore Request
-    /// Serialized Name: AzureFileShareRestoreRequest
-    /// </summary>
+    /// <summary> AzureFileShare Restore Request. </summary>
     public partial class FileShareRestoreRequest : RestoreRequest
     {
         /// <summary> Initializes a new instance of FileShareRestoreRequest. </summary>
@@ -24,35 +21,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of FileShareRestoreRequest. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RestoreRequest.objectType
-        /// </param>
-        /// <param name="recoveryType">
-        /// Type of this recovery.
-        /// Serialized Name: AzureFileShareRestoreRequest.recoveryType
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// Source storage account ARM Id
-        /// Serialized Name: AzureFileShareRestoreRequest.sourceResourceId
-        /// </param>
-        /// <param name="copyOptions">
-        /// Options to resolve copy conflicts.
-        /// Serialized Name: AzureFileShareRestoreRequest.copyOptions
-        /// </param>
-        /// <param name="restoreRequestType">
-        /// Restore Type (FullShareRestore or ItemLevelRestore)
-        /// Serialized Name: AzureFileShareRestoreRequest.restoreRequestType
-        /// </param>
-        /// <param name="restoreFileSpecs">
-        /// List of Source Files/Folders(which need to recover) and TargetFolderPath details
-        /// Serialized Name: AzureFileShareRestoreRequest.restoreFileSpecs
-        /// </param>
-        /// <param name="targetDetails">
-        /// Target File Share Details
-        /// Serialized Name: AzureFileShareRestoreRequest.targetDetails
-        /// </param>
-        internal FileShareRestoreRequest(string objectType, RecoveryType? recoveryType, string sourceResourceId, CopyOption? copyOptions, RestoreRequestType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType)
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryType"> Type of this recovery. </param>
+        /// <param name="sourceResourceId"> Source storage account ARM Id. </param>
+        /// <param name="copyOptions"> Options to resolve copy conflicts. </param>
+        /// <param name="restoreRequestType"> Restore Type (FullShareRestore or ItemLevelRestore). </param>
+        /// <param name="restoreFileSpecs"> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </param>
+        /// <param name="targetDetails"> Target File Share Details. </param>
+        internal FileShareRestoreRequest(string objectType, RecoveryType? recoveryType, ResourceIdentifier sourceResourceId, CopyOption? copyOptions, RestoreRequestType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType)
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
@@ -63,35 +39,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "AzureFileShareRestoreRequest";
         }
 
-        /// <summary>
-        /// Type of this recovery.
-        /// Serialized Name: AzureFileShareRestoreRequest.recoveryType
-        /// </summary>
+        /// <summary> Type of this recovery. </summary>
         public RecoveryType? RecoveryType { get; set; }
-        /// <summary>
-        /// Source storage account ARM Id
-        /// Serialized Name: AzureFileShareRestoreRequest.sourceResourceId
-        /// </summary>
-        public string SourceResourceId { get; set; }
-        /// <summary>
-        /// Options to resolve copy conflicts.
-        /// Serialized Name: AzureFileShareRestoreRequest.copyOptions
-        /// </summary>
+        /// <summary> Source storage account ARM Id. </summary>
+        public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary> Options to resolve copy conflicts. </summary>
         public CopyOption? CopyOptions { get; set; }
-        /// <summary>
-        /// Restore Type (FullShareRestore or ItemLevelRestore)
-        /// Serialized Name: AzureFileShareRestoreRequest.restoreRequestType
-        /// </summary>
+        /// <summary> Restore Type (FullShareRestore or ItemLevelRestore). </summary>
         public RestoreRequestType? RestoreRequestType { get; set; }
-        /// <summary>
-        /// List of Source Files/Folders(which need to recover) and TargetFolderPath details
-        /// Serialized Name: AzureFileShareRestoreRequest.restoreFileSpecs
-        /// </summary>
+        /// <summary> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </summary>
         public IList<RestoreFileSpecs> RestoreFileSpecs { get; }
-        /// <summary>
-        /// Target File Share Details
-        /// Serialized Name: AzureFileShareRestoreRequest.targetDetails
-        /// </summary>
+        /// <summary> Target File Share Details. </summary>
         public TargetAfsRestoreInfo TargetDetails { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Type of workload for the backup management
-    /// Serialized Name: WorkloadType
-    /// </summary>
+    /// <summary> Type of workload for the backup management. </summary>
     public readonly partial struct BackupWorkloadType : IEquatable<BackupWorkloadType>
     {
         private readonly string _value;
@@ -28,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string InvalidValue = "Invalid";
         private const string VmValue = "VM";
         private const string FileFolderValue = "FileFolder";
-        private const string AzureSqlDbValue = "AzureSqlDb";
+        private const string AzureSqlDBValue = "AzureSqlDb";
         private const string SqlDBValue = "SQLDB";
         private const string ExchangeValue = "Exchange";
         private const string SharepointValue = "Sharepoint";
@@ -42,85 +39,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SapAseDatabaseValue = "SAPAseDatabase";
         private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: WorkloadType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static BackupWorkloadType Invalid { get; } = new BackupWorkloadType(InvalidValue);
-        /// <summary>
-        /// VM
-        /// Serialized Name: WorkloadType.VM
-        /// </summary>
+        /// <summary> VM. </summary>
         public static BackupWorkloadType Vm { get; } = new BackupWorkloadType(VmValue);
-        /// <summary>
-        /// FileFolder
-        /// Serialized Name: WorkloadType.FileFolder
-        /// </summary>
+        /// <summary> FileFolder. </summary>
         public static BackupWorkloadType FileFolder { get; } = new BackupWorkloadType(FileFolderValue);
-        /// <summary>
-        /// AzureSqlDb
-        /// Serialized Name: WorkloadType.AzureSqlDb
-        /// </summary>
-        public static BackupWorkloadType AzureSqlDb { get; } = new BackupWorkloadType(AzureSqlDbValue);
-        /// <summary>
-        /// SQLDB
-        /// Serialized Name: WorkloadType.SQLDB
-        /// </summary>
+        /// <summary> AzureSqlDb. </summary>
+        public static BackupWorkloadType AzureSqlDB { get; } = new BackupWorkloadType(AzureSqlDBValue);
+        /// <summary> SQLDB. </summary>
         public static BackupWorkloadType SqlDB { get; } = new BackupWorkloadType(SqlDBValue);
-        /// <summary>
-        /// Exchange
-        /// Serialized Name: WorkloadType.Exchange
-        /// </summary>
+        /// <summary> Exchange. </summary>
         public static BackupWorkloadType Exchange { get; } = new BackupWorkloadType(ExchangeValue);
-        /// <summary>
-        /// Sharepoint
-        /// Serialized Name: WorkloadType.Sharepoint
-        /// </summary>
+        /// <summary> Sharepoint. </summary>
         public static BackupWorkloadType Sharepoint { get; } = new BackupWorkloadType(SharepointValue);
-        /// <summary>
-        /// VMwareVM
-        /// Serialized Name: WorkloadType.VMwareVM
-        /// </summary>
+        /// <summary> VMwareVM. </summary>
         public static BackupWorkloadType VMwareVm { get; } = new BackupWorkloadType(VMwareVmValue);
-        /// <summary>
-        /// SystemState
-        /// Serialized Name: WorkloadType.SystemState
-        /// </summary>
+        /// <summary> SystemState. </summary>
         public static BackupWorkloadType SystemState { get; } = new BackupWorkloadType(SystemStateValue);
-        /// <summary>
-        /// Client
-        /// Serialized Name: WorkloadType.Client
-        /// </summary>
+        /// <summary> Client. </summary>
         public static BackupWorkloadType Client { get; } = new BackupWorkloadType(ClientValue);
-        /// <summary>
-        /// GenericDataSource
-        /// Serialized Name: WorkloadType.GenericDataSource
-        /// </summary>
+        /// <summary> GenericDataSource. </summary>
         public static BackupWorkloadType GenericDataSource { get; } = new BackupWorkloadType(GenericDataSourceValue);
-        /// <summary>
-        /// SQLDataBase
-        /// Serialized Name: WorkloadType.SQLDataBase
-        /// </summary>
+        /// <summary> SQLDataBase. </summary>
         public static BackupWorkloadType SqlDataBase { get; } = new BackupWorkloadType(SqlDataBaseValue);
-        /// <summary>
-        /// AzureFileShare
-        /// Serialized Name: WorkloadType.AzureFileShare
-        /// </summary>
+        /// <summary> AzureFileShare. </summary>
         public static BackupWorkloadType AzureFileShare { get; } = new BackupWorkloadType(AzureFileShareValue);
-        /// <summary>
-        /// SAPHanaDatabase
-        /// Serialized Name: WorkloadType.SAPHanaDatabase
-        /// </summary>
+        /// <summary> SAPHanaDatabase. </summary>
         public static BackupWorkloadType SapHanaDatabase { get; } = new BackupWorkloadType(SapHanaDatabaseValue);
-        /// <summary>
-        /// SAPAseDatabase
-        /// Serialized Name: WorkloadType.SAPAseDatabase
-        /// </summary>
+        /// <summary> SAPAseDatabase. </summary>
         public static BackupWorkloadType SapAseDatabase { get; } = new BackupWorkloadType(SapAseDatabaseValue);
-        /// <summary>
-        /// SAPHanaDBInstance
-        /// Serialized Name: WorkloadType.SAPHanaDBInstance
-        /// </summary>
+        /// <summary> SAPHanaDBInstance. </summary>
         public static BackupWorkloadType SapHanaDBInstance { get; } = new BackupWorkloadType(SapHanaDBInstanceValue);
         /// <summary> Determines if two <see cref="BackupWorkloadType"/> values are the same. </summary>
         public static bool operator ==(BackupWorkloadType left, BackupWorkloadType right) => left.Equals(right);

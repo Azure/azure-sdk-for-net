@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The BackupResourceEncryptionConfig.
-    /// Serialized Name: BackupResourceEncryptionConfig
-    /// </summary>
+    /// <summary> The BackupResourceEncryptionConfig. </summary>
     public partial class BackupResourceEncryptionConfig
     {
         /// <summary> Initializes a new instance of BackupResourceEncryptionConfig. </summary>
@@ -21,20 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupResourceEncryptionConfig. </summary>
-        /// <param name="encryptionAtRestType">
-        /// Encryption At Rest Type
-        /// Serialized Name: BackupResourceEncryptionConfig.encryptionAtRestType
-        /// </param>
-        /// <param name="keyUri">
-        /// Key Vault Key URI
-        /// Serialized Name: BackupResourceEncryptionConfig.keyUri
-        /// </param>
-        /// <param name="subscriptionId">
-        /// Key Vault Subscription Id
-        /// Serialized Name: BackupResourceEncryptionConfig.subscriptionId
-        /// </param>
-        /// <param name="lastUpdateStatus"> Serialized Name: BackupResourceEncryptionConfig.lastUpdateStatus. </param>
-        /// <param name="infrastructureEncryptionState"> Serialized Name: BackupResourceEncryptionConfig.infrastructureEncryptionState. </param>
+        /// <param name="encryptionAtRestType"> Encryption At Rest Type. </param>
+        /// <param name="keyUri"> Key Vault Key URI. </param>
+        /// <param name="subscriptionId"> Key Vault Subscription Id. </param>
+        /// <param name="lastUpdateStatus"></param>
+        /// <param name="infrastructureEncryptionState"></param>
         internal BackupResourceEncryptionConfig(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState)
         {
             EncryptionAtRestType = encryptionAtRestType;
@@ -44,24 +32,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             InfrastructureEncryptionState = infrastructureEncryptionState;
         }
 
-        /// <summary>
-        /// Encryption At Rest Type
-        /// Serialized Name: BackupResourceEncryptionConfig.encryptionAtRestType
-        /// </summary>
+        /// <summary> Encryption At Rest Type. </summary>
         public BackupEncryptionAtRestType? EncryptionAtRestType { get; set; }
-        /// <summary>
-        /// Key Vault Key URI
-        /// Serialized Name: BackupResourceEncryptionConfig.keyUri
-        /// </summary>
+        /// <summary> Key Vault Key URI. </summary>
         public Uri KeyUri { get; set; }
-        /// <summary>
-        /// Key Vault Subscription Id
-        /// Serialized Name: BackupResourceEncryptionConfig.subscriptionId
-        /// </summary>
+        /// <summary> Key Vault Subscription Id. </summary>
         public string SubscriptionId { get; set; }
-        /// <summary> Serialized Name: BackupResourceEncryptionConfig.lastUpdateStatus. </summary>
+        /// <summary> Gets or sets the last update status. </summary>
         public LastUpdateStatus? LastUpdateStatus { get; set; }
-        /// <summary> Serialized Name: BackupResourceEncryptionConfig.infrastructureEncryptionState. </summary>
+        /// <summary> Gets or sets the infrastructure encryption state. </summary>
         public InfrastructureEncryptionState? InfrastructureEncryptionState { get; set; }
     }
 }

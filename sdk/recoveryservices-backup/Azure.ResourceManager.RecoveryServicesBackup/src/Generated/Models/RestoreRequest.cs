@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for restore request. Workload-specific restore requests are derived from this class.
-    /// Serialized Name: RestoreRequest
     /// Please note <see cref="RestoreRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FileShareRestoreRequest"/>, <see cref="WorkloadPointInTimeRestoreRequest"/>, <see cref="WorkloadRestoreRequest"/>, <see cref="WorkloadSapHanaPointInTimeRestoreRequest"/>, <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateRequest"/>, <see cref="WorkloadSapHanaRestoreRequest"/>, <see cref="WorkloadSapHanaRestoreWithRehydrateRequest"/>, <see cref="WorkloadSqlPointInTimeRestoreRequest"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateRequest"/>, <see cref="WorkloadSqlRestoreRequest"/>, <see cref="WorkloadSqlRestoreWithRehydrateRequest"/>, <see cref="IaasVmRestoreRequest"/> and <see cref="IaasVmRestoreWithRehydrationRequest"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RestoreRequest. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RestoreRequest.objectType
-        /// </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal RestoreRequest(string objectType)
         {
             ObjectType = objectType;
         }
 
-        /// <summary>
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RestoreRequest.objectType
-        /// </summary>
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
         internal string ObjectType { get; set; }
     }
 }

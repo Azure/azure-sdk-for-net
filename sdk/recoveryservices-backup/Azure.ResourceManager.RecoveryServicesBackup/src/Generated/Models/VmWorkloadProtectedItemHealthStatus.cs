@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Health status of the backup item, evaluated based on last heartbeat received
-    /// Serialized Name: ProtectedItemHealthStatus
-    /// </summary>
+    /// <summary> Health status of the backup item, evaluated based on last heartbeat received. </summary>
     public readonly partial struct VmWorkloadProtectedItemHealthStatus : IEquatable<VmWorkloadProtectedItemHealthStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string NotReachableValue = "NotReachable";
         private const string IRPendingValue = "IRPending";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: ProtectedItemHealthStatus.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static VmWorkloadProtectedItemHealthStatus Invalid { get; } = new VmWorkloadProtectedItemHealthStatus(InvalidValue);
-        /// <summary>
-        /// Healthy
-        /// Serialized Name: ProtectedItemHealthStatus.Healthy
-        /// </summary>
+        /// <summary> Healthy. </summary>
         public static VmWorkloadProtectedItemHealthStatus Healthy { get; } = new VmWorkloadProtectedItemHealthStatus(HealthyValue);
-        /// <summary>
-        /// Unhealthy
-        /// Serialized Name: ProtectedItemHealthStatus.Unhealthy
-        /// </summary>
+        /// <summary> Unhealthy. </summary>
         public static VmWorkloadProtectedItemHealthStatus Unhealthy { get; } = new VmWorkloadProtectedItemHealthStatus(UnhealthyValue);
-        /// <summary>
-        /// NotReachable
-        /// Serialized Name: ProtectedItemHealthStatus.NotReachable
-        /// </summary>
+        /// <summary> NotReachable. </summary>
         public static VmWorkloadProtectedItemHealthStatus NotReachable { get; } = new VmWorkloadProtectedItemHealthStatus(NotReachableValue);
-        /// <summary>
-        /// IRPending
-        /// Serialized Name: ProtectedItemHealthStatus.IRPending
-        /// </summary>
+        /// <summary> IRPending. </summary>
         public static VmWorkloadProtectedItemHealthStatus IRPending { get; } = new VmWorkloadProtectedItemHealthStatus(IRPendingValue);
         /// <summary> Determines if two <see cref="VmWorkloadProtectedItemHealthStatus"/> values are the same. </summary>
         public static bool operator ==(VmWorkloadProtectedItemHealthStatus left, VmWorkloadProtectedItemHealthStatus right) => left.Equals(right);

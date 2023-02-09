@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Additional information on Azure Sql specific protected item.
-    /// Serialized Name: AzureSqlProtectedItemExtendedInfo
-    /// </summary>
+    /// <summary> Additional information on Azure Sql specific protected item. </summary>
     public partial class SqlProtectedItemExtendedInfo
     {
         /// <summary> Initializes a new instance of SqlProtectedItemExtendedInfo. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of SqlProtectedItemExtendedInfo. </summary>
-        /// <param name="oldestRecoveryPoint">
-        /// The oldest backup copy available for this item in the service.
-        /// Serialized Name: AzureSqlProtectedItemExtendedInfo.oldestRecoveryPoint
-        /// </param>
-        /// <param name="recoveryPointCount">
-        /// Number of available backup copies associated with this backup item.
-        /// Serialized Name: AzureSqlProtectedItemExtendedInfo.recoveryPointCount
-        /// </param>
-        /// <param name="policyState">
-        /// State of the backup policy associated with this backup item.
-        /// Serialized Name: AzureSqlProtectedItemExtendedInfo.policyState
-        /// </param>
+        /// <param name="oldestRecoveryPoint"> The oldest backup copy available for this item in the service. </param>
+        /// <param name="recoveryPointCount"> Number of available backup copies associated with this backup item. </param>
+        /// <param name="policyState"> State of the backup policy associated with this backup item. </param>
         internal SqlProtectedItemExtendedInfo(DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount, string policyState)
         {
             OldestRecoveryPoint = oldestRecoveryPoint;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             PolicyState = policyState;
         }
 
-        /// <summary>
-        /// The oldest backup copy available for this item in the service.
-        /// Serialized Name: AzureSqlProtectedItemExtendedInfo.oldestRecoveryPoint
-        /// </summary>
+        /// <summary> The oldest backup copy available for this item in the service. </summary>
         public DateTimeOffset? OldestRecoveryPoint { get; set; }
-        /// <summary>
-        /// Number of available backup copies associated with this backup item.
-        /// Serialized Name: AzureSqlProtectedItemExtendedInfo.recoveryPointCount
-        /// </summary>
+        /// <summary> Number of available backup copies associated with this backup item. </summary>
         public int? RecoveryPointCount { get; set; }
-        /// <summary>
-        /// State of the backup policy associated with this backup item.
-        /// Serialized Name: AzureSqlProtectedItemExtendedInfo.policyState
-        /// </summary>
+        /// <summary> State of the backup policy associated with this backup item. </summary>
         public string PolicyState { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Create mode to indicate recovery of existing soft deleted data source or creation of new data source.
-    /// Serialized Name: CreateMode
-    /// </summary>
+    /// <summary> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </summary>
     public readonly partial struct BackupCreateMode : IEquatable<BackupCreateMode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string DefaultValue = "Default";
         private const string RecoverValue = "Recover";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: CreateMode.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static BackupCreateMode Invalid { get; } = new BackupCreateMode(InvalidValue);
-        /// <summary>
-        /// Default
-        /// Serialized Name: CreateMode.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static BackupCreateMode Default { get; } = new BackupCreateMode(DefaultValue);
-        /// <summary>
-        /// Recover
-        /// Serialized Name: CreateMode.Recover
-        /// </summary>
+        /// <summary> Recover. </summary>
         public static BackupCreateMode Recover { get; } = new BackupCreateMode(RecoverValue);
         /// <summary> Determines if two <see cref="BackupCreateMode"/> values are the same. </summary>
         public static bool operator ==(BackupCreateMode left, BackupCreateMode right) => left.Equals(right);

@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup item. Workload-specific backup items are derived from this class.
-    /// Serialized Name: WorkloadProtectableItem
     /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaHsr"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
     /// </summary>
@@ -21,26 +20,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadProtectableItem. </summary>
-        /// <param name="backupManagementType">
-        /// Type of backup management to backup an item.
-        /// Serialized Name: WorkloadProtectableItem.backupManagementType
-        /// </param>
-        /// <param name="workloadType">
-        /// Type of workload for the backup management
-        /// Serialized Name: WorkloadProtectableItem.workloadType
-        /// </param>
-        /// <param name="protectableItemType">
-        /// Type of the backup item.
-        /// Serialized Name: WorkloadProtectableItem.protectableItemType
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the backup item.
-        /// Serialized Name: WorkloadProtectableItem.friendlyName
-        /// </param>
-        /// <param name="protectionState">
-        /// State of the back up item.
-        /// Serialized Name: WorkloadProtectableItem.protectionState
-        /// </param>
+        /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
+        /// <param name="workloadType"> Type of workload for the backup management. </param>
+        /// <param name="protectableItemType"> Type of the backup item. </param>
+        /// <param name="friendlyName"> Friendly name of the backup item. </param>
+        /// <param name="protectionState"> State of the back up item. </param>
         internal WorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState)
         {
             BackupManagementType = backupManagementType;
@@ -50,30 +34,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectionState = protectionState;
         }
 
-        /// <summary>
-        /// Type of backup management to backup an item.
-        /// Serialized Name: WorkloadProtectableItem.backupManagementType
-        /// </summary>
+        /// <summary> Type of backup management to backup an item. </summary>
         public string BackupManagementType { get; set; }
-        /// <summary>
-        /// Type of workload for the backup management
-        /// Serialized Name: WorkloadProtectableItem.workloadType
-        /// </summary>
+        /// <summary> Type of workload for the backup management. </summary>
         public string WorkloadType { get; set; }
-        /// <summary>
-        /// Type of the backup item.
-        /// Serialized Name: WorkloadProtectableItem.protectableItemType
-        /// </summary>
+        /// <summary> Type of the backup item. </summary>
         internal string ProtectableItemType { get; set; }
-        /// <summary>
-        /// Friendly name of the backup item.
-        /// Serialized Name: WorkloadProtectableItem.friendlyName
-        /// </summary>
+        /// <summary> Friendly name of the backup item. </summary>
         public string FriendlyName { get; set; }
-        /// <summary>
-        /// State of the back up item.
-        /// Serialized Name: WorkloadProtectableItem.protectionState
-        /// </summary>
+        /// <summary> State of the back up item. </summary>
         public ProtectionStatus? ProtectionState { get; set; }
     }
 }

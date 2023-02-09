@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Can Overwrite if Target DataBase already exists
-    /// Serialized Name: OverwriteOptions
-    /// </summary>
+    /// <summary> Can Overwrite if Target DataBase already exists. </summary>
     public readonly partial struct RestoreOverwriteOption : IEquatable<RestoreOverwriteOption>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string FailOnConflictValue = "FailOnConflict";
         private const string OverwriteValue = "Overwrite";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: OverwriteOptions.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static RestoreOverwriteOption Invalid { get; } = new RestoreOverwriteOption(InvalidValue);
-        /// <summary>
-        /// FailOnConflict
-        /// Serialized Name: OverwriteOptions.FailOnConflict
-        /// </summary>
+        /// <summary> FailOnConflict. </summary>
         public static RestoreOverwriteOption FailOnConflict { get; } = new RestoreOverwriteOption(FailOnConflictValue);
-        /// <summary>
-        /// Overwrite
-        /// Serialized Name: OverwriteOptions.Overwrite
-        /// </summary>
+        /// <summary> Overwrite. </summary>
         public static RestoreOverwriteOption Overwrite { get; } = new RestoreOverwriteOption(OverwriteValue);
         /// <summary> Determines if two <see cref="RestoreOverwriteOption"/> values are the same. </summary>
         public static bool operator ==(RestoreOverwriteOption left, RestoreOverwriteOption right) => left.Equals(right);

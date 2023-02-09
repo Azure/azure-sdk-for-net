@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Recovery point tier information.
-    /// Serialized Name: RecoveryPointTierInformation
-    /// </summary>
+    /// <summary> Recovery point tier information. </summary>
     public partial class RecoveryPointTierInformation
     {
         /// <summary> Initializes a new instance of RecoveryPointTierInformation. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPointTierInformation. </summary>
-        /// <param name="tierType">
-        /// Recovery point tier type.
-        /// Serialized Name: RecoveryPointTierInformation.type
-        /// </param>
-        /// <param name="status">
-        /// Recovery point tier status.
-        /// Serialized Name: RecoveryPointTierInformation.status
-        /// </param>
-        /// <param name="extendedInfo">
-        /// Recovery point tier status.
-        /// Serialized Name: RecoveryPointTierInformation.extendedInfo
-        /// </param>
+        /// <param name="tierType"> Recovery point tier type. </param>
+        /// <param name="status"> Recovery point tier status. </param>
+        /// <param name="extendedInfo"> Recovery point tier status. </param>
         internal RecoveryPointTierInformation(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo)
         {
             TierType = tierType;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ExtendedInfo = extendedInfo;
         }
 
-        /// <summary>
-        /// Recovery point tier type.
-        /// Serialized Name: RecoveryPointTierInformation.type
-        /// </summary>
+        /// <summary> Recovery point tier type. </summary>
         public RecoveryPointTierType? TierType { get; set; }
-        /// <summary>
-        /// Recovery point tier status.
-        /// Serialized Name: RecoveryPointTierInformation.status
-        /// </summary>
+        /// <summary> Recovery point tier status. </summary>
         public RecoveryPointTierStatus? Status { get; set; }
-        /// <summary>
-        /// Recovery point tier status.
-        /// Serialized Name: RecoveryPointTierInformation.extendedInfo
-        /// </summary>
+        /// <summary> Recovery point tier status. </summary>
         public IDictionary<string, string> ExtendedInfo { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Retention duration.
-    /// Serialized Name: RetentionDuration
-    /// </summary>
+    /// <summary> Retention duration. </summary>
     public partial class RetentionDuration
     {
         /// <summary> Initializes a new instance of RetentionDuration. </summary>
@@ -22,12 +19,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="count">
         /// Count of duration types. Retention duration is obtained by the counting the duration type Count times.
         /// For example, when Count = 3 and DurationType = Weeks, retention duration will be three weeks.
-        /// Serialized Name: RetentionDuration.count
         /// </param>
-        /// <param name="durationType">
-        /// Retention duration type of retention policy.
-        /// Serialized Name: RetentionDuration.durationType
-        /// </param>
+        /// <param name="durationType"> Retention duration type of retention policy. </param>
         internal RetentionDuration(int? count, RetentionDurationType? durationType)
         {
             Count = count;
@@ -37,13 +30,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary>
         /// Count of duration types. Retention duration is obtained by the counting the duration type Count times.
         /// For example, when Count = 3 and DurationType = Weeks, retention duration will be three weeks.
-        /// Serialized Name: RetentionDuration.count
         /// </summary>
         public int? Count { get; set; }
-        /// <summary>
-        /// Retention duration type of retention policy.
-        /// Serialized Name: RetentionDuration.durationType
-        /// </summary>
+        /// <summary> Retention duration type of retention policy. </summary>
         public RetentionDurationType? DurationType { get; set; }
     }
 }

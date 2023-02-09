@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup policy. Workload-specific backup policies are derived from this class.
-    /// Serialized Name: ProtectionPolicy
     /// Please note <see cref="BackupProtectionPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="VmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
     /// </summary>
@@ -25,18 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupProtectionPolicyProperties. </summary>
-        /// <param name="protectedItemsCount">
-        /// Number of items associated with this policy.
-        /// Serialized Name: ProtectionPolicy.protectedItemsCount
-        /// </param>
-        /// <param name="backupManagementType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: ProtectionPolicy.backupManagementType
-        /// </param>
-        /// <param name="resourceGuardOperationRequests">
-        /// ResourceGuard Operation Requests
-        /// Serialized Name: ProtectionPolicy.resourceGuardOperationRequests
-        /// </param>
+        /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
+        /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
         internal BackupProtectionPolicyProperties(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests)
         {
             ProtectedItemsCount = protectedItemsCount;
@@ -44,20 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
         }
 
-        /// <summary>
-        /// Number of items associated with this policy.
-        /// Serialized Name: ProtectionPolicy.protectedItemsCount
-        /// </summary>
+        /// <summary> Number of items associated with this policy. </summary>
         public int? ProtectedItemsCount { get; set; }
-        /// <summary>
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: ProtectionPolicy.backupManagementType
-        /// </summary>
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
         internal string BackupManagementType { get; set; }
-        /// <summary>
-        /// ResourceGuard Operation Requests
-        /// Serialized Name: ProtectionPolicy.resourceGuardOperationRequests
-        /// </summary>
+        /// <summary> ResourceGuard Operation Requests. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
     }
 }

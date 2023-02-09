@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Gets or sets provisioning state of the private endpoint connection
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Gets or sets provisioning state of the private endpoint connection. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string FailedValue = "Failed";
         private const string PendingValue = "Pending";
 
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-        /// <summary>
-        /// Pending
-        /// Serialized Name: ProvisioningState.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static ProvisioningState Pending { get; } = new ProvisioningState(PendingValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);

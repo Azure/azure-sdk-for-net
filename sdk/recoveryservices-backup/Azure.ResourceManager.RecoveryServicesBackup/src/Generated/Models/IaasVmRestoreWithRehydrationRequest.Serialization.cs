@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region");
-                writer.WriteStringValue(Region);
+                writer.WriteStringValue(Region.Value);
             }
             if (Optional.IsDefined(AffinityGroup))
             {
                 writer.WritePropertyName("affinityGroup");
                 writer.WriteStringValue(AffinityGroup);
             }
-            if (Optional.IsDefined(CreateNewCloudService))
+            if (Optional.IsDefined(DoesCreateNewCloudService))
             {
                 writer.WritePropertyName("createNewCloudService");
-                writer.WriteBooleanValue(CreateNewCloudService.Value);
+                writer.WriteBooleanValue(DoesCreateNewCloudService.Value);
             }
             if (Optional.IsDefined(OriginalStorageAccountOption))
             {
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RestoreWithManagedDisks))
+            if (Optional.IsDefined(DoesRestoreWithManagedDisks))
             {
                 writer.WritePropertyName("restoreWithManagedDisks");
-                writer.WriteBooleanValue(RestoreWithManagedDisks.Value);
+                writer.WriteBooleanValue(DoesRestoreWithManagedDisks.Value);
             }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RecoveryPointRehydrationInfo> recoveryPointRehydrationInfo = default;
             Optional<string> recoveryPointId = default;
             Optional<RecoveryType> recoveryType = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> targetVirtualMachineId = default;
-            Optional<string> targetResourceGroupId = default;
-            Optional<string> storageAccountId = default;
-            Optional<string> virtualNetworkId = default;
-            Optional<string> subnetId = default;
-            Optional<string> targetDomainNameId = default;
-            Optional<string> region = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> targetVirtualMachineId = default;
+            Optional<ResourceIdentifier> targetResourceGroupId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<ResourceIdentifier> virtualNetworkId = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<ResourceIdentifier> targetDomainNameId = default;
+            Optional<AzureLocation> region = default;
             Optional<string> affinityGroup = default;
             Optional<bool> createNewCloudService = default;
             Optional<bool> originalStorageAccountOption = default;
@@ -189,42 +189,82 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVirtualMachineId"))
                 {
-                    targetVirtualMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetVirtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetResourceGroupId"))
                 {
-                    targetResourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountId"))
                 {
-                    storageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkId"))
                 {
-                    virtualNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    virtualNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnetId"))
                 {
-                    subnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetDomainNameId"))
                 {
-                    targetDomainNameId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetDomainNameId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("region"))
                 {
-                    region = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    region = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("affinityGroup"))
@@ -333,7 +373,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmRestoreWithRehydrationRequest(objectType, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, region.Value, affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, Optional.ToList(restoreDiskLunList), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, Optional.ToList(zones), identityInfo.Value, identityBasedRestoreDetails.Value, recoveryPointRehydrationInfo.Value);
+            return new IaasVmRestoreWithRehydrationRequest(objectType, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, Optional.ToNullable(region), affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, Optional.ToList(restoreDiskLunList), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, Optional.ToList(zones), identityInfo.Value, identityBasedRestoreDetails.Value, recoveryPointRehydrationInfo.Value);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static BekDetails DeserializeBekDetails(JsonElement element)
         {
             Optional<Uri> secretUrl = default;
-            Optional<string> secretVaultId = default;
+            Optional<ResourceIdentifier> secretVaultId = default;
             Optional<string> secretData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("secretVaultId"))
                 {
-                    secretVaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    secretVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secretData"))

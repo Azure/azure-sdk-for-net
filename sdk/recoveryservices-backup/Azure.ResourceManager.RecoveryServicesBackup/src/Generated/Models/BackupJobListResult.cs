@@ -11,10 +11,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// List of Job resources
-    /// Serialized Name: JobResourceList
-    /// </summary>
+    /// <summary> List of Job resources. </summary>
     internal partial class BackupJobListResult
     {
         /// <summary> Initializes a new instance of BackupJobListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupJobListResult. </summary>
-        /// <param name="value">
-        /// List of resources.
-        /// Serialized Name: JobResourceList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The uri to fetch the next page of resources.
-        /// Serialized Name: JobResourceList.nextLink
-        /// </param>
+        /// <param name="value"> List of resources. </param>
+        /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         internal BackupJobListResult(IReadOnlyList<BackupJobData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of resources.
-        /// Serialized Name: JobResourceList.value
-        /// </summary>
+        /// <summary> List of resources. </summary>
         public IReadOnlyList<BackupJobData> Value { get; }
-        /// <summary>
-        /// The uri to fetch the next page of resources.
-        /// Serialized Name: JobResourceList.nextLink
-        /// </summary>
+        /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }
 }

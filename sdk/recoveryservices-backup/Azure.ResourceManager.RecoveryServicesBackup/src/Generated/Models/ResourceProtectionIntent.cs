@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// IaaS VM specific backup protection intent item.
-    /// Serialized Name: AzureResourceProtectionIntent
-    /// </summary>
+    /// <summary> IaaS VM specific backup protection intent item. </summary>
     public partial class ResourceProtectionIntent : BackupProtectionIntentProperties
     {
         /// <summary> Initializes a new instance of ResourceProtectionIntent. </summary>
@@ -20,44 +19,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of ResourceProtectionIntent. </summary>
-        /// <param name="protectionIntentItemType">
-        /// backup protectionIntent type.
-        /// Serialized Name: ProtectionIntent.protectionIntentItemType
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Type of backup management for the backed up item.
-        /// Serialized Name: ProtectionIntent.backupManagementType
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// ARM ID of the resource to be backed up.
-        /// Serialized Name: ProtectionIntent.sourceResourceId
-        /// </param>
-        /// <param name="itemId">
-        /// ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId
-        /// Serialized Name: ProtectionIntent.itemId
-        /// </param>
-        /// <param name="policyId">
-        /// ID of the backup policy with which this item is backed up.
-        /// Serialized Name: ProtectionIntent.policyId
-        /// </param>
-        /// <param name="protectionState">
-        /// Backup state of this backup item.
-        /// Serialized Name: ProtectionIntent.protectionState
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the VM represented by this backup item.
-        /// Serialized Name: AzureResourceProtectionIntent.friendlyName
-        /// </param>
-        internal ResourceProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, string sourceResourceId, string itemId, string policyId, ProtectionStatus? protectionState, string friendlyName) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState)
+        /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
+        /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
+        /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
+        /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
+        /// <param name="protectionState"> Backup state of this backup item. </param>
+        /// <param name="friendlyName"> Friendly name of the VM represented by this backup item. </param>
+        internal ResourceProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, ProtectionStatus? protectionState, string friendlyName) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState)
         {
             FriendlyName = friendlyName;
             ProtectionIntentItemType = protectionIntentItemType;
         }
 
-        /// <summary>
-        /// Friendly name of the VM represented by this backup item.
-        /// Serialized Name: AzureResourceProtectionIntent.friendlyName
-        /// </summary>
+        /// <summary> Friendly name of the VM represented by this backup item. </summary>
         public string FriendlyName { get; set; }
     }
 }

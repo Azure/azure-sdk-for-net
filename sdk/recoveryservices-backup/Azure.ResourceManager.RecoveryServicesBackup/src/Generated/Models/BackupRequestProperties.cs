@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup request. Workload-specific backup requests are derived from this class.
-    /// Serialized Name: BackupRequest
     /// Please note <see cref="BackupRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FileShareBackupRequest"/>, <see cref="WorkloadBackupRequest"/> and <see cref="IaasVmBackupRequest"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupRequestProperties. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: BackupRequest.objectType
-        /// </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal BackupRequestProperties(string objectType)
         {
             ObjectType = objectType;
         }
 
-        /// <summary>
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: BackupRequest.objectType
-        /// </summary>
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
         internal string ObjectType { get; set; }
     }
 }

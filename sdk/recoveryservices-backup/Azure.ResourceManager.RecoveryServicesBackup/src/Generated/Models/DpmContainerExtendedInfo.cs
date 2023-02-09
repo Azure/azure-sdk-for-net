@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Additional information of the DPMContainer.
-    /// Serialized Name: DPMContainerExtendedInfo
-    /// </summary>
+    /// <summary> Additional information of the DPMContainer. </summary>
     internal partial class DpmContainerExtendedInfo
     {
         /// <summary> Initializes a new instance of DpmContainerExtendedInfo. </summary>
@@ -21,19 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DpmContainerExtendedInfo. </summary>
-        /// <param name="lastRefreshedOn">
-        /// Last refresh time of the DPMContainer.
-        /// Serialized Name: DPMContainerExtendedInfo.lastRefreshedAt
-        /// </param>
+        /// <param name="lastRefreshedOn"> Last refresh time of the DPMContainer. </param>
         internal DpmContainerExtendedInfo(DateTimeOffset? lastRefreshedOn)
         {
             LastRefreshedOn = lastRefreshedOn;
         }
 
-        /// <summary>
-        /// Last refresh time of the DPMContainer.
-        /// Serialized Name: DPMContainerExtendedInfo.lastRefreshedAt
-        /// </summary>
+        /// <summary> Last refresh time of the DPMContainer. </summary>
         public DateTimeOffset? LastRefreshedOn { get; set; }
     }
 }

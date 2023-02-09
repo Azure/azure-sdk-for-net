@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<PreValidateEnableBackupResponse>> ValidateProtectionIntentAsync(this SubscriptionResource subscriptionResource, string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PreValidateEnableBackupResult>> ValidateProtectionIntentAsync(this SubscriptionResource subscriptionResource, string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static Response<PreValidateEnableBackupResponse> ValidateProtectionIntent(this SubscriptionResource subscriptionResource, string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
+        public static Response<PreValidateEnableBackupResult> ValidateProtectionIntent(this SubscriptionResource subscriptionResource, string azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<BackupStatusResponse>> GetBackupStatusAsync(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<BackupStatusResult>> GetBackupStatusAsync(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static Response<BackupStatusResponse> GetBackupStatus(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public static Response<BackupStatusResult> GetBackupStatus(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
@@ -832,11 +832,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <returns> An async collection of <see cref="BackupProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BackupProtectionIntentResource> GetBackupProtectionIntentsByBackupProtectionIntentAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BackupProtectionIntentResource> GetBackupProtectionIntentsAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetExtensionClient(resourceGroupResource).GetBackupProtectionIntentsByBackupProtectionIntentAsync(vaultName, filter, skipToken, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetBackupProtectionIntentsAsync(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -860,11 +860,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <returns> A collection of <see cref="BackupProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BackupProtectionIntentResource> GetBackupProtectionIntentsByBackupProtectionIntent(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<BackupProtectionIntentResource> GetBackupProtectionIntents(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetExtensionClient(resourceGroupResource).GetBackupProtectionIntentsByBackupProtectionIntent(vaultName, filter, skipToken, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetBackupProtectionIntents(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -996,11 +996,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <returns> An async collection of <see cref="BackupProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsByBackupProtectedItemAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetExtensionClient(resourceGroupResource).GetBackupProtectedItemsByBackupProtectedItemAsync(vaultName, filter, skipToken, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetBackupProtectedItemsAsync(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1024,11 +1024,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <returns> A collection of <see cref="BackupProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BackupProtectedItemResource> GetBackupProtectedItemsByBackupProtectedItem(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public static Pageable<BackupProtectedItemResource> GetBackupProtectedItems(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetExtensionClient(resourceGroupResource).GetBackupProtectedItemsByBackupProtectedItem(vaultName, filter, skipToken, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetBackupProtectedItems(vaultName, filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -1225,11 +1225,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <returns> An async collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersByBackupProtectionContainerAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetExtensionClient(resourceGroupResource).GetBackupProtectionContainersByBackupProtectionContainerAsync(vaultName, filter, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetBackupProtectionContainersAsync(vaultName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1252,11 +1252,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <returns> A collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BackupProtectionContainerResource> GetBackupProtectionContainersByBackupProtectionContainer(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        public static Pageable<BackupProtectionContainerResource> GetBackupProtectionContainers(this ResourceGroupResource resourceGroupResource, string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetExtensionClient(resourceGroupResource).GetBackupProtectionContainersByBackupProtectionContainer(vaultName, filter, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetBackupProtectionContainers(vaultName, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1332,11 +1332,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public static async Task<Response<TokenInformation>> GetSecurityPINAsync(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<TokenInformation>> GetSecurityPinAsync(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return await GetExtensionClient(resourceGroupResource).GetSecurityPINAsync(vaultName, securityPinBase, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).GetSecurityPinAsync(vaultName, securityPinBase, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1358,11 +1358,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        public static Response<TokenInformation> GetSecurityPIN(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
+        public static Response<TokenInformation> GetSecurityPin(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            return GetExtensionClient(resourceGroupResource).GetSecurityPIN(vaultName, securityPinBase, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetSecurityPin(vaultName, securityPinBase, cancellationToken);
         }
 
         #region BackupResourceConfigResource

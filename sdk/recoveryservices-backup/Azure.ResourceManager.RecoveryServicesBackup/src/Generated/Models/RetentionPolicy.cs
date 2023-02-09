@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for retention policy.
-    /// Serialized Name: RetentionPolicy
     /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RetentionPolicy. </summary>
-        /// <param name="retentionPolicyType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RetentionPolicy.retentionPolicyType
-        /// </param>
+        /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal RetentionPolicy(string retentionPolicyType)
         {
             RetentionPolicyType = retentionPolicyType;
         }
 
-        /// <summary>
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RetentionPolicy.retentionPolicyType
-        /// </summary>
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
         internal string RetentionPolicyType { get; set; }
     }
 }

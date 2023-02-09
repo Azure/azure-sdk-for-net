@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure workload-specific container
-    /// Serialized Name: AzureVMAppContainerProtectableContainer
-    /// </summary>
+    /// <summary> Azure workload-specific container. </summary>
     public partial class VmAppContainerProtectableContainer : ProtectableContainer
     {
         /// <summary> Initializes a new instance of VmAppContainerProtectableContainer. </summary>
@@ -20,29 +19,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of VmAppContainerProtectableContainer. </summary>
-        /// <param name="friendlyName">
-        /// Friendly name of the container.
-        /// Serialized Name: ProtectableContainer.friendlyName
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Type of backup management for the container.
-        /// Serialized Name: ProtectableContainer.backupManagementType
-        /// </param>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">
         /// Type of the container. The value of this property for
         /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
         /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
-        /// Serialized Name: ProtectableContainer.protectableContainerType
         /// </param>
-        /// <param name="healthStatus">
-        /// Status of health of the container.
-        /// Serialized Name: ProtectableContainer.healthStatus
-        /// </param>
-        /// <param name="containerId">
-        /// Fabric Id of the container such as ARM Id.
-        /// Serialized Name: ProtectableContainer.containerId
-        /// </param>
-        internal VmAppContainerProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId) : base(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId)
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
+        internal VmAppContainerProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, ResourceIdentifier containerId) : base(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId)
         {
             ProtectableContainerType = protectableContainerType;
         }

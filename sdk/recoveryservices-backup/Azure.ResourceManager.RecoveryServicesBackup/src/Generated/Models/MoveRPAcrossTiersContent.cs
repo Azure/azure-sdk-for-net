@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The MoveRPAcrossTiersRequest.
-    /// Serialized Name: MoveRPAcrossTiersRequest
-    /// </summary>
+    /// <summary> The MoveRPAcrossTiersContent. </summary>
     public partial class MoveRPAcrossTiersContent
     {
         /// <summary> Initializes a new instance of MoveRPAcrossTiersContent. </summary>
@@ -18,20 +15,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
         }
 
-        /// <summary>
-        /// Gets the class type.
-        /// Serialized Name: MoveRPAcrossTiersRequest.objectType
-        /// </summary>
+        /// <summary> Gets the class type. </summary>
         public string ObjectType { get; set; }
-        /// <summary>
-        /// Source tier from where RP needs to be moved
-        /// Serialized Name: MoveRPAcrossTiersRequest.sourceTierType
-        /// </summary>
+        /// <summary> Source tier from where RP needs to be moved. </summary>
         public RecoveryPointTierType? SourceTierType { get; set; }
-        /// <summary>
-        /// Target tier where RP needs to be moved
-        /// Serialized Name: MoveRPAcrossTiersRequest.targetTierType
-        /// </summary>
+        /// <summary> Target tier where RP needs to be moved. </summary>
         public RecoveryPointTierType? TargetTierType { get; set; }
     }
 }

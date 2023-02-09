@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Disk configuration
-    /// Serialized Name: RecoveryPointDiskConfiguration
-    /// </summary>
+    /// <summary> Disk configuration. </summary>
     public partial class RecoveryPointDiskConfiguration
     {
         /// <summary> Initializes a new instance of RecoveryPointDiskConfiguration. </summary>
@@ -24,22 +21,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPointDiskConfiguration. </summary>
-        /// <param name="numberOfDisksIncludedInBackup">
-        /// Number of disks included in backup
-        /// Serialized Name: RecoveryPointDiskConfiguration.numberOfDisksIncludedInBackup
-        /// </param>
-        /// <param name="numberOfDisksAttachedToVm">
-        /// Number of disks attached to the VM
-        /// Serialized Name: RecoveryPointDiskConfiguration.numberOfDisksAttachedToVm
-        /// </param>
-        /// <param name="includedDiskList">
-        /// Information of disks included in backup
-        /// Serialized Name: RecoveryPointDiskConfiguration.includedDiskList
-        /// </param>
-        /// <param name="excludedDiskList">
-        /// Information of disks excluded from backup
-        /// Serialized Name: RecoveryPointDiskConfiguration.excludedDiskList
-        /// </param>
+        /// <param name="numberOfDisksIncludedInBackup"> Number of disks included in backup. </param>
+        /// <param name="numberOfDisksAttachedToVm"> Number of disks attached to the VM. </param>
+        /// <param name="includedDiskList"> Information of disks included in backup. </param>
+        /// <param name="excludedDiskList"> Information of disks excluded from backup. </param>
         internal RecoveryPointDiskConfiguration(int? numberOfDisksIncludedInBackup, int? numberOfDisksAttachedToVm, IList<DiskInformation> includedDiskList, IList<DiskInformation> excludedDiskList)
         {
             NumberOfDisksIncludedInBackup = numberOfDisksIncludedInBackup;
@@ -48,25 +33,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ExcludedDiskList = excludedDiskList;
         }
 
-        /// <summary>
-        /// Number of disks included in backup
-        /// Serialized Name: RecoveryPointDiskConfiguration.numberOfDisksIncludedInBackup
-        /// </summary>
+        /// <summary> Number of disks included in backup. </summary>
         public int? NumberOfDisksIncludedInBackup { get; set; }
-        /// <summary>
-        /// Number of disks attached to the VM
-        /// Serialized Name: RecoveryPointDiskConfiguration.numberOfDisksAttachedToVm
-        /// </summary>
+        /// <summary> Number of disks attached to the VM. </summary>
         public int? NumberOfDisksAttachedToVm { get; set; }
-        /// <summary>
-        /// Information of disks included in backup
-        /// Serialized Name: RecoveryPointDiskConfiguration.includedDiskList
-        /// </summary>
+        /// <summary> Information of disks included in backup. </summary>
         public IList<DiskInformation> IncludedDiskList { get; }
-        /// <summary>
-        /// Information of disks excluded from backup
-        /// Serialized Name: RecoveryPointDiskConfiguration.excludedDiskList
-        /// </summary>
+        /// <summary> Information of disks excluded from backup. </summary>
         public IList<DiskInformation> ExcludedDiskList { get; }
     }
 }

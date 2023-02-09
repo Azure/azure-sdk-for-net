@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Storage type
-    /// Serialized Name: StorageType
-    /// </summary>
+    /// <summary> Storage type. </summary>
     public readonly partial struct BackupStorageType : IEquatable<BackupStorageType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string ZoneRedundantValue = "ZoneRedundant";
         private const string ReadAccessGeoZoneRedundantValue = "ReadAccessGeoZoneRedundant";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: StorageType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static BackupStorageType Invalid { get; } = new BackupStorageType(InvalidValue);
-        /// <summary>
-        /// GeoRedundant
-        /// Serialized Name: StorageType.GeoRedundant
-        /// </summary>
+        /// <summary> GeoRedundant. </summary>
         public static BackupStorageType GeoRedundant { get; } = new BackupStorageType(GeoRedundantValue);
-        /// <summary>
-        /// LocallyRedundant
-        /// Serialized Name: StorageType.LocallyRedundant
-        /// </summary>
+        /// <summary> LocallyRedundant. </summary>
         public static BackupStorageType LocallyRedundant { get; } = new BackupStorageType(LocallyRedundantValue);
-        /// <summary>
-        /// ZoneRedundant
-        /// Serialized Name: StorageType.ZoneRedundant
-        /// </summary>
+        /// <summary> ZoneRedundant. </summary>
         public static BackupStorageType ZoneRedundant { get; } = new BackupStorageType(ZoneRedundantValue);
-        /// <summary>
-        /// ReadAccessGeoZoneRedundant
-        /// Serialized Name: StorageType.ReadAccessGeoZoneRedundant
-        /// </summary>
+        /// <summary> ReadAccessGeoZoneRedundant. </summary>
         public static BackupStorageType ReadAccessGeoZoneRedundant { get; } = new BackupStorageType(ReadAccessGeoZoneRedundantValue);
         /// <summary> Determines if two <see cref="BackupStorageType"/> values are the same. </summary>
         public static bool operator ==(BackupStorageType left, BackupStorageType right) => left.Equals(right);

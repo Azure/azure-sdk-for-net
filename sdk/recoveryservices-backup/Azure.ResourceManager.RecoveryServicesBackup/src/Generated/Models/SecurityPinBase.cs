@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Base class for get security pin request body
-    /// Serialized Name: SecurityPinBase
-    /// </summary>
+    /// <summary> Base class for get security pin request body. </summary>
     public partial class SecurityPinBase
     {
         /// <summary> Initializes a new instance of SecurityPinBase. </summary>
@@ -22,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary>
-        /// ResourceGuard Operation Requests
-        /// Serialized Name: SecurityPinBase.resourceGuardOperationRequests
-        /// </summary>
+        /// <summary> ResourceGuard Operation Requests. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
     }
 }

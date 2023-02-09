@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static StorageContainer DeserializeStorageContainer(JsonElement element)
         {
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<string> storageAccountVersion = default;
             Optional<string> resourceGroup = default;
             Optional<long> protectedItemCount = default;
@@ -87,7 +87,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountVersion"))

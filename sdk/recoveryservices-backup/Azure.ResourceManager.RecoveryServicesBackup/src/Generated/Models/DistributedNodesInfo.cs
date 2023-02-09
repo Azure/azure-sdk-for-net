@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// This is used to represent the various nodes of the distributed container.
-    /// Serialized Name: DistributedNodesInfo
-    /// </summary>
+    /// <summary> This is used to represent the various nodes of the distributed container. </summary>
     public partial class DistributedNodesInfo
     {
         /// <summary> Initializes a new instance of DistributedNodesInfo. </summary>
@@ -19,19 +16,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DistributedNodesInfo. </summary>
-        /// <param name="nodeName">
-        /// Name of the node under a distributed container.
-        /// Serialized Name: DistributedNodesInfo.nodeName
-        /// </param>
+        /// <param name="nodeName"> Name of the node under a distributed container. </param>
         /// <param name="status">
         /// Status of this Node.
         /// Failed | Succeeded
-        /// Serialized Name: DistributedNodesInfo.status
         /// </param>
-        /// <param name="errorDetail">
-        /// Error Details if the Status is non-success.
-        /// Serialized Name: DistributedNodesInfo.errorDetail
-        /// </param>
+        /// <param name="errorDetail"> Error Details if the Status is non-success. </param>
         internal DistributedNodesInfo(string nodeName, string status, BackupErrorDetail errorDetail)
         {
             NodeName = nodeName;
@@ -39,21 +29,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ErrorDetail = errorDetail;
         }
 
-        /// <summary>
-        /// Name of the node under a distributed container.
-        /// Serialized Name: DistributedNodesInfo.nodeName
-        /// </summary>
+        /// <summary> Name of the node under a distributed container. </summary>
         public string NodeName { get; set; }
         /// <summary>
         /// Status of this Node.
         /// Failed | Succeeded
-        /// Serialized Name: DistributedNodesInfo.status
         /// </summary>
         public string Status { get; set; }
-        /// <summary>
-        /// Error Details if the Status is non-success.
-        /// Serialized Name: DistributedNodesInfo.errorDetail
-        /// </summary>
+        /// <summary> Error Details if the Status is non-success. </summary>
         public BackupErrorDetail ErrorDetail { get; set; }
     }
 }

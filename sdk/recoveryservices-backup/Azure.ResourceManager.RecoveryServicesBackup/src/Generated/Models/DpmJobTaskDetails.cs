@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// DPM workload-specific job task details.
-    /// Serialized Name: DpmJobTaskDetails
-    /// </summary>
+    /// <summary> DPM workload-specific job task details. </summary>
     public partial class DpmJobTaskDetails
     {
         /// <summary> Initializes a new instance of DpmJobTaskDetails. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DpmJobTaskDetails. </summary>
-        /// <param name="taskId">
-        /// The task display name.
-        /// Serialized Name: DpmJobTaskDetails.taskId
-        /// </param>
-        /// <param name="startOn">
-        /// The start time.
-        /// Serialized Name: DpmJobTaskDetails.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time.
-        /// Serialized Name: DpmJobTaskDetails.endTime
-        /// </param>
-        /// <param name="duration">
-        /// Time elapsed for task.
-        /// Serialized Name: DpmJobTaskDetails.duration
-        /// </param>
-        /// <param name="status">
-        /// The status.
-        /// Serialized Name: DpmJobTaskDetails.status
-        /// </param>
+        /// <param name="taskId"> The task display name. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="duration"> Time elapsed for task. </param>
+        /// <param name="status"> The status. </param>
         internal DpmJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, string status)
         {
             TaskId = taskId;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Status = status;
         }
 
-        /// <summary>
-        /// The task display name.
-        /// Serialized Name: DpmJobTaskDetails.taskId
-        /// </summary>
+        /// <summary> The task display name. </summary>
         public string TaskId { get; set; }
-        /// <summary>
-        /// The start time.
-        /// Serialized Name: DpmJobTaskDetails.startTime
-        /// </summary>
+        /// <summary> The start time. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// The end time.
-        /// Serialized Name: DpmJobTaskDetails.endTime
-        /// </summary>
+        /// <summary> The end time. </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// Time elapsed for task.
-        /// Serialized Name: DpmJobTaskDetails.duration
-        /// </summary>
+        /// <summary> Time elapsed for task. </summary>
         public TimeSpan? Duration { get; set; }
-        /// <summary>
-        /// The status.
-        /// Serialized Name: DpmJobTaskDetails.status
-        /// </summary>
+        /// <summary> The status. </summary>
         public string Status { get; set; }
     }
 }

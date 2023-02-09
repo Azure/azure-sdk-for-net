@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Retention schedule format type for monthly retention policy.
-    /// Serialized Name: RetentionScheduleFormat
-    /// </summary>
+    /// <summary> Retention schedule format type for monthly retention policy. </summary>
     public readonly partial struct RetentionScheduleFormat : IEquatable<RetentionScheduleFormat>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string DailyValue = "Daily";
         private const string WeeklyValue = "Weekly";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: RetentionScheduleFormat.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static RetentionScheduleFormat Invalid { get; } = new RetentionScheduleFormat(InvalidValue);
-        /// <summary>
-        /// Daily
-        /// Serialized Name: RetentionScheduleFormat.Daily
-        /// </summary>
+        /// <summary> Daily. </summary>
         public static RetentionScheduleFormat Daily { get; } = new RetentionScheduleFormat(DailyValue);
-        /// <summary>
-        /// Weekly
-        /// Serialized Name: RetentionScheduleFormat.Weekly
-        /// </summary>
+        /// <summary> Weekly. </summary>
         public static RetentionScheduleFormat Weekly { get; } = new RetentionScheduleFormat(WeeklyValue);
         /// <summary> Determines if two <see cref="RetentionScheduleFormat"/> values are the same. </summary>
         public static bool operator ==(RetentionScheduleFormat left, RetentionScheduleFormat right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Re-Do Operation
-    /// Serialized Name: OperationType
-    /// </summary>
+    /// <summary> Re-Do Operation. </summary>
     public readonly partial struct WorkloadOperationType : IEquatable<WorkloadOperationType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string RegisterValue = "Register";
         private const string ReregisterValue = "Reregister";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: OperationType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static WorkloadOperationType Invalid { get; } = new WorkloadOperationType(InvalidValue);
-        /// <summary>
-        /// Register
-        /// Serialized Name: OperationType.Register
-        /// </summary>
+        /// <summary> Register. </summary>
         public static WorkloadOperationType Register { get; } = new WorkloadOperationType(RegisterValue);
-        /// <summary>
-        /// Reregister
-        /// Serialized Name: OperationType.Reregister
-        /// </summary>
+        /// <summary> Reregister. </summary>
         public static WorkloadOperationType Reregister { get; } = new WorkloadOperationType(ReregisterValue);
         /// <summary> Determines if two <see cref="WorkloadOperationType"/> values are the same. </summary>
         public static bool operator ==(WorkloadOperationType left, WorkloadOperationType right) => left.Equals(right);

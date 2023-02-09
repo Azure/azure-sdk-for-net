@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// KEK is encryption key for BEK.
-    /// Serialized Name: KEKDetails
-    /// </summary>
+    /// <summary> KEK is encryption key for BEK. </summary>
     public partial class KekDetails
     {
         /// <summary> Initializes a new instance of KekDetails. </summary>
@@ -21,39 +19,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of KekDetails. </summary>
-        /// <param name="keyUri">
-        /// Key is KEK.
-        /// Serialized Name: KEKDetails.keyUrl
-        /// </param>
-        /// <param name="keyVaultId">
-        /// Key Vault ID where this Key is stored.
-        /// Serialized Name: KEKDetails.keyVaultId
-        /// </param>
-        /// <param name="keyBackupData">
-        /// KEK data.
-        /// Serialized Name: KEKDetails.keyBackupData
-        /// </param>
-        internal KekDetails(Uri keyUri, string keyVaultId, string keyBackupData)
+        /// <param name="keyUri"> Key is KEK. </param>
+        /// <param name="keyVaultId"> Key Vault ID where this Key is stored. </param>
+        /// <param name="keyBackupData"> KEK data. </param>
+        internal KekDetails(Uri keyUri, ResourceIdentifier keyVaultId, string keyBackupData)
         {
             KeyUri = keyUri;
             KeyVaultId = keyVaultId;
             KeyBackupData = keyBackupData;
         }
 
-        /// <summary>
-        /// Key is KEK.
-        /// Serialized Name: KEKDetails.keyUrl
-        /// </summary>
+        /// <summary> Key is KEK. </summary>
         public Uri KeyUri { get; set; }
-        /// <summary>
-        /// Key Vault ID where this Key is stored.
-        /// Serialized Name: KEKDetails.keyVaultId
-        /// </summary>
-        public string KeyVaultId { get; set; }
-        /// <summary>
-        /// KEK data.
-        /// Serialized Name: KEKDetails.keyBackupData
-        /// </summary>
+        /// <summary> Key Vault ID where this Key is stored. </summary>
+        public ResourceIdentifier KeyVaultId { get; set; }
+        /// <summary> KEK data. </summary>
         public string KeyBackupData { get; set; }
     }
 }

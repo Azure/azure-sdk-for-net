@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Gets or sets the status
-    /// Serialized Name: PrivateEndpointConnectionStatus
-    /// </summary>
+    /// <summary> Gets or sets the status. </summary>
     public readonly partial struct PrivateEndpointConnectionStatus : IEquatable<PrivateEndpointConnectionStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary>
-        /// Pending
-        /// Serialized Name: PrivateEndpointConnectionStatus.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static PrivateEndpointConnectionStatus Pending { get; } = new PrivateEndpointConnectionStatus(PendingValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: PrivateEndpointConnectionStatus.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static PrivateEndpointConnectionStatus Approved { get; } = new PrivateEndpointConnectionStatus(ApprovedValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: PrivateEndpointConnectionStatus.Rejected
-        /// </summary>
+        /// <summary> Rejected. </summary>
         public static PrivateEndpointConnectionStatus Rejected { get; } = new PrivateEndpointConnectionStatus(RejectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: PrivateEndpointConnectionStatus.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static PrivateEndpointConnectionStatus Disconnected { get; } = new PrivateEndpointConnectionStatus(DisconnectedValue);
         /// <summary> Determines if two <see cref="PrivateEndpointConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(PrivateEndpointConnectionStatus left, PrivateEndpointConnectionStatus right) => left.Equals(right);

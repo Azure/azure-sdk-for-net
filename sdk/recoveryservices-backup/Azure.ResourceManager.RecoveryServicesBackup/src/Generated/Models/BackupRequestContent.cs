@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Base class for backup request. Workload-specific backup requests are derived from this class.
-    /// Serialized Name: BackupRequestResource
-    /// </summary>
+    /// <summary> Base class for backup request. Workload-specific backup requests are derived from this class. </summary>
     public partial class BackupRequestContent : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BackupRequestContent. </summary>
@@ -33,14 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// BackupRequestResource properties
-        /// Serialized Name: BackupRequestResource.properties
         /// Please note <see cref="BackupRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareBackupRequest"/>, <see cref="WorkloadBackupRequest"/> and <see cref="IaasVmBackupRequest"/>.
         /// </param>
-        /// <param name="eTag">
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
         internal BackupRequestContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupRequestProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -49,15 +42,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// BackupRequestResource properties
-        /// Serialized Name: BackupRequestResource.properties
         /// Please note <see cref="BackupRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareBackupRequest"/>, <see cref="WorkloadBackupRequest"/> and <see cref="IaasVmBackupRequest"/>.
         /// </summary>
         public BackupRequestProperties Properties { get; set; }
-        /// <summary>
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </summary>
+        /// <summary> Optional ETag. </summary>
         public ETag? ETag { get; set; }
     }
 }

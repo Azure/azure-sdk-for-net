@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// 2. Key(KEK) - Url + Backup Data + vaultId.
     /// 3. EncryptionMechanism
     /// BEK and KEK can potentially have different vault ids.
-    /// Serialized Name: KeyAndSecretDetails
     /// </summary>
     public partial class KeyAndSecretDetails
     {
@@ -25,18 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of KeyAndSecretDetails. </summary>
-        /// <param name="kekDetails">
-        /// KEK is encryption key for BEK.
-        /// Serialized Name: KeyAndSecretDetails.kekDetails
-        /// </param>
-        /// <param name="bekDetails">
-        /// BEK is bitlocker encryption key.
-        /// Serialized Name: KeyAndSecretDetails.bekDetails
-        /// </param>
-        /// <param name="encryptionMechanism">
-        /// Encryption mechanism: None/ SinglePass/ DoublePass
-        /// Serialized Name: KeyAndSecretDetails.encryptionMechanism
-        /// </param>
+        /// <param name="kekDetails"> KEK is encryption key for BEK. </param>
+        /// <param name="bekDetails"> BEK is bitlocker encryption key. </param>
+        /// <param name="encryptionMechanism"> Encryption mechanism: None/ SinglePass/ DoublePass. </param>
         internal KeyAndSecretDetails(KekDetails kekDetails, BekDetails bekDetails, string encryptionMechanism)
         {
             KekDetails = kekDetails;
@@ -44,20 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             EncryptionMechanism = encryptionMechanism;
         }
 
-        /// <summary>
-        /// KEK is encryption key for BEK.
-        /// Serialized Name: KeyAndSecretDetails.kekDetails
-        /// </summary>
+        /// <summary> KEK is encryption key for BEK. </summary>
         public KekDetails KekDetails { get; set; }
-        /// <summary>
-        /// BEK is bitlocker encryption key.
-        /// Serialized Name: KeyAndSecretDetails.bekDetails
-        /// </summary>
+        /// <summary> BEK is bitlocker encryption key. </summary>
         public BekDetails BekDetails { get; set; }
-        /// <summary>
-        /// Encryption mechanism: None/ SinglePass/ DoublePass
-        /// Serialized Name: KeyAndSecretDetails.encryptionMechanism
-        /// </summary>
+        /// <summary> Encryption mechanism: None/ SinglePass/ DoublePass. </summary>
         public string EncryptionMechanism { get; set; }
     }
 }

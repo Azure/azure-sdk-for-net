@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Backup management type to execute the current job.
-    /// Serialized Name: BackupManagementType
-    /// </summary>
+    /// <summary> Backup management type to execute the current job. </summary>
     public readonly partial struct BackupManagementType : IEquatable<BackupManagementType>
     {
         private readonly string _value;
@@ -37,60 +34,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string BackupProtectedItemCountSummaryValue = "BackupProtectedItemCountSummary";
         private const string BackupProtectionContainerCountSummaryValue = "BackupProtectionContainerCountSummary";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: BackupManagementType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static BackupManagementType Invalid { get; } = new BackupManagementType(InvalidValue);
-        /// <summary>
-        /// AzureIaasVM
-        /// Serialized Name: BackupManagementType.AzureIaasVM
-        /// </summary>
+        /// <summary> AzureIaasVM. </summary>
         public static BackupManagementType AzureIaasVm { get; } = new BackupManagementType(AzureIaasVmValue);
-        /// <summary>
-        /// MAB
-        /// Serialized Name: BackupManagementType.MAB
-        /// </summary>
+        /// <summary> MAB. </summary>
         public static BackupManagementType Mab { get; } = new BackupManagementType(MabValue);
-        /// <summary>
-        /// DPM
-        /// Serialized Name: BackupManagementType.DPM
-        /// </summary>
+        /// <summary> DPM. </summary>
         public static BackupManagementType Dpm { get; } = new BackupManagementType(DpmValue);
-        /// <summary>
-        /// AzureBackupServer
-        /// Serialized Name: BackupManagementType.AzureBackupServer
-        /// </summary>
+        /// <summary> AzureBackupServer. </summary>
         public static BackupManagementType AzureBackupServer { get; } = new BackupManagementType(AzureBackupServerValue);
-        /// <summary>
-        /// AzureSql
-        /// Serialized Name: BackupManagementType.AzureSql
-        /// </summary>
+        /// <summary> AzureSql. </summary>
         public static BackupManagementType AzureSql { get; } = new BackupManagementType(AzureSqlValue);
-        /// <summary>
-        /// AzureStorage
-        /// Serialized Name: BackupManagementType.AzureStorage
-        /// </summary>
+        /// <summary> AzureStorage. </summary>
         public static BackupManagementType AzureStorage { get; } = new BackupManagementType(AzureStorageValue);
-        /// <summary>
-        /// AzureWorkload
-        /// Serialized Name: BackupManagementType.AzureWorkload
-        /// </summary>
+        /// <summary> AzureWorkload. </summary>
         public static BackupManagementType AzureWorkload { get; } = new BackupManagementType(AzureWorkloadValue);
-        /// <summary>
-        /// DefaultBackup
-        /// Serialized Name: BackupManagementType.DefaultBackup
-        /// </summary>
+        /// <summary> DefaultBackup. </summary>
         public static BackupManagementType DefaultBackup { get; } = new BackupManagementType(DefaultBackupValue);
-        /// <summary>
-        /// BackupProtectedItemCountSummary
-        /// Serialized Name: BackupManagementType.BackupProtectedItemCountSummary
-        /// </summary>
+        /// <summary> BackupProtectedItemCountSummary. </summary>
         public static BackupManagementType BackupProtectedItemCountSummary { get; } = new BackupManagementType(BackupProtectedItemCountSummaryValue);
-        /// <summary>
-        /// BackupProtectionContainerCountSummary
-        /// Serialized Name: BackupManagementType.BackupProtectionContainerCountSummary
-        /// </summary>
+        /// <summary> BackupProtectionContainerCountSummary. </summary>
         public static BackupManagementType BackupProtectionContainerCountSummary { get; } = new BackupManagementType(BackupProtectionContainerCountSummaryValue);
         /// <summary> Determines if two <see cref="BackupManagementType"/> values are the same. </summary>
         public static bool operator ==(BackupManagementType left, BackupManagementType right) => left.Equals(right);

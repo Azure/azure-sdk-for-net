@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataDirectoryTimeInUTC))
+            if (Optional.IsDefined(DataDirectoryInfoCapturedOn))
             {
                 writer.WritePropertyName("dataDirectoryTimeInUTC");
-                writer.WriteStringValue(DataDirectoryTimeInUTC.Value, "O");
+                writer.WriteStringValue(DataDirectoryInfoCapturedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(DataDirectoryPaths))
             {

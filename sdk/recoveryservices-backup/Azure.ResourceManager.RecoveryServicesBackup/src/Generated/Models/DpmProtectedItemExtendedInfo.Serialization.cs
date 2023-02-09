@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Protected))
+            if (Optional.IsDefined(IsProtected))
             {
                 writer.WritePropertyName("protected");
-                writer.WriteBooleanValue(Protected.Value);
+                writer.WriteBooleanValue(IsProtected.Value);
             }
             if (Optional.IsDefined(IsPresentOnCloud))
             {

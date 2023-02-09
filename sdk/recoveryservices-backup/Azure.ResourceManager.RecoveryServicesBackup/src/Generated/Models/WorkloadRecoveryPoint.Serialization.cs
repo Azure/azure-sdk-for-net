@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointTimeInUTC))
+            if (Optional.IsDefined(RecoveryPointCreatedOn))
             {
                 writer.WritePropertyName("recoveryPointTimeInUTC");
-                writer.WriteStringValue(RecoveryPointTimeInUTC.Value, "O");
+                writer.WriteStringValue(RecoveryPointCreatedOn.Value, "O");
             }
             if (Optional.IsDefined(RestorePointType))
             {

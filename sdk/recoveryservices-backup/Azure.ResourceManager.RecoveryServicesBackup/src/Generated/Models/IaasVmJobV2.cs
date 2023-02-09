@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure IaaS VM workload-specific job object.
-    /// Serialized Name: AzureIaaSVMJobV2
-    /// </summary>
+    /// <summary> Azure IaaS VM workload-specific job object. </summary>
     public partial class IaasVmJobV2 : BackupJobProperties
     {
         /// <summary> Initializes a new instance of IaasVmJobV2. </summary>
@@ -26,62 +23,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IaasVmJobV2. </summary>
-        /// <param name="entityFriendlyName">
-        /// Friendly name of the entity on which the current job is executing.
-        /// Serialized Name: Job.entityFriendlyName
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Backup management type to execute the current job.
-        /// Serialized Name: Job.backupManagementType
-        /// </param>
-        /// <param name="operation">
-        /// The operation name.
-        /// Serialized Name: Job.operation
-        /// </param>
-        /// <param name="status">
-        /// Job status.
-        /// Serialized Name: Job.status
-        /// </param>
-        /// <param name="startOn">
-        /// The start time.
-        /// Serialized Name: Job.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time.
-        /// Serialized Name: Job.endTime
-        /// </param>
-        /// <param name="activityId">
-        /// ActivityId of job.
-        /// Serialized Name: Job.activityId
-        /// </param>
-        /// <param name="jobType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: Job.jobType
-        /// </param>
-        /// <param name="actionsInfo">
-        /// Gets or sets the state/actions applicable on this job like cancel/retry.
-        /// Serialized Name: AzureIaaSVMJobV2.actionsInfo
-        /// </param>
-        /// <param name="containerName">
-        /// Container name of the entity on which the current job is executing.
-        /// Serialized Name: AzureIaaSVMJobV2.containerName
-        /// </param>
-        /// <param name="duration">
-        /// Time elapsed during the execution of this job.
-        /// Serialized Name: AzureIaaSVMJobV2.duration
-        /// </param>
-        /// <param name="errorDetails">
-        /// Error details on execution of this job.
-        /// Serialized Name: AzureIaaSVMJobV2.errorDetails
-        /// </param>
-        /// <param name="virtualMachineVersion">
-        /// Specifies whether the backup item is a Classic or an Azure Resource Manager VM.
-        /// Serialized Name: AzureIaaSVMJobV2.virtualMachineVersion
-        /// </param>
-        /// <param name="extendedInfo">
-        /// Additional information for this job.
-        /// Serialized Name: AzureIaaSVMJobV2.extendedInfo
-        /// </param>
+        /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
+        /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
+        /// <param name="operation"> The operation name. </param>
+        /// <param name="status"> Job status. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="activityId"> ActivityId of job. </param>
+        /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="actionsInfo"> Gets or sets the state/actions applicable on this job like cancel/retry. </param>
+        /// <param name="containerName"> Container name of the entity on which the current job is executing. </param>
+        /// <param name="duration"> Time elapsed during the execution of this job. </param>
+        /// <param name="errorDetails"> Error details on execution of this job. </param>
+        /// <param name="virtualMachineVersion"> Specifies whether the backup item is a Classic or an Azure Resource Manager VM. </param>
+        /// <param name="extendedInfo"> Additional information for this job. </param>
         internal IaasVmJobV2(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IList<JobSupportedAction> actionsInfo, string containerName, TimeSpan? duration, IList<IaasVmErrorInfo> errorDetails, string virtualMachineVersion, IaasVmJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
         {
             ActionsInfo = actionsInfo;
@@ -93,35 +48,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = jobType ?? "AzureIaaSVMJobV2";
         }
 
-        /// <summary>
-        /// Gets or sets the state/actions applicable on this job like cancel/retry.
-        /// Serialized Name: AzureIaaSVMJobV2.actionsInfo
-        /// </summary>
+        /// <summary> Gets or sets the state/actions applicable on this job like cancel/retry. </summary>
         public IList<JobSupportedAction> ActionsInfo { get; }
-        /// <summary>
-        /// Container name of the entity on which the current job is executing.
-        /// Serialized Name: AzureIaaSVMJobV2.containerName
-        /// </summary>
+        /// <summary> Container name of the entity on which the current job is executing. </summary>
         public string ContainerName { get; set; }
-        /// <summary>
-        /// Time elapsed during the execution of this job.
-        /// Serialized Name: AzureIaaSVMJobV2.duration
-        /// </summary>
+        /// <summary> Time elapsed during the execution of this job. </summary>
         public TimeSpan? Duration { get; set; }
-        /// <summary>
-        /// Error details on execution of this job.
-        /// Serialized Name: AzureIaaSVMJobV2.errorDetails
-        /// </summary>
+        /// <summary> Error details on execution of this job. </summary>
         public IList<IaasVmErrorInfo> ErrorDetails { get; }
-        /// <summary>
-        /// Specifies whether the backup item is a Classic or an Azure Resource Manager VM.
-        /// Serialized Name: AzureIaaSVMJobV2.virtualMachineVersion
-        /// </summary>
+        /// <summary> Specifies whether the backup item is a Classic or an Azure Resource Manager VM. </summary>
         public string VirtualMachineVersion { get; set; }
-        /// <summary>
-        /// Additional information for this job.
-        /// Serialized Name: AzureIaaSVMJobV2.extendedInfo
-        /// </summary>
+        /// <summary> Additional information for this job. </summary>
         public IaasVmJobExtendedInfo ExtendedInfo { get; set; }
     }
 }

@@ -29,29 +29,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// BackupResourceVaultConfigResource properties
-        /// Serialized Name: BackupResourceVaultConfigResource.properties
-        /// </param>
-        /// <param name="eTag">
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </param>
+        /// <param name="properties"> BackupResourceVaultConfigResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         internal BackupResourceVaultConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupResourceVaultConfigProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary>
-        /// BackupResourceVaultConfigResource properties
-        /// Serialized Name: BackupResourceVaultConfigResource.properties
-        /// </summary>
+        /// <summary> BackupResourceVaultConfigResource properties. </summary>
         public BackupResourceVaultConfigProperties Properties { get; set; }
-        /// <summary>
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </summary>
+        /// <summary> Optional ETag. </summary>
         public ETag? ETag { get; set; }
     }
 }

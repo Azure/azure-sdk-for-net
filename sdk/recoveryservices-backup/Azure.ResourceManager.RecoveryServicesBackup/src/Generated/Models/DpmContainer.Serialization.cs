@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UpgradeAvailable))
+            if (Optional.IsDefined(IsUpgradeAvailable))
             {
                 writer.WritePropertyName("upgradeAvailable");
-                writer.WriteBooleanValue(UpgradeAvailable.Value);
+                writer.WriteBooleanValue(IsUpgradeAvailable.Value);
             }
             if (Optional.IsDefined(ProtectionStatus))
             {

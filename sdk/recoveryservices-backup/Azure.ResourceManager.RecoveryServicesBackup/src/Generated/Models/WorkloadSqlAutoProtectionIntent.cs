@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure Workload SQL Auto Protection intent item.
-    /// Serialized Name: AzureWorkloadSQLAutoProtectionIntent
-    /// </summary>
+    /// <summary> Azure Workload SQL Auto Protection intent item. </summary>
     public partial class WorkloadSqlAutoProtectionIntent : WorkloadAutoProtectionIntent
     {
         /// <summary> Initializes a new instance of WorkloadSqlAutoProtectionIntent. </summary>
@@ -20,44 +19,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadSqlAutoProtectionIntent. </summary>
-        /// <param name="protectionIntentItemType">
-        /// backup protectionIntent type.
-        /// Serialized Name: ProtectionIntent.protectionIntentItemType
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Type of backup management for the backed up item.
-        /// Serialized Name: ProtectionIntent.backupManagementType
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// ARM ID of the resource to be backed up.
-        /// Serialized Name: ProtectionIntent.sourceResourceId
-        /// </param>
-        /// <param name="itemId">
-        /// ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId
-        /// Serialized Name: ProtectionIntent.itemId
-        /// </param>
-        /// <param name="policyId">
-        /// ID of the backup policy with which this item is backed up.
-        /// Serialized Name: ProtectionIntent.policyId
-        /// </param>
-        /// <param name="protectionState">
-        /// Backup state of this backup item.
-        /// Serialized Name: ProtectionIntent.protectionState
-        /// </param>
-        /// <param name="workloadItemType">
-        /// Workload item type of the item for which intent is to be set
-        /// Serialized Name: AzureWorkloadSQLAutoProtectionIntent.workloadItemType
-        /// </param>
-        internal WorkloadSqlAutoProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, string sourceResourceId, string itemId, string policyId, ProtectionStatus? protectionState, WorkloadItemType? workloadItemType) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState)
+        /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
+        /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
+        /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
+        /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
+        /// <param name="protectionState"> Backup state of this backup item. </param>
+        /// <param name="workloadItemType"> Workload item type of the item for which intent is to be set. </param>
+        internal WorkloadSqlAutoProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, ProtectionStatus? protectionState, WorkloadItemType? workloadItemType) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState)
         {
             WorkloadItemType = workloadItemType;
             ProtectionIntentItemType = protectionIntentItemType;
         }
 
-        /// <summary>
-        /// Workload item type of the item for which intent is to be set
-        /// Serialized Name: AzureWorkloadSQLAutoProtectionIntent.workloadItemType
-        /// </summary>
+        /// <summary> Workload item type of the item for which intent is to be set. </summary>
         public WorkloadItemType? WorkloadItemType { get; set; }
     }
 }

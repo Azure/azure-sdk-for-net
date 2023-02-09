@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class PreValidateEnableBackupResponse
+    public partial class PreValidateEnableBackupResult
     {
-        internal static PreValidateEnableBackupResponse DeserializePreValidateEnableBackupResponse(JsonElement element)
+        internal static PreValidateEnableBackupResult DeserializePreValidateEnableBackupResult(JsonElement element)
         {
             Optional<BackupValidationStatus> status = default;
             Optional<string> errorCode = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new PreValidateEnableBackupResponse(Optional.ToNullable(status), errorCode.Value, errorMessage.Value, recommendation.Value, containerName.Value, protectedItemName.Value);
+            return new PreValidateEnableBackupResult(Optional.ToNullable(status), errorCode.Value, errorMessage.Value, recommendation.Value, containerName.Value, protectedItemName.Value);
         }
     }
 }

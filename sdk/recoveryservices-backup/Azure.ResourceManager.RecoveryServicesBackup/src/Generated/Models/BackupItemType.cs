@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Type of backup items associated with this container.
-    /// Serialized Name: BackupItemType
-    /// </summary>
+    /// <summary> Type of backup items associated with this container. </summary>
     public readonly partial struct BackupItemType : IEquatable<BackupItemType>
     {
         private readonly string _value;
@@ -28,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string InvalidValue = "Invalid";
         private const string VmValue = "VM";
         private const string FileFolderValue = "FileFolder";
-        private const string AzureSqlDbValue = "AzureSqlDb";
+        private const string AzureSqlDBValue = "AzureSqlDb";
         private const string SqlDBValue = "SQLDB";
         private const string ExchangeValue = "Exchange";
         private const string SharepointValue = "Sharepoint";
@@ -42,85 +39,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SapAseDatabaseValue = "SAPAseDatabase";
         private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: BackupItemType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static BackupItemType Invalid { get; } = new BackupItemType(InvalidValue);
-        /// <summary>
-        /// VM
-        /// Serialized Name: BackupItemType.VM
-        /// </summary>
+        /// <summary> VM. </summary>
         public static BackupItemType Vm { get; } = new BackupItemType(VmValue);
-        /// <summary>
-        /// FileFolder
-        /// Serialized Name: BackupItemType.FileFolder
-        /// </summary>
+        /// <summary> FileFolder. </summary>
         public static BackupItemType FileFolder { get; } = new BackupItemType(FileFolderValue);
-        /// <summary>
-        /// AzureSqlDb
-        /// Serialized Name: BackupItemType.AzureSqlDb
-        /// </summary>
-        public static BackupItemType AzureSqlDb { get; } = new BackupItemType(AzureSqlDbValue);
-        /// <summary>
-        /// SQLDB
-        /// Serialized Name: BackupItemType.SQLDB
-        /// </summary>
+        /// <summary> AzureSqlDb. </summary>
+        public static BackupItemType AzureSqlDB { get; } = new BackupItemType(AzureSqlDBValue);
+        /// <summary> SQLDB. </summary>
         public static BackupItemType SqlDB { get; } = new BackupItemType(SqlDBValue);
-        /// <summary>
-        /// Exchange
-        /// Serialized Name: BackupItemType.Exchange
-        /// </summary>
+        /// <summary> Exchange. </summary>
         public static BackupItemType Exchange { get; } = new BackupItemType(ExchangeValue);
-        /// <summary>
-        /// Sharepoint
-        /// Serialized Name: BackupItemType.Sharepoint
-        /// </summary>
+        /// <summary> Sharepoint. </summary>
         public static BackupItemType Sharepoint { get; } = new BackupItemType(SharepointValue);
-        /// <summary>
-        /// VMwareVM
-        /// Serialized Name: BackupItemType.VMwareVM
-        /// </summary>
+        /// <summary> VMwareVM. </summary>
         public static BackupItemType VMwareVm { get; } = new BackupItemType(VMwareVmValue);
-        /// <summary>
-        /// SystemState
-        /// Serialized Name: BackupItemType.SystemState
-        /// </summary>
+        /// <summary> SystemState. </summary>
         public static BackupItemType SystemState { get; } = new BackupItemType(SystemStateValue);
-        /// <summary>
-        /// Client
-        /// Serialized Name: BackupItemType.Client
-        /// </summary>
+        /// <summary> Client. </summary>
         public static BackupItemType Client { get; } = new BackupItemType(ClientValue);
-        /// <summary>
-        /// GenericDataSource
-        /// Serialized Name: BackupItemType.GenericDataSource
-        /// </summary>
+        /// <summary> GenericDataSource. </summary>
         public static BackupItemType GenericDataSource { get; } = new BackupItemType(GenericDataSourceValue);
-        /// <summary>
-        /// SQLDataBase
-        /// Serialized Name: BackupItemType.SQLDataBase
-        /// </summary>
+        /// <summary> SQLDataBase. </summary>
         public static BackupItemType SqlDataBase { get; } = new BackupItemType(SqlDataBaseValue);
-        /// <summary>
-        /// AzureFileShare
-        /// Serialized Name: BackupItemType.AzureFileShare
-        /// </summary>
+        /// <summary> AzureFileShare. </summary>
         public static BackupItemType AzureFileShare { get; } = new BackupItemType(AzureFileShareValue);
-        /// <summary>
-        /// SAPHanaDatabase
-        /// Serialized Name: BackupItemType.SAPHanaDatabase
-        /// </summary>
+        /// <summary> SAPHanaDatabase. </summary>
         public static BackupItemType SapHanaDatabase { get; } = new BackupItemType(SapHanaDatabaseValue);
-        /// <summary>
-        /// SAPAseDatabase
-        /// Serialized Name: BackupItemType.SAPAseDatabase
-        /// </summary>
+        /// <summary> SAPAseDatabase. </summary>
         public static BackupItemType SapAseDatabase { get; } = new BackupItemType(SapAseDatabaseValue);
-        /// <summary>
-        /// SAPHanaDBInstance
-        /// Serialized Name: BackupItemType.SAPHanaDBInstance
-        /// </summary>
+        /// <summary> SAPHanaDBInstance. </summary>
         public static BackupItemType SapHanaDBInstance { get; } = new BackupItemType(SapHanaDBInstanceValue);
         /// <summary> Determines if two <see cref="BackupItemType"/> values are the same. </summary>
         public static bool operator ==(BackupItemType left, BackupItemType right) => left.Equals(right);

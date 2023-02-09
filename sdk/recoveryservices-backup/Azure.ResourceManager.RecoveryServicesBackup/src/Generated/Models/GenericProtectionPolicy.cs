@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure VM (Mercury) workload-specific backup policy.
-    /// Serialized Name: GenericProtectionPolicy
-    /// </summary>
+    /// <summary> Azure VM (Mercury) workload-specific backup policy. </summary>
     public partial class GenericProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of GenericProtectionPolicy. </summary>
@@ -24,30 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of GenericProtectionPolicy. </summary>
-        /// <param name="protectedItemsCount">
-        /// Number of items associated with this policy.
-        /// Serialized Name: ProtectionPolicy.protectedItemsCount
-        /// </param>
-        /// <param name="backupManagementType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: ProtectionPolicy.backupManagementType
-        /// </param>
-        /// <param name="resourceGuardOperationRequests">
-        /// ResourceGuard Operation Requests
-        /// Serialized Name: ProtectionPolicy.resourceGuardOperationRequests
-        /// </param>
-        /// <param name="subProtectionPolicy">
-        /// List of sub-protection policies which includes schedule and retention
-        /// Serialized Name: GenericProtectionPolicy.subProtectionPolicy
-        /// </param>
-        /// <param name="timeZone">
-        /// TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;.
-        /// Serialized Name: GenericProtectionPolicy.timeZone
-        /// </param>
-        /// <param name="fabricName">
-        /// Name of this policy&apos;s fabric.
-        /// Serialized Name: GenericProtectionPolicy.fabricName
-        /// </param>
+        /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
+        /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="subProtectionPolicy"> List of sub-protection policies which includes schedule and retention. </param>
+        /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </param>
+        /// <param name="fabricName"> Name of this policy&apos;s fabric. </param>
         internal GenericProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IList<SubProtectionPolicy> subProtectionPolicy, string timeZone, string fabricName) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
         {
             SubProtectionPolicy = subProtectionPolicy;
@@ -56,20 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupManagementType = backupManagementType ?? "GenericProtectionPolicy";
         }
 
-        /// <summary>
-        /// List of sub-protection policies which includes schedule and retention
-        /// Serialized Name: GenericProtectionPolicy.subProtectionPolicy
-        /// </summary>
+        /// <summary> List of sub-protection policies which includes schedule and retention. </summary>
         public IList<SubProtectionPolicy> SubProtectionPolicy { get; }
-        /// <summary>
-        /// TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;.
-        /// Serialized Name: GenericProtectionPolicy.timeZone
-        /// </summary>
+        /// <summary> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </summary>
         public string TimeZone { get; set; }
-        /// <summary>
-        /// Name of this policy&apos;s fabric.
-        /// Serialized Name: GenericProtectionPolicy.fabricName
-        /// </summary>
+        /// <summary> Name of this policy&apos;s fabric. </summary>
         public string FabricName { get; set; }
     }
 }

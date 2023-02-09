@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary>
     /// Tiering Policy for a target tier.
     /// If the policy is not specified for a given target tier, service retains the existing configured tiering policy for that tier
-    /// Serialized Name: TieringPolicy
     /// </summary>
     public partial class TieringPolicy
     {
@@ -25,17 +24,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// 1. TierRecommended: Tier all recovery points recommended to be tiered
         /// 2. TierAfter: Tier all recovery points after a fixed period, as specified in duration + durationType below.
         /// 3. DoNotTier: Do not tier any recovery points
-        /// Serialized Name: TieringPolicy.tieringMode
         /// </param>
         /// <param name="durationValue">
         /// Number of days/weeks/months/years to retain backups in current tier before tiering.
         /// Used only if TieringMode is set to TierAfter
-        /// Serialized Name: TieringPolicy.duration
         /// </param>
         /// <param name="durationType">
         /// Retention duration type: days/weeks/months/years
         /// Used only if TieringMode is set to TierAfter
-        /// Serialized Name: TieringPolicy.durationType
         /// </param>
         internal TieringPolicy(TieringMode? tieringMode, int? durationValue, RetentionDurationType? durationType)
         {
@@ -49,19 +45,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// 1. TierRecommended: Tier all recovery points recommended to be tiered
         /// 2. TierAfter: Tier all recovery points after a fixed period, as specified in duration + durationType below.
         /// 3. DoNotTier: Do not tier any recovery points
-        /// Serialized Name: TieringPolicy.tieringMode
         /// </summary>
         public TieringMode? TieringMode { get; set; }
         /// <summary>
         /// Number of days/weeks/months/years to retain backups in current tier before tiering.
         /// Used only if TieringMode is set to TierAfter
-        /// Serialized Name: TieringPolicy.duration
         /// </summary>
         public int? DurationValue { get; set; }
         /// <summary>
         /// Retention duration type: days/weeks/months/years
         /// Used only if TieringMode is set to TierAfter
-        /// Serialized Name: TieringPolicy.durationType
         /// </summary>
         public RetentionDurationType? DurationType { get; set; }
     }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Disk information
-    /// Serialized Name: DiskInformation
-    /// </summary>
+    /// <summary> Disk information. </summary>
     public partial class DiskInformation
     {
         /// <summary> Initializes a new instance of DiskInformation. </summary>
@@ -19,17 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DiskInformation. </summary>
-        /// <param name="lun"> Serialized Name: DiskInformation.lun. </param>
-        /// <param name="name"> Serialized Name: DiskInformation.name. </param>
+        /// <param name="lun"></param>
+        /// <param name="name"></param>
         internal DiskInformation(int? lun, string name)
         {
             Lun = lun;
             Name = name;
         }
 
-        /// <summary> Serialized Name: DiskInformation.lun. </summary>
+        /// <summary> Gets or sets the lun. </summary>
         public int? Lun { get; set; }
-        /// <summary> Serialized Name: DiskInformation.name. </summary>
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
     }
 }

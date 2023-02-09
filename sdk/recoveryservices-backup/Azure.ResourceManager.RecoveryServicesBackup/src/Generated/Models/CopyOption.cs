@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Options to resolve copy conflicts.
-    /// Serialized Name: CopyOptions
-    /// </summary>
+    /// <summary> Options to resolve copy conflicts. </summary>
     public readonly partial struct CopyOption : IEquatable<CopyOption>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string OverwriteValue = "Overwrite";
         private const string FailOnConflictValue = "FailOnConflict";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: CopyOptions.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static CopyOption Invalid { get; } = new CopyOption(InvalidValue);
-        /// <summary>
-        /// CreateCopy
-        /// Serialized Name: CopyOptions.CreateCopy
-        /// </summary>
+        /// <summary> CreateCopy. </summary>
         public static CopyOption CreateCopy { get; } = new CopyOption(CreateCopyValue);
-        /// <summary>
-        /// Skip
-        /// Serialized Name: CopyOptions.Skip
-        /// </summary>
+        /// <summary> Skip. </summary>
         public static CopyOption Skip { get; } = new CopyOption(SkipValue);
-        /// <summary>
-        /// Overwrite
-        /// Serialized Name: CopyOptions.Overwrite
-        /// </summary>
+        /// <summary> Overwrite. </summary>
         public static CopyOption Overwrite { get; } = new CopyOption(OverwriteValue);
-        /// <summary>
-        /// FailOnConflict
-        /// Serialized Name: CopyOptions.FailOnConflict
-        /// </summary>
+        /// <summary> FailOnConflict. </summary>
         public static CopyOption FailOnConflict { get; } = new CopyOption(FailOnConflictValue);
         /// <summary> Determines if two <see cref="CopyOption"/> values are the same. </summary>
         public static bool operator ==(CopyOption left, CopyOption right) => left.Equals(right);

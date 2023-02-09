@@ -11,10 +11,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// List of RecoveryPoint resources
-    /// Serialized Name: RecoveryPointResourceList
-    /// </summary>
+    /// <summary> List of RecoveryPoint resources. </summary>
     internal partial class RecoveryPointResourceList
     {
         /// <summary> Initializes a new instance of RecoveryPointResourceList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPointResourceList. </summary>
-        /// <param name="value">
-        /// List of resources.
-        /// Serialized Name: RecoveryPointResourceList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The uri to fetch the next page of resources.
-        /// Serialized Name: RecoveryPointResourceList.nextLink
-        /// </param>
+        /// <param name="value"> List of resources. </param>
+        /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         internal RecoveryPointResourceList(IReadOnlyList<BackupRecoveryPointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of resources.
-        /// Serialized Name: RecoveryPointResourceList.value
-        /// </summary>
+        /// <summary> List of resources. </summary>
         public IReadOnlyList<BackupRecoveryPointData> Value { get; }
-        /// <summary>
-        /// The uri to fetch the next page of resources.
-        /// Serialized Name: RecoveryPointResourceList.nextLink
-        /// </summary>
+        /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }
 }

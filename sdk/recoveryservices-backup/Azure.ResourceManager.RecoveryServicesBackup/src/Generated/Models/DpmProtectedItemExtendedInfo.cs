@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Additional information of DPM Protected item.
-    /// Serialized Name: DPMProtectedItemExtendedInfo
-    /// </summary>
+    /// <summary> Additional information of DPM Protected item. </summary>
     public partial class DpmProtectedItemExtendedInfo
     {
         /// <summary> Initializes a new instance of DpmProtectedItemExtendedInfo. </summary>
@@ -24,66 +21,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DpmProtectedItemExtendedInfo. </summary>
-        /// <param name="protectableObjectLoadPath">
-        /// Attribute to provide information on various DBs.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.protectableObjectLoadPath
-        /// </param>
-        /// <param name="protected">
-        /// To check if backup item is disk protected.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.protected
-        /// </param>
-        /// <param name="isPresentOnCloud">
-        /// To check if backup item is cloud protected.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.isPresentOnCloud
-        /// </param>
-        /// <param name="lastBackupStatus">
-        /// Last backup status information on backup item.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.lastBackupStatus
-        /// </param>
-        /// <param name="lastRefreshedOn">
-        /// Last refresh time on backup item.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.lastRefreshedAt
-        /// </param>
-        /// <param name="oldestRecoveryPoint">
-        /// Oldest cloud recovery point time.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.oldestRecoveryPoint
-        /// </param>
-        /// <param name="recoveryPointCount">
-        /// cloud recovery point count.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.recoveryPointCount
-        /// </param>
-        /// <param name="onPremiseOldestRecoveryPoint">
-        /// Oldest disk recovery point time.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.onPremiseOldestRecoveryPoint
-        /// </param>
-        /// <param name="onPremiseLatestRecoveryPoint">
-        /// latest disk recovery point time.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.onPremiseLatestRecoveryPoint
-        /// </param>
-        /// <param name="onPremiseRecoveryPointCount">
-        /// disk recovery point count.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.onPremiseRecoveryPointCount
-        /// </param>
-        /// <param name="isCollocated">
-        /// To check if backup item is collocated.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.isCollocated
-        /// </param>
-        /// <param name="protectionGroupName">
-        /// Protection group name of the backup item.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.protectionGroupName
-        /// </param>
-        /// <param name="diskStorageUsedInBytes">
-        /// Used Disk storage in bytes.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.diskStorageUsedInBytes
-        /// </param>
-        /// <param name="totalDiskStorageSizeInBytes">
-        /// total Disk storage in bytes.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.totalDiskStorageSizeInBytes
-        /// </param>
-        internal DpmProtectedItemExtendedInfo(IDictionary<string, string> protectableObjectLoadPath, bool? @protected, bool? isPresentOnCloud, string lastBackupStatus, DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount, DateTimeOffset? onPremiseOldestRecoveryPoint, DateTimeOffset? onPremiseLatestRecoveryPoint, int? onPremiseRecoveryPointCount, bool? isCollocated, string protectionGroupName, string diskStorageUsedInBytes, string totalDiskStorageSizeInBytes)
+        /// <param name="protectableObjectLoadPath"> Attribute to provide information on various DBs. </param>
+        /// <param name="isProtected"> To check if backup item is disk protected. </param>
+        /// <param name="isPresentOnCloud"> To check if backup item is cloud protected. </param>
+        /// <param name="lastBackupStatus"> Last backup status information on backup item. </param>
+        /// <param name="lastRefreshedOn"> Last refresh time on backup item. </param>
+        /// <param name="oldestRecoveryPoint"> Oldest cloud recovery point time. </param>
+        /// <param name="recoveryPointCount"> cloud recovery point count. </param>
+        /// <param name="onPremiseOldestRecoveryPoint"> Oldest disk recovery point time. </param>
+        /// <param name="onPremiseLatestRecoveryPoint"> latest disk recovery point time. </param>
+        /// <param name="onPremiseRecoveryPointCount"> disk recovery point count. </param>
+        /// <param name="isCollocated"> To check if backup item is collocated. </param>
+        /// <param name="protectionGroupName"> Protection group name of the backup item. </param>
+        /// <param name="diskStorageUsedInBytes"> Used Disk storage in bytes. </param>
+        /// <param name="totalDiskStorageSizeInBytes"> total Disk storage in bytes. </param>
+        internal DpmProtectedItemExtendedInfo(IDictionary<string, string> protectableObjectLoadPath, bool? isProtected, bool? isPresentOnCloud, string lastBackupStatus, DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount, DateTimeOffset? onPremiseOldestRecoveryPoint, DateTimeOffset? onPremiseLatestRecoveryPoint, int? onPremiseRecoveryPointCount, bool? isCollocated, string protectionGroupName, string diskStorageUsedInBytes, string totalDiskStorageSizeInBytes)
         {
             ProtectableObjectLoadPath = protectableObjectLoadPath;
-            Protected = @protected;
+            IsProtected = isProtected;
             IsPresentOnCloud = isPresentOnCloud;
             LastBackupStatus = lastBackupStatus;
             LastRefreshedOn = lastRefreshedOn;
@@ -98,75 +53,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TotalDiskStorageSizeInBytes = totalDiskStorageSizeInBytes;
         }
 
-        /// <summary>
-        /// Attribute to provide information on various DBs.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.protectableObjectLoadPath
-        /// </summary>
+        /// <summary> Attribute to provide information on various DBs. </summary>
         public IDictionary<string, string> ProtectableObjectLoadPath { get; }
-        /// <summary>
-        /// To check if backup item is disk protected.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.protected
-        /// </summary>
-        public bool? Protected { get; set; }
-        /// <summary>
-        /// To check if backup item is cloud protected.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.isPresentOnCloud
-        /// </summary>
+        /// <summary> To check if backup item is disk protected. </summary>
+        public bool? IsProtected { get; set; }
+        /// <summary> To check if backup item is cloud protected. </summary>
         public bool? IsPresentOnCloud { get; set; }
-        /// <summary>
-        /// Last backup status information on backup item.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.lastBackupStatus
-        /// </summary>
+        /// <summary> Last backup status information on backup item. </summary>
         public string LastBackupStatus { get; set; }
-        /// <summary>
-        /// Last refresh time on backup item.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.lastRefreshedAt
-        /// </summary>
+        /// <summary> Last refresh time on backup item. </summary>
         public DateTimeOffset? LastRefreshedOn { get; set; }
-        /// <summary>
-        /// Oldest cloud recovery point time.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.oldestRecoveryPoint
-        /// </summary>
+        /// <summary> Oldest cloud recovery point time. </summary>
         public DateTimeOffset? OldestRecoveryPoint { get; set; }
-        /// <summary>
-        /// cloud recovery point count.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.recoveryPointCount
-        /// </summary>
+        /// <summary> cloud recovery point count. </summary>
         public int? RecoveryPointCount { get; set; }
-        /// <summary>
-        /// Oldest disk recovery point time.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.onPremiseOldestRecoveryPoint
-        /// </summary>
+        /// <summary> Oldest disk recovery point time. </summary>
         public DateTimeOffset? OnPremiseOldestRecoveryPoint { get; set; }
-        /// <summary>
-        /// latest disk recovery point time.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.onPremiseLatestRecoveryPoint
-        /// </summary>
+        /// <summary> latest disk recovery point time. </summary>
         public DateTimeOffset? OnPremiseLatestRecoveryPoint { get; set; }
-        /// <summary>
-        /// disk recovery point count.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.onPremiseRecoveryPointCount
-        /// </summary>
+        /// <summary> disk recovery point count. </summary>
         public int? OnPremiseRecoveryPointCount { get; set; }
-        /// <summary>
-        /// To check if backup item is collocated.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.isCollocated
-        /// </summary>
+        /// <summary> To check if backup item is collocated. </summary>
         public bool? IsCollocated { get; set; }
-        /// <summary>
-        /// Protection group name of the backup item.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.protectionGroupName
-        /// </summary>
+        /// <summary> Protection group name of the backup item. </summary>
         public string ProtectionGroupName { get; set; }
-        /// <summary>
-        /// Used Disk storage in bytes.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.diskStorageUsedInBytes
-        /// </summary>
+        /// <summary> Used Disk storage in bytes. </summary>
         public string DiskStorageUsedInBytes { get; set; }
-        /// <summary>
-        /// total Disk storage in bytes.
-        /// Serialized Name: DPMProtectedItemExtendedInfo.totalDiskStorageSizeInBytes
-        /// </summary>
+        /// <summary> total Disk storage in bytes. </summary>
         public string TotalDiskStorageSizeInBytes { get; set; }
     }
 }

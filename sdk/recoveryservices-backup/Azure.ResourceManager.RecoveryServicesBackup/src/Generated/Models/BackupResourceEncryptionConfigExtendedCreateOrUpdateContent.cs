@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The BackupResourceEncryptionConfigResource.
-    /// Serialized Name: BackupResourceEncryptionConfigResource
-    /// </summary>
+    /// <summary> The BackupResourceEncryptionConfigExtendedCreateOrUpdateContent. </summary>
     public partial class BackupResourceEncryptionConfigExtendedCreateOrUpdateContent : TrackedResourceData
     {
         /// <summary> Initializes a new instance of BackupResourceEncryptionConfigExtendedCreateOrUpdateContent. </summary>
@@ -31,29 +28,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// BackupResourceEncryptionConfigResource properties
-        /// Serialized Name: BackupResourceEncryptionConfigResource.properties
-        /// </param>
-        /// <param name="eTag">
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </param>
+        /// <param name="properties"> BackupResourceEncryptionConfigResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
         internal BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupResourceEncryptionConfig properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary>
-        /// BackupResourceEncryptionConfigResource properties
-        /// Serialized Name: BackupResourceEncryptionConfigResource.properties
-        /// </summary>
+        /// <summary> BackupResourceEncryptionConfigResource properties. </summary>
         public BackupResourceEncryptionConfig Properties { get; set; }
-        /// <summary>
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </summary>
+        /// <summary> Optional ETag. </summary>
         public ETag? ETag { get; set; }
     }
 }

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Properties of Recovery Point
-    /// Serialized Name: RecoveryPointProperties
-    /// </summary>
+    /// <summary> Properties of Recovery Point. </summary>
     public partial class RecoveryPointProperties
     {
         /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPointProperties. </summary>
-        /// <param name="expiryOn">
-        /// Expiry time of Recovery Point in UTC.
-        /// Serialized Name: RecoveryPointProperties.expiryTime
-        /// </param>
-        /// <param name="ruleName">
-        /// Rule name tagged on Recovery Point that governs life cycle
-        /// Serialized Name: RecoveryPointProperties.ruleName
-        /// </param>
+        /// <param name="expiryOn"> Expiry time of Recovery Point in UTC. </param>
+        /// <param name="ruleName"> Rule name tagged on Recovery Point that governs life cycle. </param>
         internal RecoveryPointProperties(DateTimeOffset? expiryOn, string ruleName)
         {
             ExpiryOn = expiryOn;
             RuleName = ruleName;
         }
 
-        /// <summary>
-        /// Expiry time of Recovery Point in UTC.
-        /// Serialized Name: RecoveryPointProperties.expiryTime
-        /// </summary>
+        /// <summary> Expiry time of Recovery Point in UTC. </summary>
         public DateTimeOffset? ExpiryOn { get; set; }
-        /// <summary>
-        /// Rule name tagged on Recovery Point that governs life cycle
-        /// Serialized Name: RecoveryPointProperties.ruleName
-        /// </summary>
+        /// <summary> Rule name tagged on Recovery Point that governs life cycle. </summary>
         public string RuleName { get; set; }
     }
 }

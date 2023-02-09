@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Restore Type (FullShareRestore or ItemLevelRestore)
-    /// Serialized Name: RestoreRequestType
-    /// </summary>
+    /// <summary> Restore Type (FullShareRestore or ItemLevelRestore). </summary>
     public readonly partial struct RestoreRequestType : IEquatable<RestoreRequestType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string FullShareRestoreValue = "FullShareRestore";
         private const string ItemLevelRestoreValue = "ItemLevelRestore";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: RestoreRequestType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static RestoreRequestType Invalid { get; } = new RestoreRequestType(InvalidValue);
-        /// <summary>
-        /// FullShareRestore
-        /// Serialized Name: RestoreRequestType.FullShareRestore
-        /// </summary>
+        /// <summary> FullShareRestore. </summary>
         public static RestoreRequestType FullShareRestore { get; } = new RestoreRequestType(FullShareRestoreValue);
-        /// <summary>
-        /// ItemLevelRestore
-        /// Serialized Name: RestoreRequestType.ItemLevelRestore
-        /// </summary>
+        /// <summary> ItemLevelRestore. </summary>
         public static RestoreRequestType ItemLevelRestore { get; } = new RestoreRequestType(ItemLevelRestoreValue);
         /// <summary> Determines if two <see cref="RestoreRequestType"/> values are the same. </summary>
         public static bool operator ==(RestoreRequestType left, RestoreRequestType right) => left.Equals(right);

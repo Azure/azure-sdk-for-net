@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Recovery point tier type.
-    /// Serialized Name: RecoveryPointTierType
-    /// </summary>
+    /// <summary> Recovery point tier type. </summary>
     public enum RecoveryPointTierType
     {
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: RecoveryPointTierType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         Invalid,
-        /// <summary>
-        /// InstantRP
-        /// Serialized Name: RecoveryPointTierType.InstantRP
-        /// </summary>
+        /// <summary> InstantRP. </summary>
         InstantRP,
-        /// <summary>
-        /// HardenedRP
-        /// Serialized Name: RecoveryPointTierType.HardenedRP
-        /// </summary>
+        /// <summary> HardenedRP. </summary>
         HardenedRP,
-        /// <summary>
-        /// ArchivedRP
-        /// Serialized Name: RecoveryPointTierType.ArchivedRP
-        /// </summary>
+        /// <summary> ArchivedRP. </summary>
         ArchivedRP
     }
 }

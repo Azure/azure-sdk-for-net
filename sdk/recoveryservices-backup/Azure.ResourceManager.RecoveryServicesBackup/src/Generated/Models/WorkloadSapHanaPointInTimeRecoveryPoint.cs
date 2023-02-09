@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Recovery point specific to PointInTime in SAPHana
-    /// Serialized Name: AzureWorkloadSAPHanaPointInTimeRecoveryPoint
-    /// </summary>
+    /// <summary> Recovery point specific to PointInTime in SAPHana. </summary>
     public partial class WorkloadSapHanaPointInTimeRecoveryPoint : WorkloadPointInTimeRecoveryPoint
     {
         /// <summary> Initializes a new instance of WorkloadSapHanaPointInTimeRecoveryPoint. </summary>
@@ -23,35 +20,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadSapHanaPointInTimeRecoveryPoint. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RecoveryPoint.objectType
-        /// </param>
-        /// <param name="recoveryPointTimeInUTC">
-        /// UTC time at which recovery point was created
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTimeInUTC
-        /// </param>
-        /// <param name="restorePointType">
-        /// Type of restore point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.type
-        /// </param>
-        /// <param name="recoveryPointTierDetails">
-        /// Recovery point tier information.
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTierDetails
-        /// </param>
-        /// <param name="recoveryPointMoveReadinessInfo">
-        /// Eligibility of RP to be moved to another tier
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointMoveReadinessInfo
-        /// </param>
-        /// <param name="recoveryPointProperties">
-        /// Properties of Recovery Point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointProperties
-        /// </param>
-        /// <param name="timeRanges">
-        /// List of log ranges
-        /// Serialized Name: AzureWorkloadPointInTimeRecoveryPoint.timeRanges
-        /// </param>
-        internal WorkloadSapHanaPointInTimeRecoveryPoint(string objectType, DateTimeOffset? recoveryPointTimeInUTC, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, IList<PointInTimeRange> timeRanges) : base(objectType, recoveryPointTimeInUTC, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties, timeRanges)
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
+        /// <param name="restorePointType"> Type of restore point. </param>
+        /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
+        /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
+        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        /// <param name="timeRanges"> List of log ranges. </param>
+        internal WorkloadSapHanaPointInTimeRecoveryPoint(string objectType, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, IList<PointInTimeRange> timeRanges) : base(objectType, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties, timeRanges)
         {
             ObjectType = objectType ?? "AzureWorkloadSAPHanaPointInTimeRecoveryPoint";
         }

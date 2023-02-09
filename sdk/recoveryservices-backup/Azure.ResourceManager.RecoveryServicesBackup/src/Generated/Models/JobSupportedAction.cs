@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The JobSupportedAction.
-    /// Serialized Name: JobSupportedAction
-    /// </summary>
+    /// <summary> The JobSupportedAction. </summary>
     public enum JobSupportedAction
     {
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: JobSupportedAction.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         Invalid,
-        /// <summary>
-        /// Cancellable
-        /// Serialized Name: JobSupportedAction.Cancellable
-        /// </summary>
+        /// <summary> Cancellable. </summary>
         Cancellable,
-        /// <summary>
-        /// Retriable
-        /// Serialized Name: JobSupportedAction.Retriable
-        /// </summary>
+        /// <summary> Retriable. </summary>
         Retriable
     }
 }

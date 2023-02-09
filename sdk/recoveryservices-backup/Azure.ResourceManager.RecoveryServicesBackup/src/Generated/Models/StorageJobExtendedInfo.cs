@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure Storage workload-specific additional information for job.
-    /// Serialized Name: AzureStorageJobExtendedInfo
-    /// </summary>
+    /// <summary> Azure Storage workload-specific additional information for job. </summary>
     public partial class StorageJobExtendedInfo
     {
         /// <summary> Initializes a new instance of StorageJobExtendedInfo. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of StorageJobExtendedInfo. </summary>
-        /// <param name="tasksList">
-        /// List of tasks for this job
-        /// Serialized Name: AzureStorageJobExtendedInfo.tasksList
-        /// </param>
-        /// <param name="propertyBag">
-        /// Job properties.
-        /// Serialized Name: AzureStorageJobExtendedInfo.propertyBag
-        /// </param>
-        /// <param name="dynamicErrorMessage">
-        /// Non localized error message on job execution.
-        /// Serialized Name: AzureStorageJobExtendedInfo.dynamicErrorMessage
-        /// </param>
+        /// <param name="tasksList"> List of tasks for this job. </param>
+        /// <param name="propertyBag"> Job properties. </param>
+        /// <param name="dynamicErrorMessage"> Non localized error message on job execution. </param>
         internal StorageJobExtendedInfo(IList<StorageJobTaskDetails> tasksList, IDictionary<string, string> propertyBag, string dynamicErrorMessage)
         {
             TasksList = tasksList;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DynamicErrorMessage = dynamicErrorMessage;
         }
 
-        /// <summary>
-        /// List of tasks for this job
-        /// Serialized Name: AzureStorageJobExtendedInfo.tasksList
-        /// </summary>
+        /// <summary> List of tasks for this job. </summary>
         public IList<StorageJobTaskDetails> TasksList { get; }
-        /// <summary>
-        /// Job properties.
-        /// Serialized Name: AzureStorageJobExtendedInfo.propertyBag
-        /// </summary>
+        /// <summary> Job properties. </summary>
         public IDictionary<string, string> PropertyBag { get; }
-        /// <summary>
-        /// Non localized error message on job execution.
-        /// Serialized Name: AzureStorageJobExtendedInfo.dynamicErrorMessage
-        /// </summary>
+        /// <summary> Non localized error message on job execution. </summary>
         public string DynamicErrorMessage { get; set; }
     }
 }

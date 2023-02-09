@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Resource Health Status
-    /// Serialized Name: ResourceHealthStatus
-    /// </summary>
+    /// <summary> Resource Health Status. </summary>
     public readonly partial struct ResourceHealthStatus : IEquatable<ResourceHealthStatus>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string PersistentUnhealthyValue = "PersistentUnhealthy";
         private const string InvalidValue = "Invalid";
 
-        /// <summary>
-        /// Healthy
-        /// Serialized Name: ResourceHealthStatus.Healthy
-        /// </summary>
+        /// <summary> Healthy. </summary>
         public static ResourceHealthStatus Healthy { get; } = new ResourceHealthStatus(HealthyValue);
-        /// <summary>
-        /// TransientDegraded
-        /// Serialized Name: ResourceHealthStatus.TransientDegraded
-        /// </summary>
+        /// <summary> TransientDegraded. </summary>
         public static ResourceHealthStatus TransientDegraded { get; } = new ResourceHealthStatus(TransientDegradedValue);
-        /// <summary>
-        /// PersistentDegraded
-        /// Serialized Name: ResourceHealthStatus.PersistentDegraded
-        /// </summary>
+        /// <summary> PersistentDegraded. </summary>
         public static ResourceHealthStatus PersistentDegraded { get; } = new ResourceHealthStatus(PersistentDegradedValue);
-        /// <summary>
-        /// TransientUnhealthy
-        /// Serialized Name: ResourceHealthStatus.TransientUnhealthy
-        /// </summary>
+        /// <summary> TransientUnhealthy. </summary>
         public static ResourceHealthStatus TransientUnhealthy { get; } = new ResourceHealthStatus(TransientUnhealthyValue);
-        /// <summary>
-        /// PersistentUnhealthy
-        /// Serialized Name: ResourceHealthStatus.PersistentUnhealthy
-        /// </summary>
+        /// <summary> PersistentUnhealthy. </summary>
         public static ResourceHealthStatus PersistentUnhealthy { get; } = new ResourceHealthStatus(PersistentUnhealthyValue);
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: ResourceHealthStatus.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static ResourceHealthStatus Invalid { get; } = new ResourceHealthStatus(InvalidValue);
         /// <summary> Determines if two <see cref="ResourceHealthStatus"/> values are the same. </summary>
         public static bool operator ==(ResourceHealthStatus left, ResourceHealthStatus right) => left.Equals(right);

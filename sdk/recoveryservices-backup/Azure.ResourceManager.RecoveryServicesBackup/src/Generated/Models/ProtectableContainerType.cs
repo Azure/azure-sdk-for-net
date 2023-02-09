@@ -11,99 +11,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Type of the container. The value of this property for
     /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
     /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
-    /// Serialized Name: ProtectableContainerType
     /// </summary>
     internal enum ProtectableContainerType
     {
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: ProtectableContainerType.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         Unknown,
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: ProtectableContainerType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         Invalid,
-        /// <summary>
-        /// IaasVMContainer
-        /// Serialized Name: ProtectableContainerType.IaasVMContainer
-        /// </summary>
+        /// <summary> IaasVMContainer. </summary>
         IaasVmContainer,
-        /// <summary>
-        /// IaasVMServiceContainer
-        /// Serialized Name: ProtectableContainerType.IaasVMServiceContainer
-        /// </summary>
+        /// <summary> IaasVMServiceContainer. </summary>
         IaasVmServiceContainer,
-        /// <summary>
-        /// DPMContainer
-        /// Serialized Name: ProtectableContainerType.DPMContainer
-        /// </summary>
+        /// <summary> DPMContainer. </summary>
         DpmContainer,
-        /// <summary>
-        /// AzureBackupServerContainer
-        /// Serialized Name: ProtectableContainerType.AzureBackupServerContainer
-        /// </summary>
+        /// <summary> AzureBackupServerContainer. </summary>
         AzureBackupServerContainer,
-        /// <summary>
-        /// MABContainer
-        /// Serialized Name: ProtectableContainerType.MABContainer
-        /// </summary>
+        /// <summary> MABContainer. </summary>
         MabContainer,
-        /// <summary>
-        /// Cluster
-        /// Serialized Name: ProtectableContainerType.Cluster
-        /// </summary>
+        /// <summary> Cluster. </summary>
         Cluster,
-        /// <summary>
-        /// AzureSqlContainer
-        /// Serialized Name: ProtectableContainerType.AzureSqlContainer
-        /// </summary>
+        /// <summary> AzureSqlContainer. </summary>
         AzureSqlContainer,
-        /// <summary>
-        /// Windows
-        /// Serialized Name: ProtectableContainerType.Windows
-        /// </summary>
+        /// <summary> Windows. </summary>
         Windows,
-        /// <summary>
-        /// VCenter
-        /// Serialized Name: ProtectableContainerType.VCenter
-        /// </summary>
+        /// <summary> VCenter. </summary>
         VCenter,
-        /// <summary>
-        /// VMAppContainer
-        /// Serialized Name: ProtectableContainerType.VMAppContainer
-        /// </summary>
+        /// <summary> VMAppContainer. </summary>
         VmAppContainer,
-        /// <summary>
-        /// SQLAGWorkLoadContainer
-        /// Serialized Name: ProtectableContainerType.SQLAGWorkLoadContainer
-        /// </summary>
+        /// <summary> SQLAGWorkLoadContainer. </summary>
         SqlAvailabilityGroupWorkLoadContainer,
-        /// <summary>
-        /// StorageContainer
-        /// Serialized Name: ProtectableContainerType.StorageContainer
-        /// </summary>
+        /// <summary> StorageContainer. </summary>
         StorageContainer,
-        /// <summary>
-        /// GenericContainer
-        /// Serialized Name: ProtectableContainerType.GenericContainer
-        /// </summary>
+        /// <summary> GenericContainer. </summary>
         GenericContainer,
-        /// <summary>
-        /// Microsoft.ClassicCompute/virtualMachines
-        /// Serialized Name: ProtectableContainerType.Microsoft.ClassicCompute/virtualMachines
-        /// </summary>
+        /// <summary> Microsoft.ClassicCompute/virtualMachines. </summary>
         MicrosoftClassicComputeVirtualMachines,
-        /// <summary>
-        /// Microsoft.Compute/virtualMachines
-        /// Serialized Name: ProtectableContainerType.Microsoft.Compute/virtualMachines
-        /// </summary>
+        /// <summary> Microsoft.Compute/virtualMachines. </summary>
         MicrosoftComputeVirtualMachines,
-        /// <summary>
-        /// AzureWorkloadContainer
-        /// Serialized Name: ProtectableContainerType.AzureWorkloadContainer
-        /// </summary>
+        /// <summary> AzureWorkloadContainer. </summary>
         AzureWorkloadContainer
     }
 }

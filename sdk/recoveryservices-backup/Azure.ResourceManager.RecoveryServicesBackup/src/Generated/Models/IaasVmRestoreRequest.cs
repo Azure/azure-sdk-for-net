@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// IaaS VM workload-specific restore.
-    /// Serialized Name: IaasVMRestoreRequest
     /// Please note <see cref="IaasVmRestoreRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="IaasVmRestoreWithRehydrationRequest"/>.
     /// </summary>
@@ -27,98 +26,47 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IaasVmRestoreRequest. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RestoreRequest.objectType
-        /// </param>
-        /// <param name="recoveryPointId">
-        /// ID of the backup copy to be recovered.
-        /// Serialized Name: IaasVMRestoreRequest.recoveryPointId
-        /// </param>
-        /// <param name="recoveryType">
-        /// Type of this recovery.
-        /// Serialized Name: IaasVMRestoreRequest.recoveryType
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// Fully qualified ARM ID of the VM which is being recovered.
-        /// Serialized Name: IaasVMRestoreRequest.sourceResourceId
-        /// </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryPointId"> ID of the backup copy to be recovered. </param>
+        /// <param name="recoveryType"> Type of this recovery. </param>
+        /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM which is being recovered. </param>
         /// <param name="targetVirtualMachineId">
         /// This is the complete ARM Id of the VM that will be created.
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
-        /// Serialized Name: IaasVMRestoreRequest.targetVirtualMachineId
         /// </param>
         /// <param name="targetResourceGroupId">
         /// This is the ARM Id of the resource group that you want to create for this Virtual machine and other artifacts.
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}
-        /// Serialized Name: IaasVMRestoreRequest.targetResourceGroupId
         /// </param>
-        /// <param name="storageAccountId">
-        /// Fully qualified ARM ID of the storage account to which the VM has to be restored.
-        /// Serialized Name: IaasVMRestoreRequest.storageAccountId
-        /// </param>
+        /// <param name="storageAccountId"> Fully qualified ARM ID of the storage account to which the VM has to be restored. </param>
         /// <param name="virtualNetworkId">
         /// This is the virtual network Id of the vnet that will be attached to the virtual machine.
         /// User will be validated for join action permissions in the linked access.
-        /// Serialized Name: IaasVMRestoreRequest.virtualNetworkId
         /// </param>
         /// <param name="subnetId">
         /// Subnet ID, is the subnet ID associated with the to be restored VM. For Classic VMs it would be
         /// {VnetID}/Subnet/{SubnetName} and, for the Azure Resource Manager VMs it would be ARM resource ID used to represent
         /// the subnet.
-        /// Serialized Name: IaasVMRestoreRequest.subnetId
         /// </param>
         /// <param name="targetDomainNameId">
         /// Fully qualified ARM ID of the domain name to be associated to the VM being restored. This applies only to Classic
         /// Virtual Machines.
-        /// Serialized Name: IaasVMRestoreRequest.targetDomainNameId
         /// </param>
-        /// <param name="region">
-        /// Region in which the virtual machine is restored.
-        /// Serialized Name: IaasVMRestoreRequest.region
-        /// </param>
-        /// <param name="affinityGroup">
-        /// Affinity group associated to VM to be restored. Used only for Classic Compute Virtual Machines.
-        /// Serialized Name: IaasVMRestoreRequest.affinityGroup
-        /// </param>
-        /// <param name="createNewCloudService">
+        /// <param name="region"> Region in which the virtual machine is restored. </param>
+        /// <param name="affinityGroup"> Affinity group associated to VM to be restored. Used only for Classic Compute Virtual Machines. </param>
+        /// <param name="doesCreateNewCloudService">
         /// Should a new cloud service be created while restoring the VM. If this is false, VM will be restored to the same
         /// cloud service as it was at the time of backup.
-        /// Serialized Name: IaasVMRestoreRequest.createNewCloudService
         /// </param>
-        /// <param name="originalStorageAccountOption">
-        /// Original Storage Account Option
-        /// Serialized Name: IaasVMRestoreRequest.originalStorageAccountOption
-        /// </param>
-        /// <param name="encryptionDetails">
-        /// Details needed if the VM was encrypted at the time of backup.
-        /// Serialized Name: IaasVMRestoreRequest.encryptionDetails
-        /// </param>
-        /// <param name="restoreDiskLunList">
-        /// List of Disk LUNs for partial restore
-        /// Serialized Name: IaasVMRestoreRequest.restoreDiskLunList
-        /// </param>
-        /// <param name="restoreWithManagedDisks">
-        /// Flag to denote of an Unmanaged disk VM should be restored with Managed disks.
-        /// Serialized Name: IaasVMRestoreRequest.restoreWithManagedDisks
-        /// </param>
-        /// <param name="diskEncryptionSetId">
-        /// DiskEncryptionSet&apos;s ID - needed if the VM needs to be encrypted at rest during restore with customer managed key.
-        /// Serialized Name: IaasVMRestoreRequest.diskEncryptionSetId
-        /// </param>
-        /// <param name="zones">
-        /// Target zone where the VM and its disks should be restored.
-        /// Serialized Name: IaasVMRestoreRequest.zones
-        /// </param>
-        /// <param name="identityInfo">
-        /// Managed Identity information required to access customer storage account.
-        /// Serialized Name: IaasVMRestoreRequest.identityInfo
-        /// </param>
-        /// <param name="identityBasedRestoreDetails">
-        /// IaaS VM workload specific restore details for restores using managed identity.
-        /// Serialized Name: IaasVMRestoreRequest.identityBasedRestoreDetails
-        /// </param>
-        internal IaasVmRestoreRequest(string objectType, string recoveryPointId, RecoveryType? recoveryType, string sourceResourceId, string targetVirtualMachineId, string targetResourceGroupId, string storageAccountId, string virtualNetworkId, string subnetId, string targetDomainNameId, string region, string affinityGroup, bool? createNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? restoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, IdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails) : base(objectType)
+        /// <param name="originalStorageAccountOption"> Original Storage Account Option. </param>
+        /// <param name="encryptionDetails"> Details needed if the VM was encrypted at the time of backup. </param>
+        /// <param name="restoreDiskLunList"> List of Disk LUNs for partial restore. </param>
+        /// <param name="doesRestoreWithManagedDisks"> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </param>
+        /// <param name="diskEncryptionSetId"> DiskEncryptionSet&apos;s ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </param>
+        /// <param name="zones"> Target zone where the VM and its disks should be restored. </param>
+        /// <param name="identityInfo"> Managed Identity information required to access customer storage account. </param>
+        /// <param name="identityBasedRestoreDetails"> IaaS VM workload specific restore details for restores using managed identity. </param>
+        internal IaasVmRestoreRequest(string objectType, string recoveryPointId, RecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, IdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails) : base(objectType)
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -131,11 +79,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TargetDomainNameId = targetDomainNameId;
             Region = region;
             AffinityGroup = affinityGroup;
-            CreateNewCloudService = createNewCloudService;
+            DoesCreateNewCloudService = doesCreateNewCloudService;
             OriginalStorageAccountOption = originalStorageAccountOption;
             EncryptionDetails = encryptionDetails;
             RestoreDiskLunList = restoreDiskLunList;
-            RestoreWithManagedDisks = restoreWithManagedDisks;
+            DoesRestoreWithManagedDisks = doesRestoreWithManagedDisks;
             DiskEncryptionSetId = diskEncryptionSetId;
             Zones = zones;
             IdentityInfo = identityInfo;
@@ -143,112 +91,64 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "IaasVMRestoreRequest";
         }
 
-        /// <summary>
-        /// ID of the backup copy to be recovered.
-        /// Serialized Name: IaasVMRestoreRequest.recoveryPointId
-        /// </summary>
+        /// <summary> ID of the backup copy to be recovered. </summary>
         public string RecoveryPointId { get; set; }
-        /// <summary>
-        /// Type of this recovery.
-        /// Serialized Name: IaasVMRestoreRequest.recoveryType
-        /// </summary>
+        /// <summary> Type of this recovery. </summary>
         public RecoveryType? RecoveryType { get; set; }
-        /// <summary>
-        /// Fully qualified ARM ID of the VM which is being recovered.
-        /// Serialized Name: IaasVMRestoreRequest.sourceResourceId
-        /// </summary>
-        public string SourceResourceId { get; set; }
+        /// <summary> Fully qualified ARM ID of the VM which is being recovered. </summary>
+        public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary>
         /// This is the complete ARM Id of the VM that will be created.
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
-        /// Serialized Name: IaasVMRestoreRequest.targetVirtualMachineId
         /// </summary>
-        public string TargetVirtualMachineId { get; set; }
+        public ResourceIdentifier TargetVirtualMachineId { get; set; }
         /// <summary>
         /// This is the ARM Id of the resource group that you want to create for this Virtual machine and other artifacts.
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}
-        /// Serialized Name: IaasVMRestoreRequest.targetResourceGroupId
         /// </summary>
-        public string TargetResourceGroupId { get; set; }
-        /// <summary>
-        /// Fully qualified ARM ID of the storage account to which the VM has to be restored.
-        /// Serialized Name: IaasVMRestoreRequest.storageAccountId
-        /// </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier TargetResourceGroupId { get; set; }
+        /// <summary> Fully qualified ARM ID of the storage account to which the VM has to be restored. </summary>
+        public ResourceIdentifier StorageAccountId { get; set; }
         /// <summary>
         /// This is the virtual network Id of the vnet that will be attached to the virtual machine.
         /// User will be validated for join action permissions in the linked access.
-        /// Serialized Name: IaasVMRestoreRequest.virtualNetworkId
         /// </summary>
-        public string VirtualNetworkId { get; set; }
+        public ResourceIdentifier VirtualNetworkId { get; set; }
         /// <summary>
         /// Subnet ID, is the subnet ID associated with the to be restored VM. For Classic VMs it would be
         /// {VnetID}/Subnet/{SubnetName} and, for the Azure Resource Manager VMs it would be ARM resource ID used to represent
         /// the subnet.
-        /// Serialized Name: IaasVMRestoreRequest.subnetId
         /// </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary>
         /// Fully qualified ARM ID of the domain name to be associated to the VM being restored. This applies only to Classic
         /// Virtual Machines.
-        /// Serialized Name: IaasVMRestoreRequest.targetDomainNameId
         /// </summary>
-        public string TargetDomainNameId { get; set; }
-        /// <summary>
-        /// Region in which the virtual machine is restored.
-        /// Serialized Name: IaasVMRestoreRequest.region
-        /// </summary>
-        public string Region { get; set; }
-        /// <summary>
-        /// Affinity group associated to VM to be restored. Used only for Classic Compute Virtual Machines.
-        /// Serialized Name: IaasVMRestoreRequest.affinityGroup
-        /// </summary>
+        public ResourceIdentifier TargetDomainNameId { get; set; }
+        /// <summary> Region in which the virtual machine is restored. </summary>
+        public AzureLocation? Region { get; set; }
+        /// <summary> Affinity group associated to VM to be restored. Used only for Classic Compute Virtual Machines. </summary>
         public string AffinityGroup { get; set; }
         /// <summary>
         /// Should a new cloud service be created while restoring the VM. If this is false, VM will be restored to the same
         /// cloud service as it was at the time of backup.
-        /// Serialized Name: IaasVMRestoreRequest.createNewCloudService
         /// </summary>
-        public bool? CreateNewCloudService { get; set; }
-        /// <summary>
-        /// Original Storage Account Option
-        /// Serialized Name: IaasVMRestoreRequest.originalStorageAccountOption
-        /// </summary>
+        public bool? DoesCreateNewCloudService { get; set; }
+        /// <summary> Original Storage Account Option. </summary>
         public bool? OriginalStorageAccountOption { get; set; }
-        /// <summary>
-        /// Details needed if the VM was encrypted at the time of backup.
-        /// Serialized Name: IaasVMRestoreRequest.encryptionDetails
-        /// </summary>
+        /// <summary> Details needed if the VM was encrypted at the time of backup. </summary>
         public VmEncryptionDetails EncryptionDetails { get; set; }
-        /// <summary>
-        /// List of Disk LUNs for partial restore
-        /// Serialized Name: IaasVMRestoreRequest.restoreDiskLunList
-        /// </summary>
+        /// <summary> List of Disk LUNs for partial restore. </summary>
         public IList<int> RestoreDiskLunList { get; }
-        /// <summary>
-        /// Flag to denote of an Unmanaged disk VM should be restored with Managed disks.
-        /// Serialized Name: IaasVMRestoreRequest.restoreWithManagedDisks
-        /// </summary>
-        public bool? RestoreWithManagedDisks { get; set; }
-        /// <summary>
-        /// DiskEncryptionSet&apos;s ID - needed if the VM needs to be encrypted at rest during restore with customer managed key.
-        /// Serialized Name: IaasVMRestoreRequest.diskEncryptionSetId
-        /// </summary>
+        /// <summary> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </summary>
+        public bool? DoesRestoreWithManagedDisks { get; set; }
+        /// <summary> DiskEncryptionSet&apos;s ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </summary>
         public string DiskEncryptionSetId { get; set; }
-        /// <summary>
-        /// Target zone where the VM and its disks should be restored.
-        /// Serialized Name: IaasVMRestoreRequest.zones
-        /// </summary>
+        /// <summary> Target zone where the VM and its disks should be restored. </summary>
         public IList<string> Zones { get; }
-        /// <summary>
-        /// Managed Identity information required to access customer storage account.
-        /// Serialized Name: IaasVMRestoreRequest.identityInfo
-        /// </summary>
+        /// <summary> Managed Identity information required to access customer storage account. </summary>
         public IdentityInfo IdentityInfo { get; set; }
-        /// <summary>
-        /// IaaS VM workload specific restore details for restores using managed identity.
-        /// Serialized Name: IaasVMRestoreRequest.identityBasedRestoreDetails
-        /// </summary>
+        /// <summary> IaaS VM workload specific restore details for restores using managed identity. </summary>
         public IdentityBasedRestoreDetails IdentityBasedRestoreDetails { get; set; }
     }
 }

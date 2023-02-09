@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static TargetAfsRestoreInfo DeserializeTargetAfsRestoreInfo(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> targetResourceId = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,7 +41,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("targetResourceId"))
                 {
-                    targetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

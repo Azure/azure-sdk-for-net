@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MakePolicyConsistent))
+            if (Optional.IsDefined(DoesMakePolicyConsistent))
             {
                 writer.WritePropertyName("makePolicyConsistent");
-                writer.WriteBooleanValue(MakePolicyConsistent.Value);
+                writer.WriteBooleanValue(DoesMakePolicyConsistent.Value);
             }
             if (Optional.IsDefined(ProtectedItemsCount))
             {

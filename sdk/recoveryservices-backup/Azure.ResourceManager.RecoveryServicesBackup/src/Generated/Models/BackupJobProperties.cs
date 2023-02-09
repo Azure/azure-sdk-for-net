@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Defines workload agnostic properties for a job.
-    /// Serialized Name: Job
     /// Please note <see cref="BackupJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="IaasVmJob"/>, <see cref="IaasVmJobV2"/>, <see cref="StorageJob"/>, <see cref="WorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
     /// </summary>
@@ -23,38 +22,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupJobProperties. </summary>
-        /// <param name="entityFriendlyName">
-        /// Friendly name of the entity on which the current job is executing.
-        /// Serialized Name: Job.entityFriendlyName
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Backup management type to execute the current job.
-        /// Serialized Name: Job.backupManagementType
-        /// </param>
-        /// <param name="operation">
-        /// The operation name.
-        /// Serialized Name: Job.operation
-        /// </param>
-        /// <param name="status">
-        /// Job status.
-        /// Serialized Name: Job.status
-        /// </param>
-        /// <param name="startOn">
-        /// The start time.
-        /// Serialized Name: Job.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time.
-        /// Serialized Name: Job.endTime
-        /// </param>
-        /// <param name="activityId">
-        /// ActivityId of job.
-        /// Serialized Name: Job.activityId
-        /// </param>
-        /// <param name="jobType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: Job.jobType
-        /// </param>
+        /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
+        /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
+        /// <param name="operation"> The operation name. </param>
+        /// <param name="status"> Job status. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
+        /// <param name="activityId"> ActivityId of job. </param>
+        /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal BackupJobProperties(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType)
         {
             EntityFriendlyName = entityFriendlyName;
@@ -67,45 +42,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = jobType;
         }
 
-        /// <summary>
-        /// Friendly name of the entity on which the current job is executing.
-        /// Serialized Name: Job.entityFriendlyName
-        /// </summary>
+        /// <summary> Friendly name of the entity on which the current job is executing. </summary>
         public string EntityFriendlyName { get; set; }
-        /// <summary>
-        /// Backup management type to execute the current job.
-        /// Serialized Name: Job.backupManagementType
-        /// </summary>
+        /// <summary> Backup management type to execute the current job. </summary>
         public BackupManagementType? BackupManagementType { get; set; }
-        /// <summary>
-        /// The operation name.
-        /// Serialized Name: Job.operation
-        /// </summary>
+        /// <summary> The operation name. </summary>
         public string Operation { get; set; }
-        /// <summary>
-        /// Job status.
-        /// Serialized Name: Job.status
-        /// </summary>
+        /// <summary> Job status. </summary>
         public string Status { get; set; }
-        /// <summary>
-        /// The start time.
-        /// Serialized Name: Job.startTime
-        /// </summary>
+        /// <summary> The start time. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// The end time.
-        /// Serialized Name: Job.endTime
-        /// </summary>
+        /// <summary> The end time. </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// ActivityId of job.
-        /// Serialized Name: Job.activityId
-        /// </summary>
+        /// <summary> ActivityId of job. </summary>
         public string ActivityId { get; set; }
-        /// <summary>
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: Job.jobType
-        /// </summary>
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
         internal string JobType { get; set; }
     }
 }

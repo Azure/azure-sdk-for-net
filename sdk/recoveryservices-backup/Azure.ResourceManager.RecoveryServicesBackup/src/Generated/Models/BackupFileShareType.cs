@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// File Share type XSync or XSMB.
-    /// Serialized Name: AzureFileShareType
-    /// </summary>
+    /// <summary> File Share type XSync or XSMB. </summary>
     public readonly partial struct BackupFileShareType : IEquatable<BackupFileShareType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string XsmbValue = "XSMB";
         private const string XSyncValue = "XSync";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: AzureFileShareType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static BackupFileShareType Invalid { get; } = new BackupFileShareType(InvalidValue);
-        /// <summary>
-        /// XSMB
-        /// Serialized Name: AzureFileShareType.XSMB
-        /// </summary>
+        /// <summary> XSMB. </summary>
         public static BackupFileShareType Xsmb { get; } = new BackupFileShareType(XsmbValue);
-        /// <summary>
-        /// XSync
-        /// Serialized Name: AzureFileShareType.XSync
-        /// </summary>
+        /// <summary> XSync. </summary>
         public static BackupFileShareType XSync { get; } = new BackupFileShareType(XSyncValue);
         /// <summary> Determines if two <see cref="BackupFileShareType"/> values are the same. </summary>
         public static bool operator ==(BackupFileShareType left, BackupFileShareType right) => left.Equals(right);

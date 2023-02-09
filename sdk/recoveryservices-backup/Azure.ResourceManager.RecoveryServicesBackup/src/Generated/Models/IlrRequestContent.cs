@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Parameters to Provision ILR API.
-    /// Serialized Name: ILRRequestResource
-    /// </summary>
+    /// <summary> Parameters to Provision ILR API. </summary>
     public partial class IlrRequestContent : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IlrRequestContent. </summary>
@@ -33,14 +30,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ILRRequestResource properties
-        /// Serialized Name: ILRRequestResource.properties
         /// Please note <see cref="IlrRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareProvisionIlrRequest"/> and <see cref="IaasVmilrRegistrationRequest"/>.
         /// </param>
-        /// <param name="eTag">
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
         internal IlrRequestContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IlrRequestProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -49,15 +42,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// ILRRequestResource properties
-        /// Serialized Name: ILRRequestResource.properties
         /// Please note <see cref="IlrRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FileShareProvisionIlrRequest"/> and <see cref="IaasVmilrRegistrationRequest"/>.
         /// </summary>
         public IlrRequestProperties Properties { get; set; }
-        /// <summary>
-        /// Optional ETag.
-        /// Serialized Name: Resource.eTag
-        /// </summary>
+        /// <summary> Optional ETag. </summary>
         public ETag? ETag { get; set; }
     }
 }

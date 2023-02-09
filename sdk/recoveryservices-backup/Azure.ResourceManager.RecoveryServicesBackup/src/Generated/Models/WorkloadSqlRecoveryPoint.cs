@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// SQL specific recoverypoint, specifically encapsulates full/diff recoverypoint along with extended info
-    /// Serialized Name: AzureWorkloadSQLRecoveryPoint
     /// Please note <see cref="WorkloadSqlRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>.
     /// </summary>
@@ -25,37 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadSqlRecoveryPoint. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RecoveryPoint.objectType
-        /// </param>
-        /// <param name="recoveryPointTimeInUTC">
-        /// UTC time at which recovery point was created
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTimeInUTC
-        /// </param>
-        /// <param name="restorePointType">
-        /// Type of restore point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.type
-        /// </param>
-        /// <param name="recoveryPointTierDetails">
-        /// Recovery point tier information.
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTierDetails
-        /// </param>
-        /// <param name="recoveryPointMoveReadinessInfo">
-        /// Eligibility of RP to be moved to another tier
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointMoveReadinessInfo
-        /// </param>
-        /// <param name="recoveryPointProperties">
-        /// Properties of Recovery Point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointProperties
-        /// </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
+        /// <param name="restorePointType"> Type of restore point. </param>
+        /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
+        /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
+        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <param name="extendedInfo">
         /// Extended Info that provides data directory details. Will be populated in two cases:
         /// When a specific recovery point is accessed using GetRecoveryPoint
         /// Or when ListRecoveryPoints is called for Log RP only with ExtendedInfo query filter
-        /// Serialized Name: AzureWorkloadSQLRecoveryPoint.extendedInfo
         /// </param>
-        internal WorkloadSqlRecoveryPoint(string objectType, DateTimeOffset? recoveryPointTimeInUTC, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, WorkloadSqlRecoveryPointExtendedInfo extendedInfo) : base(objectType, recoveryPointTimeInUTC, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
+        internal WorkloadSqlRecoveryPoint(string objectType, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties, WorkloadSqlRecoveryPointExtendedInfo extendedInfo) : base(objectType, recoveryPointCreatedOn, restorePointType, recoveryPointTierDetails, recoveryPointMoveReadinessInfo, recoveryPointProperties)
         {
             ExtendedInfo = extendedInfo;
             ObjectType = objectType ?? "AzureWorkloadSQLRecoveryPoint";
@@ -65,7 +45,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Extended Info that provides data directory details. Will be populated in two cases:
         /// When a specific recovery point is accessed using GetRecoveryPoint
         /// Or when ListRecoveryPoints is called for Log RP only with ExtendedInfo query filter
-        /// Serialized Name: AzureWorkloadSQLRecoveryPoint.extendedInfo
         /// </summary>
         public WorkloadSqlRecoveryPointExtendedInfo ExtendedInfo { get; set; }
     }

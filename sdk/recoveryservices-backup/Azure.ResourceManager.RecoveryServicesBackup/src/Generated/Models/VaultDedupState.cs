@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Vault Dedup state
-    /// Serialized Name: DedupState
-    /// </summary>
+    /// <summary> Vault Dedup state. </summary>
     public readonly partial struct VaultDedupState : IEquatable<VaultDedupState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: DedupState.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static VaultDedupState Invalid { get; } = new VaultDedupState(InvalidValue);
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: DedupState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static VaultDedupState Enabled { get; } = new VaultDedupState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: DedupState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static VaultDedupState Disabled { get; } = new VaultDedupState(DisabledValue);
         /// <summary> Determines if two <see cref="VaultDedupState"/> values are the same. </summary>
         public static bool operator ==(VaultDedupState left, VaultDedupState right) => left.Equals(right);

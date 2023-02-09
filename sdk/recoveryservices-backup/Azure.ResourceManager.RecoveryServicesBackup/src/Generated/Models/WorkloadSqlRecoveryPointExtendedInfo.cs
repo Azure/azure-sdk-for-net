@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Extended info class details
-    /// Serialized Name: AzureWorkloadSQLRecoveryPointExtendedInfo
-    /// </summary>
+    /// <summary> Extended info class details. </summary>
     public partial class WorkloadSqlRecoveryPointExtendedInfo
     {
         /// <summary> Initializes a new instance of WorkloadSqlRecoveryPointExtendedInfo. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadSqlRecoveryPointExtendedInfo. </summary>
-        /// <param name="dataDirectoryTimeInUTC">
-        /// UTC time at which data directory info was captured
-        /// Serialized Name: AzureWorkloadSQLRecoveryPointExtendedInfo.dataDirectoryTimeInUTC
-        /// </param>
-        /// <param name="dataDirectoryPaths">
-        /// List of data directory paths during restore operation.
-        /// Serialized Name: AzureWorkloadSQLRecoveryPointExtendedInfo.dataDirectoryPaths
-        /// </param>
-        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryTimeInUTC, IList<SqlDataDirectory> dataDirectoryPaths)
+        /// <param name="dataDirectoryInfoCapturedOn"> UTC time at which data directory info was captured. </param>
+        /// <param name="dataDirectoryPaths"> List of data directory paths during restore operation. </param>
+        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths)
         {
-            DataDirectoryTimeInUTC = dataDirectoryTimeInUTC;
+            DataDirectoryInfoCapturedOn = dataDirectoryInfoCapturedOn;
             DataDirectoryPaths = dataDirectoryPaths;
         }
 
-        /// <summary>
-        /// UTC time at which data directory info was captured
-        /// Serialized Name: AzureWorkloadSQLRecoveryPointExtendedInfo.dataDirectoryTimeInUTC
-        /// </summary>
-        public DateTimeOffset? DataDirectoryTimeInUTC { get; set; }
-        /// <summary>
-        /// List of data directory paths during restore operation.
-        /// Serialized Name: AzureWorkloadSQLRecoveryPointExtendedInfo.dataDirectoryPaths
-        /// </summary>
+        /// <summary> UTC time at which data directory info was captured. </summary>
+        public DateTimeOffset? DataDirectoryInfoCapturedOn { get; set; }
+        /// <summary> List of data directory paths during restore operation. </summary>
         public IList<SqlDataDirectory> DataDirectoryPaths { get; }
     }
 }

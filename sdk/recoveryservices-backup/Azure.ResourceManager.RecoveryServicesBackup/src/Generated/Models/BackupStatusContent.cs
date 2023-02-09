@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// BackupStatus request.
-    /// Serialized Name: BackupStatusRequest
-    /// </summary>
+    /// <summary> BackupStatus request. </summary>
     public partial class BackupStatusContent
     {
         /// <summary> Initializes a new instance of BackupStatusContent. </summary>
@@ -18,20 +17,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
         }
 
-        /// <summary>
-        /// Container Type - VM, SQLPaaS, DPM, AzureFileShare...
-        /// Serialized Name: BackupStatusRequest.resourceType
-        /// </summary>
+        /// <summary> Container Type - VM, SQLPaaS, DPM, AzureFileShare... </summary>
         public BackupDataSourceType? ResourceType { get; set; }
-        /// <summary>
-        /// Entire ARM resource id of the resource
-        /// Serialized Name: BackupStatusRequest.resourceId
-        /// </summary>
-        public string ResourceId { get; set; }
-        /// <summary>
-        /// Protectable Item Logical Name
-        /// Serialized Name: BackupStatusRequest.poLogicalName
-        /// </summary>
+        /// <summary> Entire ARM resource id of the resource. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
+        /// <summary> Protectable Item Logical Name. </summary>
         public string PoLogicalName { get; set; }
     }
 }

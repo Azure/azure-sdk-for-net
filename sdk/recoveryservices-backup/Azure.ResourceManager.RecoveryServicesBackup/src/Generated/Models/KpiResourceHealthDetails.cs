@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// KPI Resource Health Details
-    /// Serialized Name: KPIResourceHealthDetails
-    /// </summary>
+    /// <summary> KPI Resource Health Details. </summary>
     public partial class KpiResourceHealthDetails
     {
         /// <summary> Initializes a new instance of KpiResourceHealthDetails. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of KpiResourceHealthDetails. </summary>
-        /// <param name="resourceHealthStatus">
-        /// Resource Health Status
-        /// Serialized Name: KPIResourceHealthDetails.resourceHealthStatus
-        /// </param>
-        /// <param name="resourceHealthDetails">
-        /// Resource Health Status
-        /// Serialized Name: KPIResourceHealthDetails.resourceHealthDetails
-        /// </param>
+        /// <param name="resourceHealthStatus"> Resource Health Status. </param>
+        /// <param name="resourceHealthDetails"> Resource Health Status. </param>
         internal KpiResourceHealthDetails(ResourceHealthStatus? resourceHealthStatus, IList<ResourceHealthDetails> resourceHealthDetails)
         {
             ResourceHealthStatus = resourceHealthStatus;
             ResourceHealthDetails = resourceHealthDetails;
         }
 
-        /// <summary>
-        /// Resource Health Status
-        /// Serialized Name: KPIResourceHealthDetails.resourceHealthStatus
-        /// </summary>
+        /// <summary> Resource Health Status. </summary>
         public ResourceHealthStatus? ResourceHealthStatus { get; set; }
-        /// <summary>
-        /// Resource Health Status
-        /// Serialized Name: KPIResourceHealthDetails.resourceHealthDetails
-        /// </summary>
+        /// <summary> Resource Health Status. </summary>
         public IList<ResourceHealthDetails> ResourceHealthDetails { get; }
     }
 }

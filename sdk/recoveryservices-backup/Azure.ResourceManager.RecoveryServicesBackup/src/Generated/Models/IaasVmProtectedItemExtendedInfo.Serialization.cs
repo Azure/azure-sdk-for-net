@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("recoveryPointCount");
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Optional.IsDefined(PolicyInconsistent))
+            if (Optional.IsDefined(IsPolicyInconsistent))
             {
                 writer.WritePropertyName("policyInconsistent");
-                writer.WriteBooleanValue(PolicyInconsistent.Value);
+                writer.WriteBooleanValue(IsPolicyInconsistent.Value);
             }
             writer.WriteEndObject();
         }

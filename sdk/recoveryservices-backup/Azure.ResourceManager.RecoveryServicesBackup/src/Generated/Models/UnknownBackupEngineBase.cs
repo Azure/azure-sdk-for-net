@@ -7,65 +7,23 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The UnknownBackupEngineBase.
-    /// Serialized Name: UnknownBackupEngineBase
-    /// </summary>
+    /// <summary> The UnknownBackupEngineBase. </summary>
     internal partial class UnknownBackupEngineBase : BackupEngineProperties
     {
         /// <summary> Initializes a new instance of UnknownBackupEngineBase. </summary>
-        /// <param name="friendlyName">
-        /// Friendly name of the backup engine.
-        /// Serialized Name: BackupEngineBase.friendlyName
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Type of backup management for the backup engine.
-        /// Serialized Name: BackupEngineBase.backupManagementType
-        /// </param>
-        /// <param name="registrationStatus">
-        /// Registration status of the backup engine with the Recovery Services Vault.
-        /// Serialized Name: BackupEngineBase.registrationStatus
-        /// </param>
-        /// <param name="backupEngineState">
-        /// Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}
-        /// Serialized Name: BackupEngineBase.backupEngineState
-        /// </param>
-        /// <param name="healthStatus">
-        /// Backup status of the backup engine.
-        /// Serialized Name: BackupEngineBase.healthStatus
-        /// </param>
-        /// <param name="backupEngineType">
-        /// Type of the backup engine.
-        /// Serialized Name: BackupEngineBase.backupEngineType
-        /// </param>
-        /// <param name="canReRegister">
-        /// Flag indicating if the backup engine be registered, once already registered.
-        /// Serialized Name: BackupEngineBase.canReRegister
-        /// </param>
-        /// <param name="backupEngineId">
-        /// ID of the backup engine.
-        /// Serialized Name: BackupEngineBase.backupEngineId
-        /// </param>
-        /// <param name="dpmVersion">
-        /// Backup engine version
-        /// Serialized Name: BackupEngineBase.dpmVersion
-        /// </param>
-        /// <param name="azureBackupAgentVersion">
-        /// Backup agent version
-        /// Serialized Name: BackupEngineBase.azureBackupAgentVersion
-        /// </param>
-        /// <param name="isAzureBackupAgentUpgradeAvailable">
-        /// To check if backup agent upgrade available
-        /// Serialized Name: BackupEngineBase.isAzureBackupAgentUpgradeAvailable
-        /// </param>
-        /// <param name="isDpmUpgradeAvailable">
-        /// To check if backup engine upgrade available
-        /// Serialized Name: BackupEngineBase.isDpmUpgradeAvailable
-        /// </param>
-        /// <param name="extendedInfo">
-        /// Extended info of the backupengine
-        /// Serialized Name: BackupEngineBase.extendedInfo
-        /// </param>
+        /// <param name="friendlyName"> Friendly name of the backup engine. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
+        /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>
+        /// <param name="backupEngineState"> Status of the backup engine with the Recovery Services Vault. = {Active/Deleting/DeleteFailed}. </param>
+        /// <param name="healthStatus"> Backup status of the backup engine. </param>
+        /// <param name="backupEngineType"> Type of the backup engine. </param>
+        /// <param name="canReRegister"> Flag indicating if the backup engine be registered, once already registered. </param>
+        /// <param name="backupEngineId"> ID of the backup engine. </param>
+        /// <param name="dpmVersion"> Backup engine version. </param>
+        /// <param name="azureBackupAgentVersion"> Backup agent version. </param>
+        /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
+        /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
+        /// <param name="extendedInfo"> Extended info of the backupengine. </param>
         internal UnknownBackupEngineBase(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, backupEngineState, healthStatus, backupEngineType, canReRegister, backupEngineId, dpmVersion, azureBackupAgentVersion, isAzureBackupAgentUpgradeAvailable, isDpmUpgradeAvailable, extendedInfo)
         {
             BackupEngineType = backupEngineType;

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Error Detail class which encapsulates Code, Message and Recommendations.
-    /// Serialized Name: ErrorDetail
-    /// </summary>
+    /// <summary> Error Detail class which encapsulates Code, Message and Recommendations. </summary>
     public partial class BackupErrorDetail
     {
         /// <summary> Initializes a new instance of BackupErrorDetail. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupErrorDetail. </summary>
-        /// <param name="code">
-        /// Error code.
-        /// Serialized Name: ErrorDetail.code
-        /// </param>
-        /// <param name="message">
-        /// Error Message related to the Code.
-        /// Serialized Name: ErrorDetail.message
-        /// </param>
-        /// <param name="recommendations">
-        /// List of recommendation strings.
-        /// Serialized Name: ErrorDetail.recommendations
-        /// </param>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error Message related to the Code. </param>
+        /// <param name="recommendations"> List of recommendation strings. </param>
         internal BackupErrorDetail(string code, string message, IReadOnlyList<string> recommendations)
         {
             Code = code;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Recommendations = recommendations;
         }
 
-        /// <summary>
-        /// Error code.
-        /// Serialized Name: ErrorDetail.code
-        /// </summary>
+        /// <summary> Error code. </summary>
         public string Code { get; }
-        /// <summary>
-        /// Error Message related to the Code.
-        /// Serialized Name: ErrorDetail.message
-        /// </summary>
+        /// <summary> Error Message related to the Code. </summary>
         public string Message { get; }
-        /// <summary>
-        /// List of recommendation strings.
-        /// Serialized Name: ErrorDetail.recommendations
-        /// </summary>
+        /// <summary> List of recommendation strings. </summary>
         public IReadOnlyList<string> Recommendations { get; }
     }
 }

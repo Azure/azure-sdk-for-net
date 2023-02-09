@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// RecoveryPoint Tier Information V2
-    /// Serialized Name: RecoveryPointTierInformationV2
-    /// </summary>
+    /// <summary> RecoveryPoint Tier Information V2. </summary>
     public partial class RecoveryPointTierInformationV2 : RecoveryPointTierInformation
     {
         /// <summary> Initializes a new instance of RecoveryPointTierInformationV2. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of RecoveryPointTierInformationV2. </summary>
-        /// <param name="tierType">
-        /// Recovery point tier type.
-        /// Serialized Name: RecoveryPointTierInformation.type
-        /// </param>
-        /// <param name="status">
-        /// Recovery point tier status.
-        /// Serialized Name: RecoveryPointTierInformation.status
-        /// </param>
-        /// <param name="extendedInfo">
-        /// Recovery point tier status.
-        /// Serialized Name: RecoveryPointTierInformation.extendedInfo
-        /// </param>
+        /// <param name="tierType"> Recovery point tier type. </param>
+        /// <param name="status"> Recovery point tier status. </param>
+        /// <param name="extendedInfo"> Recovery point tier status. </param>
         internal RecoveryPointTierInformationV2(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo) : base(tierType, status, extendedInfo)
         {
         }

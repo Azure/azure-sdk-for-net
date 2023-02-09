@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// The InstantRPAdditionalDetails.
-    /// Serialized Name: InstantRPAdditionalDetails
-    /// </summary>
+    /// <summary> The InstantRPAdditionalDetails. </summary>
     public partial class InstantRPAdditionalDetails
     {
         /// <summary> Initializes a new instance of InstantRPAdditionalDetails. </summary>
@@ -19,17 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of InstantRPAdditionalDetails. </summary>
-        /// <param name="azureBackupRGNamePrefix"> Serialized Name: InstantRPAdditionalDetails.azureBackupRGNamePrefix. </param>
-        /// <param name="azureBackupRGNameSuffix"> Serialized Name: InstantRPAdditionalDetails.azureBackupRGNameSuffix. </param>
+        /// <param name="azureBackupRGNamePrefix"></param>
+        /// <param name="azureBackupRGNameSuffix"></param>
         internal InstantRPAdditionalDetails(string azureBackupRGNamePrefix, string azureBackupRGNameSuffix)
         {
             AzureBackupRGNamePrefix = azureBackupRGNamePrefix;
             AzureBackupRGNameSuffix = azureBackupRGNameSuffix;
         }
 
-        /// <summary> Serialized Name: InstantRPAdditionalDetails.azureBackupRGNamePrefix. </summary>
+        /// <summary> Gets or sets the azure backup rg name prefix. </summary>
         public string AzureBackupRGNamePrefix { get; set; }
-        /// <summary> Serialized Name: InstantRPAdditionalDetails.azureBackupRGNameSuffix. </summary>
+        /// <summary> Gets or sets the azure backup rg name suffix. </summary>
         public string AzureBackupRGNameSuffix { get; set; }
     }
 }

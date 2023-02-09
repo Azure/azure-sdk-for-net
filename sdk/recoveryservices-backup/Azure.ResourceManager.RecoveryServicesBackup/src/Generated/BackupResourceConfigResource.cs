@@ -242,16 +242,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Prepare data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> BMSPrepareDataMoveAsync(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> BmsPrepareDataMoveAsync(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.BMSPrepareDataMove");
+            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.BmsPrepareDataMove");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.BMSPrepareDataMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _defaultRestClient.BmsPrepareDataMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBmsPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -280,16 +280,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Prepare data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation BMSPrepareDataMove(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation BmsPrepareDataMove(WaitUntil waitUntil, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.BMSPrepareDataMove");
+            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.BmsPrepareDataMove");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.BMSPrepareDataMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _defaultRestClient.BmsPrepareDataMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken);
+                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBmsPrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -318,16 +318,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Trigger data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> BMSTriggerDataMoveAsync(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> BmsTriggerDataMoveAsync(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.BMSTriggerDataMove");
+            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.BmsTriggerDataMove");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.BMSTriggerDataMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _defaultRestClient.BmsTriggerDataMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBmsTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -356,16 +356,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Trigger data move request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation BMSTriggerDataMove(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation BmsTriggerDataMove(WaitUntil waitUntil, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.BMSTriggerDataMove");
+            using var scope = _defaultClientDiagnostics.CreateScope("BackupResourceConfigResource.BmsTriggerDataMove");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.BMSTriggerDataMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBMSTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _defaultRestClient.BmsTriggerDataMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content, cancellationToken);
+                var operation = new RecoveryServicesBackupArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateBmsTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

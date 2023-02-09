@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Sub-protection policy which includes schedule and retention
-    /// Serialized Name: SubProtectionPolicy
-    /// </summary>
+    /// <summary> Sub-protection policy which includes schedule and retention. </summary>
     public partial class SubProtectionPolicy
     {
         /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
@@ -23,19 +20,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
-        /// <param name="policyType">
-        /// Type of backup policy type
-        /// Serialized Name: SubProtectionPolicy.policyType
-        /// </param>
+        /// <param name="policyType"> Type of backup policy type. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.
-        /// Serialized Name: SubProtectionPolicy.schedulePolicy
         /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </param>
         /// <param name="retentionPolicy">
         /// Retention policy with the details on backup copy retention ranges.
-        /// Serialized Name: SubProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </param>
@@ -43,7 +35,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Tiering policy to automatically move RPs to another tier.
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
-        /// Serialized Name: SubProtectionPolicy.tieringPolicy
         /// </param>
         internal SubProtectionPolicy(SubProtectionPolicyType? policyType, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, IDictionary<string, TieringPolicy> tieringPolicy)
         {
@@ -53,21 +44,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TieringPolicy = tieringPolicy;
         }
 
-        /// <summary>
-        /// Type of backup policy type
-        /// Serialized Name: SubProtectionPolicy.policyType
-        /// </summary>
+        /// <summary> Type of backup policy type. </summary>
         public SubProtectionPolicyType? PolicyType { get; set; }
         /// <summary>
         /// Backup schedule specified as part of backup policy.
-        /// Serialized Name: SubProtectionPolicy.schedulePolicy
         /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
         /// </summary>
         public SchedulePolicy SchedulePolicy { get; set; }
         /// <summary>
         /// Retention policy with the details on backup copy retention ranges.
-        /// Serialized Name: SubProtectionPolicy.retentionPolicy
         /// Please note <see cref="RetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LongTermRetentionPolicy"/> and <see cref="SimpleRetentionPolicy"/>.
         /// </summary>
@@ -76,7 +62,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Tiering policy to automatically move RPs to another tier.
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
-        /// Serialized Name: SubProtectionPolicy.tieringPolicy
         /// </summary>
         public IDictionary<string, TieringPolicy> TieringPolicy { get; }
     }

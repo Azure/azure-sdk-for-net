@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Type of backup policy type
-    /// Serialized Name: PolicyType
-    /// </summary>
+    /// <summary> Type of backup policy type. </summary>
     public readonly partial struct SubProtectionPolicyType : IEquatable<SubProtectionPolicyType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SnapshotFullValue = "SnapshotFull";
         private const string SnapshotCopyOnlyFullValue = "SnapshotCopyOnlyFull";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: PolicyType.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static SubProtectionPolicyType Invalid { get; } = new SubProtectionPolicyType(InvalidValue);
-        /// <summary>
-        /// Full
-        /// Serialized Name: PolicyType.Full
-        /// </summary>
+        /// <summary> Full. </summary>
         public static SubProtectionPolicyType Full { get; } = new SubProtectionPolicyType(FullValue);
-        /// <summary>
-        /// Differential
-        /// Serialized Name: PolicyType.Differential
-        /// </summary>
+        /// <summary> Differential. </summary>
         public static SubProtectionPolicyType Differential { get; } = new SubProtectionPolicyType(DifferentialValue);
-        /// <summary>
-        /// Log
-        /// Serialized Name: PolicyType.Log
-        /// </summary>
+        /// <summary> Log. </summary>
         public static SubProtectionPolicyType Log { get; } = new SubProtectionPolicyType(LogValue);
-        /// <summary>
-        /// CopyOnlyFull
-        /// Serialized Name: PolicyType.CopyOnlyFull
-        /// </summary>
+        /// <summary> CopyOnlyFull. </summary>
         public static SubProtectionPolicyType CopyOnlyFull { get; } = new SubProtectionPolicyType(CopyOnlyFullValue);
-        /// <summary>
-        /// Incremental
-        /// Serialized Name: PolicyType.Incremental
-        /// </summary>
+        /// <summary> Incremental. </summary>
         public static SubProtectionPolicyType Incremental { get; } = new SubProtectionPolicyType(IncrementalValue);
-        /// <summary>
-        /// SnapshotFull
-        /// Serialized Name: PolicyType.SnapshotFull
-        /// </summary>
+        /// <summary> SnapshotFull. </summary>
         public static SubProtectionPolicyType SnapshotFull { get; } = new SubProtectionPolicyType(SnapshotFullValue);
-        /// <summary>
-        /// SnapshotCopyOnlyFull
-        /// Serialized Name: PolicyType.SnapshotCopyOnlyFull
-        /// </summary>
+        /// <summary> SnapshotCopyOnlyFull. </summary>
         public static SubProtectionPolicyType SnapshotCopyOnlyFull { get; } = new SubProtectionPolicyType(SnapshotCopyOnlyFullValue);
         /// <summary> Determines if two <see cref="SubProtectionPolicyType"/> values are the same. </summary>
         public static bool operator ==(SubProtectionPolicyType left, SubProtectionPolicyType right) => left.Equals(right);

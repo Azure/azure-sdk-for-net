@@ -5,11 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup ProtectionIntent.
-    /// Serialized Name: ProtectionIntent
     /// Please note <see cref="BackupProtectionIntentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadSqlAutoProtectionIntent"/> and <see cref="RecoveryServiceVaultProtectionIntent"/>.
     /// </summary>
@@ -21,31 +22,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupProtectionIntentProperties. </summary>
-        /// <param name="protectionIntentItemType">
-        /// backup protectionIntent type.
-        /// Serialized Name: ProtectionIntent.protectionIntentItemType
-        /// </param>
-        /// <param name="backupManagementType">
-        /// Type of backup management for the backed up item.
-        /// Serialized Name: ProtectionIntent.backupManagementType
-        /// </param>
-        /// <param name="sourceResourceId">
-        /// ARM ID of the resource to be backed up.
-        /// Serialized Name: ProtectionIntent.sourceResourceId
-        /// </param>
-        /// <param name="itemId">
-        /// ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId
-        /// Serialized Name: ProtectionIntent.itemId
-        /// </param>
-        /// <param name="policyId">
-        /// ID of the backup policy with which this item is backed up.
-        /// Serialized Name: ProtectionIntent.policyId
-        /// </param>
-        /// <param name="protectionState">
-        /// Backup state of this backup item.
-        /// Serialized Name: ProtectionIntent.protectionState
-        /// </param>
-        internal BackupProtectionIntentProperties(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, string sourceResourceId, string itemId, string policyId, ProtectionStatus? protectionState)
+        /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
+        /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
+        /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
+        /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
+        /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
+        /// <param name="protectionState"> Backup state of this backup item. </param>
+        internal BackupProtectionIntentProperties(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, ProtectionStatus? protectionState)
         {
             ProtectionIntentItemType = protectionIntentItemType;
             BackupManagementType = backupManagementType;
@@ -55,35 +38,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectionState = protectionState;
         }
 
-        /// <summary>
-        /// backup protectionIntent type.
-        /// Serialized Name: ProtectionIntent.protectionIntentItemType
-        /// </summary>
+        /// <summary> backup protectionIntent type. </summary>
         internal ProtectionIntentItemType ProtectionIntentItemType { get; set; }
-        /// <summary>
-        /// Type of backup management for the backed up item.
-        /// Serialized Name: ProtectionIntent.backupManagementType
-        /// </summary>
+        /// <summary> Type of backup management for the backed up item. </summary>
         public BackupManagementType? BackupManagementType { get; set; }
-        /// <summary>
-        /// ARM ID of the resource to be backed up.
-        /// Serialized Name: ProtectionIntent.sourceResourceId
-        /// </summary>
-        public string SourceResourceId { get; set; }
-        /// <summary>
-        /// ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId
-        /// Serialized Name: ProtectionIntent.itemId
-        /// </summary>
-        public string ItemId { get; set; }
-        /// <summary>
-        /// ID of the backup policy with which this item is backed up.
-        /// Serialized Name: ProtectionIntent.policyId
-        /// </summary>
-        public string PolicyId { get; set; }
-        /// <summary>
-        /// Backup state of this backup item.
-        /// Serialized Name: ProtectionIntent.protectionState
-        /// </summary>
+        /// <summary> ARM ID of the resource to be backed up. </summary>
+        public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </summary>
+        public ResourceIdentifier ItemId { get; set; }
+        /// <summary> ID of the backup policy with which this item is backed up. </summary>
+        public ResourceIdentifier PolicyId { get; set; }
+        /// <summary> Backup state of this backup item. </summary>
         public ProtectionStatus? ProtectionState { get; set; }
     }
 }

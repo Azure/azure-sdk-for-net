@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Workload specific recovery point, specifically encapsulates full/diff recovery point
-    /// Serialized Name: AzureWorkloadRecoveryPoint
     /// Please note <see cref="WorkloadRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/> and <see cref="WorkloadSqlRecoveryPoint"/>.
     /// </summary>
@@ -28,33 +27,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of WorkloadRecoveryPoint. </summary>
-        /// <param name="objectType">
-        /// This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types.
-        /// Serialized Name: RecoveryPoint.objectType
-        /// </param>
-        /// <param name="recoveryPointTimeInUTC">
-        /// UTC time at which recovery point was created
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTimeInUTC
-        /// </param>
-        /// <param name="restorePointType">
-        /// Type of restore point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.type
-        /// </param>
-        /// <param name="recoveryPointTierDetails">
-        /// Recovery point tier information.
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTierDetails
-        /// </param>
-        /// <param name="recoveryPointMoveReadinessInfo">
-        /// Eligibility of RP to be moved to another tier
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointMoveReadinessInfo
-        /// </param>
-        /// <param name="recoveryPointProperties">
-        /// Properties of Recovery Point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointProperties
-        /// </param>
-        internal WorkloadRecoveryPoint(string objectType, DateTimeOffset? recoveryPointTimeInUTC, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="recoveryPointCreatedOn"> UTC time at which recovery point was created. </param>
+        /// <param name="restorePointType"> Type of restore point. </param>
+        /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
+        /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
+        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        internal WorkloadRecoveryPoint(string objectType, DateTimeOffset? recoveryPointCreatedOn, RestorePointType? restorePointType, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
         {
-            RecoveryPointTimeInUTC = recoveryPointTimeInUTC;
+            RecoveryPointCreatedOn = recoveryPointCreatedOn;
             RestorePointType = restorePointType;
             RecoveryPointTierDetails = recoveryPointTierDetails;
             RecoveryPointMoveReadinessInfo = recoveryPointMoveReadinessInfo;
@@ -62,30 +43,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = objectType ?? "AzureWorkloadRecoveryPoint";
         }
 
-        /// <summary>
-        /// UTC time at which recovery point was created
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTimeInUTC
-        /// </summary>
-        public DateTimeOffset? RecoveryPointTimeInUTC { get; set; }
-        /// <summary>
-        /// Type of restore point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.type
-        /// </summary>
+        /// <summary> UTC time at which recovery point was created. </summary>
+        public DateTimeOffset? RecoveryPointCreatedOn { get; set; }
+        /// <summary> Type of restore point. </summary>
         public RestorePointType? RestorePointType { get; set; }
-        /// <summary>
-        /// Recovery point tier information.
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointTierDetails
-        /// </summary>
+        /// <summary> Recovery point tier information. </summary>
         public IList<RecoveryPointTierInformationV2> RecoveryPointTierDetails { get; }
-        /// <summary>
-        /// Eligibility of RP to be moved to another tier
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointMoveReadinessInfo
-        /// </summary>
+        /// <summary> Eligibility of RP to be moved to another tier. </summary>
         public IDictionary<string, RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get; }
-        /// <summary>
-        /// Properties of Recovery Point
-        /// Serialized Name: AzureWorkloadRecoveryPoint.recoveryPointProperties
-        /// </summary>
+        /// <summary> Properties of Recovery Point. </summary>
         public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }
