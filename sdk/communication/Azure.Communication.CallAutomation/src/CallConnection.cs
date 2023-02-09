@@ -404,7 +404,7 @@ namespace Azure.Communication.CallAutomation
             // validate ParticipantsToAdd is not null or empty
             Argument.AssertNotNullOrEmpty(options.ParticipantsToAdd, nameof(options.ParticipantsToAdd));
 
-            // TODO: update logic 
+            // TODO: update logic
             AddParticipantRequest request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantsToAdd.FirstOrDefault()));
 
             request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
