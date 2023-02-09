@@ -100,7 +100,7 @@ To register `LogsIngestionClient` with the dependency injection (DI) container, 
 
 ### Upload custom logs
 
-You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. Note the data ingestion [limits](https://learn.microsoft.com/azure/azure-monitor/service-limits#custom-logs). If you are passing in content that is already manipulated, set the contentEncoding parameter. For example if your content is gzipped, set contentEncoding to be "gzip".  
+You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. Note the data ingestion [limits](https://learn.microsoft.com/azure/azure-monitor/service-limits#custom-logs). This method has an optional parameter: string contentEncoding. This refers to the encoding of the RequestContent that is being passed in. If you are passing in content that is already manipulated, set the contentEncoding parameter. For example if your content is gzipped, set contentEncoding to be "gzip". The default behavior if this parameter is not set is to `gzip` all input. 
 
 ```C# Snippet:UploadCustomLogsAsync
 var endpoint = new Uri("<data_collection_endpoint>");
@@ -151,7 +151,7 @@ Response response = await client.UploadAsync(
 
 ### Upload custom logs as IEnumerable
 
-You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. In these two methods, logs are passed in a generic IEnumerable type. Additionally, there is an UploadLogsOptions options parameter in which a serializer, concurrency, and EventHandler can be set.
+You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. In these two methods, logs are passed in a generic `IEnumerable` type. Additionally, there's an `UploadLogsOptions`-typed parameter in which a serializer, concurrency, and EventHandler can be set.
 
 ```C# Snippet:UploadLogDataIEnumerableAsync
 var endpoint = new Uri("<data_collection_endpoint_uri>");
@@ -181,7 +181,7 @@ Response response = await client.UploadAsync(ruleId, streamName, entries).Config
 
 ### Upload custom logs as IEnumerable with EventHandler
 
-You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. In these two methods, logs are passed in a generic IEnumerable type. Additionally, there is an UploadLogsOptions options parameter in which a serializer, concurrency, and EventHandler can be set. The default serializer is set to System.Text.Json, you can pass in the serializer you would like used. The MaxConcurrency sets the number of threads that will be used in UploadAsync method. The default value is 5 and this parameter is unused in the Upload method. The EventHandler is used for error handling. It gives the user the option to abort the Upload if a batch fails and access the failed logs and corresponding exception. Without the EventHandler, if an Upload fails an AggregateException will be thrown.
+You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. In these two methods, logs are passed in a generic `IEnumerable` type. Additionally, there's an `UploadLogsOptions`-typed parameter in which a serializer, concurrency, and EventHandler can be set. The default serializer is set to `System.Text.Json`, but you can pass in the serializer you would like used. The `MaxConcurrency` property sets the number of threads that will be used in the `UploadAsync` method. The default value is 5, and this parameter is unused in the `Upload` method. The EventHandler is used for error handling. It gives the user the option to abort the upload if a batch fails and access the failed logs and corresponding exception. Without the EventHandler, if an upload fails, an `AggregateException` will be thrown.
 
 ```C# Snippet:LogDataIEnumerableEventHandlerAsync
 var endpoint = new Uri("<data_collection_endpoint_uri>");
