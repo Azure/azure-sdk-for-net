@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DailyRetentionFormat DeserializeDailyRetentionFormat(JsonElement element)
         {
-            Optional<IList<Day>> daysOfTheMonth = default;
+            Optional<IList<BackupDay>> daysOfTheMonth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfTheMonth"))
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Day> array = new List<Day>();
+                    List<BackupDay> array = new List<BackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Day.DeserializeDay(item));
+                        array.Add(BackupDay.DeserializeBackupDay(item));
                     }
                     daysOfTheMonth = array;
                     continue;

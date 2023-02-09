@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Specifies the fabric name - Azure or AD
     /// Serialized Name: FabricName
     /// </summary>
-    public readonly partial struct FabricName : IEquatable<FabricName>
+    public readonly partial struct BackupFabricName : IEquatable<BackupFabricName>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="FabricName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFabricName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FabricName(string value)
+        public BackupFabricName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Invalid
         /// Serialized Name: FabricName.Invalid
         /// </summary>
-        public static FabricName Invalid { get; } = new FabricName(InvalidValue);
+        public static BackupFabricName Invalid { get; } = new BackupFabricName(InvalidValue);
         /// <summary>
         /// Azure
         /// Serialized Name: FabricName.Azure
         /// </summary>
-        public static FabricName Azure { get; } = new FabricName(AzureValue);
-        /// <summary> Determines if two <see cref="FabricName"/> values are the same. </summary>
-        public static bool operator ==(FabricName left, FabricName right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="FabricName"/> values are not the same. </summary>
-        public static bool operator !=(FabricName left, FabricName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FabricName"/>. </summary>
-        public static implicit operator FabricName(string value) => new FabricName(value);
+        public static BackupFabricName Azure { get; } = new BackupFabricName(AzureValue);
+        /// <summary> Determines if two <see cref="BackupFabricName"/> values are the same. </summary>
+        public static bool operator ==(BackupFabricName left, BackupFabricName right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="BackupFabricName"/> values are not the same. </summary>
+        public static bool operator !=(BackupFabricName left, BackupFabricName right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="BackupFabricName"/>. </summary>
+        public static implicit operator BackupFabricName(string value) => new BackupFabricName(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FabricName other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupFabricName other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(FabricName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupFabricName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

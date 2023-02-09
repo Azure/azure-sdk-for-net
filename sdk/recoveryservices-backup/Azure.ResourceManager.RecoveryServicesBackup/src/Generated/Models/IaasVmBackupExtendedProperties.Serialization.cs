@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class ExtendedProperties : IUtf8JsonSerializable
+    public partial class IaasVmBackupExtendedProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static ExtendedProperties DeserializeExtendedProperties(JsonElement element)
+        internal static IaasVmBackupExtendedProperties DeserializeIaasVmBackupExtendedProperties(JsonElement element)
         {
             Optional<DiskExclusionProperties> diskExclusionProperties = default;
             Optional<string> linuxVmApplicationName = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new ExtendedProperties(diskExclusionProperties.Value, linuxVmApplicationName.Value);
+            return new IaasVmBackupExtendedProperties(diskExclusionProperties.Value, linuxVmApplicationName.Value);
         }
     }
 }

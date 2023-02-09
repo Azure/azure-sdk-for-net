@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WeeklyRetentionSchedule. </summary>
         public WeeklyRetentionSchedule()
         {
-            DaysOfTheWeek = new ChangeTrackingList<DayOfWeek>();
+            DaysOfTheWeek = new ChangeTrackingList<BackupDayOfWeek>();
             RetentionTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Retention duration of retention Policy.
         /// Serialized Name: WeeklyRetentionSchedule.retentionDuration
         /// </param>
-        internal WeeklyRetentionSchedule(IList<DayOfWeek> daysOfTheWeek, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
+        internal WeeklyRetentionSchedule(IList<BackupDayOfWeek> daysOfTheWeek, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
         {
             DaysOfTheWeek = daysOfTheWeek;
             RetentionTimes = retentionTimes;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of days of week for weekly retention policy.
         /// Serialized Name: WeeklyRetentionSchedule.daysOfTheWeek
         /// </summary>
-        public IList<DayOfWeek> DaysOfTheWeek { get; }
+        public IList<BackupDayOfWeek> DaysOfTheWeek { get; }
         /// <summary>
         /// Retention times of retention policy.
         /// Serialized Name: WeeklyRetentionSchedule.retentionTimes

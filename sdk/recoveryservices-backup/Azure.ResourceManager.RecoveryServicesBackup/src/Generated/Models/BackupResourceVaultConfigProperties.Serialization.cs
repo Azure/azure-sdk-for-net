@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupResourceVaultConfigProperties DeserializeBackupResourceVaultConfigProperties(JsonElement element)
         {
-            Optional<StorageType> storageModelType = default;
-            Optional<StorageType> storageType = default;
+            Optional<BackupStorageType> storageModelType = default;
+            Optional<BackupStorageType> storageType = default;
             Optional<StorageTypeState> storageTypeState = default;
             Optional<EnhancedSecurityState> enhancedSecurityState = default;
             Optional<SoftDeleteFeatureState> softDeleteFeatureState = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageModelType = new StorageType(property.Value.GetString());
+                    storageModelType = new BackupStorageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageType"))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageType = new StorageType(property.Value.GetString());
+                    storageType = new BackupStorageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageTypeState"))

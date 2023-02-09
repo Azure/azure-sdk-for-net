@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Error Detail class which encapsulates Code, Message and Recommendations.
     /// Serialized Name: ErrorDetail
     /// </summary>
-    public partial class ErrorDetail
+    public partial class BackupErrorDetail
     {
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        public ErrorDetail()
+        /// <summary> Initializes a new instance of BackupErrorDetail. </summary>
+        public BackupErrorDetail()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Initializes a new instance of BackupErrorDetail. </summary>
         /// <param name="code">
         /// Error code.
         /// Serialized Name: ErrorDetail.code
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of recommendation strings.
         /// Serialized Name: ErrorDetail.recommendations
         /// </param>
-        internal ErrorDetail(string code, string message, IReadOnlyList<string> recommendations)
+        internal BackupErrorDetail(string code, string message, IReadOnlyList<string> recommendations)
         {
             Code = code;
             Message = message;

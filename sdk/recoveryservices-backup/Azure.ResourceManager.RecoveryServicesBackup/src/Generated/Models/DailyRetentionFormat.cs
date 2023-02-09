@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
         public DailyRetentionFormat()
         {
-            DaysOfTheMonth = new ChangeTrackingList<Day>();
+            DaysOfTheMonth = new ChangeTrackingList<BackupDay>();
         }
 
         /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of days of the month.
         /// Serialized Name: DailyRetentionFormat.daysOfTheMonth
         /// </param>
-        internal DailyRetentionFormat(IList<Day> daysOfTheMonth)
+        internal DailyRetentionFormat(IList<BackupDay> daysOfTheMonth)
         {
             DaysOfTheMonth = daysOfTheMonth;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of days of the month.
         /// Serialized Name: DailyRetentionFormat.daysOfTheMonth
         /// </summary>
-        public IList<Day> DaysOfTheMonth { get; }
+        public IList<BackupDay> DaysOfTheMonth { get; }
     }
 }

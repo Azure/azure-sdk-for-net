@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc
         /// Serialized Name: PreValidateEnableBackupRequest.resourceType
         /// </summary>
-        public DataSourceType? ResourceType { get; set; }
+        public BackupDataSourceType? ResourceType { get; set; }
         /// <summary>
         /// ARM Virtual Machine Id
         /// Serialized Name: PreValidateEnableBackupRequest.resourceId

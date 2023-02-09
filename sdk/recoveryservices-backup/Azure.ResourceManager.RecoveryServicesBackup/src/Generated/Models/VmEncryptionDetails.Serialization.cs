@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class EncryptionDetails : IUtf8JsonSerializable
+    public partial class VmEncryptionDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static EncryptionDetails DeserializeEncryptionDetails(JsonElement element)
+        internal static VmEncryptionDetails DeserializeVmEncryptionDetails(JsonElement element)
         {
             Optional<bool> encryptionEnabled = default;
             Optional<Uri> kekUrl = default;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new EncryptionDetails(Optional.ToNullable(encryptionEnabled), kekUrl.Value, secretKeyUrl.Value, kekVaultId.Value, secretKeyVaultId.Value);
+            return new VmEncryptionDetails(Optional.ToNullable(encryptionEnabled), kekUrl.Value, secretKeyUrl.Value, kekVaultId.Value, secretKeyVaultId.Value);
         }
     }
 }

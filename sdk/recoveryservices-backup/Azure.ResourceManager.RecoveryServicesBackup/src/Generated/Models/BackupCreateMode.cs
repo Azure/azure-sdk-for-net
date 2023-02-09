@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Create mode to indicate recovery of existing soft deleted data source or creation of new data source.
     /// Serialized Name: CreateMode
     /// </summary>
-    public readonly partial struct CreateMode : IEquatable<CreateMode>
+    public readonly partial struct BackupCreateMode : IEquatable<BackupCreateMode>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="CreateMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupCreateMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CreateMode(string value)
+        public BackupCreateMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -33,29 +33,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Invalid
         /// Serialized Name: CreateMode.Invalid
         /// </summary>
-        public static CreateMode Invalid { get; } = new CreateMode(InvalidValue);
+        public static BackupCreateMode Invalid { get; } = new BackupCreateMode(InvalidValue);
         /// <summary>
         /// Default
         /// Serialized Name: CreateMode.Default
         /// </summary>
-        public static CreateMode Default { get; } = new CreateMode(DefaultValue);
+        public static BackupCreateMode Default { get; } = new BackupCreateMode(DefaultValue);
         /// <summary>
         /// Recover
         /// Serialized Name: CreateMode.Recover
         /// </summary>
-        public static CreateMode Recover { get; } = new CreateMode(RecoverValue);
-        /// <summary> Determines if two <see cref="CreateMode"/> values are the same. </summary>
-        public static bool operator ==(CreateMode left, CreateMode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CreateMode"/> values are not the same. </summary>
-        public static bool operator !=(CreateMode left, CreateMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CreateMode"/>. </summary>
-        public static implicit operator CreateMode(string value) => new CreateMode(value);
+        public static BackupCreateMode Recover { get; } = new BackupCreateMode(RecoverValue);
+        /// <summary> Determines if two <see cref="BackupCreateMode"/> values are the same. </summary>
+        public static bool operator ==(BackupCreateMode left, BackupCreateMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="BackupCreateMode"/> values are not the same. </summary>
+        public static bool operator !=(BackupCreateMode left, BackupCreateMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="BackupCreateMode"/>. </summary>
+        public static implicit operator BackupCreateMode(string value) => new BackupCreateMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CreateMode other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupCreateMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(CreateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupCreateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

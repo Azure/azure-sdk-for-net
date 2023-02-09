@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static SimpleSchedulePolicy DeserializeSimpleSchedulePolicy(JsonElement element)
         {
             Optional<ScheduleRunType> scheduleRunFrequency = default;
-            Optional<IList<DayOfWeek>> scheduleRunDays = default;
+            Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
             Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
             Optional<HourlySchedule> hourlySchedule = default;
             Optional<int> scheduleWeeklyFrequency = default;
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<BackupDayOfWeek> array = new List<BackupDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToBackupDayOfWeek());
                     }
                     scheduleRunDays = array;
                     continue;

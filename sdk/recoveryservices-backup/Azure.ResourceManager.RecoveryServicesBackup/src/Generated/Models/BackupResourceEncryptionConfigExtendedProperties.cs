@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// bool to indicate whether to use system Assigned Identity or not
         /// Serialized Name: BackupResourceEncryptionConfigExtended.useSystemAssignedIdentity
         /// </param>
-        internal BackupResourceEncryptionConfigExtendedProperties(EncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, string userAssignedIdentity, bool? useSystemAssignedIdentity) : base(encryptionAtRestType, keyUri, subscriptionId, lastUpdateStatus, infrastructureEncryptionState)
+        internal BackupResourceEncryptionConfigExtendedProperties(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, string userAssignedIdentity, bool? useSystemAssignedIdentity) : base(encryptionAtRestType, keyUri, subscriptionId, lastUpdateStatus, infrastructureEncryptionState)
         {
             UserAssignedIdentity = userAssignedIdentity;
             UseSystemAssignedIdentity = useSystemAssignedIdentity;

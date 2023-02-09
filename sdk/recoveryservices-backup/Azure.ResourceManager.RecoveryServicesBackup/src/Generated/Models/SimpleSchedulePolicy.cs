@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of SimpleSchedulePolicy. </summary>
         public SimpleSchedulePolicy()
         {
-            ScheduleRunDays = new ChangeTrackingList<DayOfWeek>();
+            ScheduleRunDays = new ChangeTrackingList<BackupDayOfWeek>();
             ScheduleRunTimes = new ChangeTrackingList<DateTimeOffset>();
             SchedulePolicyType = "SimpleSchedulePolicy";
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// At every number weeks this schedule has to be run.
         /// Serialized Name: SimpleSchedulePolicy.scheduleWeeklyFrequency
         /// </param>
-        internal SimpleSchedulePolicy(string schedulePolicyType, ScheduleRunType? scheduleRunFrequency, IList<DayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, HourlySchedule hourlySchedule, int? scheduleWeeklyFrequency) : base(schedulePolicyType)
+        internal SimpleSchedulePolicy(string schedulePolicyType, ScheduleRunType? scheduleRunFrequency, IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, HourlySchedule hourlySchedule, int? scheduleWeeklyFrequency) : base(schedulePolicyType)
         {
             ScheduleRunFrequency = scheduleRunFrequency;
             ScheduleRunDays = scheduleRunDays;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of days of week this schedule has to be run.
         /// Serialized Name: SimpleSchedulePolicy.scheduleRunDays
         /// </summary>
-        public IList<DayOfWeek> ScheduleRunDays { get; }
+        public IList<BackupDayOfWeek> ScheduleRunDays { get; }
         /// <summary>
         /// List of times of day this schedule has to be run.
         /// Serialized Name: SimpleSchedulePolicy.scheduleRunTimes

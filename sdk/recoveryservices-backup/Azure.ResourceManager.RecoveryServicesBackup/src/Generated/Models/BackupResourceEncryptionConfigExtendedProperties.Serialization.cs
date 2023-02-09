@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<string> userAssignedIdentity = default;
             Optional<bool> useSystemAssignedIdentity = default;
-            Optional<EncryptionAtRestType> encryptionAtRestType = default;
+            Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;
             Optional<Uri> keyUri = default;
             Optional<string> subscriptionId = default;
             Optional<LastUpdateStatus> lastUpdateStatus = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encryptionAtRestType = new EncryptionAtRestType(property.Value.GetString());
+                    encryptionAtRestType = new BackupEncryptionAtRestType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyUri"))

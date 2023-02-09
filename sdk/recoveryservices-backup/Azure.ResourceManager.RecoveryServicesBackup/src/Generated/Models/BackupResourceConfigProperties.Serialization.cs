@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupResourceConfigProperties DeserializeBackupResourceConfigProperties(JsonElement element)
         {
-            Optional<StorageType> storageModelType = default;
-            Optional<StorageType> storageType = default;
+            Optional<BackupStorageType> storageModelType = default;
+            Optional<BackupStorageType> storageType = default;
             Optional<StorageTypeState> storageTypeState = default;
             Optional<bool> crossRegionRestoreFlag = default;
-            Optional<DedupState> dedupState = default;
-            Optional<XcoolState> xcoolState = default;
+            Optional<VaultDedupState> dedupState = default;
+            Optional<VaultXcoolState> xcoolState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageModelType"))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageModelType = new StorageType(property.Value.GetString());
+                    storageModelType = new BackupStorageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageType"))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageType = new StorageType(property.Value.GetString());
+                    storageType = new BackupStorageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageTypeState"))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dedupState = new DedupState(property.Value.GetString());
+                    dedupState = new VaultDedupState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("xcoolState"))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    xcoolState = new XcoolState(property.Value.GetString());
+                    xcoolState = new VaultXcoolState(property.Value.GetString());
                     continue;
                 }
             }

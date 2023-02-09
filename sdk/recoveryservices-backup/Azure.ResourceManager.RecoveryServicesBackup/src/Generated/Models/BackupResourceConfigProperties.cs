@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Vault x-cool state
         /// Serialized Name: BackupResourceConfig.xcoolState
         /// </param>
-        internal BackupResourceConfigProperties(StorageType? storageModelType, StorageType? storageType, StorageTypeState? storageTypeState, bool? crossRegionRestoreFlag, DedupState? dedupState, XcoolState? xcoolState)
+        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, StorageTypeState? storageTypeState, bool? crossRegionRestoreFlag, VaultDedupState? dedupState, VaultXcoolState? xcoolState)
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Storage type
         /// Serialized Name: BackupResourceConfig.storageModelType
         /// </summary>
-        public StorageType? StorageModelType { get; set; }
+        public BackupStorageType? StorageModelType { get; set; }
         /// <summary>
         /// Storage type.
         /// Serialized Name: BackupResourceConfig.storageType
         /// </summary>
-        public StorageType? StorageType { get; set; }
+        public BackupStorageType? StorageType { get; set; }
         /// <summary>
         /// Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked.
         /// Serialized Name: BackupResourceConfig.storageTypeState
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Vault Dedup state
         /// Serialized Name: BackupResourceConfig.dedupState
         /// </summary>
-        public DedupState? DedupState { get; set; }
+        public VaultDedupState? DedupState { get; set; }
         /// <summary>
         /// Vault x-cool state
         /// Serialized Name: BackupResourceConfig.xcoolState
         /// </summary>
-        public XcoolState? XcoolState { get; set; }
+        public VaultXcoolState? XcoolState { get; set; }
     }
 }

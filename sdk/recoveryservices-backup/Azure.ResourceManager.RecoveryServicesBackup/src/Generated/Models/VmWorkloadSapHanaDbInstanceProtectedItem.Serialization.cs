@@ -173,20 +173,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<ProtectionState> protectionState = default;
             Optional<LastBackupStatus> lastBackupStatus = default;
             Optional<DateTimeOffset> lastBackupTime = default;
-            Optional<ErrorDetail> lastBackupErrorDetail = default;
+            Optional<BackupErrorDetail> lastBackupErrorDetail = default;
             Optional<string> protectedItemDataSourceId = default;
             Optional<ProtectedItemHealthStatus> protectedItemHealthStatus = default;
             Optional<VmWorkloadProtectedItemExtendedInfo> extendedInfo = default;
             Optional<IDictionary<string, KPIResourceHealthDetails>> kpisHealths = default;
             string protectedItemType = default;
             Optional<BackupManagementType> backupManagementType = default;
-            Optional<DataSourceType> workloadType = default;
+            Optional<BackupDataSourceType> workloadType = default;
             Optional<string> containerName = default;
             Optional<string> sourceResourceId = default;
             Optional<string> policyId = default;
             Optional<DateTimeOffset> lastRecoveryPoint = default;
             Optional<string> backupSetName = default;
-            Optional<CreateMode> createMode = default;
+            Optional<BackupCreateMode> createMode = default;
             Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
             Optional<bool> isScheduledForDeferredDelete = default;
             Optional<string> deferredDeleteTimeRemaining = default;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastBackupErrorDetail = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    lastBackupErrorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemDataSourceId"))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    workloadType = new DataSourceType(property.Value.GetString());
+                    workloadType = new BackupDataSourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("containerName"))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createMode = new CreateMode(property.Value.GetString());
+                    createMode = new BackupCreateMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deferredDeleteTimeInUTC"))

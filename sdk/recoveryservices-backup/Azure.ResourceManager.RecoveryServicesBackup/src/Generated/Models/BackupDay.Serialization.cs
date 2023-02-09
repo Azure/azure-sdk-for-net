@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class Day : IUtf8JsonSerializable
+    public partial class BackupDay : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static Day DeserializeDay(JsonElement element)
+        internal static BackupDay DeserializeBackupDay(JsonElement element)
         {
             Optional<int> date = default;
             Optional<bool> isLast = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new Day(Optional.ToNullable(date), Optional.ToNullable(isLast));
+            return new BackupDay(Optional.ToNullable(date), Optional.ToNullable(isLast));
         }
     }
 }

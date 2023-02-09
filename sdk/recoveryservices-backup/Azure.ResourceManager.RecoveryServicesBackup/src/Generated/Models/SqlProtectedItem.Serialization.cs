@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<SqlProtectedItemExtendedInfo> extendedInfo = default;
             string protectedItemType = default;
             Optional<BackupManagementType> backupManagementType = default;
-            Optional<DataSourceType> workloadType = default;
+            Optional<BackupDataSourceType> workloadType = default;
             Optional<string> containerName = default;
             Optional<string> sourceResourceId = default;
             Optional<string> policyId = default;
             Optional<DateTimeOffset> lastRecoveryPoint = default;
             Optional<string> backupSetName = default;
-            Optional<CreateMode> createMode = default;
+            Optional<BackupCreateMode> createMode = default;
             Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
             Optional<bool> isScheduledForDeferredDelete = default;
             Optional<string> deferredDeleteTimeRemaining = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    workloadType = new DataSourceType(property.Value.GetString());
+                    workloadType = new BackupDataSourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("containerName"))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createMode = new CreateMode(property.Value.GetString());
+                    createMode = new BackupCreateMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deferredDeleteTimeInUTC"))

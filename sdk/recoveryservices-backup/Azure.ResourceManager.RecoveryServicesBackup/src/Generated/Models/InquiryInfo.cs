@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// For e.g. - For SQL and oracle this will contain different details.
         /// Serialized Name: InquiryInfo.inquiryDetails
         /// </param>
-        internal InquiryInfo(string status, ErrorDetail errorDetail, IList<WorkloadInquiryDetails> inquiryDetails)
+        internal InquiryInfo(string status, BackupErrorDetail errorDetail, IList<WorkloadInquiryDetails> inquiryDetails)
         {
             Status = status;
             ErrorDetail = errorDetail;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Error Details if the Status is non-success.
         /// Serialized Name: InquiryInfo.errorDetail
         /// </summary>
-        public ErrorDetail ErrorDetail { get; set; }
+        public BackupErrorDetail ErrorDetail { get; set; }
         /// <summary>
         /// Inquiry Details which will have workload specific details.
         /// For e.g. - For SQL and oracle this will contain different details.

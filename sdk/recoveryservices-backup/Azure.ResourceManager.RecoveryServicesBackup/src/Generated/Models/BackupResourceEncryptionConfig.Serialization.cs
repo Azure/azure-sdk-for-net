@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupResourceEncryptionConfig DeserializeBackupResourceEncryptionConfig(JsonElement element)
         {
-            Optional<EncryptionAtRestType> encryptionAtRestType = default;
+            Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;
             Optional<Uri> keyUri = default;
             Optional<string> subscriptionId = default;
             Optional<LastUpdateStatus> lastUpdateStatus = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encryptionAtRestType = new EncryptionAtRestType(property.Value.GetString());
+                    encryptionAtRestType = new BackupEncryptionAtRestType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyUri"))

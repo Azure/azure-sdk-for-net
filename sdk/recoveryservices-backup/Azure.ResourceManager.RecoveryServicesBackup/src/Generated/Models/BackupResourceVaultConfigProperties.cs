@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Is soft delete feature state editable
         /// Serialized Name: BackupResourceVaultConfig.isSoftDeleteFeatureStateEditable
         /// </param>
-        internal BackupResourceVaultConfigProperties(StorageType? storageModelType, StorageType? storageType, StorageTypeState? storageTypeState, EnhancedSecurityState? enhancedSecurityState, SoftDeleteFeatureState? softDeleteFeatureState, IList<string> resourceGuardOperationRequests, bool? isSoftDeleteFeatureStateEditable)
+        internal BackupResourceVaultConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, StorageTypeState? storageTypeState, EnhancedSecurityState? enhancedSecurityState, SoftDeleteFeatureState? softDeleteFeatureState, IList<string> resourceGuardOperationRequests, bool? isSoftDeleteFeatureStateEditable)
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Storage type.
         /// Serialized Name: BackupResourceVaultConfig.storageModelType
         /// </summary>
-        public StorageType? StorageModelType { get; set; }
+        public BackupStorageType? StorageModelType { get; set; }
         /// <summary>
         /// Storage type.
         /// Serialized Name: BackupResourceVaultConfig.storageType
         /// </summary>
-        public StorageType? StorageType { get; set; }
+        public BackupStorageType? StorageType { get; set; }
         /// <summary>
         /// Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked.
         /// Serialized Name: BackupResourceVaultConfig.storageTypeState

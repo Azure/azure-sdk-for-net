@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> affinityGroup = default;
             Optional<bool> createNewCloudService = default;
             Optional<bool> originalStorageAccountOption = default;
-            Optional<EncryptionDetails> encryptionDetails = default;
+            Optional<VmEncryptionDetails> encryptionDetails = default;
             Optional<IList<int>> restoreDiskLunList = default;
             Optional<bool> restoreWithManagedDisks = default;
             Optional<string> diskEncryptionSetId = default;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    encryptionDetails = EncryptionDetails.DeserializeEncryptionDetails(property.Value);
+                    encryptionDetails = VmEncryptionDetails.DeserializeVmEncryptionDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restoreDiskLunList"))

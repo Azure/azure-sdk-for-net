@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Container registration status
         /// Serialized Name: BackupStatusResponse.registrationStatus
         /// </param>
-        internal BackupStatusResponse(ProtectionStatus? protectionStatus, string vaultId, FabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus)
+        internal BackupStatusResponse(ProtectionStatus? protectionStatus, string vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus)
         {
             ProtectionStatus = protectionStatus;
             VaultId = vaultId;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Specifies the fabric name - Azure or AD
         /// Serialized Name: BackupStatusResponse.fabricName
         /// </summary>
-        public FabricName? FabricName { get; }
+        public BackupFabricName? FabricName { get; }
         /// <summary>
         /// Specifies the product specific container name. E.g. iaasvmcontainer;iaasvmcontainer;csname;vmname.
         /// Serialized Name: BackupStatusResponse.containerName

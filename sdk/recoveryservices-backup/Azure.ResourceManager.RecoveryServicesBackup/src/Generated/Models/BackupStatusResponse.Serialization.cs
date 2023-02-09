@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<ProtectionStatus> protectionStatus = default;
             Optional<string> vaultId = default;
-            Optional<FabricName> fabricName = default;
+            Optional<BackupFabricName> fabricName = default;
             Optional<string> containerName = default;
             Optional<string> protectedItemName = default;
             Optional<string> errorCode = default;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fabricName = new FabricName(property.Value.GetString());
+                    fabricName = new BackupFabricName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("containerName"))

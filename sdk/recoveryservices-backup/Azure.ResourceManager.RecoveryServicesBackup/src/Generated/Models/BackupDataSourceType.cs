@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Type of workload this item represents.
     /// Serialized Name: DataSourceType
     /// </summary>
-    public readonly partial struct DataSourceType : IEquatable<DataSourceType>
+    public readonly partial struct BackupDataSourceType : IEquatable<BackupDataSourceType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="DataSourceType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupDataSourceType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataSourceType(string value)
+        public BackupDataSourceType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -46,94 +46,94 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Invalid
         /// Serialized Name: DataSourceType.Invalid
         /// </summary>
-        public static DataSourceType Invalid { get; } = new DataSourceType(InvalidValue);
+        public static BackupDataSourceType Invalid { get; } = new BackupDataSourceType(InvalidValue);
         /// <summary>
         /// VM
         /// Serialized Name: DataSourceType.VM
         /// </summary>
-        public static DataSourceType Vm { get; } = new DataSourceType(VmValue);
+        public static BackupDataSourceType Vm { get; } = new BackupDataSourceType(VmValue);
         /// <summary>
         /// FileFolder
         /// Serialized Name: DataSourceType.FileFolder
         /// </summary>
-        public static DataSourceType FileFolder { get; } = new DataSourceType(FileFolderValue);
+        public static BackupDataSourceType FileFolder { get; } = new BackupDataSourceType(FileFolderValue);
         /// <summary>
         /// AzureSqlDb
         /// Serialized Name: DataSourceType.AzureSqlDb
         /// </summary>
-        public static DataSourceType AzureSqlDb { get; } = new DataSourceType(AzureSqlDbValue);
+        public static BackupDataSourceType AzureSqlDb { get; } = new BackupDataSourceType(AzureSqlDbValue);
         /// <summary>
         /// SQLDB
         /// Serialized Name: DataSourceType.SQLDB
         /// </summary>
-        public static DataSourceType SqlDB { get; } = new DataSourceType(SqlDBValue);
+        public static BackupDataSourceType SqlDB { get; } = new BackupDataSourceType(SqlDBValue);
         /// <summary>
         /// Exchange
         /// Serialized Name: DataSourceType.Exchange
         /// </summary>
-        public static DataSourceType Exchange { get; } = new DataSourceType(ExchangeValue);
+        public static BackupDataSourceType Exchange { get; } = new BackupDataSourceType(ExchangeValue);
         /// <summary>
         /// Sharepoint
         /// Serialized Name: DataSourceType.Sharepoint
         /// </summary>
-        public static DataSourceType Sharepoint { get; } = new DataSourceType(SharepointValue);
+        public static BackupDataSourceType Sharepoint { get; } = new BackupDataSourceType(SharepointValue);
         /// <summary>
         /// VMwareVM
         /// Serialized Name: DataSourceType.VMwareVM
         /// </summary>
-        public static DataSourceType VMwareVm { get; } = new DataSourceType(VMwareVmValue);
+        public static BackupDataSourceType VMwareVm { get; } = new BackupDataSourceType(VMwareVmValue);
         /// <summary>
         /// SystemState
         /// Serialized Name: DataSourceType.SystemState
         /// </summary>
-        public static DataSourceType SystemState { get; } = new DataSourceType(SystemStateValue);
+        public static BackupDataSourceType SystemState { get; } = new BackupDataSourceType(SystemStateValue);
         /// <summary>
         /// Client
         /// Serialized Name: DataSourceType.Client
         /// </summary>
-        public static DataSourceType Client { get; } = new DataSourceType(ClientValue);
+        public static BackupDataSourceType Client { get; } = new BackupDataSourceType(ClientValue);
         /// <summary>
         /// GenericDataSource
         /// Serialized Name: DataSourceType.GenericDataSource
         /// </summary>
-        public static DataSourceType GenericDataSource { get; } = new DataSourceType(GenericDataSourceValue);
+        public static BackupDataSourceType GenericDataSource { get; } = new BackupDataSourceType(GenericDataSourceValue);
         /// <summary>
         /// SQLDataBase
         /// Serialized Name: DataSourceType.SQLDataBase
         /// </summary>
-        public static DataSourceType SqlDataBase { get; } = new DataSourceType(SqlDataBaseValue);
+        public static BackupDataSourceType SqlDataBase { get; } = new BackupDataSourceType(SqlDataBaseValue);
         /// <summary>
         /// AzureFileShare
         /// Serialized Name: DataSourceType.AzureFileShare
         /// </summary>
-        public static DataSourceType AzureFileShare { get; } = new DataSourceType(AzureFileShareValue);
+        public static BackupDataSourceType AzureFileShare { get; } = new BackupDataSourceType(AzureFileShareValue);
         /// <summary>
         /// SAPHanaDatabase
         /// Serialized Name: DataSourceType.SAPHanaDatabase
         /// </summary>
-        public static DataSourceType SAPHanaDatabase { get; } = new DataSourceType(SAPHanaDatabaseValue);
+        public static BackupDataSourceType SAPHanaDatabase { get; } = new BackupDataSourceType(SAPHanaDatabaseValue);
         /// <summary>
         /// SAPAseDatabase
         /// Serialized Name: DataSourceType.SAPAseDatabase
         /// </summary>
-        public static DataSourceType SAPAseDatabase { get; } = new DataSourceType(SAPAseDatabaseValue);
+        public static BackupDataSourceType SAPAseDatabase { get; } = new BackupDataSourceType(SAPAseDatabaseValue);
         /// <summary>
         /// SAPHanaDBInstance
         /// Serialized Name: DataSourceType.SAPHanaDBInstance
         /// </summary>
-        public static DataSourceType SAPHanaDBInstance { get; } = new DataSourceType(SAPHanaDBInstanceValue);
-        /// <summary> Determines if two <see cref="DataSourceType"/> values are the same. </summary>
-        public static bool operator ==(DataSourceType left, DataSourceType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="DataSourceType"/> values are not the same. </summary>
-        public static bool operator !=(DataSourceType left, DataSourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataSourceType"/>. </summary>
-        public static implicit operator DataSourceType(string value) => new DataSourceType(value);
+        public static BackupDataSourceType SAPHanaDBInstance { get; } = new BackupDataSourceType(SAPHanaDBInstanceValue);
+        /// <summary> Determines if two <see cref="BackupDataSourceType"/> values are the same. </summary>
+        public static bool operator ==(BackupDataSourceType left, BackupDataSourceType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="BackupDataSourceType"/> values are not the same. </summary>
+        public static bool operator !=(BackupDataSourceType left, BackupDataSourceType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="BackupDataSourceType"/>. </summary>
+        public static implicit operator BackupDataSourceType(string value) => new BackupDataSourceType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DataSourceType other && Equals(other);
+        public override bool Equals(object obj) => obj is BackupDataSourceType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(DataSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BackupDataSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

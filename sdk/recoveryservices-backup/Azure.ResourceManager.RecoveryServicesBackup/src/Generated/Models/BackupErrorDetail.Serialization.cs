@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class ErrorDetail : IUtf8JsonSerializable
+    public partial class BackupErrorDetail : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
+        internal static BackupErrorDetail DeserializeBackupErrorDetail(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new ErrorDetail(code.Value, message.Value, Optional.ToList(recommendations));
+            return new BackupErrorDetail(code.Value, message.Value, Optional.ToList(recommendations));
         }
     }
 }

@@ -537,6 +537,92 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.AcquireStorageAccountLock left, Azure.ResourceManager.RecoveryServicesBackup.Models.AcquireStorageAccountLock right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupCreateMode : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupCreateMode(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode Default { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode Invalid { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode Recover { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupDataSourceType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupDataSourceType(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType AzureFileShare { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType AzureSqlDb { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType Client { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType Exchange { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType FileFolder { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType GenericDataSource { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType Invalid { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType SAPAseDatabase { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType SAPHanaDatabase { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType SAPHanaDBInstance { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType Sharepoint { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType SqlDataBase { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType SqlDB { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType SystemState { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType Vm { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType VMwareVm { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class BackupDay
+    {
+        public BackupDay() { }
+        public int? Date { get { throw null; } set { } }
+        public bool? IsLast { get { throw null; } set { } }
+    }
+    public enum BackupDayOfWeek
+    {
+        Sunday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupEncryptionAtRestType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupEncryptionAtRestType(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType CustomerManaged { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType Invalid { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType MicrosoftManaged { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BackupEngineExtendedInfo
     {
         public BackupEngineExtendedInfo() { }
@@ -564,6 +650,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public bool? IsAzureBackupAgentUpgradeAvailable { get { throw null; } set { } }
         public bool? IsDpmUpgradeAvailable { get { throw null; } set { } }
         public string RegistrationStatus { get { throw null; } set { } }
+    }
+    public partial class BackupErrorDetail
+    {
+        public BackupErrorDetail() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Recommendations { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupFabricName : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupFabricName(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName Azure { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BackupFileShareType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFileShareType>
@@ -681,7 +792,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType? BackupManagementType { get { throw null; } }
         public string BackupSetName { get { throw null; } set { } }
         public string ContainerName { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode? CreateMode { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupCreateMode? CreateMode { get { throw null; } set { } }
         public System.DateTimeOffset? DeferredDeleteTimeInUTC { get { throw null; } set { } }
         public string DeferredDeleteTimeRemaining { get { throw null; } set { } }
         public bool? IsArchiveEnabled { get { throw null; } set { } }
@@ -694,7 +805,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public System.Collections.Generic.IList<string> ResourceGuardOperationRequests { get { throw null; } }
         public int? SoftDeleteRetentionPeriod { get { throw null; } set { } }
         public string SourceResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType? WorkloadType { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType? WorkloadType { get { throw null; } }
     }
     public abstract partial class BackupProtectionContainerProperties
     {
@@ -738,16 +849,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         public BackupResourceConfigProperties() { }
         public bool? CrossRegionRestoreFlag { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState? DedupState { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType? StorageModelType { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType? StorageType { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState? DedupState { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType? StorageModelType { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType? StorageType { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.StorageTypeState? StorageTypeState { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState? XcoolState { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState? XcoolState { get { throw null; } set { } }
     }
     public partial class BackupResourceEncryptionConfig
     {
         public BackupResourceEncryptionConfig() { }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType? EncryptionAtRestType { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupEncryptionAtRestType? EncryptionAtRestType { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.InfrastructureEncryptionState? InfrastructureEncryptionState { get { throw null; } set { } }
         public System.Uri KeyUri { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.LastUpdateStatus? LastUpdateStatus { get { throw null; } set { } }
@@ -772,8 +883,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public bool? IsSoftDeleteFeatureStateEditable { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ResourceGuardOperationRequests { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.SoftDeleteFeatureState? SoftDeleteFeatureState { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType? StorageModelType { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType? StorageType { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType? StorageModelType { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType? StorageType { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.StorageTypeState? StorageTypeState { get { throw null; } set { } }
     }
     public partial class BackupServerContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.DpmContainer
@@ -789,7 +900,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public BackupStatusContent() { }
         public string PoLogicalName { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType? ResourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType? ResourceType { get { throw null; } set { } }
     }
     public partial class BackupStatusResponse
     {
@@ -797,12 +908,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string ContainerName { get { throw null; } }
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName? FabricName { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupFabricName? FabricName { get { throw null; } }
         public string PolicyName { get { throw null; } }
         public string ProtectedItemName { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionStatus? ProtectionStatus { get { throw null; } }
         public string RegistrationStatus { get { throw null; } }
         public string VaultId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackupStorageType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackupStorageType(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType GeoRedundant { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType Invalid { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType LocallyRedundant { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType ReadAccessGeoZoneRedundant { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType ZoneRedundant { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType left, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStorageType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BackupType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupType>
@@ -864,25 +996,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.CopyOption left, Azure.ResourceManager.RecoveryServicesBackup.Models.CopyOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreateMode : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreateMode(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode Default { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode Invalid { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode Recover { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode left, Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode left, Azure.ResourceManager.RecoveryServicesBackup.Models.CreateMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class DailyRetentionSchedule
     {
         public DailyRetentionSchedule() { }
@@ -908,73 +1021,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.DataMoveLevel left, Azure.ResourceManager.RecoveryServicesBackup.Models.DataMoveLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DataSourceType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DataSourceType(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType AzureFileShare { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType AzureSqlDb { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType Client { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType Exchange { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType FileFolder { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType GenericDataSource { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType Invalid { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SAPAseDatabase { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SAPHanaDatabase { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SAPHanaDBInstance { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType Sharepoint { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SqlDataBase { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SqlDB { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SystemState { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType Vm { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType VMwareVm { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType left, Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType left, Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Day
-    {
-        public Day() { }
-        public int? Date { get { throw null; } set { } }
-        public bool? IsLast { get { throw null; } set { } }
-    }
-    public enum DayOfWeek
-    {
-        Sunday = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 3,
-        Thursday = 4,
-        Friday = 5,
-        Saturday = 6,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DedupState : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DedupState(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState Enabled { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState left, Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState left, Azure.ResourceManager.RecoveryServicesBackup.Models.DedupState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class DiskExclusionProperties
     {
         public DiskExclusionProperties() { }
@@ -990,7 +1036,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class DistributedNodesInfo
     {
         public DistributedNodesInfo() { }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.ErrorDetail ErrorDetail { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupErrorDetail ErrorDetail { get { throw null; } set { } }
         public string NodeName { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
     }
@@ -1071,34 +1117,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string TotalDiskStorageSizeInBytes { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncryptionAtRestType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncryptionAtRestType(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType CustomerManaged { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType Invalid { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType MicrosoftManaged { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType left, Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType left, Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionAtRestType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class EncryptionDetails
-    {
-        public EncryptionDetails() { }
-        public bool? EncryptionEnabled { get { throw null; } set { } }
-        public System.Uri KekUri { get { throw null; } set { } }
-        public string KekVaultId { get { throw null; } set { } }
-        public System.Uri SecretKeyUri { get { throw null; } set { } }
-        public string SecretKeyVaultId { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EnhancedSecurityState : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.EnhancedSecurityState>
     {
         private readonly object _dummy;
@@ -1115,37 +1133,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.EnhancedSecurityState left, Azure.ResourceManager.RecoveryServicesBackup.Models.EnhancedSecurityState right) { throw null; }
         public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.EnhancedSecurityState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.EnhancedSecurityState left, Azure.ResourceManager.RecoveryServicesBackup.Models.EnhancedSecurityState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ErrorDetail
-    {
-        public ErrorDetail() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Recommendations { get { throw null; } }
-    }
-    public partial class ExtendedProperties
-    {
-        public ExtendedProperties() { }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.DiskExclusionProperties DiskExclusionProperties { get { throw null; } set { } }
-        public string LinuxVmApplicationName { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FabricName : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FabricName(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName Azure { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName left, Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName left, Azure.ResourceManager.RecoveryServicesBackup.Models.FabricName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class FeatureSupportContent
@@ -1307,6 +1294,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         public IaasComputeVmProtectedItem() { }
     }
+    public partial class IaasVmBackupExtendedProperties
+    {
+        public IaasVmBackupExtendedProperties() { }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.DiskExclusionProperties DiskExclusionProperties { get { throw null; } set { } }
+        public string LinuxVmApplicationName { get { throw null; } set { } }
+    }
     public partial class IaasVmBackupRequest : Azure.ResourceManager.RecoveryServicesBackup.Models.BackupRequestProperties
     {
         public IaasVmBackupRequest() { }
@@ -1412,7 +1405,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         public IaasVmProtectedItem() { }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmProtectedItemExtendedInfo ExtendedInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.ExtendedProperties ExtendedProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmBackupExtendedProperties ExtendedProperties { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmHealthDetails> HealthDetails { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.HealthStatus? HealthStatus { get { throw null; } }
@@ -1471,7 +1464,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string AffinityGroup { get { throw null; } set { } }
         public bool? CreateNewCloudService { get { throw null; } set { } }
         public string DiskEncryptionSetId { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.EncryptionDetails EncryptionDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.VmEncryptionDetails EncryptionDetails { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.IdentityBasedRestoreDetails IdentityBasedRestoreDetails { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.IdentityInfo IdentityInfo { get { throw null; } set { } }
         public bool? OriginalStorageAccountOption { get { throw null; } set { } }
@@ -1538,7 +1531,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class InquiryInfo
     {
         public InquiryInfo() { }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.ErrorDetail ErrorDetail { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupErrorDetail ErrorDetail { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadInquiryDetails> InquiryDetails { get { throw null; } }
         public string Status { get { throw null; } set { } }
     }
@@ -1565,7 +1558,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         public InquiryValidation() { }
         public string AdditionalDetail { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.ErrorDetail ErrorDetail { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupErrorDetail ErrorDetail { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
     }
     public partial class InstantRPAdditionalDetails
@@ -1787,7 +1780,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         public MonthlyRetentionSchedule() { }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RetentionDuration RetentionDuration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.Day> RetentionScheduleDailyDaysOfTheMonth { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDay> RetentionScheduleDailyDaysOfTheMonth { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RetentionScheduleFormat? RetentionScheduleFormatType { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.WeeklyRetentionFormat RetentionScheduleWeekly { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.DateTimeOffset> RetentionTimes { get { throw null; } }
@@ -1910,7 +1903,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public PreValidateEnableBackupContent() { }
         public string Properties { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType? ResourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDataSourceType? ResourceType { get { throw null; } set { } }
         public string VaultId { get { throw null; } set { } }
     }
     public partial class PreValidateEnableBackupResponse
@@ -2389,7 +2382,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         public SimpleSchedulePolicy() { }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.HourlySchedule HourlySchedule { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.DayOfWeek> ScheduleRunDays { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDayOfWeek> ScheduleRunDays { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.ScheduleRunType? ScheduleRunFrequency { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.DateTimeOffset> ScheduleRunTimes { get { throw null; } }
         public int? ScheduleWeeklyFrequency { get { throw null; } set { } }
@@ -2525,27 +2518,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class StorageProtectableContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectableContainer
     {
         public StorageProtectableContainer() { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageType(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType GeoRedundant { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType Invalid { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType LocallyRedundant { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType ReadAccessGeoZoneRedundant { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType ZoneRedundant { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType left, Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType left, Azure.ResourceManager.RecoveryServicesBackup.Models.StorageType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageTypeState : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.StorageTypeState>
@@ -2705,6 +2677,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.ValidationStatus left, Azure.ResourceManager.RecoveryServicesBackup.Models.ValidationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VaultDedupState : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VaultDedupState(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState left, Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState left, Azure.ResourceManager.RecoveryServicesBackup.Models.VaultDedupState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class VaultJob : Azure.ResourceManager.RecoveryServicesBackup.Models.BackupJobProperties
     {
         public VaultJob() { }
@@ -2720,6 +2711,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string ErrorString { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Recommendations { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VaultXcoolState : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VaultXcoolState(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState left, Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState left, Azure.ResourceManager.RecoveryServicesBackup.Models.VaultXcoolState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class VmAppContainerProtectableContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectableContainer
     {
         public VmAppContainerProtectableContainer() { }
@@ -2727,6 +2737,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmAppContainerProtectionContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadContainer
     {
         public VmAppContainerProtectionContainer() { }
+    }
+    public partial class VmEncryptionDetails
+    {
+        public VmEncryptionDetails() { }
+        public bool? EncryptionEnabled { get { throw null; } set { } }
+        public System.Uri KekUri { get { throw null; } set { } }
+        public string KekVaultId { get { throw null; } set { } }
+        public System.Uri SecretKeyUri { get { throw null; } set { } }
+        public string SecretKeyVaultId { get { throw null; } set { } }
     }
     public partial class VmResourceFeatureSupportContent : Azure.ResourceManager.RecoveryServicesBackup.Models.FeatureSupportContent
     {
@@ -2766,7 +2785,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public Azure.ResourceManager.RecoveryServicesBackup.Models.VmWorkloadProtectedItemExtendedInfo ExtendedInfo { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.RecoveryServicesBackup.Models.KPIResourceHealthDetails> KpisHealths { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.ErrorDetail LastBackupErrorDetail { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupErrorDetail LastBackupErrorDetail { get { throw null; } set { } }
         public System.DateTimeOffset? LastBackupOn { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.LastBackupStatus? LastBackupStatus { get { throw null; } set { } }
         public string ParentName { get { throw null; } set { } }
@@ -2872,20 +2891,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WeeklyRetentionFormat
     {
         public WeeklyRetentionFormat() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.DayOfWeek> DaysOfTheWeek { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDayOfWeek> DaysOfTheWeek { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.WeekOfMonth> WeeksOfTheMonth { get { throw null; } }
     }
     public partial class WeeklyRetentionSchedule
     {
         public WeeklyRetentionSchedule() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.DayOfWeek> DaysOfTheWeek { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDayOfWeek> DaysOfTheWeek { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RetentionDuration RetentionDuration { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.DateTimeOffset> RetentionTimes { get { throw null; } }
     }
     public partial class WeeklySchedule
     {
         public WeeklySchedule() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.DayOfWeek> ScheduleRunDays { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDayOfWeek> ScheduleRunDays { get { throw null; } }
         public System.Collections.Generic.IList<System.DateTimeOffset> ScheduleRunTimes { get { throw null; } }
     }
     public enum WeekOfMonth
@@ -3149,31 +3168,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType left, Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct XcoolState : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public XcoolState(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState Enabled { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState left, Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState left, Azure.ResourceManager.RecoveryServicesBackup.Models.XcoolState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class YearlyRetentionSchedule
     {
         public YearlyRetentionSchedule() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.MonthOfYear> MonthsOfYear { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RetentionDuration RetentionDuration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.Day> RetentionScheduleDailyDaysOfTheMonth { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupDay> RetentionScheduleDailyDaysOfTheMonth { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RetentionScheduleFormat? RetentionScheduleFormatType { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.WeeklyRetentionFormat RetentionScheduleWeekly { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.DateTimeOffset> RetentionTimes { get { throw null; } }

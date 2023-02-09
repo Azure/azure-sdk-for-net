@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Details needed if the VM was encrypted at the time of backup.
     /// Serialized Name: EncryptionDetails
     /// </summary>
-    public partial class EncryptionDetails
+    public partial class VmEncryptionDetails
     {
-        /// <summary> Initializes a new instance of EncryptionDetails. </summary>
-        public EncryptionDetails()
+        /// <summary> Initializes a new instance of VmEncryptionDetails. </summary>
+        public VmEncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of VmEncryptionDetails. </summary>
         /// <param name="encryptionEnabled">
         /// Identifies whether this backup copy represents an encrypted VM at the time of backup.
         /// Serialized Name: EncryptionDetails.encryptionEnabled
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// ID of Key Vault where Secret is stored.
         /// Serialized Name: EncryptionDetails.secretKeyVaultId
         /// </param>
-        internal EncryptionDetails(bool? encryptionEnabled, Uri kekUri, Uri secretKeyUri, string kekVaultId, string secretKeyVaultId)
+        internal VmEncryptionDetails(bool? encryptionEnabled, Uri kekUri, Uri secretKeyUri, string kekVaultId, string secretKeyVaultId)
         {
             EncryptionEnabled = encryptionEnabled;
             KekUri = kekUri;

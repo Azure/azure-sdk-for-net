@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>
         public WeeklyRetentionFormat()
         {
-            DaysOfTheWeek = new ChangeTrackingList<DayOfWeek>();
+            DaysOfTheWeek = new ChangeTrackingList<BackupDayOfWeek>();
             WeeksOfTheMonth = new ChangeTrackingList<WeekOfMonth>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of weeks of month.
         /// Serialized Name: WeeklyRetentionFormat.weeksOfTheMonth
         /// </param>
-        internal WeeklyRetentionFormat(IList<DayOfWeek> daysOfTheWeek, IList<WeekOfMonth> weeksOfTheMonth)
+        internal WeeklyRetentionFormat(IList<BackupDayOfWeek> daysOfTheWeek, IList<WeekOfMonth> weeksOfTheMonth)
         {
             DaysOfTheWeek = daysOfTheWeek;
             WeeksOfTheMonth = weeksOfTheMonth;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of days of the week.
         /// Serialized Name: WeeklyRetentionFormat.daysOfTheWeek
         /// </summary>
-        public IList<DayOfWeek> DaysOfTheWeek { get; }
+        public IList<BackupDayOfWeek> DaysOfTheWeek { get; }
         /// <summary>
         /// List of weeks of month.
         /// Serialized Name: WeeklyRetentionFormat.weeksOfTheMonth

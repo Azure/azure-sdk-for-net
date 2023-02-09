@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Container Type - VM, SQLPaaS, DPM, AzureFileShare...
         /// Serialized Name: BackupStatusRequest.resourceType
         /// </summary>
-        public DataSourceType? ResourceType { get; set; }
+        public BackupDataSourceType? ResourceType { get; set; }
         /// <summary>
         /// Entire ARM resource id of the resource
         /// Serialized Name: BackupStatusRequest.resourceId

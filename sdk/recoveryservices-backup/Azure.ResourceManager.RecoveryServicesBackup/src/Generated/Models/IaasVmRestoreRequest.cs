@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// IaaS VM workload specific restore details for restores using managed identity.
         /// Serialized Name: IaasVMRestoreRequest.identityBasedRestoreDetails
         /// </param>
-        internal IaasVmRestoreRequest(string objectType, string recoveryPointId, RecoveryType? recoveryType, string sourceResourceId, string targetVirtualMachineId, string targetResourceGroupId, string storageAccountId, string virtualNetworkId, string subnetId, string targetDomainNameId, string region, string affinityGroup, bool? createNewCloudService, bool? originalStorageAccountOption, EncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? restoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, IdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails) : base(objectType)
+        internal IaasVmRestoreRequest(string objectType, string recoveryPointId, RecoveryType? recoveryType, string sourceResourceId, string targetVirtualMachineId, string targetResourceGroupId, string storageAccountId, string virtualNetworkId, string subnetId, string targetDomainNameId, string region, string affinityGroup, bool? createNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? restoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, IdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails) : base(objectType)
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Details needed if the VM was encrypted at the time of backup.
         /// Serialized Name: IaasVMRestoreRequest.encryptionDetails
         /// </summary>
-        public EncryptionDetails EncryptionDetails { get; set; }
+        public VmEncryptionDetails EncryptionDetails { get; set; }
         /// <summary>
         /// List of Disk LUNs for partial restore
         /// Serialized Name: IaasVMRestoreRequest.restoreDiskLunList

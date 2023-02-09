@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of days of the month.
         /// Serialized Name: DailyRetentionFormat.daysOfTheMonth
         /// </summary>
-        public IList<Day> RetentionScheduleDailyDaysOfTheMonth
+        public IList<BackupDay> RetentionScheduleDailyDaysOfTheMonth
         {
             get
             {

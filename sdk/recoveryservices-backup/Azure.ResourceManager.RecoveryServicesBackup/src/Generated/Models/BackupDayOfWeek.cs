@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
-    /// The DayOfWeek.
+    /// The BackupDayOfWeek.
     /// Serialized Name: DayOfWeek
     /// </summary>
-    public enum DayOfWeek
+    public enum BackupDayOfWeek
     {
         /// <summary>
         /// Sunday

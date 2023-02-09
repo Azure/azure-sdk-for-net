@@ -140,8 +140,20 @@ rename-mapping:
   AzureWorkloadSQLRestoreWithRehydrateRequest: WorkloadSqlRestoreWithRehydrateRequest
   BackupRequest: BackupRequestProperties
   BackupRequestResource: BackupRequestContent
+  CreateMode: BackupCreateMode
+  DataSourceType: BackupDataSourceType
+  Day: BackupDay
+  DayOfWeek: BackupDayOfWeek
+  DedupState: VaultDedupState
+  EncryptionAtRestType: BackupEncryptionAtRestType
+  EncryptionDetails: VmEncryptionDetails
+  ErrorDetail: BackupErrorDetail
+  ExtendedProperties: IaasVmBackupExtendedProperties
+  FabricName: BackupFabricName
   ILRRequest: IlrRequestProperties
   ILRRequestResource: ILRRequestContent
+  StorageType: BackupStorageType
+  XcoolState: VaultXcoolState
 
 format-by-name-rules:
   'tenantId': 'uuid'

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WeeklySchedule. </summary>
         public WeeklySchedule()
         {
-            ScheduleRunDays = new ChangeTrackingList<DayOfWeek>();
+            ScheduleRunDays = new ChangeTrackingList<BackupDayOfWeek>();
             ScheduleRunTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of times of day this schedule has to be run.
         /// Serialized Name: WeeklySchedule.scheduleRunTimes
         /// </param>
-        internal WeeklySchedule(IList<DayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes)
+        internal WeeklySchedule(IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes)
         {
             ScheduleRunDays = scheduleRunDays;
             ScheduleRunTimes = scheduleRunTimes;
         }
 
         /// <summary> Serialized Name: WeeklySchedule.scheduleRunDays. </summary>
-        public IList<DayOfWeek> ScheduleRunDays { get; }
+        public IList<BackupDayOfWeek> ScheduleRunDays { get; }
         /// <summary>
         /// List of times of day this schedule has to be run.
         /// Serialized Name: WeeklySchedule.scheduleRunTimes

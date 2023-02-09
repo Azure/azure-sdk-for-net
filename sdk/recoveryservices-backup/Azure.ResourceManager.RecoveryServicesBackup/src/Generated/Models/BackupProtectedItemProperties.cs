@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Soft delete retention period in days
         /// Serialized Name: ProtectedItem.softDeleteRetentionPeriod
         /// </param>
-        internal BackupProtectedItemProperties(string protectedItemType, BackupManagementType? backupManagementType, DataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, CreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod)
+        internal BackupProtectedItemProperties(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod)
         {
             ProtectedItemType = protectedItemType;
             BackupManagementType = backupManagementType;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Type of workload this item represents.
         /// Serialized Name: ProtectedItem.workloadType
         /// </summary>
-        public DataSourceType? WorkloadType { get; }
+        public BackupDataSourceType? WorkloadType { get; }
         /// <summary>
         /// Unique name of container
         /// Serialized Name: ProtectedItem.containerName
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Create mode to indicate recovery of existing soft deleted data source or creation of new data source.
         /// Serialized Name: ProtectedItem.createMode
         /// </summary>
-        public CreateMode? CreateMode { get; set; }
+        public BackupCreateMode? CreateMode { get; set; }
         /// <summary>
         /// Time for deferred deletion in UTC
         /// Serialized Name: ProtectedItem.deferredDeleteTimeInUTC
