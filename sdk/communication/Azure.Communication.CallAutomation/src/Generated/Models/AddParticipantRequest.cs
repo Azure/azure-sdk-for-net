@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of AddParticipantRequest. </summary>
         /// <param name="participantToAdd"> The participant to invite. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
-        public AddParticipantRequest(CommunicationIdentifierModel participantToAdd)
+        internal AddParticipantRequest(CommunicationIdentifierModel participantToAdd)
         {
             Argument.AssertNotNull(participantToAdd, nameof(participantToAdd));
 
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
         /// Required only when inviting a PSTN participant.
         /// </summary>
-        public PhoneNumberIdentifierModel SourceCallerId { get; set; }
+        internal PhoneNumberIdentifierModel SourceCallerId { get; set; }
         /// <summary>
         /// (Optional) The display name of the source that is associated with this invite operation when
         /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
@@ -38,9 +38,9 @@ namespace Azure.Communication.CallAutomation
         /// (Optional) The identifier of the source of the call for this invite operation. If SourceDisplayName
         /// is not set, the display name of the source will be used by default when adding a PSTN participant or teams user.
         /// </summary>
-        public CommunicationIdentifierModel SourceIdentifier { get; set; }
+        internal CommunicationIdentifierModel SourceIdentifier { get; set; }
         /// <summary> The participant to invite. </summary>
-        public CommunicationIdentifierModel ParticipantToAdd { get; }
+        internal CommunicationIdentifierModel ParticipantToAdd { get; }
         /// <summary>
         /// Gets or sets the timeout to wait for the invited participant to pickup.
         /// The maximum value of this is 180 seconds
