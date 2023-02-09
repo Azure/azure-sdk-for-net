@@ -55,8 +55,6 @@ namespace Azure.ResourceManager.EventHubs
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The exact time the message was updated. </summary>
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </summary>
-        public long? MessageRetentionInDays { get; set; }
         /// <summary> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </summary>
         public long? PartitionCount { get; set; }
         /// <summary> Enumerates the possible values for the status of the Event Hub. </summary>
