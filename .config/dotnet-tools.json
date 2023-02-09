@@ -2,22 +2,10 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "Azure.Sdk.Tools.SnippetGenerator": {
-      "version": "1.0.0-dev.20230124.1",
-      "commands": [
-        "snippet-generator"
-      ]
-    },
     "dotnet-reportgenerator-globaltool": {
       "version": "4.8.0",
       "commands": [
         "reportgenerator"
-      ]
-    },
-    "jetbrains.dottrace.globaltools": {
-      "version": "2022.2.4",
-      "commands": [
-        "dottrace"
       ]
     }
   }

@@ -19,9 +19,6 @@ parameters:
   displayName: AdditionalArguments (passed to PerfAutomation)
   type: string
   default: ' '
-- name: ToolsRepoCommitish
-  type: string
-  default: 'main'
 
 extends:
   template: /eng/pipelines/templates/jobs/perf.yml
@@ -33,4 +30,3 @@ extends:
     Arguments: ${{ parameters.Arguments }}
     Iterations: ${{ parameters.Iterations }}
     AdditionalArguments: ${{ parameters.AdditionalArguments }}
-    ToolsRepoCommitish: ${{ parameters.ToolsRepoCommitish }}
