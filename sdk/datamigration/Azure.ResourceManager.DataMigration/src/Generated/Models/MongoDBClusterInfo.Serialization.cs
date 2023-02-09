@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databases"))
+                if (property.NameEquals("databases"u8))
                 {
                     List<MongoDBDatabaseInfo> array = new List<MongoDBDatabaseInfo>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     databases = array;
                     continue;
                 }
-                if (property.NameEquals("supportsSharding"))
+                if (property.NameEquals("supportsSharding"u8))
                 {
                     supportsSharding = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new MongoDBClusterType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

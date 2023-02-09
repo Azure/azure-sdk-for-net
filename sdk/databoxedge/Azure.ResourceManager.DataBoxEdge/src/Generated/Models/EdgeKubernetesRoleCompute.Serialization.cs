@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vmProfile");
+            writer.WritePropertyName("vmProfile"u8);
             writer.WriteStringValue(VmProfile);
             writer.WriteEndObject();
         }
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<int> processorCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmProfile"))
+                if (property.NameEquals("vmProfile"u8))
                 {
                     vmProfile = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memoryInBytes"))
+                if (property.NameEquals("memoryInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     memoryInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("processorCount"))
+                if (property.NameEquals("processorCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

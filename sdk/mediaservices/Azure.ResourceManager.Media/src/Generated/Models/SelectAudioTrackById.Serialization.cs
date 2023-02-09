@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("trackId");
+            writer.WritePropertyName("trackId"u8);
             writer.WriteNumberValue(TrackId);
             if (Optional.IsDefined(ChannelMapping))
             {
-                writer.WritePropertyName("channelMapping");
+                writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackId"))
+                if (property.NameEquals("trackId"u8))
                 {
                     trackId = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("channelMapping"))
+                if (property.NameEquals("channelMapping"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
                     channelMapping = new ChannelMapping(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

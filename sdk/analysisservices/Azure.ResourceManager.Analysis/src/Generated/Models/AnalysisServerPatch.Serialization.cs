@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,41 +31,41 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AsAdministrators))
             {
-                writer.WritePropertyName("asAdministrators");
+                writer.WritePropertyName("asAdministrators"u8);
                 writer.WriteObjectValue(AsAdministrators);
             }
             if (Optional.IsDefined(BackupBlobContainerUri))
             {
-                writer.WritePropertyName("backupBlobContainerUri");
+                writer.WritePropertyName("backupBlobContainerUri"u8);
                 writer.WriteStringValue(BackupBlobContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(GatewayDetails))
             {
-                writer.WritePropertyName("gatewayDetails");
+                writer.WritePropertyName("gatewayDetails"u8);
                 writer.WriteObjectValue(GatewayDetails);
             }
             if (Optional.IsDefined(IPV4FirewallSettings))
             {
-                writer.WritePropertyName("ipV4FirewallSettings");
+                writer.WritePropertyName("ipV4FirewallSettings"u8);
                 writer.WriteObjectValue(IPV4FirewallSettings);
             }
             if (Optional.IsDefined(QuerypoolConnectionMode))
             {
-                writer.WritePropertyName("querypoolConnectionMode");
+                writer.WritePropertyName("querypoolConnectionMode"u8);
                 writer.WriteStringValue(QuerypoolConnectionMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(ManagedMode))
             {
-                writer.WritePropertyName("managedMode");
+                writer.WritePropertyName("managedMode"u8);
                 writer.WriteStringValue(ManagedMode.Value.ToString());
             }
             if (Optional.IsDefined(ServerMonitorMode))
             {
-                writer.WritePropertyName("serverMonitorMode");
+                writer.WritePropertyName("serverMonitorMode"u8);
                 writer.WriteStringValue(ServerMonitorMode.Value.ToString());
             }
             writer.WriteEndObject();

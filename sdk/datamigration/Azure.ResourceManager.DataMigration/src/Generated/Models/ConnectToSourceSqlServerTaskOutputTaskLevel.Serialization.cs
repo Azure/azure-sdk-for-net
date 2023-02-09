@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databases"))
+                if (property.NameEquals("databases"u8))
                 {
                     databases = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logins"))
+                if (property.NameEquals("logins"u8))
                 {
                     logins = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentJobs"))
+                if (property.NameEquals("agentJobs"u8))
                 {
                     agentJobs = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseTdeCertificateMapping"))
+                if (property.NameEquals("databaseTdeCertificateMapping"u8))
                 {
                     databaseTdeCertificateMapping = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerVersion"))
+                if (property.NameEquals("sourceServerVersion"u8))
                 {
                     sourceServerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerBrandVersion"))
+                if (property.NameEquals("sourceServerBrandVersion"u8))
                 {
                     sourceServerBrandVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

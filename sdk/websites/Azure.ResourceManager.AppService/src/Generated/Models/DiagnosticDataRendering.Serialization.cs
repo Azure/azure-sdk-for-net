@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RenderingType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RenderingType.Value.ToSerialString());
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.AppService.Models
                     type = property.Value.GetString().ToDiagnosticDataRenderingType();
                     continue;
                 }
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

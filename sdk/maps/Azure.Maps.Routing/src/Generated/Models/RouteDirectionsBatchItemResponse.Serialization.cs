@@ -22,7 +22,7 @@ namespace Azure.Maps.Routing.Models
             Optional<RouteReport> report = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,12 +32,12 @@ namespace Azure.Maps.Routing.Models
                     error = Models.ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
-                if (property.NameEquals("formatVersion"))
+                if (property.NameEquals("formatVersion"u8))
                 {
                     formatVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.Maps.Routing.Models
                     routes = array;
                     continue;
                 }
-                if (property.NameEquals("optimizedWaypoints"))
+                if (property.NameEquals("optimizedWaypoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.Maps.Routing.Models
                     optimizedWaypoints = array;
                     continue;
                 }
-                if (property.NameEquals("report"))
+                if (property.NameEquals("report"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

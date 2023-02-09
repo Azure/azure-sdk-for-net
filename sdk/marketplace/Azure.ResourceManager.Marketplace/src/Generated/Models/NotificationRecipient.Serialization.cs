@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrincipalId))
             {
-                writer.WritePropertyName("principalId");
+                writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
             writer.WriteEndObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                     principalId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("emailAddress"))
+                if (property.NameEquals("emailAddress"u8))
                 {
                     emailAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;

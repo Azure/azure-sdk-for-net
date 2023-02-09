@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IReadOnlyList<AnalyzedTokenInfo> tokens = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tokens"))
+                if (property.NameEquals("tokens"u8))
                 {
                     List<AnalyzedTokenInfo> array = new List<AnalyzedTokenInfo>();
                     foreach (var item in property.Value.EnumerateArray())

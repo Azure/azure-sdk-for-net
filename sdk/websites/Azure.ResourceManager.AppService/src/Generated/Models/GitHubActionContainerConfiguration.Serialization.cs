@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerUri))
             {
-                writer.WritePropertyName("serverUrl");
+                writer.WritePropertyName("serverUrl"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ImageName))
             {
-                writer.WritePropertyName("imageName");
+                writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             writer.WriteEndObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverUrl"))
+                if (property.NameEquals("serverUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.AppService.Models
                     serverUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("imageName"))
+                if (property.NameEquals("imageName"u8))
                 {
                     imageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;

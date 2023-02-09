@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> aadAuthority = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
                     applicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectId"))
+                if (property.NameEquals("objectId"u8))
                 {
                     objectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("audience"))
+                if (property.NameEquals("audience"u8))
                 {
                     audience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadAuthority"))
+                if (property.NameEquals("aadAuthority"u8))
                 {
                     aadAuthority = property.Value.GetString();
                     continue;

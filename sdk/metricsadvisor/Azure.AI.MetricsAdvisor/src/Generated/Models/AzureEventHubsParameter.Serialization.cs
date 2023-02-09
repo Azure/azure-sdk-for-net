@@ -17,10 +17,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
+                writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            writer.WritePropertyName("consumerGroup");
+            writer.WritePropertyName("consumerGroup"u8);
             writer.WriteStringValue(ConsumerGroup);
             writer.WriteEndObject();
         }
@@ -31,12 +31,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             string consumerGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("consumerGroup"))
+                if (property.NameEquals("consumerGroup"u8))
                 {
                     consumerGroup = property.Value.GetString();
                     continue;

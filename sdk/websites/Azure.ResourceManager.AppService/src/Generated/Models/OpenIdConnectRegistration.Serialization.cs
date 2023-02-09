@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientCredential))
             {
-                writer.WritePropertyName("clientCredential");
+                writer.WritePropertyName("clientCredential"u8);
                 writer.WriteObjectValue(ClientCredential);
             }
             if (Optional.IsDefined(OpenIdConnectConfiguration))
             {
-                writer.WritePropertyName("openIdConnectConfiguration");
+                writer.WritePropertyName("openIdConnectConfiguration"u8);
                 writer.WriteObjectValue(OpenIdConnectConfiguration);
             }
             writer.WriteEndObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<OpenIdConnectConfig> openIdConnectConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientCredential"))
+                if (property.NameEquals("clientCredential"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
                     clientCredential = OpenIdConnectClientCredential.DeserializeOpenIdConnectClientCredential(property.Value);
                     continue;
                 }
-                if (property.NameEquals("openIdConnectConfiguration"))
+                if (property.NameEquals("openIdConnectConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<string> previousResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"))
+                if (property.NameEquals("startTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     startTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTimeUtc"))
+                if (property.NameEquals("lastUpdatedTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"))
+                if (property.NameEquals("endTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     endTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     status = new VaultUpgradeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerType"))
+                if (property.NameEquals("triggerType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     triggerType = new TriggerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("upgradedResourceId"))
+                if (property.NameEquals("upgradedResourceId"u8))
                 {
                     upgradedResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("previousResourceId"))
+                if (property.NameEquals("previousResourceId"u8))
                 {
                     previousResourceId = property.Value.GetString();
                     continue;

@@ -29,6 +29,56 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary>
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServices_Capabilities</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public static async Task<Response<CapabilitiesResult>> GetCapabilitiesRecoveryServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            return await GetExtensionClient(subscriptionResource).GetCapabilitiesRecoveryServiceAsync(location, input, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API to get details about capabilities provided by Microsoft.RecoveryServices RP
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServices_Capabilities</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="input"> Contains information about Resource type and properties to get capabilities. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public static Response<CapabilitiesResult> GetCapabilitiesRecoveryService(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            return GetExtensionClient(subscriptionResource).GetCapabilitiesRecoveryService(location, input, cancellationToken);
+        }
+
+        /// <summary>
         /// Fetches all the resources of the specified type in the subscription.
         /// <list type="bullet">
         /// <item>

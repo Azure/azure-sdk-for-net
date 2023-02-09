@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(TargetId))
             {
-                writer.WritePropertyName("targetId");
+                writer.WritePropertyName("targetId"u8);
                 writer.WriteStringValue(TargetId);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<ResourceIdentifier> targetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetId"))
+                if (property.NameEquals("targetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

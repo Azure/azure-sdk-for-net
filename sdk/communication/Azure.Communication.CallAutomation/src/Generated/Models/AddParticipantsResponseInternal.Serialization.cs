@@ -15,26 +15,26 @@ namespace Azure.Communication.CallAutomation
     {
         internal static AddParticipantsResponseInternal DeserializeAddParticipantsResponseInternal(JsonElement element)
         {
-            Optional<IReadOnlyList<AcsCallParticipantInternal>> participants = default;
+            Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("participants"))
+                if (property.NameEquals("participants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AcsCallParticipantInternal> array = new List<AcsCallParticipantInternal>();
+                    List<CallParticipantInternal> array = new List<CallParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(item));
+                        array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
                     }
                     participants = array;
                     continue;
                 }
-                if (property.NameEquals("operationContext"))
+                if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
                     continue;

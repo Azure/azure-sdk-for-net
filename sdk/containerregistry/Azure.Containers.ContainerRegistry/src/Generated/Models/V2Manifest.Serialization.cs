@@ -12,53 +12,22 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class V2Manifest : IUtf8JsonSerializable
+    internal partial class V2Manifest
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
-            {
-                writer.WritePropertyName("mediaType");
-                writer.WriteStringValue(MediaType);
-            }
-            if (Optional.IsDefined(Config))
-            {
-                writer.WritePropertyName("config");
-                writer.WriteObjectValue(Config);
-            }
-            if (Optional.IsCollectionDefined(Layers))
-            {
-                writer.WritePropertyName("layers");
-                writer.WriteStartArray();
-                foreach (var item in Layers)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schemaVersion");
-                writer.WriteNumberValue(SchemaVersion.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static V2Manifest DeserializeV2Manifest(JsonElement element)
         {
             Optional<string> mediaType = default;
             Optional<OciBlobDescriptor> config = default;
-            Optional<IList<OciBlobDescriptor>> layers = default;
+            Optional<IReadOnlyList<OciBlobDescriptor>> layers = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mediaType"))
+                if (property.NameEquals("mediaType"u8))
                 {
                     mediaType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("config"))
+                if (property.NameEquals("config"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +37,7 @@ namespace Azure.Containers.ContainerRegistry
                     config = OciBlobDescriptor.DeserializeOciBlobDescriptor(property.Value);
                     continue;
                 }
-                if (property.NameEquals("layers"))
+                if (property.NameEquals("layers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry
                     layers = array;
                     continue;
                 }
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageModelType))
             {
-                writer.WritePropertyName("storageModelType");
+                writer.WritePropertyName("storageModelType"u8);
                 writer.WriteStringValue(StorageModelType.Value.ToString());
             }
             if (Optional.IsDefined(StorageType))
             {
-                writer.WritePropertyName("storageType");
+                writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
             if (Optional.IsDefined(StorageTypeState))
             {
-                writer.WritePropertyName("storageTypeState");
+                writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
             if (Optional.IsDefined(CrossRegionRestoreFlag))
             {
-                writer.WritePropertyName("crossRegionRestoreFlag");
+                writer.WritePropertyName("crossRegionRestoreFlag"u8);
                 writer.WriteBooleanValue(CrossRegionRestoreFlag.Value);
             }
             if (Optional.IsDefined(DedupState))
             {
-                writer.WritePropertyName("dedupState");
+                writer.WritePropertyName("dedupState"u8);
                 writer.WriteStringValue(DedupState.Value.ToString());
             }
             if (Optional.IsDefined(XcoolState))
             {
-                writer.WritePropertyName("xcoolState");
+                writer.WritePropertyName("xcoolState"u8);
                 writer.WriteStringValue(XcoolState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<XcoolState> xcoolState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageModelType"))
+                if (property.NameEquals("storageModelType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     storageModelType = new StorageType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageType"))
+                if (property.NameEquals("storageType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     storageType = new StorageType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageTypeState"))
+                if (property.NameEquals("storageTypeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     storageTypeState = new StorageTypeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("crossRegionRestoreFlag"))
+                if (property.NameEquals("crossRegionRestoreFlag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     crossRegionRestoreFlag = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dedupState"))
+                if (property.NameEquals("dedupState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     dedupState = new DedupState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("xcoolState"))
+                if (property.NameEquals("xcoolState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

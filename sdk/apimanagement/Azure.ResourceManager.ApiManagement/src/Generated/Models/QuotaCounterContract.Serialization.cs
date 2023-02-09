@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<QuotaCounterValueContractProperties> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("counterKey"))
+                if (property.NameEquals("counterKey"u8))
                 {
                     counterKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("periodKey"))
+                if (property.NameEquals("periodKey"u8))
                 {
                     periodKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("periodStartTime"))
+                if (property.NameEquals("periodStartTime"u8))
                 {
                     periodStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("periodEndTime"))
+                if (property.NameEquals("periodEndTime"u8))
                 {
                     periodEndTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Strategy))
             {
-                writer.WritePropertyName("strategy");
+                writer.WritePropertyName("strategy"u8);
                 writer.WriteStringValue(Strategy.Value.ToString());
             }
             if (Optional.IsDefined(Zone))
             {
-                writer.WritePropertyName("zone");
+                writer.WritePropertyName("zone"u8);
                 writer.WriteNumberValue(Zone.Value);
             }
             if (Optional.IsDefined(SecondaryZone))
             {
-                writer.WritePropertyName("secondaryZone");
+                writer.WritePropertyName("secondaryZone"u8);
                 writer.WriteNumberValue(SecondaryZone.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<int> secondaryZone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("strategy"))
+                if (property.NameEquals("strategy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Models
                     strategy = new AvailabilityStrategy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zone"))
+                if (property.NameEquals("zone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Models
                     zone = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("secondaryZone"))
+                if (property.NameEquals("secondaryZone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

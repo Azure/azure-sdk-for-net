@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> routeTableId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextHopType"))
+                if (property.NameEquals("nextHopType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
                     nextHopType = new NextHopType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nextHopIpAddress"))
+                if (property.NameEquals("nextHopIpAddress"u8))
                 {
                     nextHopIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routeTableId"))
+                if (property.NameEquals("routeTableId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountId))
             {
                 if (StorageAccountId != null)
                 {
-                    writer.WritePropertyName("storageAccountId");
+                    writer.WritePropertyName("storageAccountId"u8);
                     writer.WriteStringValue(StorageAccountId);
                 }
                 else
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (ServiceBusRuleId != null)
                 {
-                    writer.WritePropertyName("serviceBusRuleId");
+                    writer.WritePropertyName("serviceBusRuleId"u8);
                     writer.WriteStringValue(ServiceBusRuleId);
                 }
                 else
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.Monitor
                     writer.WriteNull("serviceBusRuleId");
                 }
             }
-            writer.WritePropertyName("locations");
+            writer.WritePropertyName("locations"u8);
             writer.WriteStartArray();
             foreach (var item in Locations)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("categories");
+            writer.WritePropertyName("categories"u8);
             writer.WriteStartArray();
             foreach (var item in Categories)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("retentionPolicy");
+            writer.WritePropertyName("retentionPolicy"u8);
             writer.WriteObjectValue(RetentionPolicy);
             writer.WriteEndObject();
             writer.WriteEndObject();

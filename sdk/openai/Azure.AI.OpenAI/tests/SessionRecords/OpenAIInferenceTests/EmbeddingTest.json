@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk.openai.azure.com/openai/deployments/text-similarity-davinci-001/embeddings?api-version=2022-06-01-preview",
+      "RequestUri": "https://sdk6955.openai.azure.com/openai/deployments/text-similarity-davinci-001/embeddings?api-version=2022-12-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "38",
         "Content-Type": "application/json",
-        "traceparent": "00-9450cffd6c2288972cd9a11a8ee85b05-58f4da016895ad6b-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230125.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "679309bc1b1f1a0572e86251702fde2a",
+        "traceparent": "00-52c3844570dd8e2f1c9059dffd85cd59-5dcef2de2b7f4a80-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230201.1 (.NET 7.0.2; Microsoft Windows 10.0.25281)",
+        "x-ms-client-request-id": "5e7c7807a6a0fcb24960558666ad7097",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -19,16 +19,16 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "b54e8dc9-fc8c-4226-a6f0-8db9cab3e673",
+        "apim-request-id": "564da0ad-a38e-4a48-baef-818f1fecc8a5",
         "Content-Length": "269906",
         "Content-Type": "application/json",
-        "Date": "Wed, 25 Jan 2023 20:43:24 GMT",
-        "openai-processing-ms": "442.7099",
+        "Date": "Wed, 01 Feb 2023 21:15:33 GMT",
+        "openai-processing-ms": "155.2084",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "679309bc1b1f1a0572e86251702fde2a",
-        "x-ms-region": "South Central US",
-        "X-Request-ID": "a3317fba-dd59-4627-a0c0-b7a02a1c770d"
+        "x-ms-client-request-id": "5e7c7807a6a0fcb24960558666ad7097",
+        "x-ms-region": "East US",
+        "X-Request-ID": "eb2b1d9a-eaf1-4b9d-addb-cd0301c08ec2"
       },
       "ResponseBody": {
         "object": "list",
@@ -12340,8 +12340,8 @@
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
-    "OPENAI_ENDPOINT": "https://sdk.openai.azure.com/",
-    "RandomSeed": "1415931578",
-    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
+    "OPENAI_ENDPOINT": "https://sdk6955.openai.azure.com/",
+    "RandomSeed": "741312662",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

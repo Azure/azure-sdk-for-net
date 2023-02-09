@@ -17,6 +17,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: network
+    BuildSnippets: false
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Network

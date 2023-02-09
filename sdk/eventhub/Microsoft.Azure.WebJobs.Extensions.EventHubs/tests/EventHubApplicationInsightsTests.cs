@@ -259,7 +259,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.True(request.Properties.ContainsKey(LogConstants.FunctionExecutionTimeKey));
             Assert.True(double.TryParse(request.Properties[LogConstants.FunctionExecutionTimeKey], out double functionDuration));
-            Assert.True(request.Duration.TotalMilliseconds >= functionDuration);
+
+            // Allow a margin of error of ~125 milliseconds, as timing is not precise.
+            functionDuration -= 125;
+            Assert.GreaterOrEqual(request.Duration.TotalMilliseconds, functionDuration);
 
             Assert.AreEqual(LogCategories.Results, request.Properties[LogConstants.CategoryNameKey]);
             Assert.AreEqual((success ? LogLevel.Information : LogLevel.Error).ToString(), request.Properties[LogConstants.LogLevelKey]);

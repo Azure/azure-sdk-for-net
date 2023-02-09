@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> registrationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("protectionStatus"))
+                if (property.NameEquals("protectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionStatus = new ProtectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vaultId"))
+                if (property.NameEquals("vaultId"u8))
                 {
                     vaultId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricName"))
+                if (property.NameEquals("fabricName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,32 +50,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     fabricName = new FabricName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerName"))
+                if (property.NameEquals("containerName"u8))
                 {
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemName"))
+                if (property.NameEquals("protectedItemName"u8))
                 {
                     protectedItemName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     errorCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("registrationStatus"))
+                if (property.NameEquals("registrationStatus"u8))
                 {
                     registrationStatus = property.Value.GetString();
                     continue;

@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sizeMB"))
+                if (property.NameEquals("sizeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sizeMB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("databaseFiles"))
+                if (property.NameEquals("databaseFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     databaseFiles = array;
                     continue;
                 }
-                if (property.NameEquals("compatibilityLevel"))
+                if (property.NameEquals("compatibilityLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     compatibilityLevel = new DatabaseCompatLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("databaseState"))
+                if (property.NameEquals("databaseState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     databaseState = new DatabaseState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

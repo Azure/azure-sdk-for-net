@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.EdgeOrder
             Optional<IReadOnlyList<EdgeOrderStageDetails>> orderStageHistory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("orderItemIds"))
+                        if (property0.NameEquals("orderItemIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EdgeOrder
                             orderItemIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("currentStage"))
+                        if (property0.NameEquals("currentStage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder
                             currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("orderStageHistory"))
+                        if (property0.NameEquals("orderStageHistory"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

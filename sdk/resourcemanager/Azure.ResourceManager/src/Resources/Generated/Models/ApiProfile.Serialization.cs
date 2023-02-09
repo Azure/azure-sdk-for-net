@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profileVersion"))
+                if (property.NameEquals("profileVersion"u8))
                 {
                     profileVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiVersion"))
+                if (property.NameEquals("apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;

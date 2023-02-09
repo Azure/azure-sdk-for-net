@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("action");
+            writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action);
-            writer.WritePropertyName("direction");
+            writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            writer.WritePropertyName("detailLevel");
+            writer.WritePropertyName("detailLevel"u8);
             writer.WriteStringValue(DetailLevel.ToString());
             if (Optional.IsDefined(HiddenPropertyPaths))
             {
-                writer.WritePropertyName("hiddenPropertyPaths");
+                writer.WritePropertyName("hiddenPropertyPaths"u8);
                 writer.WriteObjectValue(HiddenPropertyPaths);
             }
             writer.WriteEndObject();
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<LoggingRuleHiddenPropertyPaths> hiddenPropertyPaths = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     direction = new LoggingDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("detailLevel"))
+                if (property.NameEquals("detailLevel"u8))
                 {
                     detailLevel = new LoggingDetail(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hiddenPropertyPaths"))
+                if (property.NameEquals("hiddenPropertyPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

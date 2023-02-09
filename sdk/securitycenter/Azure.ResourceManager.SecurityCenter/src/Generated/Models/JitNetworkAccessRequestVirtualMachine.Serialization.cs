@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("ports");
+            writer.WritePropertyName("ports"u8);
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IList<JitNetworkAccessRequestPort> ports = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ports"))
+                if (property.NameEquals("ports"u8))
                 {
                     List<JitNetworkAccessRequestPort> array = new List<JitNetworkAccessRequestPort>();
                     foreach (var item in property.Value.EnumerateArray())

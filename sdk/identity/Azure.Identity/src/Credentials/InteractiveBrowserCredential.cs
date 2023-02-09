@@ -66,16 +66,18 @@ namespace Azure.Identity
         [EditorBrowsable(EditorBrowsableState.Never)]
         public InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options = default)
             : this(Validations.ValidateTenantId(tenantId, nameof(tenantId), allowNull: true), clientId, options, null, null)
-        { }
+        {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+        }
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline)
             : this(tenantId, clientId, options, pipeline, null)
-        { }
+        {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+        }
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, TokenCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client)
         {
-            Argument.AssertNotNull(clientId, nameof(clientId));
-
             ClientId = clientId;
             TenantId = tenantId;
             Pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
@@ -83,6 +85,7 @@ namespace Azure.Identity
             var redirectUrl = (options as InteractiveBrowserCredentialOptions)?.RedirectUri?.AbsoluteUri ?? Constants.DefaultRedirectUrl;
             Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options);
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            Record = (options as InteractiveBrowserCredentialOptions)?.AuthenticationRecord;
         }
 
         /// <summary>

@@ -15,11 +15,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("livePipeline");
+            writer.WritePropertyName("livePipeline"u8);
             writer.WriteObjectValue(LivePipeline);
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("@apiVersion");
+                writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             writer.WriteEndObject();
@@ -32,17 +32,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("livePipeline"))
+                if (property.NameEquals("livePipeline"u8))
                 {
                     livePipeline = LivePipeline.DeserializeLivePipeline(property.Value);
                     continue;
                 }
-                if (property.NameEquals("methodName"))
+                if (property.NameEquals("methodName"u8))
                 {
                     methodName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@apiVersion"))
+                if (property.NameEquals("@apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SmbSetting))
             {
-                writer.WritePropertyName("smb");
+                writer.WritePropertyName("smb"u8);
                 writer.WriteObjectValue(SmbSetting);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<SmbSetting> smb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("smb"))
+                if (property.NameEquals("smb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

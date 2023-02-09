@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> vcenterPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nsxtUsername"))
+                if (property.NameEquals("nsxtUsername"u8))
                 {
                     nsxtUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nsxtPassword"))
+                if (property.NameEquals("nsxtPassword"u8))
                 {
                     nsxtPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vcenterUsername"))
+                if (property.NameEquals("vcenterUsername"u8))
                 {
                     vcenterUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vcenterPassword"))
+                if (property.NameEquals("vcenterPassword"u8))
                 {
                     vcenterPassword = property.Value.GetString();
                     continue;

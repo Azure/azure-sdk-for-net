@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PipelineTargetType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PipelineTargetType);
             }
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            writer.WritePropertyName("keyVaultUri");
+            writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             writer.WriteEndObject();
         }
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Uri keyVaultUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultUri"))
+                if (property.NameEquals("keyVaultUri"u8))
                 {
                     keyVaultUri = new Uri(property.Value.GetString());
                     continue;

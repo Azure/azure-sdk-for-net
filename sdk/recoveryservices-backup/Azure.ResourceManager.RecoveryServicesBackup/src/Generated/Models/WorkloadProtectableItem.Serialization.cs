@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
             if (Optional.IsDefined(WorkloadType))
             {
-                writer.WritePropertyName("workloadType");
+                writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("protectableItemType");
+            writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ProtectionState))
             {
-                writer.WritePropertyName("protectionState");
+                writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
             writer.WriteEndObject();

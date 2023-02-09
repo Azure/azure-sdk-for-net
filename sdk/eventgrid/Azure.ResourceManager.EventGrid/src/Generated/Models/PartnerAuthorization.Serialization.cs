@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
             {
-                writer.WritePropertyName("defaultMaximumExpirationTimeInDays");
+                writer.WritePropertyName("defaultMaximumExpirationTimeInDays"u8);
                 writer.WriteNumberValue(DefaultMaximumExpirationTimeInDays.Value);
             }
             if (Optional.IsCollectionDefined(AuthorizedPartnersList))
             {
-                writer.WritePropertyName("authorizedPartnersList");
+                writer.WritePropertyName("authorizedPartnersList"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuthorizedPartnersList)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<IList<EventGridPartnerContent>> authorizedPartnersList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultMaximumExpirationTimeInDays"))
+                if (property.NameEquals("defaultMaximumExpirationTimeInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     defaultMaximumExpirationTimeInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("authorizedPartnersList"))
+                if (property.NameEquals("authorizedPartnersList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

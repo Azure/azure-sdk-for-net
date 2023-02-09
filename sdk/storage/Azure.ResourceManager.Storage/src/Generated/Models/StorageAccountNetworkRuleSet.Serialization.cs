@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Bypass))
             {
-                writer.WritePropertyName("bypass");
+                writer.WritePropertyName("bypass"u8);
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ResourceAccessRules))
             {
-                writer.WritePropertyName("resourceAccessRules");
+                writer.WritePropertyName("resourceAccessRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceAccessRules)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
-                writer.WritePropertyName("virtualNetworkRules");
+                writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             if (Optional.IsCollectionDefined(IPRules))
             {
-                writer.WritePropertyName("ipRules");
+                writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("defaultAction");
+            writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToSerialString());
             writer.WriteEndObject();
         }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageNetworkDefaultAction defaultAction = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bypass"))
+                if (property.NameEquals("bypass"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
                     bypass = new StorageNetworkBypass(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceAccessRules"))
+                if (property.NameEquals("resourceAccessRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage.Models
                     resourceAccessRules = array;
                     continue;
                 }
-                if (property.NameEquals("virtualNetworkRules"))
+                if (property.NameEquals("virtualNetworkRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Models
                     virtualNetworkRules = array;
                     continue;
                 }
-                if (property.NameEquals("ipRules"))
+                if (property.NameEquals("ipRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Storage.Models
                     ipRules = array;
                     continue;
                 }
-                if (property.NameEquals("defaultAction"))
+                if (property.NameEquals("defaultAction"u8))
                 {
                     defaultAction = property.Value.GetString().ToStorageNetworkDefaultAction();
                     continue;

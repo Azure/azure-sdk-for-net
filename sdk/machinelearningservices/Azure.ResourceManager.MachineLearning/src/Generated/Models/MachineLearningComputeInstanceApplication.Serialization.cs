@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<Uri> endpointUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointUri"))
+                if (property.NameEquals("endpointUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

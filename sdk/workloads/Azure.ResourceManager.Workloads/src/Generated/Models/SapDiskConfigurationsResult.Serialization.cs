@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<IReadOnlyList<SapDiskConfiguration>> diskConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskConfigurations"))
+                if (property.NameEquals("diskConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

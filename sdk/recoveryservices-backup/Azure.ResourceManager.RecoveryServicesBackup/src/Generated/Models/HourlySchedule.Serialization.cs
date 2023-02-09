@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Interval))
             {
-                writer.WritePropertyName("interval");
+                writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
             if (Optional.IsDefined(ScheduleWindowStartOn))
             {
-                writer.WritePropertyName("scheduleWindowStartTime");
+                writer.WritePropertyName("scheduleWindowStartTime"u8);
                 writer.WriteStringValue(ScheduleWindowStartOn.Value, "O");
             }
             if (Optional.IsDefined(ScheduleWindowDuration))
             {
-                writer.WritePropertyName("scheduleWindowDuration");
+                writer.WritePropertyName("scheduleWindowDuration"u8);
                 writer.WriteNumberValue(ScheduleWindowDuration.Value);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> scheduleWindowDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("interval"))
+                if (property.NameEquals("interval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     interval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scheduleWindowStartTime"))
+                if (property.NameEquals("scheduleWindowStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     scheduleWindowStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("scheduleWindowDuration"))
+                if (property.NameEquals("scheduleWindowDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsInternal))
             {
-                writer.WritePropertyName("internal");
+                writer.WritePropertyName("internal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);
             }
             if (Optional.IsDefined(InfrastructureSubnetId))
             {
-                writer.WritePropertyName("infrastructureSubnetId");
+                writer.WritePropertyName("infrastructureSubnetId"u8);
                 writer.WriteStringValue(InfrastructureSubnetId);
             }
             if (Optional.IsDefined(RuntimeSubnetId))
             {
-                writer.WritePropertyName("runtimeSubnetId");
+                writer.WritePropertyName("runtimeSubnetId"u8);
                 writer.WriteStringValue(RuntimeSubnetId);
             }
             if (Optional.IsDefined(DockerBridgeCidr))
             {
-                writer.WritePropertyName("dockerBridgeCidr");
+                writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
             }
             if (Optional.IsDefined(PlatformReservedCidr))
             {
-                writer.WritePropertyName("platformReservedCidr");
+                writer.WritePropertyName("platformReservedCidr"u8);
                 writer.WriteStringValue(PlatformReservedCidr);
             }
             if (Optional.IsDefined(PlatformReservedDnsIP))
             {
-                writer.WritePropertyName("platformReservedDnsIP");
+                writer.WritePropertyName("platformReservedDnsIP"u8);
                 writer.WriteStringValue(PlatformReservedDnsIP);
             }
             if (Optional.IsDefined(OutboundSettings))
             {
-                writer.WritePropertyName("outboundSettings");
+                writer.WritePropertyName("outboundSettings"u8);
                 writer.WriteObjectValue(OutboundSettings);
             }
             writer.WriteEndObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppManagedEnvironmentOutboundSettings> outboundSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("internal"))
+                if (property.NameEquals("internal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     @internal = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("infrastructureSubnetId"))
+                if (property.NameEquals("infrastructureSubnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,27 +84,27 @@ namespace Azure.ResourceManager.AppContainers.Models
                     infrastructureSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("runtimeSubnetId"))
+                if (property.NameEquals("runtimeSubnetId"u8))
                 {
                     runtimeSubnetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dockerBridgeCidr"))
+                if (property.NameEquals("dockerBridgeCidr"u8))
                 {
                     dockerBridgeCidr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("platformReservedCidr"))
+                if (property.NameEquals("platformReservedCidr"u8))
                 {
                     platformReservedCidr = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("platformReservedDnsIP"))
+                if (property.NameEquals("platformReservedDnsIP"u8))
                 {
                     platformReservedDnsIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outboundSettings"))
+                if (property.NameEquals("outboundSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

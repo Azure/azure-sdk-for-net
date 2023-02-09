@@ -17,17 +17,17 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Phone))
             {
-                writer.WritePropertyName("phone");
+                writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;

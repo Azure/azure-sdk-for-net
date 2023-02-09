@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
             SelectionMarkState state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("boundingBox"))
+                if (property.NameEquals("boundingBox"u8))
                 {
                     List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,12 +30,12 @@ namespace Azure.AI.FormRecognizer.Models
                     boundingBox = array;
                     continue;
                 }
-                if (property.NameEquals("confidence"))
+                if (property.NameEquals("confidence"u8))
                 {
                     confidence = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString().ToSelectionMarkState();
                     continue;

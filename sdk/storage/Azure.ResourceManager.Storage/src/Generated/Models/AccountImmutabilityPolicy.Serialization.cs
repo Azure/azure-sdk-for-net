@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
-                writer.WritePropertyName("immutabilityPeriodSinceCreationInDays");
+                writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(AllowProtectedAppendWrites))
             {
-                writer.WritePropertyName("allowProtectedAppendWrites");
+                writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<bool> allowProtectedAppendWrites = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("immutabilityPeriodSinceCreationInDays"))
+                if (property.NameEquals("immutabilityPeriodSinceCreationInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
                     immutabilityPeriodSinceCreationInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
                     state = new AccountImmutabilityPolicyState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowProtectedAppendWrites"))
+                if (property.NameEquals("allowProtectedAppendWrites"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

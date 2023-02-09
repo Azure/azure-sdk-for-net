@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("eventLevel");
+            writer.WritePropertyName("eventLevel"u8);
             writer.WriteStringValue(EventLevel.ToSerialString());
-            writer.WritePropertyName("eventTime");
+            writer.WritePropertyName("eventTime"u8);
             writer.WriteStringValue(EventOn, "O");
-            writer.WritePropertyName("recordType");
+            writer.WritePropertyName("recordType"u8);
             writer.WriteStringValue(RecordType.ToString());
             if (Optional.IsDefined(Record))
             {
-                writer.WritePropertyName("record");
+                writer.WritePropertyName("record"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Record);
 #else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error");
+                writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
             writer.WriteEndObject();

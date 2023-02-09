@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<long> minCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastSkuUpdate"))
+                if (property.NameEquals("lastSkuUpdate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     lastSkuUpdate = property.Value.GetDateTimeOffset();
                     continue;
                 }
-                if (property.NameEquals("minCapacity"))
+                if (property.NameEquals("minCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

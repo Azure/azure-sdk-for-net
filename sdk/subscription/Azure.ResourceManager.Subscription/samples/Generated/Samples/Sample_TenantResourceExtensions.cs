@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Subscription;
 using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription.Samples

@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Fqdn))
             {
-                writer.WritePropertyName("fqdn");
+                writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
             if (Optional.IsDefined(GpuCapacity))
             {
-                writer.WritePropertyName("gpuCapacity");
+                writer.WritePropertyName("gpuCapacity"u8);
                 writer.WriteObjectValue(GpuCapacity);
             }
             if (Optional.IsDefined(MemoryCapacity))
             {
-                writer.WritePropertyName("memoryCapacity");
+                writer.WritePropertyName("memoryCapacity"u8);
                 writer.WriteObjectValue(MemoryCapacity);
             }
             if (Optional.IsDefined(LastRefreshedOn))
             {
-                writer.WritePropertyName("lastRefreshedTime");
+                writer.WritePropertyName("lastRefreshedTime"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
             if (Optional.IsDefined(TotalProvisionedNonHpnCores))
             {
-                writer.WritePropertyName("totalProvisionedNonHpnCores");
+                writer.WritePropertyName("totalProvisionedNonHpnCores"u8);
                 writer.WriteNumberValue(TotalProvisionedNonHpnCores.Value);
             }
             writer.WriteEndObject();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<long> totalProvisionedNonHpnCores = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gpuCapacity"))
+                if (property.NameEquals("gpuCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     gpuCapacity = EdgeClusterGpuCapacity.DeserializeEdgeClusterGpuCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("memoryCapacity"))
+                if (property.NameEquals("memoryCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     memoryCapacity = EdgeClusterMemoryCapacity.DeserializeEdgeClusterMemoryCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastRefreshedTime"))
+                if (property.NameEquals("lastRefreshedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     lastRefreshedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("totalProvisionedNonHpnCores"))
+                if (property.NameEquals("totalProvisionedNonHpnCores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

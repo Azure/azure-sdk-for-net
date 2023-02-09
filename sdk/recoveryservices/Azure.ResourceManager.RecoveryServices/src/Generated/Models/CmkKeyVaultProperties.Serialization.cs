@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyUri))
             {
-                writer.WritePropertyName("keyUri");
+                writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<Uri> keyUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyUri"))
+                if (property.NameEquals("keyUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> secondaryAccessKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryAccessKey"))
+                if (property.NameEquals("primaryAccessKey"u8))
                 {
                     primaryAccessKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryAccessKey"))
+                if (property.NameEquals("secondaryAccessKey"u8))
                 {
                     secondaryAccessKey = property.Value.GetString();
                     continue;

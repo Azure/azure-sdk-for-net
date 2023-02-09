@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FunctionAlias))
             {
-                writer.WritePropertyName("functionAlias");
+                writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
             }
             if (Optional.IsDefined(WorkspaceId))
             {
-                writer.WritePropertyName("workspaceId");
+                writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> workspaceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("functionAlias"))
+                if (property.NameEquals("functionAlias"u8))
                 {
                     functionAlias = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     workspaceId = property.Value.GetString();
                     continue;
