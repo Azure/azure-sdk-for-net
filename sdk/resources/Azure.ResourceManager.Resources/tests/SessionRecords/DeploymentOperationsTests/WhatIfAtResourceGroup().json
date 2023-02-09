@@ -57,7 +57,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-5-1232?api-version=2022-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-5-1232?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -194,7 +194,7 @@
         "Content-Length": "0",
         "Date": "Tue, 10 Jan 2023 07:05:18 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVFJHOjJENToyRDEyMzItVEVTVERFUExPWU1FTlRXSEFUSUYtNkRDRUQwOEU6MkRGMzgwOjJENEM1MzoyREI1QjE6MkRGNjAxMUFDRDc2RDciLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=2022-09-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVFJHOjJENToyRDEyMzItVEVTVERFUExPWU1FTlRXSEFUSUYtNkRDRUQwOEU6MkRGMzgwOjJENEM1MzoyREI1QjE6MkRGNjAxMUFDRDc2RDciLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=**",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -207,7 +207,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVFJHOjJENToyRDEyMzItVEVTVERFUExPWU1FTlRXSEFUSUYtNkRDRUQwOEU6MkRGMzgwOjJENEM1MzoyREI1QjE6MkRGNjAxMUFDRDc2RDciLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=2022-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVFJHOjJENToyRDEyMzItVEVTVERFUExPWU1FTlRXSEFUSUYtNkRDRUQwOEU6MkRGMzgwOjJENEM1MzoyREI1QjE6MkRGNjAxMUFDRDc2RDciLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -223,7 +223,7 @@
         "Content-Length": "0",
         "Date": "Tue, 10 Jan 2023 07:05:19 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVFJHOjJENToyRDEyMzItVEVTVERFUExPWU1FTlRXSEFUSUYtNkRDRUQwOEU6MkRGMzgwOjJENEM1MzoyREI1QjE6MkRGNjAxMUFDRDc2RDciLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=2022-09-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVFJHOjJENToyRDEyMzItVEVTVERFUExPWU1FTlRXSEFUSUYtNkRDRUQwOEU6MkRGMzgwOjJENEM1MzoyREI1QjE6MkRGNjAxMUFDRDc2RDciLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=**",
         "Pragma": "no-cache",
         "Retry-After": "15",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -236,7 +236,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVFJHOjJENToyRDEyMzItVEVTVERFUExPWU1FTlRXSEFUSUYtNkRDRUQwOEU6MkRGMzgwOjJENEM1MzoyREI1QjE6MkRGNjAxMUFDRDc2RDciLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=2022-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnRXaGF0SWZKb2ItVEVTVFJHOjJENToyRDEyMzItVEVTVERFUExPWU1FTlRXSEFUSUYtNkRDRUQwOEU6MkRGMzgwOjJENEM1MzoyREI1QjE6MkRGNjAxMUFDRDc2RDciLCJqb2JMb2NhdGlvbiI6Indlc3R1czIifQ?api-version=**",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

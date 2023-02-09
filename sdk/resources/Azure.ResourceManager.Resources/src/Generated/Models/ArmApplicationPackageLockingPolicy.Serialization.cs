@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             if (Optional.IsCollectionDefined(AllowedDataActions))
             {
-                writer.WritePropertyName("allowedDataActions");
+                writer.WritePropertyName("allowedDataActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedDataActions)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
                     allowedActions = array;
                     continue;
                 }
-                if (property.NameEquals("allowedDataActions"))
+                if (property.NameEquals("allowedDataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
