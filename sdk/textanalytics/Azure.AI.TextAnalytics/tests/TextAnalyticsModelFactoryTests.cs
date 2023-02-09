@@ -76,7 +76,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 TextAnalyticsModelFactory.ExtractiveSummarizeActionResult(default, default, default),
             };
 
-            var abstractSummaryActionResults = new List<AbstractiveSummarizeActionResult>()
+            var abstractiveSummarizeActionResults = new List<AbstractiveSummarizeActionResult>()
             {
                 TextAnalyticsModelFactory.AbstractiveSummarizeActionResult(default, default, default),
                 TextAnalyticsModelFactory.AbstractiveSummarizeActionResult(default, default, default),
@@ -106,7 +106,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 multiLabelClassifyActionResults,
                 analyzeHealthcareEntitiesActionResults,
                 extractiveSummarizeActionResults,
-                abstractSummaryActionResults);
+                abstractiveSummarizeActionResults);
 
             CollectionAssert.AreEquivalent(extractKeyPhrasesActionResults, actionsResult.ExtractKeyPhrasesResults);
             CollectionAssert.AreEquivalent(recognizeEntitiesActionResults, actionsResult.RecognizeEntitiesResults);
@@ -118,7 +118,7 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(multiLabelClassifyActionResults, actionsResult.MultiLabelClassifyResults);
             CollectionAssert.AreEquivalent(analyzeHealthcareEntitiesActionResults, actionsResult.AnalyzeHealthcareEntitiesResults);
             CollectionAssert.AreEquivalent(extractiveSummarizeActionResults, actionsResult.ExtractiveSummarizeResults);
-            CollectionAssert.AreEquivalent(abstractSummaryActionResults, actionsResult.AbstractiveSummarizeResults);
+            CollectionAssert.AreEquivalent(abstractiveSummarizeActionResults, actionsResult.AbstractiveSummarizeResults);
         }
         #endregion Action Result Models
     }

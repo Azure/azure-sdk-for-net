@@ -1146,7 +1146,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="multiLabelClassifyActionResults">Sets the collection of <see cref="TextAnalytics.MultiLabelClassifyActionResult"/>.</param>
         /// <param name="analyzeHealthcareEntitiesActionResults">Sets the collection of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/>.</param>
         /// <param name="extractiveSummarizeActionResults">Sets the collection of <see cref="TextAnalytics.ExtractiveSummarizeActionResult"/>.</param>
-        /// <param name="abstractSummaryActionResults">Sets the collection of <see cref="TextAnalytics.AbstractiveSummarizeActionResult"/>.</param>
+        /// <param name="abstractiveSummarizeActionResults">Sets the collection of <see cref="TextAnalytics.AbstractiveSummarizeActionResult"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeActionsResult"/> for mocking purposes.</returns>
         public static AnalyzeActionsResult AnalyzeActionsResult(
             IEnumerable<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
@@ -1159,7 +1159,7 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
             IEnumerable<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
             IEnumerable<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults,
-            IEnumerable<AbstractiveSummarizeActionResult> abstractSummaryActionResults)
+            IEnumerable<AbstractiveSummarizeActionResult> abstractiveSummarizeActionResults)
         {
             return new AnalyzeActionsResult(
                 extractKeyPhrasesActionResults.ToList(),
@@ -1172,7 +1172,7 @@ namespace Azure.AI.TextAnalytics
                 multiLabelClassifyActionResults.ToList(),
                 analyzeHealthcareEntitiesActionResults.ToList(),
                 extractiveSummarizeActionResults.ToList(),
-                abstractSummaryActionResults.ToList()
+                abstractiveSummarizeActionResults.ToList()
                 );
         }
 
@@ -2007,7 +2007,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Abstract Summary
+        #region Abstractive Summarize
 
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.AbstractiveSummarizeResult"/> for mocking purposes.

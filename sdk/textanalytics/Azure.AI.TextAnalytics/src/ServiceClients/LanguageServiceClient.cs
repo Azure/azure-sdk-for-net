@@ -2436,7 +2436,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #endregion
 
-        #region Abstract Summary
+        #region Abstractive Summarize
 
         public override AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default)
         {

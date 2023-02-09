@@ -2536,7 +2536,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Abstract Summary
+        #region Abstractive Summarize
 
         /// <summary>
         /// Performs abstractive summarization on a given set of documents, which consists of generating a summary with

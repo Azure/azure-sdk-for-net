@@ -871,13 +871,13 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractSummaryActionsResults = resultCollection.AbstractiveSummarizeResults;
-            Assert.IsNotNull(abstractSummaryActionsResults);
+            IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractiveSummarizeActionsResults = resultCollection.AbstractiveSummarizeResults;
+            Assert.IsNotNull(abstractiveSummarizeActionsResults);
 
-            AbstractiveSummarizeResultCollection abstractSummaryDocumentsResults = abstractSummaryActionsResults.FirstOrDefault().DocumentsResults;
-            Assert.AreEqual(1, abstractSummaryDocumentsResults.Count);
+            AbstractiveSummarizeResultCollection abstractiveSummarizeDocumentsResults = abstractiveSummarizeActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, abstractiveSummarizeDocumentsResults.Count);
 
-            AbstractiveSummarizeResult result = abstractSummaryDocumentsResults[0];
+            AbstractiveSummarizeResult result = abstractiveSummarizeDocumentsResults[0];
             Assert.Greater(result.Summaries.Count, 0);
 
             AbstractiveSummary summary = result.Summaries.FirstOrDefault();

@@ -223,7 +223,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         #endregion
 
-        #region Abstract Summary
+        #region Abstractive Summarize
 
         public virtual AbstractiveSummarizeOperation StartAbstractiveSummarize(IEnumerable<string> documents, string language = default, AbstractiveSummarizeOptions options = default, CancellationToken cancellationToken = default) =>
             throw Validation.NotSupported($"{nameof(TextAnalyticsClient)}.{nameof(TextAnalyticsClient.StartAbstractiveSummarize)}", ServiceVersion.V2022_10_01_Preview, ServiceVersion);

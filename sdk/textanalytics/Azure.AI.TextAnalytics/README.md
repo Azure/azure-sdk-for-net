@@ -753,7 +753,7 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Custom Multi Label Classification][multi_category_classify_sample]
 * [Dynamic Classification][dynamic_classify_sample]
 * [Extractive Summarization][extractive_summarize_sample]
-* [Abstractive Summarization][abstract_summary_sample]
+* [Abstractive Summarization][abstractive_summarize_sample]
 
 ### Advanced samples
 
@@ -816,7 +816,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [multi_category_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample10_MultiLabelClassify.md
 [dynamic_classify_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_DynamicClassify.md
 [extractive_summarize_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_ExtractiveSummarize.md
-[abstract_summary_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample13_AbstractiveSummarize.md
+[abstractive_summarize_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample13_AbstractiveSummarize.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
