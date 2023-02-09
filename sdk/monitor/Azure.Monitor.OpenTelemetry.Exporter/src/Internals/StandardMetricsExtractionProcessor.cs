@@ -73,7 +73,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.RequestResultCodeKey, statusCodeAttributeValue));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.RequestDurationMetricIdValue));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsAutoCollectedKey, "True"));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsSyntheticKey, "False"));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource.RoleInstance));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource.RoleName));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.RequestSuccessKey, RequestData.isSuccess(activity, statusCodeAttributeValue, OperationType.Http)));
@@ -97,7 +96,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencyResultCodeKey, statusCode));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.MetricIdKey, StandardMetricConstants.DependencyDurationMetricIdValue));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsAutoCollectedKey, "True"));
-            tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.IsSyntheticKey, "False"));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleInstanceKey, StandardMetricResource.RoleInstance));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.CloudRoleNameKey, StandardMetricResource.RoleName));
             tags.Add(new KeyValuePair<string, object>(StandardMetricConstants.DependencySuccessKey, activity.Status != ActivityStatusCode.Error));
