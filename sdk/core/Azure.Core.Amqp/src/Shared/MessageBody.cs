@@ -5,14 +5,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Microsoft.Azure.Amqp.Framing;
 
-namespace Azure.Messaging.ServiceBus.Amqp
+#nullable enable
+
+namespace Azure.Core.Amqp
 {
     /// <summary>
-    /// The body abstractions allow to optimize several use cases of <see cref="ServiceBusMessage"/> and
-    /// <see cref="ServiceBusReceivedMessage"/> to make sure body memory is only converted when needed and as little as possible.
+    /// The body abstractions allow to optimize several use cases to make sure body memory is only converted when needed and as little as possible.
     /// </summary>
     internal abstract class MessageBody : IEnumerable<ReadOnlyMemory<byte>>
     {
@@ -75,9 +75,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         private sealed class CopyingOnConversionMessageBody : MessageBody
         {
-            private ArrayBufferWriter<byte> _writer;
-            private IList<ReadOnlyMemory<byte>> _segments;
-            private IEnumerable<ReadOnlyMemory<byte>> _lazySegments;
+            private ArrayBufferWriter<byte>? _writer;
+            private IList<ReadOnlyMemory<byte>>? _segments;
+            private IEnumerable<ReadOnlyMemory<byte>>? _lazySegments;
 
             internal CopyingOnConversionMessageBody(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
             {
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     if (_lazySegments != null)
                     {
                         // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
-                        Segments.Append(_lazySegments,  ref _writer, ref _segments);
+                        Segments.Append(_lazySegments,  ref _writer!, ref _segments!);
                         _lazySegments = null;
                     }
 
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             public override IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
             {
-                return _segments?.GetEnumerator() ?? _lazySegments.GetEnumerator();
+                return _segments?.GetEnumerator() ?? _lazySegments!.GetEnumerator();
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             internal EagerCopyingMessageBody(IEnumerable<Data> dataSegments)
             {
                 // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
-                Segments.Append(dataSegments, ref _writer, ref _segments);
+                Segments.Append(dataSegments, ref _writer!, ref _segments!);
             }
 
             protected override ReadOnlyMemory<byte> WrittenMemory => _writer?.WrittenMemory ?? ReadOnlyMemory<byte>.Empty;
@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 int length = 0;
                 int numberOfSegments = 0;
-                List<ReadOnlyMemory<byte>> segments = null;
+                List<ReadOnlyMemory<byte>>? segments = null;
                 foreach (var segment in dataSegments)
                 {
                     segments ??= dataSegments is IReadOnlyCollection<Data> readOnlyList

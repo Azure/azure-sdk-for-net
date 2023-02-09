@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class CapabilitiesResponse : IUtf8JsonSerializable
+    public partial class CapabilitiesResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteEndObject();
         }
 
-        internal static CapabilitiesResponse DeserializeCapabilitiesResponse(JsonElement element)
+        internal static CapabilitiesResult DeserializeCapabilitiesResult(JsonElement element)
         {
             Optional<CapabilitiesResponseProperties> properties = default;
             string type = default;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new CapabilitiesResponse(type, properties.Value);
+            return new CapabilitiesResult(type, properties.Value);
         }
     }
 }
