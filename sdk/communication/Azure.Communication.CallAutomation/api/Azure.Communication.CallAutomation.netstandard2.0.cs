@@ -1,5 +1,13 @@
 namespace Azure.Communication.CallAutomation
 {
+    public partial class AddParticipantRequest
+    {
+        internal AddParticipantRequest() { }
+        public Azure.Communication.CallAutomation.CustomContext CustomContext { get { throw null; } set { } }
+        public int? InvitationTimeoutInSeconds { get { throw null; } set { } }
+        public string OperationContext { get { throw null; } set { } }
+        public string SourceDisplayName { get { throw null; } set { } }
+    }
     public partial class AddParticipantsEventResult : Azure.Communication.CallAutomation.EventResultBase
     {
         internal AddParticipantsEventResult() { }
@@ -440,6 +448,12 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
+    }
+    public partial class CustomContext
+    {
+        public CustomContext() { }
+        public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DtmfTone : System.IEquatable<Azure.Communication.CallAutomation.DtmfTone>
