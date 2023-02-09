@@ -8,9 +8,9 @@
         "api-key": "***********",
         "Content-Length": "61",
         "Content-Type": "application/json",
-        "traceparent": "00-6cbcb25c6a41f8a596f9f069c8d53da3-6ff1e89359184b03-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230201.1 (.NET 7.0.2; Microsoft Windows 10.0.25281)",
-        "x-ms-client-request-id": "0c67cf3986871336eb64a016aca27f71",
+        "traceparent": "00-11b6b2d09353a965eb1b65ba469d9c41-b0b53ed280a23f45-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230207.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "e0739062a0dcb4445ff0c115f3b7b2d5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,43 +22,43 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "4b3d0900-bcff-44e8-a254-b138b9f062cb",
+        "apim-request-id": "4bd3895d-0d96-431e-9139-e0fe8dd515f4",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "429",
+        "Content-Length": "405",
         "Content-Type": "application/json",
-        "Date": "Wed, 01 Feb 2023 20:35:33 GMT",
+        "Date": "Tue, 07 Feb 2023 17:50:51 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "325.7528",
+        "openai-processing-ms": "600.227",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "0c67cf3986871336eb64a016aca27f71",
+        "x-ms-client-request-id": "e0739062a0dcb4445ff0c115f3b7b2d5",
         "x-ms-region": "East US",
-        "X-Request-ID": "49f272fe-b738-401b-b8a3-6fed5c879f74"
+        "X-Request-ID": "98ad2bde-5d6f-4d43-b724-30691f3d1cc3"
       },
       "ResponseBody": {
-        "id": "cmpl-6fE7JukTseCUICtJAvOTvefqUoQh9",
+        "id": "cmpl-6hMPDnK29CpqXIWdu33NTdH9Sv6vf",
         "object": "text_completion",
-        "created": 1675283733,
+        "created": 1675792251,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\n\n\nHello! Welcome to my profile. \n\nA little about me",
+            "text": "\u0022);\n    }\n}",
             "index": 0,
-            "finish_reason": "length",
+            "finish_reason": "stop",
             "logprobs": null
           },
           {
-            "text": "\u2019, or the idea that we will feel \u2018stuck\u2019",
+            "text": "\n\nno progress synonym\n\nrepeating yourself or the same things or",
             "index": 1,
             "finish_reason": "length",
             "logprobs": null
           }
         ],
         "usage": {
-          "completion_tokens": 32,
+          "completion_tokens": 22,
           "prompt_tokens": 8,
-          "total_tokens": 40
+          "total_tokens": 30
         }
       }
     }
@@ -68,7 +68,7 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
     "OPENAI_ENDPOINT": "https://sdk6955.openai.azure.com/",
-    "RandomSeed": "219066846",
+    "RandomSeed": "307927404",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }
