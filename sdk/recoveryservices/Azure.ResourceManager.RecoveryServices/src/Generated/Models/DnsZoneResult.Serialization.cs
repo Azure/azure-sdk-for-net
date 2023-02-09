@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class DnsZoneResponse : IUtf8JsonSerializable
+    public partial class DnsZoneResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteEndObject();
         }
 
-        internal static DnsZoneResponse DeserializeDnsZoneResponse(JsonElement element)
+        internal static DnsZoneResult DeserializeDnsZoneResult(JsonElement element)
         {
             Optional<IList<string>> requiredZoneNames = default;
             Optional<VaultSubResourceType> subResource = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new DnsZoneResponse(Optional.ToNullable(subResource), Optional.ToList(requiredZoneNames));
+            return new DnsZoneResult(Optional.ToNullable(subResource), Optional.ToList(requiredZoneNames));
         }
     }
 }

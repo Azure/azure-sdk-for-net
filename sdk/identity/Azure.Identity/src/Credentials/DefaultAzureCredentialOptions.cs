@@ -12,7 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DefaultAzureCredential"/> authentication flow and requests made to Azure Identity services.
     /// </summary>
-    public class DefaultAzureCredentialOptions : TokenCredentialOptions
+    public class DefaultAzureCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery
     {
         private struct UpdateTracker<T>
         {
@@ -252,6 +252,9 @@ namespace Azure.Identity
         /// </summary>
         public bool ExcludeAzurePowerShellCredential { get; set; }
 
+        /// <inheriteddoc/>
+        public bool DisableInstanceDiscovery { get; set; }
+
         internal DefaultAzureCredentialOptions ShallowClone()
         {
             var options = new DefaultAzureCredentialOptions
@@ -275,7 +278,8 @@ namespace Azure.Identity
                 ExcludeVisualStudioCredential = ExcludeVisualStudioCredential,
                 ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential,
                 ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential,
-                AuthorityHost = AuthorityHost
+                AuthorityHost = AuthorityHost,
+                DisableInstanceDiscovery = DisableInstanceDiscovery,
             };
 
             foreach (var addlTenant in AdditionallyAllowedTenants)

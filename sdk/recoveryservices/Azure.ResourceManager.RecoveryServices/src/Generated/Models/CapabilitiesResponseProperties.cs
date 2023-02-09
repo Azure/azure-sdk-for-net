@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of CapabilitiesResponseProperties. </summary>
         public CapabilitiesResponseProperties()
         {
-            DnsZones = new ChangeTrackingList<DnsZoneResponse>();
+            DnsZones = new ChangeTrackingList<DnsZoneResult>();
         }
 
         /// <summary> Initializes a new instance of CapabilitiesResponseProperties. </summary>
         /// <param name="dnsZones"></param>
-        internal CapabilitiesResponseProperties(IList<DnsZoneResponse> dnsZones)
+        internal CapabilitiesResponseProperties(IList<DnsZoneResult> dnsZones)
         {
             DnsZones = dnsZones;
         }
 
         /// <summary> Gets the dns zones. </summary>
-        public IList<DnsZoneResponse> DnsZones { get; }
+        public IList<DnsZoneResult> DnsZones { get; }
     }
 }

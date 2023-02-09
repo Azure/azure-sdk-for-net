@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.0-beta.2 (2023-02-08)
+### Bugs Fixed
+- Adjusted bad name `finishReason` to `finish_reason` in deserializer class
+
 ## 1.0.0-beta.1 (2023-02-06)
 
 ### Features Added
