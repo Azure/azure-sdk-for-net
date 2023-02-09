@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FailoverDirection))
             {
-                writer.WritePropertyName("failoverDirection");
+                writer.WritePropertyName("failoverDirection"u8);
                 writer.WriteStringValue(FailoverDirection);
             }
             if (Optional.IsDefined(SourceSiteOperations))
             {
-                writer.WritePropertyName("sourceSiteOperations");
+                writer.WritePropertyName("sourceSiteOperations"u8);
                 writer.WriteStringValue(SourceSiteOperations);
             }
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
-                writer.WritePropertyName("providerSpecificDetails");
+                writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
             }
             writer.WriteEndObject();

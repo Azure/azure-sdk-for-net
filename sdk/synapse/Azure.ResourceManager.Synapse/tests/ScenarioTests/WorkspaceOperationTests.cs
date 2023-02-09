@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.Synapse.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33867")]
         public async Task TestWorkspaceLifeCycle()
         {
             // create workspace

@@ -15,11 +15,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("headerName");
+            writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
-            writer.WritePropertyName("headerValue");
+            writer.WritePropertyName("headerValue"u8);
             writer.WriteStringValue(HeaderValue);
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
@@ -31,17 +31,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("headerName"))
+                if (property.NameEquals("headerName"u8))
                 {
                     headerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("headerValue"))
+                if (property.NameEquals("headerValue"u8))
                 {
                     headerValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

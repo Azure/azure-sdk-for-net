@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<float> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     metadata = DeviceTwinMetadata.DeserializeDeviceTwinMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

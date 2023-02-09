@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
-                writer.WritePropertyName("delegatedSubnetResourceId");
+                writer.WritePropertyName("delegatedSubnetResourceId"u8);
                 writer.WriteStringValue(DelegatedSubnetResourceId);
             }
             if (Optional.IsDefined(PrivateDnsZoneResourceId))
             {
-                writer.WritePropertyName("privateDnsZoneResourceId");
+                writer.WritePropertyName("privateDnsZoneResourceId"u8);
                 writer.WriteStringValue(PrivateDnsZoneResourceId);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<ResourceIdentifier> privateDnsZoneResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     publicNetworkAccess = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("delegatedSubnetResourceId"))
+                if (property.NameEquals("delegatedSubnetResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     delegatedSubnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateDnsZoneResourceId"))
+                if (property.NameEquals("privateDnsZoneResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

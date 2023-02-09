@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IReadOnlyList<ContainerAppManagedEnvironmentStorageData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<ContainerAppManagedEnvironmentStorageData> array = new List<ContainerAppManagedEnvironmentStorageData>();
                     foreach (var item in property.Value.EnumerateArray())

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(ErrorDetail))
             {
-                writer.WritePropertyName("errorDetail");
+                writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
             writer.WriteEndObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> additionalDetail = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorDetail"))
+                if (property.NameEquals("errorDetail"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     errorDetail = ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
-                if (property.NameEquals("additionalDetail"))
+                if (property.NameEquals("additionalDetail"u8))
                 {
                     additionalDetail = property.Value.GetString();
                     continue;

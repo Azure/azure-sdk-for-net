@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ipAddress");
+            writer.WritePropertyName("ipAddress"u8);
             writer.WriteStringValue(IPAddress.ToString());
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             writer.WriteEndObject();
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EffectiveFrom))
             {
-                writer.WritePropertyName("effectiveFrom");
+                writer.WritePropertyName("effectiveFrom"u8);
                 writer.WriteStringValue(EffectiveFrom.Value, "O");
             }
             if (Optional.IsDefined(EffectiveUntil))
             {
-                writer.WritePropertyName("effectiveUntil");
+                writer.WritePropertyName("effectiveUntil"u8);
                 writer.WriteStringValue(EffectiveUntil.Value, "O");
             }
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             if (Optional.IsCollectionDefined(Recurrences))
             {
-                writer.WritePropertyName("recurrences");
+                writer.WritePropertyName("recurrences"u8);
                 writer.WriteStartArray();
                 foreach (var item in Recurrences)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<IList<AlertProcessingRuleRecurrence>> recurrences = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("effectiveFrom"))
+                if (property.NameEquals("effectiveFrom"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     effectiveFrom = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("effectiveUntil"))
+                if (property.NameEquals("effectiveUntil"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     effectiveUntil = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recurrences"))
+                if (property.NameEquals("recurrences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

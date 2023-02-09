@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleId"))
+                if (property.NameEquals("ruleId"u8))
                 {
                     ruleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

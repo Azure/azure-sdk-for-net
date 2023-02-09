@@ -15,32 +15,32 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("signedServices");
+            writer.WritePropertyName("signedServices"u8);
             writer.WriteStringValue(Services.ToString());
-            writer.WritePropertyName("signedResourceTypes");
+            writer.WritePropertyName("signedResourceTypes"u8);
             writer.WriteStringValue(ResourceTypes.ToString());
-            writer.WritePropertyName("signedPermission");
+            writer.WritePropertyName("signedPermission"u8);
             writer.WriteStringValue(Permissions.ToString());
             if (Optional.IsDefined(IPAddressOrRange))
             {
-                writer.WritePropertyName("signedIp");
+                writer.WritePropertyName("signedIp"u8);
                 writer.WriteStringValue(IPAddressOrRange);
             }
             if (Optional.IsDefined(Protocols))
             {
-                writer.WritePropertyName("signedProtocol");
+                writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
             if (Optional.IsDefined(SharedAccessStartOn))
             {
-                writer.WritePropertyName("signedStart");
+                writer.WritePropertyName("signedStart"u8);
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
-            writer.WritePropertyName("signedExpiry");
+            writer.WritePropertyName("signedExpiry"u8);
             writer.WriteStringValue(SharedAccessExpireOn, "O");
             if (Optional.IsDefined(KeyToSign))
             {
-                writer.WritePropertyName("keyToSign");
+                writer.WritePropertyName("keyToSign"u8);
                 writer.WriteStringValue(KeyToSign);
             }
             writer.WriteEndObject();

@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(ManagementGroupId))
             {
-                writer.WritePropertyName("managementGroupId");
+                writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             if (Optional.IsDefined(ResourceGroupId))
             {
-                writer.WritePropertyName("resourceGroupId");
+                writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();

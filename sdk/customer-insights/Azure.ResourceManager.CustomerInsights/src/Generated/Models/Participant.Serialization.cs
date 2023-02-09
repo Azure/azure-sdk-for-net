@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("profileTypeName");
+            writer.WritePropertyName("profileTypeName"u8);
             writer.WriteStringValue(ProfileTypeName);
-            writer.WritePropertyName("participantPropertyReferences");
+            writer.WritePropertyName("participantPropertyReferences"u8);
             writer.WriteStartArray();
             foreach (var item in ParticipantPropertyReferences)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("participantName");
+            writer.WritePropertyName("participantName"u8);
             writer.WriteStringValue(ParticipantName);
             if (Optional.IsCollectionDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
                 foreach (var item in DisplayName)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             if (Optional.IsCollectionDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
                 foreach (var item in Description)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             if (Optional.IsDefined(Role))
             {
-                writer.WritePropertyName("role");
+                writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
             writer.WriteEndObject();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("profileTypeName"))
+                if (property.NameEquals("profileTypeName"u8))
                 {
                     profileTypeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("participantPropertyReferences"))
+                if (property.NameEquals("participantPropertyReferences"u8))
                 {
                     List<ParticipantPropertyReference> array = new List<ParticipantPropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     participantPropertyReferences = array;
                     continue;
                 }
-                if (property.NameEquals("participantName"))
+                if (property.NameEquals("participantName"u8))
                 {
                     participantName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     displayName = dictionary;
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     description = dictionary;
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     role = property.Value.GetString();
                     continue;

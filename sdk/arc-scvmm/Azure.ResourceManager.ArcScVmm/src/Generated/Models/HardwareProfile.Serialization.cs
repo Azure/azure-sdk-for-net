@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MemoryMB))
             {
-                writer.WritePropertyName("memoryMB");
+                writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
             if (Optional.IsDefined(CpuCount))
             {
-                writer.WritePropertyName("cpuCount");
+                writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
             if (Optional.IsDefined(LimitCpuForMigration))
             {
-                writer.WritePropertyName("limitCpuForMigration");
+                writer.WritePropertyName("limitCpuForMigration"u8);
                 writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
             }
             if (Optional.IsDefined(DynamicMemoryEnabled))
             {
-                writer.WritePropertyName("dynamicMemoryEnabled");
+                writer.WritePropertyName("dynamicMemoryEnabled"u8);
                 writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
             }
             if (Optional.IsDefined(DynamicMemoryMaxMB))
             {
-                writer.WritePropertyName("dynamicMemoryMaxMB");
+                writer.WritePropertyName("dynamicMemoryMaxMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMaxMB.Value);
             }
             if (Optional.IsDefined(DynamicMemoryMinMB))
             {
-                writer.WritePropertyName("dynamicMemoryMinMB");
+                writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
             }
             if (Optional.IsDefined(IsHighlyAvailable))
             {
-                writer.WritePropertyName("isHighlyAvailable");
+                writer.WritePropertyName("isHighlyAvailable"u8);
                 writer.WriteStringValue(IsHighlyAvailable);
             }
             writer.WriteEndObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<string> isHighlyAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("memoryMB"))
+                if (property.NameEquals("memoryMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     memoryMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cpuCount"))
+                if (property.NameEquals("cpuCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     cpuCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limitCpuForMigration"))
+                if (property.NameEquals("limitCpuForMigration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     limitCpuForMigration = new LimitCpuForMigration(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dynamicMemoryEnabled"))
+                if (property.NameEquals("dynamicMemoryEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     dynamicMemoryEnabled = new DynamicMemoryEnabled(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dynamicMemoryMaxMB"))
+                if (property.NameEquals("dynamicMemoryMaxMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     dynamicMemoryMaxMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("dynamicMemoryMinMB"))
+                if (property.NameEquals("dynamicMemoryMinMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     dynamicMemoryMinMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isHighlyAvailable"))
+                if (property.NameEquals("isHighlyAvailable"u8))
                 {
                     isHighlyAvailable = property.Value.GetString();
                     continue;

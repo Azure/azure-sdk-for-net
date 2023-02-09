@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConfigurationVersion))
             {
-                writer.WritePropertyName("configurationVersion");
+                writer.WritePropertyName("configurationVersion"u8);
                 writer.WriteStringValue(ConfigurationVersion);
             }
             if (Optional.IsCollectionDefined(GlobalConfigurations))
             {
-                writer.WritePropertyName("globalConfigurations");
+                writer.WritePropertyName("globalConfigurations"u8);
                 writer.WriteStartObject();
                 foreach (var item in GlobalConfigurations)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsCollectionDefined(TableList))
             {
-                writer.WritePropertyName("tableList");
+                writer.WritePropertyName("tableList"u8);
                 writer.WriteStartArray();
                 foreach (var item in TableList)
                 {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IList<HDInsightAzureMonitorTableConfiguration>> tableList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationVersion"))
+                if (property.NameEquals("configurationVersion"u8))
                 {
                     configurationVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("globalConfigurations"))
+                if (property.NameEquals("globalConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     globalConfigurations = dictionary;
                     continue;
                 }
-                if (property.NameEquals("tableList"))
+                if (property.NameEquals("tableList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

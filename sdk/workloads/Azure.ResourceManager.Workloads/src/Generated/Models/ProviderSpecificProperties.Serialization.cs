@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("providerType");
+            writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
             writer.WriteEndObject();
         }

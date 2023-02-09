@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
             Optional<LatLongPairAbbreviated> btmRightPoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("topLeftPoint"))
+                if (property.NameEquals("topLeftPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
                     topLeftPoint = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
                     continue;
                 }
-                if (property.NameEquals("btmRightPoint"))
+                if (property.NameEquals("btmRightPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

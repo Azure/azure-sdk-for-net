@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("address1");
+            writer.WritePropertyName("address1"u8);
             writer.WriteStringValue(Address1);
             if (Optional.IsDefined(Address2))
             {
-                writer.WritePropertyName("address2");
+                writer.WritePropertyName("address2"u8);
                 writer.WriteStringValue(Address2);
             }
-            writer.WritePropertyName("city");
+            writer.WritePropertyName("city"u8);
             writer.WriteStringValue(City);
-            writer.WritePropertyName("country");
+            writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            writer.WritePropertyName("postalCode");
+            writer.WritePropertyName("postalCode"u8);
             writer.WriteStringValue(PostalCode);
-            writer.WritePropertyName("state");
+            writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
             writer.WriteEndObject();
         }
@@ -43,32 +43,32 @@ namespace Azure.ResourceManager.AppService.Models
             string state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("address1"))
+                if (property.NameEquals("address1"u8))
                 {
                     address1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("address2"))
+                if (property.NameEquals("address2"u8))
                 {
                     address2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"))
+                if (property.NameEquals("postalCode"u8))
                 {
                     postalCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;

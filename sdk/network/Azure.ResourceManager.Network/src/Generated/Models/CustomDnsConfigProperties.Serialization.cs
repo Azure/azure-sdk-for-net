@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Fqdn))
             {
-                writer.WritePropertyName("fqdn");
+                writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
             if (Optional.IsCollectionDefined(IPAddresses))
             {
-                writer.WritePropertyName("ipAddresses");
+                writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPAddresses)
                 {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddresses"))
+                if (property.NameEquals("ipAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

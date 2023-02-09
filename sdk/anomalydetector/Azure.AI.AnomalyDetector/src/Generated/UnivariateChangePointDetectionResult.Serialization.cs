@@ -21,7 +21,7 @@ namespace Azure.AI.AnomalyDetector
             Optional<IReadOnlyList<float>> confidenceScores = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("period"))
+                if (property.NameEquals("period"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.AI.AnomalyDetector
                     period = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isChangePoint"))
+                if (property.NameEquals("isChangePoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.AI.AnomalyDetector
                     isChangePoint = array;
                     continue;
                 }
-                if (property.NameEquals("confidenceScores"))
+                if (property.NameEquals("confidenceScores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

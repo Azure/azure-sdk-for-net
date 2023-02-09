@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<DateTimeOffset> lastUpdatedOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("remediatedResourceId"))
+                if (property.NameEquals("remediatedResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     remediatedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deploymentId"))
+                if (property.NameEquals("deploymentId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     deploymentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"))
+                if (property.NameEquals("resourceLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     resourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("createdOn"))
+                if (property.NameEquals("createdOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedOn"))
+                if (property.NameEquals("lastUpdatedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

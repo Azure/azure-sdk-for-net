@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Administration
             Optional<IReadOnlyList<KeyVaultSetting>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("settings"))
+                if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

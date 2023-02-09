@@ -15,30 +15,30 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("internationalMobileSubscriberIdentity");
+            writer.WritePropertyName("internationalMobileSubscriberIdentity"u8);
             writer.WriteStringValue(InternationalMobileSubscriberIdentity);
             if (Optional.IsDefined(IntegratedCircuitCardIdentifier))
             {
-                writer.WritePropertyName("integratedCircuitCardIdentifier");
+                writer.WritePropertyName("integratedCircuitCardIdentifier"u8);
                 writer.WriteStringValue(IntegratedCircuitCardIdentifier);
             }
             if (Optional.IsDefined(DeviceType))
             {
-                writer.WritePropertyName("deviceType");
+                writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
             if (Optional.IsDefined(SimPolicy))
             {
-                writer.WritePropertyName("simPolicy");
+                writer.WritePropertyName("simPolicy"u8);
                 JsonSerializer.Serialize(writer, SimPolicy);
             }
             if (Optional.IsCollectionDefined(StaticIPConfiguration))
             {
-                writer.WritePropertyName("staticIpConfiguration");
+                writer.WritePropertyName("staticIpConfiguration"u8);
                 writer.WriteStartArray();
                 foreach (var item in StaticIPConfiguration)
                 {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             if (Optional.IsDefined(AuthenticationKey))
             {
-                writer.WritePropertyName("authenticationKey");
+                writer.WritePropertyName("authenticationKey"u8);
                 writer.WriteStringValue(AuthenticationKey);
             }
             if (Optional.IsDefined(OperatorKeyCode))
             {
-                writer.WritePropertyName("operatorKeyCode");
+                writer.WritePropertyName("operatorKeyCode"u8);
                 writer.WriteStringValue(OperatorKeyCode);
             }
             writer.WriteEndObject();

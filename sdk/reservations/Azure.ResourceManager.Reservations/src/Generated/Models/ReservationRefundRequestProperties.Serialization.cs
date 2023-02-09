@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
-                writer.WritePropertyName("sessionId");
+                writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
             if (Optional.IsDefined(ReservationToReturn))
             {
-                writer.WritePropertyName("reservationToReturn");
+                writer.WritePropertyName("reservationToReturn"u8);
                 writer.WriteObjectValue(ReservationToReturn);
             }
             if (Optional.IsDefined(ReturnReason))
             {
-                writer.WritePropertyName("returnReason");
+                writer.WritePropertyName("returnReason"u8);
                 writer.WriteStringValue(ReturnReason);
             }
             writer.WriteEndObject();

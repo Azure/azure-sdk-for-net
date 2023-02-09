@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<FailoverGroupReplicationRole> replicationRole = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("replicationRole"))
+                if (property.NameEquals("replicationRole"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

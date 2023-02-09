@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("issueType"))
+                if (property.NameEquals("issueType"u8))
                 {
                     issueType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

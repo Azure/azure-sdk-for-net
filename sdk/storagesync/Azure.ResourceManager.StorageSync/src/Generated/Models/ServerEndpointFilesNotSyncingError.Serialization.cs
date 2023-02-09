@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<long> transientCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     errorCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("persistentCount"))
+                if (property.NameEquals("persistentCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     persistentCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("transientCount"))
+                if (property.NameEquals("transientCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

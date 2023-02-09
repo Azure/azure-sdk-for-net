@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Columns))
             {
-                writer.WritePropertyName("columns");
+                writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             if (Optional.IsDefined(QuotedName))
             {
-                writer.WritePropertyName("quotedName");
+                writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> quotedName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("quotedName"))
+                if (property.NameEquals("quotedName"u8))
                 {
                     quotedName = property.Value.GetString();
                     continue;

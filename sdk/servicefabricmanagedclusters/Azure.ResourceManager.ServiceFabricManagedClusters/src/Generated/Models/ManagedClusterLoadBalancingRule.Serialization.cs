@@ -15,27 +15,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("frontendPort");
+            writer.WritePropertyName("frontendPort"u8);
             writer.WriteNumberValue(FrontendPort);
-            writer.WritePropertyName("backendPort");
+            writer.WritePropertyName("backendPort"u8);
             writer.WriteNumberValue(BackendPort);
-            writer.WritePropertyName("protocol");
+            writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             if (Optional.IsDefined(ProbePort))
             {
-                writer.WritePropertyName("probePort");
+                writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
-            writer.WritePropertyName("probeProtocol");
+            writer.WritePropertyName("probeProtocol"u8);
             writer.WriteStringValue(ProbeProtocol.ToString());
             if (Optional.IsDefined(ProbeRequestPath))
             {
-                writer.WritePropertyName("probeRequestPath");
+                writer.WritePropertyName("probeRequestPath"u8);
                 writer.WriteStringValue(ProbeRequestPath);
             }
             if (Optional.IsDefined(LoadDistribution))
             {
-                writer.WritePropertyName("loadDistribution");
+                writer.WritePropertyName("loadDistribution"u8);
                 writer.WriteStringValue(LoadDistribution);
             }
             writer.WriteEndObject();
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<string> loadDistribution = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frontendPort"))
+                if (property.NameEquals("frontendPort"u8))
                 {
                     frontendPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backendPort"))
+                if (property.NameEquals("backendPort"u8))
                 {
                     backendPort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     protocol = new ManagedClusterLoadBalancingRuleTransportProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("probePort"))
+                if (property.NameEquals("probePort"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     probePort = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("probeProtocol"))
+                if (property.NameEquals("probeProtocol"u8))
                 {
                     probeProtocol = new ManagedClusterLoadBalanceProbeProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("probeRequestPath"))
+                if (property.NameEquals("probeRequestPath"u8))
                 {
                     probeRequestPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("loadDistribution"))
+                if (property.NameEquals("loadDistribution"u8))
                 {
                     loadDistribution = property.Value.GetString();
                     continue;

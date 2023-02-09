@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> healthProbeLog = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipConfiguration"))
+                if (property.NameEquals("ipConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                     ipConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property.Value);
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                     health = new ApplicationGatewayBackendHealthServerHealth(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthProbeLog"))
+                if (property.NameEquals("healthProbeLog"u8))
                 {
                     healthProbeLog = property.Value.GetString();
                     continue;

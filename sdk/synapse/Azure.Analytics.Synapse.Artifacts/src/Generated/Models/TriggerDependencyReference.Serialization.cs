@@ -18,9 +18,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("referenceTrigger");
+            writer.WritePropertyName("referenceTrigger"u8);
             writer.WriteObjectValue(ReferenceTrigger);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
@@ -38,12 +38,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = "TriggerDependencyReference";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("referenceTrigger"))
+                if (property.NameEquals("referenceTrigger"u8))
                 {
                     referenceTrigger = TriggerReference.DeserializeTriggerReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

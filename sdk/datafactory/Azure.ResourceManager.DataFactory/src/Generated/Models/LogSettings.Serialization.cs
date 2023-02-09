@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
-                writer.WritePropertyName("enableCopyActivityLog");
+                writer.WritePropertyName("enableCopyActivityLog"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EnableCopyActivityLog);
 #else
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
-                writer.WritePropertyName("copyActivityLogSettings");
+                writer.WritePropertyName("copyActivityLogSettings"u8);
                 writer.WriteObjectValue(CopyActivityLogSettings);
             }
-            writer.WritePropertyName("logLocationSettings");
+            writer.WritePropertyName("logLocationSettings"u8);
             writer.WriteObjectValue(LogLocationSettings);
             writer.WriteEndObject();
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableCopyActivityLog"))
+                if (property.NameEquals("enableCopyActivityLog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     enableCopyActivityLog = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("copyActivityLogSettings"))
+                if (property.NameEquals("copyActivityLogSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     copyActivityLogSettings = CopyActivityLogSettings.DeserializeCopyActivityLogSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("logLocationSettings"))
+                if (property.NameEquals("logLocationSettings"u8))
                 {
                     logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
                     continue;

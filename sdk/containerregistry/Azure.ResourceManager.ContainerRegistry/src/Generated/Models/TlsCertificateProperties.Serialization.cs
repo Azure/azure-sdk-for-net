@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> location = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     type = new TlsCertificateLocationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = property.Value.GetString();
                     continue;

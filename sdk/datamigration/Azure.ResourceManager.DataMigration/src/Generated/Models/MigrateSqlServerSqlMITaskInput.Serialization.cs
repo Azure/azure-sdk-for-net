@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("selectedDatabases");
+            writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(StartedOn))
             {
-                writer.WritePropertyName("startedOn");
+                writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn);
             }
             if (Optional.IsCollectionDefined(SelectedLogins))
             {
-                writer.WritePropertyName("selectedLogins");
+                writer.WritePropertyName("selectedLogins"u8);
                 writer.WriteStartArray();
                 foreach (var item in SelectedLogins)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (Optional.IsCollectionDefined(SelectedAgentJobs))
             {
-                writer.WritePropertyName("selectedAgentJobs");
+                writer.WritePropertyName("selectedAgentJobs"u8);
                 writer.WriteStartArray();
                 foreach (var item in SelectedAgentJobs)
                 {
@@ -50,29 +50,29 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (Optional.IsDefined(BackupFileShare))
             {
-                writer.WritePropertyName("backupFileShare");
+                writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
-            writer.WritePropertyName("backupBlobShare");
+            writer.WritePropertyName("backupBlobShare"u8);
             writer.WriteObjectValue(BackupBlobShare);
             if (Optional.IsDefined(BackupMode))
             {
-                writer.WritePropertyName("backupMode");
+                writer.WritePropertyName("backupMode"u8);
                 writer.WriteStringValue(BackupMode.Value.ToString());
             }
             if (Optional.IsDefined(AadDomainName))
             {
-                writer.WritePropertyName("aadDomainName");
+                writer.WritePropertyName("aadDomainName"u8);
                 writer.WriteStringValue(AadDomainName);
             }
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
-                writer.WritePropertyName("encryptedKeyForSecureFields");
+                writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
             writer.WriteEndObject();
         }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("selectedDatabases"))
+                if (property.NameEquals("selectedDatabases"u8))
                 {
                     List<MigrateSqlServerSqlMIDatabaseInput> array = new List<MigrateSqlServerSqlMIDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedDatabases = array;
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     startedOn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("selectedLogins"))
+                if (property.NameEquals("selectedLogins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedLogins = array;
                     continue;
                 }
-                if (property.NameEquals("selectedAgentJobs"))
+                if (property.NameEquals("selectedAgentJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedAgentJobs = array;
                     continue;
                 }
-                if (property.NameEquals("backupFileShare"))
+                if (property.NameEquals("backupFileShare"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFileShare = FileShare.DeserializeFileShare(property.Value);
                     continue;
                 }
-                if (property.NameEquals("backupBlobShare"))
+                if (property.NameEquals("backupBlobShare"u8))
                 {
                     backupBlobShare = BlobShare.DeserializeBlobShare(property.Value);
                     continue;
                 }
-                if (property.NameEquals("backupMode"))
+                if (property.NameEquals("backupMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,22 +162,22 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupMode = new BackupMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("aadDomainName"))
+                if (property.NameEquals("aadDomainName"u8))
                 {
                     aadDomainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptedKeyForSecureFields"))
+                if (property.NameEquals("encryptedKeyForSecureFields"u8))
                 {
                     encryptedKeyForSecureFields = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
                     continue;

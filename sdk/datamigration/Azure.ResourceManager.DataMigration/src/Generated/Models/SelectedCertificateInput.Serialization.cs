@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("certificateName");
+            writer.WritePropertyName("certificateName"u8);
             writer.WriteStringValue(CertificateName);
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             string password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateName"))
+                if (property.NameEquals("certificateName"u8))
                 {
                     certificateName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;

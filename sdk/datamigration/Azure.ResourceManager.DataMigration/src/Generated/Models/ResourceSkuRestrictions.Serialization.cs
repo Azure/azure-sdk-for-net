@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<ResourceSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     type = new ResourceSkuRestrictionsType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("reasonCode"))
+                if (property.NameEquals("reasonCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

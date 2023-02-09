@@ -21,7 +21,7 @@ namespace Azure.Monitor.Query.Models
             Optional<JsonElement> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tables"))
+                if (property.NameEquals("tables"u8))
                 {
                     List<LogsTable> array = new List<LogsTable>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -31,17 +31,17 @@ namespace Azure.Monitor.Query.Models
                     tables = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     statistics = property.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("render"))
+                if (property.NameEquals("render"u8))
                 {
                     render = property.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = property.Value.Clone();
                     continue;

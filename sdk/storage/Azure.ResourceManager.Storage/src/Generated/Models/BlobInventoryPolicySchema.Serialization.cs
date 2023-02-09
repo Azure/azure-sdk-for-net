@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuleType.ToString());
-            writer.WritePropertyName("rules");
+            writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.Storage.Models
             IList<BlobInventoryPolicyRule> rules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("destination"))
+                if (property.NameEquals("destination"u8))
                 {
                     destination = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new BlobInventoryRuleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rules"))
+                if (property.NameEquals("rules"u8))
                 {
                     List<BlobInventoryPolicyRule> array = new List<BlobInventoryPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())

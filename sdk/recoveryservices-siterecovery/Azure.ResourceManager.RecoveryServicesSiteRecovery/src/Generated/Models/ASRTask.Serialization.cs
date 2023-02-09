@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<JobErrorDetails>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("taskId"))
+                if (property.NameEquals("taskId"u8))
                 {
                     taskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("allowedActions"))
+                if (property.NameEquals("allowedActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,27 +75,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     allowedActions = array;
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateDescription"))
+                if (property.NameEquals("stateDescription"u8))
                 {
                     stateDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taskType"))
+                if (property.NameEquals("taskType"u8))
                 {
                     taskType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customDetails"))
+                if (property.NameEquals("customDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customDetails = TaskTypeDetails.DeserializeTaskTypeDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("groupTaskCustomDetails"))
+                if (property.NameEquals("groupTaskCustomDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     groupTaskCustomDetails = GroupTaskDetails.DeserializeGroupTaskDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

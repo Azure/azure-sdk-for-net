@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomContainer))
             {
-                writer.WritePropertyName("customContainer");
+                writer.WritePropertyName("customContainer"u8);
                 writer.WriteObjectValue(CustomContainer);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customContainer"))
+                if (property.NameEquals("customContainer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     customContainer = AppPlatformCustomContainer.DeserializeAppPlatformCustomContainer(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

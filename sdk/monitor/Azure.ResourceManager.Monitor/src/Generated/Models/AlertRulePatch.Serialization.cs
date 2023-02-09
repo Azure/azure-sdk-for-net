@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,41 +26,41 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("isEnabled");
+                writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Condition))
             {
-                writer.WritePropertyName("condition");
+                writer.WritePropertyName("condition"u8);
                 writer.WriteObjectValue(Condition);
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {

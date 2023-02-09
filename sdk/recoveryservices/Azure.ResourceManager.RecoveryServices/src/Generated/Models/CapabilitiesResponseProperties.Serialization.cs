@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DnsZones))
             {
-                writer.WritePropertyName("dnsZones");
+                writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsZones)
                 {
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static CapabilitiesResponseProperties DeserializeCapabilitiesResponseProperties(JsonElement element)
         {
-            Optional<IList<DnsZoneResponse>> dnsZones = default;
+            Optional<IList<DnsZoneResult>> dnsZones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dnsZones"))
+                if (property.NameEquals("dnsZones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DnsZoneResponse> array = new List<DnsZoneResponse>();
+                    List<DnsZoneResult> array = new List<DnsZoneResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsZoneResponse.DeserializeDnsZoneResponse(item));
+                        array.Add(DnsZoneResult.DeserializeDnsZoneResult(item));
                     }
                     dnsZones = array;
                     continue;

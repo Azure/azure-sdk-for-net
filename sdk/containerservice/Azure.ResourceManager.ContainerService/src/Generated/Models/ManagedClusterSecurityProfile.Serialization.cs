@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Defender))
             {
-                writer.WritePropertyName("defender");
+                writer.WritePropertyName("defender"u8);
                 writer.WriteObjectValue(Defender);
             }
             if (Optional.IsDefined(AzureKeyVaultKms))
             {
-                writer.WritePropertyName("azureKeyVaultKms");
+                writer.WritePropertyName("azureKeyVaultKms"u8);
                 writer.WriteObjectValue(AzureKeyVaultKms);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defender"))
+                if (property.NameEquals("defender"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     defender = ManagedClusterSecurityProfileDefender.DeserializeManagedClusterSecurityProfileDefender(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureKeyVaultKms"))
+                if (property.NameEquals("azureKeyVaultKms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

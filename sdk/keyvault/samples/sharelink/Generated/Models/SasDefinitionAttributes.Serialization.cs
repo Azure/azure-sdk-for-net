@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
             writer.WriteEndObject();
@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<DeletionRecoveryLevel> recoveryLevel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("created"))
+                if (property.NameEquals("created"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     created = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("updated"))
+                if (property.NameEquals("updated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     updated = property.Value.GetDateTimeOffset("U");
                     continue;
                 }
-                if (property.NameEquals("recoverableDays"))
+                if (property.NameEquals("recoverableDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     recoverableDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recoveryLevel"))
+                if (property.NameEquals("recoveryLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

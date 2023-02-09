@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("networkGroup"))
+                if (property.NameEquals("networkGroup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     networkGroup = new DataBoxEdgeNetworkGroup(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

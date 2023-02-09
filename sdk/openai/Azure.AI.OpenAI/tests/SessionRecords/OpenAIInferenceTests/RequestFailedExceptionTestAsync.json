@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk.openai.azure.com/openai/deployments/BAD_DEPLOYMENT_ID/completions?api-version=2022-12-01",
+      "RequestUri": "https://sdk6955.openai.azure.com/openai/deployments/BAD_DEPLOYMENT_ID/completions?api-version=2022-12-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
         "Content-Length": "26",
         "Content-Type": "application/json",
-        "traceparent": "00-b3fad71ac56c3e27f600fac3691a9369-2494d3ca68f7b221-00",
-        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230131.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
-        "x-ms-client-request-id": "d0ef3d379ba5173a785d55c38b3fa075",
+        "traceparent": "00-c58dc9ee89ea59a7300514794258af33-4727af5624633a77-00",
+        "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230201.1 (.NET 7.0.2; Microsoft Windows 10.0.25281)",
+        "x-ms-client-request-id": "8fd10efae2907053898276f9dceff2e7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,17 +18,21 @@
           "Hello world"
         ]
       },
-      "StatusCode": 401,
+      "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "b52e535e-1956-4b21-a5cf-f25388d2226c",
-        "Content-Length": "224",
+        "apim-request-id": "cb13bc63-2a05-4587-9462-930b5f38f383",
+        "Content-Length": "104",
         "Content-Type": "application/json",
-        "Date": "Tue, 31 Jan 2023 18:34:38 GMT"
+        "Date": "Wed, 01 Feb 2023 21:18:01 GMT",
+        "OpenAI-Processing-Ms": "7.5387",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-region": "East US"
       },
       "ResponseBody": {
         "error": {
-          "code": "401",
-          "message": "Access denied due to invalid subscription key or wrong API endpoint. Make sure to provide a valid key for an active subscription and use a correct regional API endpoint for your resource."
+          "code": "DeploymentNotFound",
+          "message": "The API deployment for the resource does not exist."
         }
       }
     }
@@ -37,8 +41,8 @@
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
-    "OPENAI_ENDPOINT": "https://sdk.openai.azure.com/",
-    "RandomSeed": "1067226900",
-    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
+    "OPENAI_ENDPOINT": "https://sdk6955.openai.azure.com/",
+    "RandomSeed": "229414873",
+    "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }

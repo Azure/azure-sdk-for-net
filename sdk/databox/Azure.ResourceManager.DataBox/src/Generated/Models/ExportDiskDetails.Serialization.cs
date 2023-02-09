@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> backupManifestCloudPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("manifestFile"))
+                if (property.NameEquals("manifestFile"u8))
                 {
                     manifestFile = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("manifestHash"))
+                if (property.NameEquals("manifestHash"u8))
                 {
                     manifestHash = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupManifestCloudPath"))
+                if (property.NameEquals("backupManifestCloudPath"u8))
                 {
                     backupManifestCloudPath = property.Value.GetString();
                     continue;

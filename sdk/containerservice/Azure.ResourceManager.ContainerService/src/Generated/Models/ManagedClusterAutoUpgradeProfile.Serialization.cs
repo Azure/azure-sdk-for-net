@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UpgradeChannel))
             {
-                writer.WritePropertyName("upgradeChannel");
+                writer.WritePropertyName("upgradeChannel"u8);
                 writer.WriteStringValue(UpgradeChannel.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<UpgradeChannel> upgradeChannel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("upgradeChannel"))
+                if (property.NameEquals("upgradeChannel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

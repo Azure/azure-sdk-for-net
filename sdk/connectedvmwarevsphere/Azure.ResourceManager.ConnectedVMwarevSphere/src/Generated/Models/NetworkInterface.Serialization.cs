@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(NetworkId))
             {
-                writer.WritePropertyName("networkId");
+                writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
             if (Optional.IsDefined(NicType))
             {
-                writer.WritePropertyName("nicType");
+                writer.WritePropertyName("nicType"u8);
                 writer.WriteStringValue(NicType.Value.ToString());
             }
             if (Optional.IsDefined(PowerOnBoot))
             {
-                writer.WritePropertyName("powerOnBoot");
+                writer.WritePropertyName("powerOnBoot"u8);
                 writer.WriteStringValue(PowerOnBoot.Value.ToString());
             }
             if (Optional.IsDefined(DeviceKey))
             {
-                writer.WritePropertyName("deviceKey");
+                writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
             if (Optional.IsDefined(IPSettings))
             {
-                writer.WritePropertyName("ipSettings");
+                writer.WritePropertyName("ipSettings"u8);
                 writer.WriteObjectValue(IPSettings);
             }
             writer.WriteEndObject();
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<NicIPSettings> ipSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddresses"))
+                if (property.NameEquals("ipAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     ipAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("macAddress"))
+                if (property.NameEquals("macAddress"u8))
                 {
                     macAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkId"))
+                if (property.NameEquals("networkId"u8))
                 {
                     networkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nicType"))
+                if (property.NameEquals("nicType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     nicType = new NICType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("powerOnBoot"))
+                if (property.NameEquals("powerOnBoot"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     powerOnBoot = new PowerOnBootOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkMoRefId"))
+                if (property.NameEquals("networkMoRefId"u8))
                 {
                     networkMoRefId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkMoName"))
+                if (property.NameEquals("networkMoName"u8))
                 {
                     networkMoName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceKey"))
+                if (property.NameEquals("deviceKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     deviceKey = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ipSettings"))
+                if (property.NameEquals("ipSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

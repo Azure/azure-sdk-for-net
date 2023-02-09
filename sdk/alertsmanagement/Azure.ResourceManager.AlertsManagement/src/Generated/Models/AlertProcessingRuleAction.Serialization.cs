@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("actionType");
+            writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WriteEndObject();
         }

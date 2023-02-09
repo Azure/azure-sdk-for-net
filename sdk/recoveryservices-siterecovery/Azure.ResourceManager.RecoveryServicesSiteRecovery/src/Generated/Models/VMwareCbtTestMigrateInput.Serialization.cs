@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("recoveryPointId");
+            writer.WritePropertyName("recoveryPointId"u8);
             writer.WriteStringValue(RecoveryPointId);
-            writer.WritePropertyName("networkId");
+            writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
             if (Optional.IsCollectionDefined(VmNics))
             {
-                writer.WritePropertyName("vmNics");
+                writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

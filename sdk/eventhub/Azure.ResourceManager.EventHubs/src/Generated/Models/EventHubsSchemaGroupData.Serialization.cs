@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.EventHubs
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(GroupProperties))
             {
-                writer.WritePropertyName("groupProperties");
+                writer.WritePropertyName("groupProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in GroupProperties)
                 {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.EventHubs
             }
             if (Optional.IsDefined(SchemaCompatibility))
             {
-                writer.WritePropertyName("schemaCompatibility");
+                writer.WritePropertyName("schemaCompatibility"u8);
                 writer.WriteStringValue(SchemaCompatibility.Value.ToString());
             }
             if (Optional.IsDefined(SchemaType))
             {
-                writer.WritePropertyName("schemaType");
+                writer.WritePropertyName("schemaType"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<EventHubsSchemaType> schemaType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.EventHubs
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventHubs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("updatedAtUtc"))
+                        if (property0.NameEquals("updatedAtUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EventHubs
                             updatedAtUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("createdAtUtc"))
+                        if (property0.NameEquals("createdAtUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventHubs
                             createdAtUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("eTag"))
+                        if (property0.NameEquals("eTag"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EventHubs
                             eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("groupProperties"))
+                        if (property0.NameEquals("groupProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventHubs
                             groupProperties = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("schemaCompatibility"))
+                        if (property0.NameEquals("schemaCompatibility"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventHubs
                             schemaCompatibility = new EventHubsSchemaCompatibility(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("schemaType"))
+                        if (property0.NameEquals("schemaType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

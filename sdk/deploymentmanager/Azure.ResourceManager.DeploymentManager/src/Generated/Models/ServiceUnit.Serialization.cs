@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Optional<ServiceUnitArtifacts> artifacts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("steps"))
+                if (property.NameEquals("steps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     steps = array;
                     continue;
                 }
-                if (property.NameEquals("targetResourceGroup"))
+                if (property.NameEquals("targetResourceGroup"u8))
                 {
                     targetResourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deploymentMode"))
+                if (property.NameEquals("deploymentMode"u8))
                 {
                     deploymentMode = property.Value.GetString().ToDeploymentMode();
                     continue;
                 }
-                if (property.NameEquals("artifacts"))
+                if (property.NameEquals("artifacts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

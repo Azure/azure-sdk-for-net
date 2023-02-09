@@ -2,10 +2,10 @@ namespace Azure.ResourceManager.RecoveryServices
 {
     public static partial class RecoveryServicesExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResponse> CapabilitiesRecoveryService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResponse>> CapabilitiesRecoveryServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CheckNameAvailabilityResult> CheckNameAvailabilityRecoveryService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityRecoveryServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult> GetCapabilitiesRecoveryService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>> GetCapabilitiesRecoveryServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.RecoveryServices.VaultResource> GetVault(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.VaultResource>> GetVaultAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion left, Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CapabilitiesResponse : Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase
+    public partial class CapabilitiesResult : Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase
     {
-        public CapabilitiesResponse(string resourceCapabilitiesBaseType) : base (default(string)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResponse> CapabilitiesResponseDnsZones { get { throw null; } }
+        public CapabilitiesResult(string resourceCapabilitiesBaseType) : base (default(string)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult> CapabilitiesResponseDnsZones { get { throw null; } }
     }
     public partial class CertificateContent
     {
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public DnsZone() { }
         public Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType? SubResource { get { throw null; } set { } }
     }
-    public partial class DnsZoneResponse : Azure.ResourceManager.RecoveryServices.Models.DnsZone
+    public partial class DnsZoneResult : Azure.ResourceManager.RecoveryServices.Models.DnsZone
     {
-        public DnsZoneResponse() { }
+        public DnsZoneResult() { }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

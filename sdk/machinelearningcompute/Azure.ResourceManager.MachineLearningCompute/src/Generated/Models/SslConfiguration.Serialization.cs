@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Cert))
             {
-                writer.WritePropertyName("cert");
+                writer.WritePropertyName("cert"u8);
                 writer.WriteStringValue(Cert);
             }
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             if (Optional.IsDefined(Cname))
             {
-                writer.WritePropertyName("cname");
+                writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Optional<string> cname = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     status = new Status(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cert"))
+                if (property.NameEquals("cert"u8))
                 {
                     cert = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cname"))
+                if (property.NameEquals("cname"u8))
                 {
                     cname = property.Value.GetString();
                     continue;

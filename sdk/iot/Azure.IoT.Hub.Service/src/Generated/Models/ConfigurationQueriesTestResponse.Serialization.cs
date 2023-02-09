@@ -19,12 +19,12 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<IReadOnlyDictionary<string, string>> customMetricQueryErrors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetConditionError"))
+                if (property.NameEquals("targetConditionError"u8))
                 {
                     targetConditionError = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customMetricQueryErrors"))
+                if (property.NameEquals("customMetricQueryErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

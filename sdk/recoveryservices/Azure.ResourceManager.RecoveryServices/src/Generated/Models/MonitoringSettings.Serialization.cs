@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
-                writer.WritePropertyName("azureMonitorAlertSettings");
+                writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);
             }
             if (Optional.IsDefined(ClassicAlertSettings))
             {
-                writer.WritePropertyName("classicAlertSettings");
+                writer.WritePropertyName("classicAlertSettings"u8);
                 writer.WriteObjectValue(ClassicAlertSettings);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<ClassicAlertSettings> classicAlertSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureMonitorAlertSettings"))
+                if (property.NameEquals("azureMonitorAlertSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     azureMonitorAlertSettings = AzureMonitorAlertSettings.DeserializeAzureMonitorAlertSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("classicAlertSettings"))
+                if (property.NameEquals("classicAlertSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

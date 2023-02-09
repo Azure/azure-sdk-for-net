@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             writer.WriteEndObject();

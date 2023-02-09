@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<SqlServerCommunicationLinkData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

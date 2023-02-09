@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Optional<long> transferDeadLetterMessageCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activeMessageCount"))
+                if (property.NameEquals("activeMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     activeMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("deadLetterMessageCount"))
+                if (property.NameEquals("deadLetterMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     deadLetterMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("scheduledMessageCount"))
+                if (property.NameEquals("scheduledMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     scheduledMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("transferMessageCount"))
+                if (property.NameEquals("transferMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     transferMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("transferDeadLetterMessageCount"))
+                if (property.NameEquals("transferDeadLetterMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

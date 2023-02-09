@@ -23,12 +23,12 @@ namespace Azure.Quantum.Jobs.Models
             Optional<MeterPeriod> period = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimension"))
+                if (property.NameEquals("dimension"u8))
                 {
                     dimension = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +38,12 @@ namespace Azure.Quantum.Jobs.Models
                     scope = new DimensionScope(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("providerId"))
+                if (property.NameEquals("providerId"u8))
                 {
                     providerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("utilization"))
+                if (property.NameEquals("utilization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.Quantum.Jobs.Models
                     utilization = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("holds"))
+                if (property.NameEquals("holds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.Quantum.Jobs.Models
                     holds = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.Quantum.Jobs.Models
                     limit = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("period"))
+                if (property.NameEquals("period"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

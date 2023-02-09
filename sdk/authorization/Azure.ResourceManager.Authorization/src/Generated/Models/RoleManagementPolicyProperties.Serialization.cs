@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<RoleManagementScopeType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Authorization.Models
                             id = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
