@@ -14,11 +14,11 @@ namespace Azure.Communication.CallAutomation
         /// Creates a new RedirectCallOptions object.
         /// </summary>
         /// <param name="incomingCallContext"></param>
-        /// <param name="target"></param>
-        public RedirectCallOptions(string incomingCallContext, CommunicationIdentifier target)
+        /// <param name="callInvite"></param>
+        public RedirectCallOptions(string incomingCallContext, CallInvite callInvite)
         {
             IncomingCallContext = incomingCallContext;
-            Target = target;
+            CallInvite = callInvite;
         }
 
         /// <summary>
@@ -27,8 +27,8 @@ namespace Azure.Communication.CallAutomation
         public string IncomingCallContext { get; }
 
         /// <summary>
-        /// The target identity.
+        /// Call invitee information.
         /// </summary>
-        public CommunicationIdentifier Target { get; }
+        public CallInvite CallInvite { get; }
     }
 }

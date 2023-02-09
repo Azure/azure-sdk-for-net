@@ -241,15 +241,15 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// Redirect an incoming call to the target identity.
-        /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="target"> The target identity. </param>
+        /// <param name="incomingCallContext"> The incoming call context. </param>
+        /// <param name="callInvite"> The target where the call is redirected to. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
-        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="callInvite"/> is null.</exception>
+        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CallInvite callInvite, CancellationToken cancellationToken = default)
         {
-            RedirectCallOptions options = new RedirectCallOptions(incomingCallContext, target);
+            RedirectCallOptions options = new RedirectCallOptions(incomingCallContext, callInvite);
 
             return await RedirectCallAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -269,7 +269,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(
@@ -288,14 +288,14 @@ namespace Azure.Communication.CallAutomation
 
         /// Redirect an incoming call to the target identities.
         /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="target"> The target identities. </param>
+        /// <param name="callInvite"> The target where the call is redirected to. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
-        public virtual Response RedirectCall(string incomingCallContext, CommunicationIdentifier target, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="callInvite"/> is null.</exception>
+        public virtual Response RedirectCall(string incomingCallContext, CallInvite callInvite, CancellationToken cancellationToken = default)
         {
-            RedirectCallOptions options = new RedirectCallOptions(incomingCallContext, target);
+            RedirectCallOptions options = new RedirectCallOptions(incomingCallContext, callInvite);
 
             return RedirectCall(options, cancellationToken);
         }
@@ -315,7 +315,7 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.Target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
                 return AzureCommunicationServicesRestClient.RedirectCall(
@@ -430,45 +430,9 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CallInvite callInvite, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
-            scope.Start();
-            try
-            {
-                if (callInvite == null)
-                {
-                    throw new ArgumentNullException(nameof(callInvite));
-                }
+            CreateCallOptions options = new CreateCallOptions(callInvite, callbackUri);
 
-                if (callbackUri == null)
-                {
-                    throw new ArgumentNullException(nameof(callbackUri));
-                }
-
-                var createCallOptions = new CreateCallOptions(callInvite, callbackUri);
-
-                CreateCallRequestInternal request = CreateCallRequest(createCallOptions);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-
-                var createCallResponse = await AzureCommunicationServicesRestClient.CreateCallAsync(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken
-                    ).ConfigureAwait(false);
-
-                var result = new CreateCallResult(
-                    GetCallConnection(createCallResponse.Value.CallConnectionId),
-                    new CallConnectionProperties(createCallResponse.Value));
-                result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
-
-                return Response.FromValue(result,
-                    createCallResponse.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return await CreateCallAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -523,45 +487,9 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual Response<CreateCallResult> CreateCall(CallInvite callInvite, Uri callbackUri, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(CreateCall)}");
-            scope.Start();
-            try
-            {
-                if (callInvite == null)
-                {
-                    throw new ArgumentNullException(nameof(callInvite));
-                }
+            CreateCallOptions options = new CreateCallOptions(callInvite, callbackUri);
 
-                if (callbackUri == null)
-                {
-                    throw new ArgumentNullException(nameof(callbackUri));
-                }
-
-                var createCallOptions = new CreateCallOptions(callInvite, callbackUri);
-
-                CreateCallRequestInternal request = CreateCallRequest(createCallOptions);
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-
-                var createCallResponse = AzureCommunicationServicesRestClient.CreateCall(
-                    request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.GetRepeatabilityFirstSentString(),
-                    cancellationToken
-                    );
-
-                var result = new CreateCallResult(
-                    GetCallConnection(createCallResponse.Value.CallConnectionId),
-                    new CallConnectionProperties(createCallResponse.Value));
-                result.SetEventProcessor(EventProcessor, createCallResponse.Value.CallConnectionId, request.OperationContext);
-
-                return Response.FromValue(result,
-                    createCallResponse.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return CreateCall(options, cancellationToken);
         }
 
         /// <summary>
