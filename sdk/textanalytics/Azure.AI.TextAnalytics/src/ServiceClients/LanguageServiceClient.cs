@@ -2094,14 +2094,12 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<ClassificationCategoryCollection> DynamicClassify(
             string document,
             IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
             string language = default,
-            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
             Argument.AssertNotNullOrEmpty(categories, nameof(categories));
-
-            options ??= new DynamicClassifyOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassify)}");
             scope.AddAttribute("document", document);
@@ -2115,16 +2113,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextDynamicClassificationInput input = new()
                 {
                     AnalysisInput = multiLanguageInput,
-                    Parameters = new DynamicClassificationTaskParameters(
-                        options.DisableServiceLogs,
-                        options.ModelVersion,
-                        options.ClassificationType,
-                        categories.ToList())
+                    Parameters = new DynamicClassificationTaskParameters(categories.ToList()) { ClassificationType = classificationType }
                 };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
                     input,
-                    options.IncludeStatistics,
                     cancellationToken: cancellationToken);
 
                 DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
@@ -2147,41 +2140,41 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
             IEnumerable<string> documents,
             IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
             string language = default,
-            DynamicClassifyOptions options = default,
+            TextAnalyticsRequestOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNullOrEmpty(categories, nameof(categories));
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return DynamicClassifyBatch(documentInputs, categories, options, cancellationToken);
+            return DynamicClassifyBatch(documentInputs, categories, classificationType, options, cancellationToken);
         }
 
         public override Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
             IEnumerable<TextDocumentInput> documents,
             IEnumerable<string> categories,
-            DynamicClassifyOptions options = default,
+            ClassificationType? classificationType = default,
+            TextAnalyticsRequestOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNullOrEmpty(categories, nameof(categories));
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return DynamicClassifyBatch(documentInputs, categories, options, cancellationToken);
+            return DynamicClassifyBatch(documentInputs, categories, classificationType, options, cancellationToken);
         }
 
         public override async Task<Response<ClassificationCategoryCollection>> DynamicClassifyAsync(
             string document,
             IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
             string language = default,
-            DynamicClassifyOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
             Argument.AssertNotNullOrEmpty(categories, nameof(categories));
-
-            options ??= new DynamicClassifyOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassify)}");
             scope.AddAttribute("document", document);
@@ -2195,16 +2188,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextDynamicClassificationInput input = new()
                 {
                     AnalysisInput = multiLanguageInput,
-                    Parameters = new DynamicClassificationTaskParameters(
-                        options.DisableServiceLogs,
-                        options.ModelVersion,
-                        options.ClassificationType,
-                        categories.ToList())
+                    Parameters = new DynamicClassificationTaskParameters(categories.ToList()) { ClassificationType = classificationType }
                 };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
                     input,
-                    options.IncludeStatistics,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 DynamicClassificationTaskResult taskResult = (DynamicClassificationTaskResult)result.Value;
@@ -2227,37 +2215,40 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
             IEnumerable<string> documents,
             IEnumerable<string> categories,
+            ClassificationType? classificationType = default,
             string language = default,
-            DynamicClassifyOptions options = default,
+            TextAnalyticsRequestOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNullOrEmpty(categories, nameof(categories));
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            return await DynamicClassifyBatchAsync(documentInputs, categories, options, cancellationToken).ConfigureAwait(false);
+            return await DynamicClassifyBatchAsync(documentInputs, categories, classificationType, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
             IEnumerable<TextDocumentInput> documents,
             IEnumerable<string> categories,
-            DynamicClassifyOptions options = default,
+            ClassificationType? classificationType = default,
+            TextAnalyticsRequestOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             Argument.AssertNotNullOrEmpty(categories, nameof(categories));
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            return await DynamicClassifyBatchAsync(documentInputs, categories, options, cancellationToken).ConfigureAwait(false);
+            return await DynamicClassifyBatchAsync(documentInputs, categories, classificationType, options, cancellationToken).ConfigureAwait(false);
         }
 
         private Response<DynamicClassifyDocumentResultCollection> DynamicClassifyBatch(
             MultiLanguageAnalysisInput multiLanguageInput,
             IEnumerable<string> categories,
-            DynamicClassifyOptions options,
+            ClassificationType? classificationType,
+            TextAnalyticsRequestOptions options,
             CancellationToken cancellationToken)
         {
-            options ??= new DynamicClassifyOptions();
+            options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassifyBatch)}");
             scope.Start();
@@ -2270,7 +2261,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                     Parameters = new DynamicClassificationTaskParameters(
                         options.DisableServiceLogs,
                         options.ModelVersion,
-                        options.ClassificationType,
+                        classificationType,
                         categories.ToList())
                 };
 
@@ -2296,10 +2287,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         private async Task<Response<DynamicClassifyDocumentResultCollection>> DynamicClassifyBatchAsync(
             MultiLanguageAnalysisInput multiLanguageInput,
             IEnumerable<string> categories,
-            DynamicClassifyOptions options,
+            ClassificationType? classificationType,
+            TextAnalyticsRequestOptions options,
             CancellationToken cancellationToken)
         {
-            options ??= new DynamicClassifyOptions();
+            options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DynamicClassifyBatch)}");
             scope.Start();
@@ -2312,7 +2304,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                     Parameters = new DynamicClassificationTaskParameters(
                         options.DisableServiceLogs,
                         options.ModelVersion,
-                        options.ClassificationType,
+                        classificationType,
                         categories.ToList())
                 };
 
