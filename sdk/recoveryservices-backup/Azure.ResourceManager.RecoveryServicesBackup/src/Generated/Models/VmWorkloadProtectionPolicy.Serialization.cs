@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadProtectionPolicy DeserializeVmWorkloadProtectionPolicy(JsonElement element)
         {
-            Optional<WorkloadType> workLoadType = default;
-            Optional<Settings> settings = default;
+            Optional<BackupWorkloadType> workLoadType = default;
+            Optional<BackupCommonSettings> settings = default;
             Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;
             Optional<bool> makePolicyConsistent = default;
             Optional<int> protectedItemsCount = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    workLoadType = new WorkloadType(property.Value.GetString());
+                    workLoadType = new BackupWorkloadType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("settings"))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    settings = Settings.DeserializeSettings(property.Value);
+                    settings = BackupCommonSettings.DeserializeBackupCommonSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("subProtectionPolicy"))

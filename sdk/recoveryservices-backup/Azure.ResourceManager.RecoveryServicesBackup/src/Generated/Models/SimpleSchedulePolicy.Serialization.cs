@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<ScheduleRunType> scheduleRunFrequency = default;
             Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
             Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
-            Optional<HourlySchedule> hourlySchedule = default;
+            Optional<BackupHourlySchedule> hourlySchedule = default;
             Optional<int> scheduleWeeklyFrequency = default;
             string schedulePolicyType = default;
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hourlySchedule = HourlySchedule.DeserializeHourlySchedule(property.Value);
+                    hourlySchedule = BackupHourlySchedule.DeserializeBackupHourlySchedule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scheduleWeeklyFrequency"))

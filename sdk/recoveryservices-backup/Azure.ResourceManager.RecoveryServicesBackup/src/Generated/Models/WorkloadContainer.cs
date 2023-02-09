@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Re-Do Operation
         /// Serialized Name: AzureWorkloadContainer.operationType
         /// </param>
-        internal WorkloadContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string sourceResourceId, DateTimeOffset? lastUpdatedOn, WorkloadContainerExtendedInfo extendedInfo, WorkloadType? workloadType, OperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
+        internal WorkloadContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string sourceResourceId, DateTimeOffset? lastUpdatedOn, WorkloadContainerExtendedInfo extendedInfo, BackupWorkloadType? workloadType, WorkloadOperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             SourceResourceId = sourceResourceId;
             LastUpdatedOn = lastUpdatedOn;
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Workload type for which registration was sent.
         /// Serialized Name: AzureWorkloadContainer.workloadType
         /// </summary>
-        public WorkloadType? WorkloadType { get; set; }
+        public BackupWorkloadType? WorkloadType { get; set; }
         /// <summary>
         /// Re-Do Operation
         /// Serialized Name: AzureWorkloadContainer.operationType
         /// </summary>
-        public OperationType? OperationType { get; set; }
+        public WorkloadOperationType? OperationType { get; set; }
     }
 }

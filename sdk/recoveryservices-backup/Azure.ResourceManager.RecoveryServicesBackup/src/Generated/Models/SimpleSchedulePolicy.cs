@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// At every number weeks this schedule has to be run.
         /// Serialized Name: SimpleSchedulePolicy.scheduleWeeklyFrequency
         /// </param>
-        internal SimpleSchedulePolicy(string schedulePolicyType, ScheduleRunType? scheduleRunFrequency, IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, HourlySchedule hourlySchedule, int? scheduleWeeklyFrequency) : base(schedulePolicyType)
+        internal SimpleSchedulePolicy(string schedulePolicyType, ScheduleRunType? scheduleRunFrequency, IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, BackupHourlySchedule hourlySchedule, int? scheduleWeeklyFrequency) : base(schedulePolicyType)
         {
             ScheduleRunFrequency = scheduleRunFrequency;
             ScheduleRunDays = scheduleRunDays;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Hourly Schedule of this Policy
         /// Serialized Name: SimpleSchedulePolicy.hourlySchedule
         /// </summary>
-        public HourlySchedule HourlySchedule { get; set; }
+        public BackupHourlySchedule HourlySchedule { get; set; }
         /// <summary>
         /// At every number weeks this schedule has to be run.
         /// Serialized Name: SimpleSchedulePolicy.scheduleWeeklyFrequency

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Target directory location for restore as files.
         /// Serialized Name: TargetRestoreInfo.targetDirectoryForFileRestore
         /// </param>
-        internal TargetRestoreInfo(OverwriteOption? overwriteOption, string containerId, string databaseName, string targetDirectoryForFileRestore)
+        internal TargetRestoreInfo(RestoreOverwriteOption? overwriteOption, string containerId, string databaseName, string targetDirectoryForFileRestore)
         {
             OverwriteOption = overwriteOption;
             ContainerId = containerId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Can Overwrite if Target DataBase already exists
         /// Serialized Name: TargetRestoreInfo.overwriteOption
         /// </summary>
-        public OverwriteOption? OverwriteOption { get; set; }
+        public RestoreOverwriteOption? OverwriteOption { get; set; }
         /// <summary>
         /// Resource Id name of the container in which Target DataBase resides
         /// Serialized Name: TargetRestoreInfo.containerId

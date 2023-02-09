@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> sourceResourceId = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<WorkloadContainerExtendedInfo> extendedInfo = default;
-            Optional<WorkloadType> workloadType = default;
-            Optional<OperationType> operationType = default;
+            Optional<BackupWorkloadType> workloadType = default;
+            Optional<WorkloadOperationType> operationType = default;
             Optional<string> friendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
             Optional<string> registrationStatus = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    workloadType = new WorkloadType(property.Value.GetString());
+                    workloadType = new BackupWorkloadType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operationType"))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    operationType = new OperationType(property.Value.GetString());
+                    operationType = new WorkloadOperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("friendlyName"))

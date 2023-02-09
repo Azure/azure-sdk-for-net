@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IaasVmProtectedItem()
         {
             HealthDetails = new ChangeTrackingList<IaasVmHealthDetails>();
-            KpisHealths = new ChangeTrackingDictionary<string, KPIResourceHealthDetails>();
+            KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
             ProtectedItemType = "AzureIaaSVMProtectedItem";
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Extended Properties for Azure IaasVM Backup.
         /// Serialized Name: AzureIaaSVMProtectedItem.extendedProperties
         /// </param>
-        internal IaasVmProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string virtualMachineId, string protectionStatus, ProtectionState? protectionState, HealthStatus? healthStatus, IList<IaasVmHealthDetails> healthDetails, IDictionary<string, KPIResourceHealthDetails> kpisHealths, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectedItemDataId, IaasVmProtectedItemExtendedInfo extendedInfo, IaasVmBackupExtendedProperties extendedProperties) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
+        internal IaasVmProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string virtualMachineId, string protectionStatus, ProtectionState? protectionState, IaasVmProtectedItemHealthStatus? healthStatus, IList<IaasVmHealthDetails> healthDetails, IDictionary<string, KpiResourceHealthDetails> kpisHealths, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectedItemDataId, IaasVmProtectedItemExtendedInfo extendedInfo, IaasVmBackupExtendedProperties extendedProperties) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
         {
             FriendlyName = friendlyName;
             VirtualMachineId = virtualMachineId;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Health status of protected item.
         /// Serialized Name: AzureIaaSVMProtectedItem.healthStatus
         /// </summary>
-        public HealthStatus? HealthStatus { get; }
+        public IaasVmProtectedItemHealthStatus? HealthStatus { get; }
         /// <summary>
         /// Health details on this backup item.
         /// Serialized Name: AzureIaaSVMProtectedItem.healthDetails
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Health details of different KPIs
         /// Serialized Name: AzureIaaSVMProtectedItem.kpisHealths
         /// </summary>
-        public IDictionary<string, KPIResourceHealthDetails> KpisHealths { get; }
+        public IDictionary<string, KpiResourceHealthDetails> KpisHealths { get; }
         /// <summary>
         /// Last backup operation status.
         /// Serialized Name: AzureIaaSVMProtectedItem.lastBackupStatus

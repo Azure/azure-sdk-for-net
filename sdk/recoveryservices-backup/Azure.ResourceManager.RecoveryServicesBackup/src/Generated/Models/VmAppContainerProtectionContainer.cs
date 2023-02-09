@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Re-Do Operation
         /// Serialized Name: AzureWorkloadContainer.operationType
         /// </param>
-        internal VmAppContainerProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string sourceResourceId, DateTimeOffset? lastUpdatedOn, WorkloadContainerExtendedInfo extendedInfo, WorkloadType? workloadType, OperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType)
+        internal VmAppContainerProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string sourceResourceId, DateTimeOffset? lastUpdatedOn, WorkloadContainerExtendedInfo extendedInfo, BackupWorkloadType? workloadType, WorkloadOperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType)
         {
             ContainerType = containerType;
         }

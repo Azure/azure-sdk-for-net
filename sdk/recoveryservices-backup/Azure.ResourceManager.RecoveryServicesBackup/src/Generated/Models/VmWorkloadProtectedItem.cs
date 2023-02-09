@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Azure VM workload-specific protected item.
     /// Serialized Name: AzureVmWorkloadProtectedItem
     /// Please note <see cref="VmWorkloadProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDbInstanceProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/> and <see cref="VmWorkloadSqlDatabaseProtectedItem"/>.
+    /// The available derived classes include <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/> and <see cref="VmWorkloadSqlDatabaseProtectedItem"/>.
     /// </summary>
     public partial class VmWorkloadProtectedItem : BackupProtectedItemProperties
     {
         /// <summary> Initializes a new instance of VmWorkloadProtectedItem. </summary>
         public VmWorkloadProtectedItem()
         {
-            KpisHealths = new ChangeTrackingDictionary<string, KPIResourceHealthDetails>();
+            KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
             ProtectedItemType = "AzureVmWorkloadProtectedItem";
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Health details of different KPIs
         /// Serialized Name: AzureVmWorkloadProtectedItem.kpisHealths
         /// </param>
-        internal VmWorkloadProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, ProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, ProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KPIResourceHealthDetails> kpisHealths) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
+        internal VmWorkloadProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, ProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KpiResourceHealthDetails> kpisHealths) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
         {
             FriendlyName = friendlyName;
             ServerName = serverName;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Health status of the backup item, evaluated based on last heartbeat received
         /// Serialized Name: AzureVmWorkloadProtectedItem.protectedItemHealthStatus
         /// </summary>
-        public ProtectedItemHealthStatus? ProtectedItemHealthStatus { get; set; }
+        public VmWorkloadProtectedItemHealthStatus? ProtectedItemHealthStatus { get; set; }
         /// <summary>
         /// Additional information for this backup item.
         /// Serialized Name: AzureVmWorkloadProtectedItem.extendedInfo
@@ -233,6 +233,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Health details of different KPIs
         /// Serialized Name: AzureVmWorkloadProtectedItem.kpisHealths
         /// </summary>
-        public IDictionary<string, KPIResourceHealthDetails> KpisHealths { get; }
+        public IDictionary<string, KpiResourceHealthDetails> KpisHealths { get; }
     }
 }

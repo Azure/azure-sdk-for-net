@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Name of usage.
         /// Serialized Name: BackupManagementUsage.name
         /// </param>
-        internal BackupManagementUsage(UsagesUnit? unit, string quotaPeriod, DateTimeOffset? nextResetOn, long? currentValue, long? limit, NameInfo name)
+        internal BackupManagementUsage(BackupUsagesUnit? unit, string quotaPeriod, DateTimeOffset? nextResetOn, long? currentValue, long? limit, BackupNameInfo name)
         {
             Unit = unit;
             QuotaPeriod = quotaPeriod;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Unit of the usage.
         /// Serialized Name: BackupManagementUsage.unit
         /// </summary>
-        public UsagesUnit? Unit { get; }
+        public BackupUsagesUnit? Unit { get; }
         /// <summary>
         /// Quota period of usage.
         /// Serialized Name: BackupManagementUsage.quotaPeriod
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Name of usage.
         /// Serialized Name: BackupManagementUsage.name
         /// </summary>
-        public NameInfo Name { get; }
+        public BackupNameInfo Name { get; }
     }
 }

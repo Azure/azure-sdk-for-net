@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileShareProtectionPolicy DeserializeFileShareProtectionPolicy(JsonElement element)
         {
-            Optional<WorkloadType> workLoadType = default;
+            Optional<BackupWorkloadType> workLoadType = default;
             Optional<SchedulePolicy> schedulePolicy = default;
             Optional<RetentionPolicy> retentionPolicy = default;
             Optional<string> timeZone = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    workLoadType = new WorkloadType(property.Value.GetString());
+                    workLoadType = new BackupWorkloadType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schedulePolicy"))

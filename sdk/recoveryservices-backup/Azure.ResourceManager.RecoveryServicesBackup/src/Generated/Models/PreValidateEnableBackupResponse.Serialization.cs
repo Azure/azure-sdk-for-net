@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static PreValidateEnableBackupResponse DeserializePreValidateEnableBackupResponse(JsonElement element)
         {
-            Optional<ValidationStatus> status = default;
+            Optional<BackupValidationStatus> status = default;
             Optional<string> errorCode = default;
             Optional<string> errorMessage = default;
             Optional<string> recommendation = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new ValidationStatus(property.Value.GetString());
+                    status = new BackupValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorCode"))

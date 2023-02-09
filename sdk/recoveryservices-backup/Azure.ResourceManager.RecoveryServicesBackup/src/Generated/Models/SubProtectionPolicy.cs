@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// Serialized Name: SubProtectionPolicy.tieringPolicy
         /// </param>
-        internal SubProtectionPolicy(PolicyType? policyType, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, IDictionary<string, TieringPolicy> tieringPolicy)
+        internal SubProtectionPolicy(SubProtectionPolicyType? policyType, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, IDictionary<string, TieringPolicy> tieringPolicy)
         {
             PolicyType = policyType;
             SchedulePolicy = schedulePolicy;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Type of backup policy type
         /// Serialized Name: SubProtectionPolicy.policyType
         /// </summary>
-        public PolicyType? PolicyType { get; set; }
+        public SubProtectionPolicyType? PolicyType { get; set; }
         /// <summary>
         /// Backup schedule specified as part of backup policy.
         /// Serialized Name: SubProtectionPolicy.schedulePolicy

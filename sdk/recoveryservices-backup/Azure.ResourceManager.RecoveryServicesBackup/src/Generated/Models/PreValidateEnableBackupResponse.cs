@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Specifies the product specific ds name. E.g. vm;iaasvmcontainer;rgname;vmname. This is required for portal
         /// Serialized Name: PreValidateEnableBackupResponse.protectedItemName
         /// </param>
-        internal PreValidateEnableBackupResponse(ValidationStatus? status, string errorCode, string errorMessage, string recommendation, string containerName, string protectedItemName)
+        internal PreValidateEnableBackupResponse(BackupValidationStatus? status, string errorCode, string errorMessage, string recommendation, string containerName, string protectedItemName)
         {
             Status = status;
             ErrorCode = errorCode;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Validation Status
         /// Serialized Name: PreValidateEnableBackupResponse.status
         /// </summary>
-        public ValidationStatus? Status { get; }
+        public BackupValidationStatus? Status { get; }
         /// <summary>
         /// Response error code
         /// Serialized Name: PreValidateEnableBackupResponse.errorCode

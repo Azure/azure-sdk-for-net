@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<CopyOption> copyOptions = default;
             Optional<RestoreRequestType> restoreRequestType = default;
             Optional<IList<RestoreFileSpecs>> restoreFileSpecs = default;
-            Optional<TargetAFSRestoreInfo> targetDetails = default;
+            Optional<TargetAfsRestoreInfo> targetDetails = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targetDetails = TargetAFSRestoreInfo.DeserializeTargetAFSRestoreInfo(property.Value);
+                    targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("objectType"))

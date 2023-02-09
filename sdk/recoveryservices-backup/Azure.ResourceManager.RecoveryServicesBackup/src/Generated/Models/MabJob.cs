@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Additional information on the job.
         /// Serialized Name: MabJob.extendedInfo
         /// </param>
-        internal MabJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, string mabServerName, MabServerType? mabServerType, WorkloadType? workloadType, IList<MabErrorInfo> errorDetails, MabJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
+        internal MabJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, string mabServerName, MabServerType? mabServerType, BackupWorkloadType? workloadType, IList<MabErrorInfo> errorDetails, MabJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
         {
             Duration = duration;
             ActionsInfo = actionsInfo;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Workload type of backup item.
         /// Serialized Name: MabJob.workloadType
         /// </summary>
-        public WorkloadType? WorkloadType { get; set; }
+        public BackupWorkloadType? WorkloadType { get; set; }
         /// <summary>
         /// The errors.
         /// Serialized Name: MabJob.errorDetails

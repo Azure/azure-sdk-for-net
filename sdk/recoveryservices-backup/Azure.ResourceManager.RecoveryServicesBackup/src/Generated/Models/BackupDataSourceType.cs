@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string GenericDataSourceValue = "GenericDataSource";
         private const string SqlDataBaseValue = "SQLDataBase";
         private const string AzureFileShareValue = "AzureFileShare";
-        private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
-        private const string SAPAseDatabaseValue = "SAPAseDatabase";
-        private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
+        private const string SapHanaDatabaseValue = "SAPHanaDatabase";
+        private const string SapAseDatabaseValue = "SAPAseDatabase";
+        private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
         /// <summary>
         /// Invalid
@@ -111,17 +111,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// SAPHanaDatabase
         /// Serialized Name: DataSourceType.SAPHanaDatabase
         /// </summary>
-        public static BackupDataSourceType SAPHanaDatabase { get; } = new BackupDataSourceType(SAPHanaDatabaseValue);
+        public static BackupDataSourceType SapHanaDatabase { get; } = new BackupDataSourceType(SapHanaDatabaseValue);
         /// <summary>
         /// SAPAseDatabase
         /// Serialized Name: DataSourceType.SAPAseDatabase
         /// </summary>
-        public static BackupDataSourceType SAPAseDatabase { get; } = new BackupDataSourceType(SAPAseDatabaseValue);
+        public static BackupDataSourceType SapAseDatabase { get; } = new BackupDataSourceType(SapAseDatabaseValue);
         /// <summary>
         /// SAPHanaDBInstance
         /// Serialized Name: DataSourceType.SAPHanaDBInstance
         /// </summary>
-        public static BackupDataSourceType SAPHanaDBInstance { get; } = new BackupDataSourceType(SAPHanaDBInstanceValue);
+        public static BackupDataSourceType SapHanaDBInstance { get; } = new BackupDataSourceType(SapHanaDBInstanceValue);
         /// <summary> Determines if two <see cref="BackupDataSourceType"/> values are the same. </summary>
         public static bool operator ==(BackupDataSourceType left, BackupDataSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupDataSourceType"/> values are not the same. </summary>

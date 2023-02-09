@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static WeeklyRetentionFormat DeserializeWeeklyRetentionFormat(JsonElement element)
         {
             Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
-            Optional<IList<WeekOfMonth>> weeksOfTheMonth = default;
+            Optional<IList<BackupWeekOfMonth>> weeksOfTheMonth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfTheWeek"))
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WeekOfMonth> array = new List<WeekOfMonth>();
+                    List<BackupWeekOfMonth> array = new List<BackupWeekOfMonth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToWeekOfMonth());
+                        array.Add(item.GetString().ToBackupWeekOfMonth());
                     }
                     weeksOfTheMonth = array;
                     continue;

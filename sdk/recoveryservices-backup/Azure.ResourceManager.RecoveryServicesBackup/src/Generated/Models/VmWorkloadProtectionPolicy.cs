@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Fix the policy inconsistency
         /// Serialized Name: AzureVmWorkloadProtectionPolicy.makePolicyConsistent
         /// </param>
-        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, WorkloadType? workLoadType, Settings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? makePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? makePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
         {
             WorkLoadType = workLoadType;
             Settings = settings;
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Type of workload for the backup management
         /// Serialized Name: AzureVmWorkloadProtectionPolicy.workLoadType
         /// </summary>
-        public WorkloadType? WorkLoadType { get; set; }
+        public BackupWorkloadType? WorkLoadType { get; set; }
         /// <summary>
         /// Common settings for the backup management
         /// Serialized Name: AzureVmWorkloadProtectionPolicy.settings
         /// </summary>
-        public Settings Settings { get; set; }
+        public BackupCommonSettings Settings { get; set; }
         /// <summary>
         /// List of sub-protection policies which includes schedule and retention
         /// Serialized Name: AzureVmWorkloadProtectionPolicy.subProtectionPolicy

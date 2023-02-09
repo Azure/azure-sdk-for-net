@@ -22,6 +22,7 @@ mgmt-debug:
 rename-mapping:
   Job: BackupJobProperties
   JobResource: BackupJob
+  JobResourceList: BackupJobListResult
   BackupEngineBase: BackupEngineProperties
   BackupEngineBaseResource: BackupEngine
   BackupResourceConfig: BackupResourceConfigProperties
@@ -87,7 +88,7 @@ rename-mapping:
   AzureVMAppContainerProtectableContainer: VmAppContainerProtectableContainer
   AzureVMAppContainerProtectionContainer: VmAppContainerProtectionContainer
   AzureVMResourceFeatureSupportRequest: VmResourceFeatureSupportContent
-  AzureVMResourceFeatureSupportResponse: VmResourceFeatureSupportResponse
+  AzureVMResourceFeatureSupportResponse: VmResourceFeatureSupportResult
   AzureVmWorkloadItem: VmWorkloadItem
   AzureVmWorkloadProtectableItem: VmWorkloadProtectableItem
   AzureVmWorkloadProtectedItem: VmWorkloadProtectedItem
@@ -100,8 +101,8 @@ rename-mapping:
   AzureVmWorkloadSAPHanaDatabaseProtectableItem: VmWorkloadSapHanaDatabaseProtectableItem
   AzureVmWorkloadSAPHanaDatabaseProtectedItem: VmWorkloadSapHanaDatabaseProtectedItem
   AzureVmWorkloadSAPHanaDatabaseWorkloadItem: VmWorkloadSapHanaDatabaseWorkloadItem
-  AzureVmWorkloadSAPHanaDBInstance: VmWorkloadSapHanaDbInstance
-  AzureVmWorkloadSAPHanaDBInstanceProtectedItem: VmWorkloadSapHanaDbInstanceProtectedItem
+  AzureVmWorkloadSAPHanaDBInstance: VmWorkloadSapHanaDBInstance
+  AzureVmWorkloadSAPHanaDBInstanceProtectedItem: VmWorkloadSapHanaDBInstanceProtectedItem
   AzureVmWorkloadSAPHanaHSR: VmWorkloadSapHanaHsr
   AzureVmWorkloadSAPHanaSystemProtectableItem: VmWorkloadSapHanaSystemProtectableItem
   AzureVmWorkloadSAPHanaSystemWorkloadItem: VmWorkloadSapHanaSystemWorkloadItem
@@ -142,6 +143,7 @@ rename-mapping:
   BackupRequestResource: BackupRequestContent
   CreateMode: BackupCreateMode
   DataSourceType: BackupDataSourceType
+  DailySchedule: BackupDailySchedule
   Day: BackupDay
   DayOfWeek: BackupDayOfWeek
   DedupState: VaultDedupState
@@ -150,9 +152,25 @@ rename-mapping:
   ErrorDetail: BackupErrorDetail
   ExtendedProperties: IaasVmBackupExtendedProperties
   FabricName: BackupFabricName
+  HealthStatus: IaasVmProtectedItemHealthStatus
+  ProtectedItemHealthStatus: VmWorkloadProtectedItemHealthStatus
+  HourlySchedule: BackupHourlySchedule
   ILRRequest: IlrRequestProperties
   ILRRequestResource: ILRRequestContent
+  ListRecoveryPointsRecommendedForMoveRequest: RecoveryPointsRecommendedForMoveContent
+  MonthOfYear: BackupMonthOfYear
+  NameInfo: BackupNameInfo
+  OperationType: WorkloadOperationType
+  OverwriteOptions: RestoreOverwriteOptions
+  PolicyType: SubProtectionPolicyType
+  Settings: BackupCommonSettings
+  SupportStatus: VmResourceFeatureSupportStatus
   StorageType: BackupStorageType
+  UsagesUnit: BackupUsagesUnit
+  ValidationStatus: BackupValidationStatus
+  WeekOfMonth: BackupWeekOfMonth
+  WeeklySchedule: BackupWeeklySchedule
+  WorkloadType: BackupWorkloadType
   XcoolState: VaultXcoolState
 
 format-by-name-rules:
@@ -188,8 +206,8 @@ rename-rules:
   IaaSVM: IaasVm
   Iaasvm: IaasVm
   Sqldb: SqlDB
-  SQLAG: SqlAG
-  Sqlag: SqlAG
+  SQLAG: SqlAvailabilityGroup
+  Sqlag: SqlAvailabilityGroup
   MAB: Mab
   DPM: Dpm
   Issqlcompression: IsSqlCompression
@@ -197,6 +215,9 @@ rename-rules:
   SQL: Sql
   BEK: Bek
   KEK: Kek
+  KPI: Kpi
+  AFS: Afs
+  SAP: Sap
 
 override-operation-name:
   BackupStatus_Get: GetBackupStatus

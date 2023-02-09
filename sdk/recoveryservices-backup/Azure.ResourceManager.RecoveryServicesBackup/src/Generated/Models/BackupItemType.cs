@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string GenericDataSourceValue = "GenericDataSource";
         private const string SqlDataBaseValue = "SQLDataBase";
         private const string AzureFileShareValue = "AzureFileShare";
-        private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
-        private const string SAPAseDatabaseValue = "SAPAseDatabase";
-        private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
+        private const string SapHanaDatabaseValue = "SAPHanaDatabase";
+        private const string SapAseDatabaseValue = "SAPAseDatabase";
+        private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
         /// <summary>
         /// Invalid
@@ -111,17 +111,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// SAPHanaDatabase
         /// Serialized Name: BackupItemType.SAPHanaDatabase
         /// </summary>
-        public static BackupItemType SAPHanaDatabase { get; } = new BackupItemType(SAPHanaDatabaseValue);
+        public static BackupItemType SapHanaDatabase { get; } = new BackupItemType(SapHanaDatabaseValue);
         /// <summary>
         /// SAPAseDatabase
         /// Serialized Name: BackupItemType.SAPAseDatabase
         /// </summary>
-        public static BackupItemType SAPAseDatabase { get; } = new BackupItemType(SAPAseDatabaseValue);
+        public static BackupItemType SapAseDatabase { get; } = new BackupItemType(SapAseDatabaseValue);
         /// <summary>
         /// SAPHanaDBInstance
         /// Serialized Name: BackupItemType.SAPHanaDBInstance
         /// </summary>
-        public static BackupItemType SAPHanaDBInstance { get; } = new BackupItemType(SAPHanaDBInstanceValue);
+        public static BackupItemType SapHanaDBInstance { get; } = new BackupItemType(SapHanaDBInstanceValue);
         /// <summary> Determines if two <see cref="BackupItemType"/> values are the same. </summary>
         public static bool operator ==(BackupItemType left, BackupItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupItemType"/> values are not the same. </summary>

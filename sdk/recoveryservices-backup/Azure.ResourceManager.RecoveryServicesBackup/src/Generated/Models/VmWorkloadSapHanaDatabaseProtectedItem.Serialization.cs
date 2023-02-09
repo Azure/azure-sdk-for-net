@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> lastBackupTime = default;
             Optional<BackupErrorDetail> lastBackupErrorDetail = default;
             Optional<string> protectedItemDataSourceId = default;
-            Optional<ProtectedItemHealthStatus> protectedItemHealthStatus = default;
+            Optional<VmWorkloadProtectedItemHealthStatus> protectedItemHealthStatus = default;
             Optional<VmWorkloadProtectedItemExtendedInfo> extendedInfo = default;
-            Optional<IDictionary<string, KPIResourceHealthDetails>> kpisHealths = default;
+            Optional<IDictionary<string, KpiResourceHealthDetails>> kpisHealths = default;
             string protectedItemType = default;
             Optional<BackupManagementType> backupManagementType = default;
             Optional<BackupDataSourceType> workloadType = default;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectedItemHealthStatus = new ProtectedItemHealthStatus(property.Value.GetString());
+                    protectedItemHealthStatus = new VmWorkloadProtectedItemHealthStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extendedInfo"))
@@ -295,10 +295,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, KPIResourceHealthDetails> dictionary = new Dictionary<string, KPIResourceHealthDetails>();
+                    Dictionary<string, KpiResourceHealthDetails> dictionary = new Dictionary<string, KpiResourceHealthDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KPIResourceHealthDetails.DeserializeKPIResourceHealthDetails(property0.Value));
+                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value));
                     }
                     kpisHealths = dictionary;
                     continue;

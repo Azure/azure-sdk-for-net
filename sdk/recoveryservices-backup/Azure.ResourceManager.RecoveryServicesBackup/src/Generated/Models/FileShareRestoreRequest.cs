@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Target File Share Details
         /// Serialized Name: AzureFileShareRestoreRequest.targetDetails
         /// </param>
-        internal FileShareRestoreRequest(string objectType, RecoveryType? recoveryType, string sourceResourceId, CopyOption? copyOptions, RestoreRequestType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAFSRestoreInfo targetDetails) : base(objectType)
+        internal FileShareRestoreRequest(string objectType, RecoveryType? recoveryType, string sourceResourceId, CopyOption? copyOptions, RestoreRequestType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType)
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
@@ -92,6 +92,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Target File Share Details
         /// Serialized Name: AzureFileShareRestoreRequest.targetDetails
         /// </summary>
-        public TargetAFSRestoreInfo TargetDetails { get; set; }
+        public TargetAfsRestoreInfo TargetDetails { get; set; }
     }
 }

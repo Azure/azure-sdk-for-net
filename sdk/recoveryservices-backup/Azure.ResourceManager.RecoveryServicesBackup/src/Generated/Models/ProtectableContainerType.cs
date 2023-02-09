@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// SQLAGWorkLoadContainer
         /// Serialized Name: ProtectableContainerType.SQLAGWorkLoadContainer
         /// </summary>
-        SqlAGWorkLoadContainer,
+        SqlAvailabilityGroupWorkLoadContainer,
         /// <summary>
         /// StorageContainer
         /// Serialized Name: ProtectableContainerType.StorageContainer

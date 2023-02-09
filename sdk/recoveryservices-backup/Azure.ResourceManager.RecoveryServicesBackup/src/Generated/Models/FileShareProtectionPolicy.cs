@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;.
         /// Serialized Name: AzureFileShareProtectionPolicy.timeZone
         /// </param>
-        internal FileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, WorkloadType? workLoadType, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        internal FileShareProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, string timeZone) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
         {
             WorkLoadType = workLoadType;
             SchedulePolicy = schedulePolicy;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Type of workload for the backup management
         /// Serialized Name: AzureFileShareProtectionPolicy.workLoadType
         /// </summary>
-        public WorkloadType? WorkLoadType { get; set; }
+        public BackupWorkloadType? WorkLoadType { get; set; }
         /// <summary>
         /// Backup schedule specified as part of backup policy.
         /// Serialized Name: AzureFileShareProtectionPolicy.schedulePolicy

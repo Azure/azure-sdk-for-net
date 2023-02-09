@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of YearlyRetentionSchedule. </summary>
         public YearlyRetentionSchedule()
         {
-            MonthsOfYear = new ChangeTrackingList<MonthOfYear>();
+            MonthsOfYear = new ChangeTrackingList<BackupMonthOfYear>();
             RetentionTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Retention duration of retention Policy.
         /// Serialized Name: YearlyRetentionSchedule.retentionDuration
         /// </param>
-        internal YearlyRetentionSchedule(RetentionScheduleFormat? retentionScheduleFormatType, IList<MonthOfYear> monthsOfYear, DailyRetentionFormat retentionScheduleDaily, WeeklyRetentionFormat retentionScheduleWeekly, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
+        internal YearlyRetentionSchedule(RetentionScheduleFormat? retentionScheduleFormatType, IList<BackupMonthOfYear> monthsOfYear, DailyRetentionFormat retentionScheduleDaily, WeeklyRetentionFormat retentionScheduleWeekly, IList<DateTimeOffset> retentionTimes, RetentionDuration retentionDuration)
         {
             RetentionScheduleFormatType = retentionScheduleFormatType;
             MonthsOfYear = monthsOfYear;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// List of months of year of yearly retention policy.
         /// Serialized Name: YearlyRetentionSchedule.monthsOfYear
         /// </summary>
-        public IList<MonthOfYear> MonthsOfYear { get; }
+        public IList<BackupMonthOfYear> MonthsOfYear { get; }
         /// <summary>
         /// Daily retention format for yearly retention policy.
         /// Serialized Name: YearlyRetentionSchedule.retentionScheduleDaily
