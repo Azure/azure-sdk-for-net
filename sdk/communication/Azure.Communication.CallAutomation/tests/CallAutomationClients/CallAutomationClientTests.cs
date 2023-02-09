@@ -128,41 +128,41 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
-        public async Task RedirectCallAsync_204NoContent(string incomingCallContext, CommunicationIdentifier target)
+        public async Task RedirectCallAsync_204NoContent(string incomingCallContext, CallInvite callInvite)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
-            var response = await callAutomationClient.RedirectCallAsync(incomingCallContext, target).ConfigureAwait(false);
+            var response = await callAutomationClient.RedirectCallAsync(incomingCallContext, callInvite).ConfigureAwait(false);
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
-        public void RedirectCall_204NoContent(string incomingCallContext, CommunicationIdentifier target)
+        public void RedirectCall_204NoContent(string incomingCallContext, CallInvite callInvite)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
 
-            var response = callAutomationClient.RedirectCall(incomingCallContext, target);
+            var response = callAutomationClient.RedirectCall(incomingCallContext, callInvite);
             Assert.NotNull(response);
             Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
-        public void RedirectCallAsync_404NotFound(string incomingCallContext, CommunicationIdentifier target)
+        public void RedirectCallAsync_404NotFound(string incomingCallContext, CallInvite callInvite)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RedirectCallAsync(incomingCallContext, target).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async() => await callAutomationClient.RedirectCallAsync(incomingCallContext, callInvite).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
-        public void RedirectCall_404NotFound(string incomingCallContext, CommunicationIdentifier target)
+        public void RedirectCall_404NotFound(string incomingCallContext, CallInvite callInvite)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RedirectCall(incomingCallContext, target));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.RedirectCall(incomingCallContext, callInvite));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -402,7 +402,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 new object?[]
                 {
                     "dummyIncomingCallContext",
-                    new CommunicationUserIdentifier("12345")
+                    new CallInvite(new CommunicationUserIdentifier("12345"))
                 },
             };
         }
