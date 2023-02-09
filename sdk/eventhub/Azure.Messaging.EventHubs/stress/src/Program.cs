@@ -63,6 +63,9 @@ public class Program
 
         var testParameters = new TestParameters();
         testParameters.EventHubsConnectionString = eventHubsConnectionString;
+        var runAllRoles = !int.TryParse(opts.Role, out var roleIndex);
+        testParameters.JobIndex = roleIndex;
+        testParameters.RunAllRoles = runAllRoles;
 
         var cancellationSource = new CancellationTokenSource();
         var runDuration = TimeSpan.FromHours(testParameters.DurationInHours);
@@ -90,7 +93,7 @@ public class Program
                         environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var bufferedProducerTest = new BufferedProducerTest(testParameters, metrics, opts.Role);
+                        var bufferedProducerTest = new BufferedProducerTest(testParameters, metrics);
                         testScenarioTasks.Add(bufferedProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
@@ -98,7 +101,7 @@ public class Program
                         environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var burstBufferedProducerTest = new BurstBufferedProducerTest(testParameters, metrics, opts.Role);
+                        var burstBufferedProducerTest = new BurstBufferedProducerTest(testParameters, metrics);
                         testScenarioTasks.Add(burstBufferedProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
@@ -106,7 +109,7 @@ public class Program
                         environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var eventProducerTest = new EventProducerTest(testParameters, metrics, opts.Role);
+                        var eventProducerTest = new EventProducerTest(testParameters, metrics);
                         testScenarioTasks.Add(eventProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
@@ -123,7 +126,7 @@ public class Program
                         environment.TryGetValue(EnvironmentVariables.StorageAccountProcessorTest, out storageConnectionString);
                         testParameters.StorageConnectionString = PromptForResources("Storage Account Connection String", testName, storageConnectionString, opts.Interactive);
 
-                        var processorTest = new ProcessorTest(testParameters, metrics, opts.Role);
+                        var processorTest = new ProcessorTest(testParameters, metrics);
                         testScenarioTasks.Add(processorTest.RunTestAsync(cancellationSource.Token));
                         break;
 
@@ -131,7 +134,7 @@ public class Program
                         environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
                         testParameters.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
-                        var consumerTest = new ConsumerTest(testParameters, metrics, opts.Role);
+                        var consumerTest = new ConsumerTest(testParameters, metrics);
                         testScenarioTasks.Add(consumerTest.RunTestAsync(cancellationSource.Token));
                         break;
                 }

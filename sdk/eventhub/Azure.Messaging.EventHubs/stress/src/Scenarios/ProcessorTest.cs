@@ -28,6 +28,9 @@ public class ProcessorTest : TestScenario
     /// <summary>The number of current handler calls happening within the same partition.</summary>
     private int[] _partitionHandlerCalls;
 
+    /// <summary>The ids of all of the partitions.</summary>
+    private string[] _partitionIds;
+
     /// <summary>Holds the set of events that have been read by this instance. The key is the unique Id set by the producer.</summary>
     private ConcurrentDictionary<string, byte> _readEvents { get; } = new ConcurrentDictionary<string, byte>();
 
@@ -35,7 +38,7 @@ public class ProcessorTest : TestScenario
     private ConcurrentDictionary<string, int> _lastReadPartitionSequence { get; } = new ConcurrentDictionary<string, int>();
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles { get; } = {Role.PartitionPublisher, Role.Processor, Role.Processor, Role.Processor};
+    public override Role[] Roles { get; } = {Role.PartitionPublisher, Role.Processor, Role.Processor, Role.Processor};
 
     /// <summary>
     ///  Initializes a new <see cref="ProcessorTest"/> instance.
@@ -46,8 +49,7 @@ public class ProcessorTest : TestScenario
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
     public ProcessorTest(TestParameters testParameters,
-                         Metrics metrics,
-                         string jobIndex = default) : base(testParameters, metrics, jobIndex, $"net-processor-{Guid.NewGuid().ToString()}")
+                         Metrics metrics) : base(testParameters, metrics, $"net-processor-{Guid.NewGuid().ToString()}")
     {
     }
 
@@ -59,23 +61,22 @@ public class ProcessorTest : TestScenario
     ///
     public async override Task RunTestAsync(CancellationToken cancellationToken)
     {
-        var partitionIds = await _testParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
-        var partitionCount = partitionIds.Length;
+        _partitionIds = await _testParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
+        var partitionCount = _partitionIds.Length;
         _partitionHandlerCalls = Enumerable.Range(0, partitionCount).Select(index => 0).ToArray();
 
-        var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
         var testRunTasks = new List<Task>();
 
-        if (runAllRoles)
+        if (_testParameters.RunAllRoles)
         {
-            foreach (Role role in _roles)
+            foreach (Role role in Roles)
             {
-                testRunTasks.Add(RunRoleAsync(role, roleIndex, partitionIds, cancellationToken));
+                testRunTasks.Add(RunRoleAsync(role, cancellationToken));
             }
         }
         else
         {
-            testRunTasks.Add(RunRoleAsync(_roles[roleIndex], roleIndex, partitionIds, cancellationToken));
+            testRunTasks.Add(RunRoleAsync(Roles[_testParameters.JobIndex], cancellationToken));
         }
 
         await Task.WhenAll(testRunTasks).ConfigureAwait(false);
@@ -89,11 +90,9 @@ public class ProcessorTest : TestScenario
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     internal override Task RunRoleAsync(Role role,
-                              int roleIndex,
-                              string[] partitionIds,
                               CancellationToken cancellationToken)
     {
-        var partitionCount = partitionIds.Length;
+        var partitionCount = _partitionIds.Length;
         switch (role)
         {
             case Role.Processor:
@@ -105,7 +104,7 @@ public class ProcessorTest : TestScenario
 
             case Role.PartitionPublisher:
                 var partitionPublisherConfiguration = new PartitionPublisherConfiguration();
-                var assignedPartitions = EventTracking.GetAssignedPartitions(partitionCount, roleIndex, partitionIds, _roles);
+                var assignedPartitions = EventTracking.GetAssignedPartitions(partitionCount, _testParameters.JobIndex, _partitionIds, Roles);
                 var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testParameters, _metrics, assignedPartitions);
                 _metrics.Client.TrackEvent("Starting to publish events");
                 return Task.Run(() => partitionPublisher.RunAsync(cancellationToken));

@@ -18,7 +18,7 @@ public class BufferedProducerTest : TestScenario
     public override string Name { get; } = "BufferedProducerTest";
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles { get; } = {Role.BufferedPublisher, Role.BufferedPublisher};
+    public override Role[] Roles { get; } = {Role.BufferedPublisher, Role.BufferedPublisher};
 
     /// <summary>
     ///  Initializes a new <see cref="BufferedProducerTest"/> instance.
@@ -29,8 +29,7 @@ public class BufferedProducerTest : TestScenario
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
     public BufferedProducerTest(TestParameters testParameters,
-                                Metrics metrics,
-                                string jobIndex = default) : base(testParameters, metrics, jobIndex, $"net-buff-prod-{Guid.NewGuid().ToString()}")
+                                Metrics metrics) : base(testParameters, metrics, $"net-buff-prod-{Guid.NewGuid().ToString()}")
     {
     }
 }

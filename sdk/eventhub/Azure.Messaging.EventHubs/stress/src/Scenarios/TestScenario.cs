@@ -18,9 +18,6 @@ public abstract class TestScenario
     /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
     internal readonly TestParameters _testParameters;
 
-    /// <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
-    internal readonly string _jobIndex;
-
     /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
     internal Metrics _metrics;
 
@@ -40,11 +37,9 @@ public abstract class TestScenario
     ///
     public TestScenario(TestParameters testParameters,
                                 Metrics metrics,
-                                string jobIndex,
                                 string testRunId)
     {
         _testParameters = testParameters;
-        _jobIndex = jobIndex;
         _metrics = metrics;
         _metrics.Client.Context.GlobalProperties["TestRunID"] = testRunId;
     }
@@ -57,10 +52,9 @@ public abstract class TestScenario
     ///
     public async virtual Task RunTestAsync(CancellationToken cancellationToken)
     {
-        var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
         var testRunTasks = new List<Task>();
 
-        if (runAllRoles)
+        if (_testParameters.RunAllRoles)
         {
             foreach (Role role in Roles)
             {
@@ -69,7 +63,7 @@ public abstract class TestScenario
         }
         else
         {
-            testRunTasks.Add(RunRoleAsync(Roles[roleIndex], cancellationToken));
+            testRunTasks.Add(RunRoleAsync(Roles[_testParameters.JobIndex], cancellationToken));
         }
 
         await Task.WhenAll(testRunTasks).ConfigureAwait(false);
@@ -87,12 +81,9 @@ public abstract class TestScenario
        switch (role)
         {
             case Role.BufferedPublisher:
-                var publisherConfiguration = new BufferedPublisherConfiguration();
-                var publisher = new BufferedPublisher(_testParameters, publisherConfiguration, _metrics);
-                return Task.Run(() => publisher.RunAsync(cancellationToken));
-
-            case Role.Processor:
-                // TODO
+                var bufferedPublisherConfiguration = new BufferedPublisherConfiguration();
+                var bufferedPublisher = new BufferedPublisher(_testParameters, bufferedPublisherConfiguration, _metrics);
+                return Task.Run(() => bufferedPublisher.RunAsync(cancellationToken));
 
             case Role.Publisher:
                 var publisherConfiguration = new PublisherConfiguration();

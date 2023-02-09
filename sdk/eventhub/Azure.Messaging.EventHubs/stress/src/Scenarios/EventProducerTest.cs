@@ -12,14 +12,13 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The test scenario responsible for running all of the roles needed for the Event Producer test scenario.
 /// <summary/>
 ///
-public class EventProducerTest
+public class EventProducerTest : TestScenario
 {
     /// <summary> The name of this test.</summary>
     public override string Name { get; } = "EventProducerTest";
 
-
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles { get; } = {Role.Publisher, Role.Publisher};
+    public override Role[] Roles { get; } = {Role.Publisher, Role.Publisher};
 
     /// <summary>
     ///  Initializes a new <see cref="EventProducerTest"/> instance.
@@ -30,8 +29,7 @@ public class EventProducerTest
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
     public EventProducerTest(TestParameters testParameters,
-                             Metrics metrics,
-                             string jobIndex = default) : base(testParameters, metrics, jobIndex, $"net-prod-{Guid.NewGuid().ToString()}")
+                             Metrics metrics) : base(testParameters, metrics, $"net-prod-{Guid.NewGuid().ToString()}")
     {
     }
 }
