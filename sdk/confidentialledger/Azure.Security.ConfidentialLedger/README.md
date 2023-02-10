@@ -121,8 +121,6 @@ Operation postResponse = ledgerClient.PostLedgerEntry(
 waitUntil: WaitUntil.Completed,
     RequestContent.Create(
         new { contents = "Hello world!" }));
-
-string content = postOperation.GetRawResponse().Content.ToString();
 transactionId = postResponse.Id;
 string collectionId = "subledger:0";
 
@@ -144,6 +142,7 @@ Console.WriteLine(contents); // "Hello world!"
 
 // Now just provide the transactionId.
 getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
+ledgerEntry = getByCollectionResponse.Content.ToDynamic();
 
 string collectionId2 = ledgerEntry.entry.collectionId;
 
@@ -186,12 +185,12 @@ loaded = false;
 contents = null;
 while (!loaded)
 {
-    dynamic json = getResponse.Content.ToDynamic();
+    ledgerEntry = getResponse.Content.ToDynamic();
 
-    loaded = (LedgerEntry)json.entry != null;
+    loaded = (LedgerEntry)ledgerEntry.entry != null;
     if (loaded)
     {
-        contents = json.entry.contents;
+        contents = ledgerEntry.entry.contents;
     }
     else
     {
@@ -210,12 +209,12 @@ loaded = false;
 string latestDefaultCollection = null;
 while (!loaded)
 {
-    dynamic json = getResponse.Content.ToDynamic();
+    ledgerEntry = getResponse.Content.ToDynamic();
 
-    loaded = (string)json.contents != null;
+    loaded = (string)ledgerEntry.contents != null;
     if (loaded)
     {
-        latestDefaultCollection = json.contents;
+        latestDefaultCollection = ledgerEntry.contents;
     }
     else
     {
@@ -234,12 +233,12 @@ loaded = false;
 string collectionEntry = null;
 while (!loaded)
 {
-    dynamic json = getResponse.Content.ToDynamic();
+    ledgerEntry = getResponse.Content.ToDynamic();
 
-    loaded = (LedgerEntry)json.entry != null;
+    loaded = (LedgerEntry)ledgerEntry.entry != null;
     if (loaded)
     {
-        collectionEntry = json.entry.contents;
+        collectionEntry = ledgerEntry.entry.contents;
     }
     else
     {

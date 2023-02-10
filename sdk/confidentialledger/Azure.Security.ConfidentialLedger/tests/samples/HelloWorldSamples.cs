@@ -88,8 +88,6 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             waitUntil: WaitUntil.Completed,
                 RequestContent.Create(
                     new { contents = "Hello world!" }));
-
-            string content = postOperation.GetRawResponse().Content.ToString();
 #if SNIPPET
             transactionId = postResponse.Id;
 #else
@@ -115,12 +113,16 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             // Now just provide the transactionId.
             getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
+            ledgerEntry = getByCollectionResponse.Content.ToDynamic();
 
             string collectionId2 = ledgerEntry.entry.collectionId;
 
             Console.WriteLine($"{collectionId} == {collectionId2}");
 
-            #endregion
+#if !SNIPPET
+            Assert.AreEqual(collectionId, collectionId2);
+#endif
+#endregion
 
             #region Snippet:GetEnteryWithNoTransactionId
 
@@ -161,12 +163,12 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             contents = null;
             while (!loaded)
             {
-                dynamic json = getResponse.Content.ToDynamic();
+                ledgerEntry = getResponse.Content.ToDynamic();
 
-                loaded = (LedgerEntry)json.entry != null;
+                loaded = (LedgerEntry)ledgerEntry.entry != null;
                 if (loaded)
                 {
-                    contents = json.entry.contents;
+                    contents = ledgerEntry.entry.contents;
                 }
                 else
                 {
@@ -177,6 +179,9 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             string firstEntryContents = ledgerEntry.entry.contents;
             Console.WriteLine(firstEntryContents); // "Hello world 0"
 
+#if !SNIPPET
+            Assert.AreEqual("Hello world 0", firstEntryContents);
+#endif
             // This will return the latest entry available in the default collection.
             getResponse = ledgerClient.GetCurrentLedgerEntry();
 
@@ -185,12 +190,12 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             string latestDefaultCollection = null;
             while (!loaded)
             {
-                dynamic json = getResponse.Content.ToDynamic();
+                ledgerEntry = getResponse.Content.ToDynamic();
 
-                loaded = (string)json.contents != null;
+                loaded = (string)ledgerEntry.contents != null;
                 if (loaded)
                 {
-                    latestDefaultCollection = json.contents;
+                    latestDefaultCollection = ledgerEntry.contents;
                 }
                 else
                 {
@@ -200,6 +205,9 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             Console.WriteLine($"The latest ledger entry from the default collection is {latestDefaultCollection}"); //"Hello world 1"
 
+#if !SNIPPET
+            Assert.AreEqual("Hello world 1", latestDefaultCollection);
+#endif
             // The ledger entry written at collectionTransactionId is retrieved from the collection 'collection'.
             string collectionTransactionId = collectionPostOperation.Id;
 
@@ -209,12 +217,12 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             string collectionEntry = null;
             while (!loaded)
             {
-                dynamic json = getResponse.Content.ToDynamic();
+                ledgerEntry = getResponse.Content.ToDynamic();
 
-                loaded = (LedgerEntry)json.entry != null;
+                loaded = (LedgerEntry)ledgerEntry.entry != null;
                 if (loaded)
                 {
-                    collectionEntry = json.entry.contents;
+                    collectionEntry = ledgerEntry.entry.contents;
                 }
                 else
                 {
@@ -224,6 +232,9 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             Console.WriteLine(collectionEntry); // "Hello world collection 0"
 
+#if !SNIPPET
+            Assert.AreEqual("Hello world collection 0", collectionEntry);
+#endif
             // This will return the latest entry available in the collection.
             getResponse = ledgerClient.GetCurrentLedgerEntry("my collection");
             dynamic currentEntry = getResponse.Content.ToDynamic();
@@ -231,6 +242,9 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             Console.WriteLine($"The latest ledger entry from the collection is {latestCollection}"); // "Hello world collection 1"
 
+#if !SNIPPET
+            Assert.AreEqual("Hello world collection 1", latestCollection);
+#endif
             #endregion
 
             #region Snippet:RangedQuery
