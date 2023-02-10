@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceType.ToString());
-            writer.WritePropertyName("referenceName");
+            writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new FactoryPipelineReferenceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("referenceName"))
+                if (property.NameEquals("referenceName"u8))
                 {
                     referenceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

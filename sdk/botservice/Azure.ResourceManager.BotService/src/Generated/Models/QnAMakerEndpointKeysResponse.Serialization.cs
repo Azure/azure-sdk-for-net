@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> lastStableVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryEndpointKey"))
+                if (property.NameEquals("primaryEndpointKey"u8))
                 {
                     primaryEndpointKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryEndpointKey"))
+                if (property.NameEquals("secondaryEndpointKey"u8))
                 {
                     secondaryEndpointKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("installedVersion"))
+                if (property.NameEquals("installedVersion"u8))
                 {
                     installedVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastStableVersion"))
+                if (property.NameEquals("lastStableVersion"u8))
                 {
                     lastStableVersion = property.Value.GetString();
                     continue;

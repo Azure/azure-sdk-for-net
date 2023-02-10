@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PreserveZipFileNameAsFolder))
             {
-                writer.WritePropertyName("preserveZipFileNameAsFolder");
+                writer.WritePropertyName("preserveZipFileNameAsFolder"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PreserveZipFileNameAsFolder);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(PreserveZipFileNameAsFolder.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CompressionReadSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preserveZipFileNameAsFolder"))
+                if (property.NameEquals("preserveZipFileNameAsFolder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     preserveZipFileNameAsFolder = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

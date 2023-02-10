@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("method");
+            writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToSerialString());
-            writer.WritePropertyName("uri");
+            writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            writer.WritePropertyName("authentication");
+            writer.WritePropertyName("authentication"u8);
             writer.WriteObjectValue(Authentication);
             writer.WriteEndObject();
         }
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             RestRequestAuthentication authentication = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     method = property.Value.GetString().ToRestRequestMethod();
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authentication"))
+                if (property.NameEquals("authentication"u8))
                 {
                     authentication = RestRequestAuthentication.DeserializeRestRequestAuthentication(property.Value);
                     continue;

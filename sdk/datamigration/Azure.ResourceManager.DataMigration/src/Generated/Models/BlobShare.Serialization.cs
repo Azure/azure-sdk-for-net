@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SasUri))
             {
-                writer.WritePropertyName("sasUri");
+                writer.WritePropertyName("sasUri"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<Uri> sasUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasUri"))
+                if (property.NameEquals("sasUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

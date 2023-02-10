@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CurrentTimeStamp))
             {
-                writer.WritePropertyName("currentTimeStamp");
+                writer.WritePropertyName("currentTimeStamp"u8);
                 writer.WriteStringValue(CurrentTimeStamp.Value, "O");
             }
             if (Optional.IsDefined(PreviousTimeStamp))
             {
-                writer.WritePropertyName("previousTimeStamp");
+                writer.WritePropertyName("previousTimeStamp"u8);
                 writer.WriteStringValue(PreviousTimeStamp.Value, "O");
             }
             if (Optional.IsDefined(CurrentCpuStats))
             {
-                writer.WritePropertyName("currentCpuStats");
+                writer.WritePropertyName("currentCpuStats"u8);
                 writer.WriteObjectValue(CurrentCpuStats);
             }
             if (Optional.IsDefined(PreviousCpuStats))
             {
-                writer.WritePropertyName("previousCpuStats");
+                writer.WritePropertyName("previousCpuStats"u8);
                 writer.WriteObjectValue(PreviousCpuStats);
             }
             if (Optional.IsDefined(MemoryStats))
             {
-                writer.WritePropertyName("memoryStats");
+                writer.WritePropertyName("memoryStats"u8);
                 writer.WriteObjectValue(MemoryStats);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Eth0))
             {
-                writer.WritePropertyName("eth0");
+                writer.WritePropertyName("eth0"u8);
                 writer.WriteObjectValue(Eth0);
             }
             writer.WriteEndObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ContainerNetworkInterfaceStatistics> eth0 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currentTimeStamp"))
+                if (property.NameEquals("currentTimeStamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
                     currentTimeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("previousTimeStamp"))
+                if (property.NameEquals("previousTimeStamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     previousTimeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currentCpuStats"))
+                if (property.NameEquals("currentCpuStats"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                     currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("previousCpuStats"))
+                if (property.NameEquals("previousCpuStats"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
                     previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("memoryStats"))
+                if (property.NameEquals("memoryStats"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.AppService.Models
                     memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eth0"))
+                if (property.NameEquals("eth0"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

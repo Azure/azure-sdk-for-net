@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVault))
             {
-                writer.WritePropertyName("keyVault");
+                writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVault);
             }
             if (Optional.IsDefined(KeyName))
             {
-                writer.WritePropertyName("keyName");
+                writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
             if (Optional.IsDefined(KeyVersion))
             {
-                writer.WritePropertyName("keyVersion");
+                writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> keyVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVault"))
+                if (property.NameEquals("keyVault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Logic.Models
                     keyVault = LogicResourceReference.DeserializeLogicResourceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVersion"))
+                if (property.NameEquals("keyVersion"u8))
                 {
                     keyVersion = property.Value.GetString();
                     continue;

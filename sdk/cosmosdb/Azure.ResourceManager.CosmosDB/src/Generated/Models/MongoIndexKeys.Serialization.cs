@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Keys))
             {
-                writer.WritePropertyName("keys");
+                writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IList<string>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("keys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

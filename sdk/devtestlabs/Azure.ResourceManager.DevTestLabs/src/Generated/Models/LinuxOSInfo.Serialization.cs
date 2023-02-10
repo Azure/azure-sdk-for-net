@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinuxOSState))
             {
-                writer.WritePropertyName("linuxOsState");
+                writer.WritePropertyName("linuxOsState"u8);
                 writer.WriteStringValue(LinuxOSState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DevTestLabLinuxOSState> linuxOSState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linuxOsState"))
+                if (property.NameEquals("linuxOsState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

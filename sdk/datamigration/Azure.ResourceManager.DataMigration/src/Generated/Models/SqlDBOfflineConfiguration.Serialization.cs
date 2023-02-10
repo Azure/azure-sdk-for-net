@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<bool> offline = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offline"))
+                if (property.NameEquals("offline"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

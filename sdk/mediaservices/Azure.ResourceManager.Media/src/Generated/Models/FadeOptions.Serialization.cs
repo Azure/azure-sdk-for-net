@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("duration");
+            writer.WritePropertyName("duration"u8);
             writer.WriteStringValue(Duration, "P");
-            writer.WritePropertyName("fadeColor");
+            writer.WritePropertyName("fadeColor"u8);
             writer.WriteStringValue(FadeColor);
             if (Optional.IsDefined(Start))
             {
-                writer.WritePropertyName("start");
+                writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start);
             }
             writer.WriteEndObject();
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> start = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("fadeColor"))
+                if (property.NameEquals("fadeColor"u8))
                 {
                     fadeColor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("start"))
+                if (property.NameEquals("start"u8))
                 {
                     start = property.Value.GetString();
                     continue;

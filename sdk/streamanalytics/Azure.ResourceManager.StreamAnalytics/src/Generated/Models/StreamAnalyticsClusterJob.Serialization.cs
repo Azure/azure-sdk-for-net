@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<StreamingJobState> jobState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("streamingUnits"))
+                if (property.NameEquals("streamingUnits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     streamingUnits = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("jobState"))
+                if (property.NameEquals("jobState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceLocation))
             {
-                writer.WritePropertyName("sourceLocation");
+                writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteObjectValue(SourceLocation);
             }
             if (Optional.IsDefined(TargetLocation))
             {
-                writer.WritePropertyName("targetLocation");
+                writer.WritePropertyName("targetLocation"u8);
                 writer.WriteObjectValue(TargetLocation);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<TargetLocation> targetLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceLocation"))
+                if (property.NameEquals("sourceLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sourceLocation = SourceLocation.DeserializeSourceLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetLocation"))
+                if (property.NameEquals("targetLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

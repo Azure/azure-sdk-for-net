@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryTriggerStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new ContainerRegistryTriggerStatus(property.Value.GetString());
                     continue;

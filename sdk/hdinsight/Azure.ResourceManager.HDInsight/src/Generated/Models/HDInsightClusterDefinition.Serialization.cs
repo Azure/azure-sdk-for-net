@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Blueprint))
             {
-                writer.WritePropertyName("blueprint");
+                writer.WritePropertyName("blueprint"u8);
                 writer.WriteStringValue(Blueprint);
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsCollectionDefined(ComponentVersion))
             {
-                writer.WritePropertyName("componentVersion");
+                writer.WritePropertyName("componentVersion"u8);
                 writer.WriteStartObject();
                 foreach (var item in ComponentVersion)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(Configurations))
             {
-                writer.WritePropertyName("configurations");
+                writer.WritePropertyName("configurations"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Configurations);
 #else
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<BinaryData> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blueprint"))
+                if (property.NameEquals("blueprint"u8))
                 {
                     blueprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("componentVersion"))
+                if (property.NameEquals("componentVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     componentVersion = dictionary;
                     continue;
                 }
-                if (property.NameEquals("configurations"))
+                if (property.NameEquals("configurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SendToServiceOwners))
             {
-                writer.WritePropertyName("sendToServiceOwners");
+                writer.WritePropertyName("sendToServiceOwners"u8);
                 writer.WriteBooleanValue(SendToServiceOwners.Value);
             }
             if (Optional.IsCollectionDefined(CustomEmails))
             {
-                writer.WritePropertyName("customEmails");
+                writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomEmails)
                 {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sendToServiceOwners"))
+                if (property.NameEquals("sendToServiceOwners"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     sendToServiceOwners = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("customEmails"))
+                if (property.NameEquals("customEmails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     customEmails = array;
                     continue;
                 }
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

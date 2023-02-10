@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<PluginCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preparationStartedAt"))
+                if (property.NameEquals("preparationStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     preparationStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resourceAcquisitionStartedAt"))
+                if (property.NameEquals("resourceAcquisitionStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     resourceAcquisitionStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("submissionStartedAt"))
+                if (property.NameEquals("submissionStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     submissionStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("monitoringStartedAt"))
+                if (property.NameEquals("monitoringStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     monitoringStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cleanupStartedAt"))
+                if (property.NameEquals("cleanupStartedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     cleanupStartedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currentState"))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

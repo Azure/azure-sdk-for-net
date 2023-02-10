@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CreateSource))
             {
-                writer.WritePropertyName("createSource");
+                writer.WritePropertyName("createSource"u8);
                 writer.WriteStringValue(CreateSource.Value.ToString());
             }
             if (Optional.IsDefined(SourceUri))
             {
-                writer.WritePropertyName("sourceUri");
+                writer.WritePropertyName("sourceUri"u8);
                 writer.WriteStringValue(SourceUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<Uri> sourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createSource"))
+                if (property.NameEquals("createSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     createSource = new ElasticSanVolumeCreateOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceUri"))
+                if (property.NameEquals("sourceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

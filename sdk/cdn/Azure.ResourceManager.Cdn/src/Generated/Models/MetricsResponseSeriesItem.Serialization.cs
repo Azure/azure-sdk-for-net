@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metric"))
+                if (property.NameEquals("metric"u8))
                 {
                     metric = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     unit = new MetricsResponseSeriesItemUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groups"))
+                if (property.NameEquals("groups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     groups = array;
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

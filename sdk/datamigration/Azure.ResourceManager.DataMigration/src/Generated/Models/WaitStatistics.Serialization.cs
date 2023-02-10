@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<long> waitCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("waitType"))
+                if (property.NameEquals("waitType"u8))
                 {
                     waitType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("waitTimeMs"))
+                if (property.NameEquals("waitTimeMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     waitTimeMs = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("waitCount"))
+                if (property.NameEquals("waitCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StartRestoreOn))
             {
-                writer.WritePropertyName("startRestoreTime");
+                writer.WritePropertyName("startRestoreTime"u8);
                 writer.WriteStringValue(StartRestoreOn.Value, "O");
             }
             if (Optional.IsDefined(EndRestoreOn))
             {
-                writer.WritePropertyName("endRestoreTime");
+                writer.WritePropertyName("endRestoreTime"u8);
                 writer.WriteStringValue(EndRestoreOn.Value, "O");
             }
             if (Optional.IsDefined(SourceTable))
             {
-                writer.WritePropertyName("sourceTable");
+                writer.WritePropertyName("sourceTable"u8);
                 writer.WriteStringValue(SourceTable);
             }
             writer.WriteEndObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<Guid> azureAsyncOperationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startRestoreTime"))
+                if (property.NameEquals("startRestoreTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     startRestoreTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endRestoreTime"))
+                if (property.NameEquals("endRestoreTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     endRestoreTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceTable"))
+                if (property.NameEquals("sourceTable"u8))
                 {
                     sourceTable = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureAsyncOperationId"))
+                if (property.NameEquals("azureAsyncOperationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

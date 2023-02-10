@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Tcp))
             {
-                writer.WritePropertyName("tcp");
+                writer.WritePropertyName("tcp"u8);
                 writer.WriteNumberValue(Tcp.Value);
             }
             if (Optional.IsDefined(Udp))
             {
-                writer.WritePropertyName("udp");
+                writer.WritePropertyName("udp"u8);
                 writer.WriteNumberValue(Udp.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<int> udp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tcp"))
+                if (property.NameEquals("tcp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     tcp = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("udp"))
+                if (property.NameEquals("udp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

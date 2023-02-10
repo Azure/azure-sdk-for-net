@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyList<string>> subscriptionsIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offerId"))
+                if (property.NameEquals("offerId"u8))
                 {
                     offerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEntire"))
+                if (property.NameEquals("isEntire"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     isEntire = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("messageCode"))
+                if (property.NameEquals("messageCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     messageCode = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("icon"))
+                if (property.NameEquals("icon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     icon = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("plans"))
+                if (property.NameEquals("plans"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     plans = array;
                     continue;
                 }
-                if (property.NameEquals("publicContext"))
+                if (property.NameEquals("publicContext"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     publicContext = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subscriptionsIds"))
+                if (property.NameEquals("subscriptionsIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

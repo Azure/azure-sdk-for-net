@@ -14,10 +14,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void ToStringWorksWithNoChanges()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Bar"" : ""Hi!""
-                }";
+                  "Bar" : "Hi!"
+                }
+                """;
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
@@ -29,49 +30,54 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void ToStringWorksWithChanges()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Bar"" : ""Hi!""
-                }";
+                  "Bar" : "Hi!"
+                }
+                """;
 
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             mdoc.RootElement.GetProperty("Bar").Set(null);
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Bar"" : null
-                }"),
+                  "Bar" : null
+                }
+                """),
                 MutableJsonDocumentWriteToTests.RemoveWhiteSpace(mdoc.RootElement.ToString()));
         }
 
         [Test]
         public void ChangesToElementAppearInToString()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Bar"" : ""Hi!""
-                }";
+                  "Bar" : "Hi!"
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
             jd.RootElement.GetProperty("Bar").Set("hello");
 
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Bar"" : ""hello""
-                }"),
+                  "Bar" : "hello"
+                }
+                """),
                 MutableJsonDocumentWriteToTests.RemoveWhiteSpace(jd.RootElement.ToString()));
         }
 
         [Test]
         public void ChangesToElementAppearInJsonElement()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Bar"" : ""Hi!""
-                }";
+                  "Bar" : "Hi!"
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -82,20 +88,22 @@ namespace Azure.Core.Experimental.Tests
 
             JsonElement rootElement = jd.RootElement.GetJsonElement();
             Assert.AreEqual(
-                MutableJsonDocumentWriteToTests.RemoveWhiteSpace(@"
+                MutableJsonDocumentWriteToTests.RemoveWhiteSpace("""
                 {
-                  ""Bar"" : ""hello""
-                }"),
+                  "Bar" : "hello"
+                }
+                """),
                 MutableJsonDocumentWriteToTests.RemoveWhiteSpace(rootElement.ToString()));
         }
 
         [Test]
         public void CanGetNullElement()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Bar"" : null
-                }";
+                  "Bar" : null
+                }
+                """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -107,10 +115,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void ValueKindReflectsChanges()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Bar"" : ""Hi!""
-                }";
+                  "Bar" : "Hi!"
+                }
+            """;
 
             var jd = MutableJsonDocument.Parse(json);
 
@@ -128,7 +137,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanEnumerateArray()
         {
-            string json = @"[0, 1, 2, 3]";
+            string json = "[0, 1, 2, 3]";
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
@@ -144,7 +153,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanEnumerateArrayWithChanges()
         {
-            string json = @"[0, 1, 2, 3]";
+            string json = "[0, 1, 2, 3]";
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 

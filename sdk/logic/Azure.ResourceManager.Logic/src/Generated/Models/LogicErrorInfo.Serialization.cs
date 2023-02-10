@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
             string code = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;

@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ApiManagementProductState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("terms"))
+                if (property.NameEquals("terms"u8))
                 {
                     terms = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionRequired"))
+                if (property.NameEquals("subscriptionRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     subscriptionRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("approvalRequired"))
+                if (property.NameEquals("approvalRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     approvalRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subscriptionsLimit"))
+                if (property.NameEquals("subscriptionsLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     subscriptionsLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

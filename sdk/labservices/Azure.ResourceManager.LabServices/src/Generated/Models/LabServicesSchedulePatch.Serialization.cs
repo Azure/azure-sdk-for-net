@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.LabServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startAt");
+                writer.WritePropertyName("startAt"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(StopOn))
             {
-                writer.WritePropertyName("stopAt");
+                writer.WritePropertyName("stopAt"u8);
                 writer.WriteStringValue(StopOn.Value, "O");
             }
             if (Optional.IsDefined(RecurrencePattern))
             {
-                writer.WritePropertyName("recurrencePattern");
+                writer.WritePropertyName("recurrencePattern"u8);
                 writer.WriteObjectValue(RecurrencePattern);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
-                writer.WritePropertyName("timeZoneId");
+                writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
             if (Optional.IsDefined(Notes))
             {
-                writer.WritePropertyName("notes");
+                writer.WritePropertyName("notes"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Notes);
 #else

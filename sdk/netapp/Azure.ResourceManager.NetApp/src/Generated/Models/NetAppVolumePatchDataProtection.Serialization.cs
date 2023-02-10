@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Backup))
             {
-                writer.WritePropertyName("backup");
+                writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup);
             }
             if (Optional.IsDefined(Snapshot))
             {
-                writer.WritePropertyName("snapshot");
+                writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
             writer.WriteEndObject();

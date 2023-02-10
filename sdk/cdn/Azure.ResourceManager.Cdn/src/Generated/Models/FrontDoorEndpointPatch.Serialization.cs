@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WriteEndObject();

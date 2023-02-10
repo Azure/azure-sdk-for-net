@@ -28,47 +28,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agentGeneratedId"))
+                if (property.NameEquals("agentGeneratedId"u8))
                 {
                     agentGeneratedId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentInstalled"))
+                if (property.NameEquals("agentInstalled"u8))
                 {
                     agentInstalled = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("poweredOn"))
+                if (property.NameEquals("poweredOn"u8))
                 {
                     poweredOn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCenterInfrastructureId"))
+                if (property.NameEquals("vCenterInfrastructureId"u8))
                 {
                     vCenterInfrastructureId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("discoveryType"))
+                if (property.NameEquals("discoveryType"u8))
                 {
                     discoveryType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskDetails"))
+                if (property.NameEquals("diskDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskDetails = array;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"))
+                if (property.NameEquals("validationErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

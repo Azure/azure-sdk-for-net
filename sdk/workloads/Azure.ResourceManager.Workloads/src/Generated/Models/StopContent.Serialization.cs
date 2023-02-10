@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HardStop))
             {
-                writer.WritePropertyName("hardStop");
+                writer.WritePropertyName("hardStop"u8);
                 writer.WriteBooleanValue(HardStop.Value);
             }
             writer.WriteEndObject();

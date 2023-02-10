@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("offeringType");
+            writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
         }

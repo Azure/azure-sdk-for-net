@@ -18,39 +18,39 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountResourceId))
             {
-                writer.WritePropertyName("storageAccountResourceId");
+                writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
             if (Optional.IsDefined(BlobContainer))
             {
-                writer.WritePropertyName("blobContainer");
+                writer.WritePropertyName("blobContainer"u8);
                 writer.WriteStringValue(BlobContainer);
             }
             if (Optional.IsDefined(ArchiveNameFormat))
             {
-                writer.WritePropertyName("archiveNameFormat");
+                writer.WritePropertyName("archiveNameFormat"u8);
                 writer.WriteStringValue(ArchiveNameFormat);
             }
             if (Optional.IsDefined(DataLakeSubscriptionId))
             {
-                writer.WritePropertyName("dataLakeSubscriptionId");
+                writer.WritePropertyName("dataLakeSubscriptionId"u8);
                 writer.WriteStringValue(DataLakeSubscriptionId.Value);
             }
             if (Optional.IsDefined(DataLakeAccountName))
             {
-                writer.WritePropertyName("dataLakeAccountName");
+                writer.WritePropertyName("dataLakeAccountName"u8);
                 writer.WriteStringValue(DataLakeAccountName);
             }
             if (Optional.IsDefined(DataLakeFolderPath))
             {
-                writer.WritePropertyName("dataLakeFolderPath");
+                writer.WritePropertyName("dataLakeFolderPath"u8);
                 writer.WriteStringValue(DataLakeFolderPath);
             }
             writer.WriteEndObject();
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<string> dataLakeFolderPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageAccountResourceId"))
+                        if (property0.NameEquals("storageAccountResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.EventHubs.Models
                             storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("blobContainer"))
+                        if (property0.NameEquals("blobContainer"u8))
                         {
                             blobContainer = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("archiveNameFormat"))
+                        if (property0.NameEquals("archiveNameFormat"u8))
                         {
                             archiveNameFormat = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataLakeSubscriptionId"))
+                        if (property0.NameEquals("dataLakeSubscriptionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.EventHubs.Models
                             dataLakeSubscriptionId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("dataLakeAccountName"))
+                        if (property0.NameEquals("dataLakeAccountName"u8))
                         {
                             dataLakeAccountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataLakeFolderPath"))
+                        if (property0.NameEquals("dataLakeFolderPath"u8))
                         {
                             dataLakeFolderPath = property0.Value.GetString();
                             continue;

@@ -15,7 +15,7 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tsx");
+            writer.WritePropertyName("tsx"u8);
             writer.WriteStringValue(Expression);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.IoT.TimeSeriesInsights
             string tsx = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tsx"))
+                if (property.NameEquals("tsx"u8))
                 {
                     tsx = property.Value.GetString();
                     continue;

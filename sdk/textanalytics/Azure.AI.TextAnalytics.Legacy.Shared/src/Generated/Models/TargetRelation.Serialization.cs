@@ -19,12 +19,12 @@ namespace Azure.AI.TextAnalytics.Legacy
             string @ref = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relationType"))
+                if (property.NameEquals("relationType"u8))
                 {
                     relationType = property.Value.GetString().ToTargetRelationType();
                     continue;
                 }
-                if (property.NameEquals("ref"))
+                if (property.NameEquals("ref"u8))
                 {
                     @ref = property.Value.GetString();
                     continue;

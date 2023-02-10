@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuleType.ToString());
-            writer.WritePropertyName("definition");
+            writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition);
             writer.WriteEndObject();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
             ManagementPolicyDefinition definition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.Storage.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ManagementPolicyRuleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("definition"))
+                if (property.NameEquals("definition"u8))
                 {
                     definition = ManagementPolicyDefinition.DeserializeManagementPolicyDefinition(property.Value);
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> accountSasToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountSasToken"))
+                if (property.NameEquals("accountSasToken"u8))
                 {
                     accountSasToken = property.Value.GetString();
                     continue;

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(BuildPodName))
             {
-                writer.WritePropertyName("buildPodName");
+                writer.WritePropertyName("buildPodName"u8);
                 writer.WriteStringValue(BuildPodName);
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<AppPlatformBuildStageProperties>> buildStages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformBuildResultProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("buildPodName"))
+                if (property.NameEquals("buildPodName"u8))
                 {
                     buildPodName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("buildStages"))
+                if (property.NameEquals("buildStages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

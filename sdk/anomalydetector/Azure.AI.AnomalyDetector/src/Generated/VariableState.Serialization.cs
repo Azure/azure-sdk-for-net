@@ -19,14 +19,14 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             if (Optional.IsDefined(Variable))
             {
-                writer.WritePropertyName("variable");
+                writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
             if (Optional.IsDefined(FilledNARatio))
             {
                 if (FilledNARatio != null)
                 {
-                    writer.WritePropertyName("filledNARatio");
+                    writer.WritePropertyName("filledNARatio"u8);
                     writer.WriteNumberValue(FilledNARatio.Value);
                 }
                 else
@@ -38,7 +38,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (EffectiveCount != null)
                 {
-                    writer.WritePropertyName("effectiveCount");
+                    writer.WritePropertyName("effectiveCount"u8);
                     writer.WriteNumberValue(EffectiveCount.Value);
                 }
                 else
@@ -50,7 +50,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (FirstTimestamp != null)
                 {
-                    writer.WritePropertyName("firstTimestamp");
+                    writer.WritePropertyName("firstTimestamp"u8);
                     writer.WriteStringValue(FirstTimestamp.Value, "O");
                 }
                 else
@@ -62,7 +62,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (LastTimestamp != null)
                 {
-                    writer.WritePropertyName("lastTimestamp");
+                    writer.WritePropertyName("lastTimestamp"u8);
                     writer.WriteStringValue(LastTimestamp.Value, "O");
                 }
                 else
@@ -82,12 +82,12 @@ namespace Azure.AI.AnomalyDetector
             Optional<DateTimeOffset?> lastTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("variable"))
+                if (property.NameEquals("variable"u8))
                 {
                     variable = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filledNARatio"))
+                if (property.NameEquals("filledNARatio"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.AI.AnomalyDetector
                     filledNARatio = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("effectiveCount"))
+                if (property.NameEquals("effectiveCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.AI.AnomalyDetector
                     effectiveCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("firstTimestamp"))
+                if (property.NameEquals("firstTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,7 +117,7 @@ namespace Azure.AI.AnomalyDetector
                     firstTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTimestamp"))
+                if (property.NameEquals("lastTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
