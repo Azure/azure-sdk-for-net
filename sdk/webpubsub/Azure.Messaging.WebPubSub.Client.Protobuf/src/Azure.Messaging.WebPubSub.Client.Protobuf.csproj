@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+    <PackageId>Azure.Messaging.WebPubSub.Client.Protobuf</PackageId>
+    <Description>Client Protobuf Protocol for Azure WebPubSub</Description>
+    <PackageTags>azure;webpubsub.client</PackageTags>
+    <NoWarn>$(NoWarn);0067</NoWarn>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Protos\webpubsub.client.proto" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Threading.Channels" />
+    <PackageReference Include="Azure.Messaging.WebPubSub.Client" VersionOverride="1.0.0-beta.2" />
+    <PackageReference Include="Google.Protobuf" VersionOverride="3.21.9" />
+    <PackageReference Include="Grpc.Tools" VersionOverride="2.50.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Azure.Core" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Protobuf Include="Protos\webpubsub.client.proto" />
+  </ItemGroup>
+</Project>
