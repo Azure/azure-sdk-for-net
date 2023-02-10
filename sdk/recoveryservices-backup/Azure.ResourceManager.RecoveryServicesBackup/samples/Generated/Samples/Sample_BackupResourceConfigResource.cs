@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             {
                 Properties = new BackupResourceConfigProperties()
                 {
-                    StorageType = StorageType.LocallyRedundant,
+                    StorageType = BackupStorageType.LocallyRedundant,
                     StorageTypeState = StorageTypeState.Unlocked,
                 },
             };
@@ -88,38 +88,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get OperationStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOperationStatus_GetOperationStatus()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/BackupDataMove/BackupDataMoveOperationStatus_Get.json
-            // this example is just showing the usage of "GetOperationStatus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BackupResourceConfigResource created on azure
-            // for more information of creating BackupResourceConfigResource, please refer to the document of BackupResourceConfigResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "sourceRG";
-            string vaultName = "source-rsv";
-            ResourceIdentifier backupResourceConfigResourceId = BackupResourceConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
-
-            // invoke the operation
-            string operationId = "00000000-0000-0000-0000-000000000000";
-            OperationStatus result = await backupResourceConfig.GetOperationStatusAsync(operationId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
         // Prepare Data Move
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task BMSPrepareDataMove_PrepareDataMove()
+        public async Task BmsPrepareDataMove_PrepareDataMove()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/BackupDataMove/PrepareDataMove_Post.json
             // this example is just showing the usage of "BMSPrepareDataMove" operation, for the dependent resources, they will have to be created separately.
@@ -138,8 +110,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
 
             // invoke the operation
-            PrepareDataMoveContent content = new PrepareDataMoveContent("/subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/targetRG/providers/Microsoft.RecoveryServices/vaults/target-rsv", "USGov Virginia", DataMoveLevel.Vault);
-            await backupResourceConfig.BMSPrepareDataMoveAsync(WaitUntil.Completed, content);
+            PrepareDataMoveContent content = new PrepareDataMoveContent(new ResourceIdentifier("/subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/targetRG/providers/Microsoft.RecoveryServices/vaults/target-rsv"), new AzureLocation("USGov Virginia"), DataMoveLevel.Vault);
+            await backupResourceConfig.BmsPrepareDataMoveAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }
@@ -147,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         // Trigger Data Move
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task BMSTriggerDataMove_TriggerDataMove()
+        public async Task BmsTriggerDataMove_TriggerDataMove()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/BackupDataMove/TriggerDataMove_Post.json
             // this example is just showing the usage of "BMSTriggerDataMove" operation, for the dependent resources, they will have to be created separately.
@@ -166,38 +138,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
 
             // invoke the operation
-            TriggerDataMoveContent content = new TriggerDataMoveContent("/subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/sourceRG/providers/Microsoft.RecoveryServices/vaults/source-rsv", "USGov Iowa", DataMoveLevel.Vault, "MTg2OTcyMzM4NzYyMjc1NDY3Nzs1YmUzYmVmNi04YjJiLTRhOTItOTllYi01NTM0MDllYjk2NjE=");
-            await backupResourceConfig.BMSTriggerDataMoveAsync(WaitUntil.Completed, content);
+            TriggerDataMoveContent content = new TriggerDataMoveContent(new ResourceIdentifier("/subscriptions/04cf684a-d41f-4550-9f70-7708a3a2283b/resourceGroups/sourceRG/providers/Microsoft.RecoveryServices/vaults/source-rsv"), new AzureLocation("USGov Iowa"), DataMoveLevel.Vault, "MTg2OTcyMzM4NzYyMjc1NDY3Nzs1YmUzYmVmNi04YjJiLTRhOTItOTllYi01NTM0MDllYjk2NjE=");
+            await backupResourceConfig.BmsTriggerDataMoveAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
-        }
-
-        // Get operation result for PrepareDataMove
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetBMSPrepareDataMoveOperationResult_GetOperationResultForPrepareDataMove()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/BackupDataMove/PrepareDataMoveOperationResult_Get.json
-            // this example is just showing the usage of "BMSPrepareDataMoveOperationResult_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BackupResourceConfigResource created on azure
-            // for more information of creating BackupResourceConfigResource, please refer to the document of BackupResourceConfigResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "sourceRG";
-            string vaultName = "source-rsv";
-            ResourceIdentifier backupResourceConfigResourceId = BackupResourceConfigResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
-
-            // invoke the operation
-            string operationId = "00000000-0000-0000-0000-000000000000";
-            VaultStorageConfigOperationResultResponse result = await backupResourceConfig.GetBMSPrepareDataMoveOperationResultAsync(operationId);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

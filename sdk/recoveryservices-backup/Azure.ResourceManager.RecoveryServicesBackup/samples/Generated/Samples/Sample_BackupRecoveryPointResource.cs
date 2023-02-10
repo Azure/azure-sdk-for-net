@@ -123,19 +123,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 {
                     RecoveryPointId = "348916168024334",
                     RecoveryType = RecoveryType.RestoreDisks,
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
-                    StorageAccountId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testingRg/providers/Microsoft.Storage/storageAccounts/testAccount",
-                    Region = "southeastasia",
-                    CreateNewCloudService = true,
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
+                    StorageAccountId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testingRg/providers/Microsoft.Storage/storageAccounts/testAccount"),
+                    Region = new AzureLocation("southeastasia"),
+                    DoesCreateNewCloudService = true,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new EncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails()
                     {
-                        EncryptionEnabled = false,
+                        IsEncryptionEnabled = false,
                     },
                     IdentityInfo = new IdentityInfo()
                     {
                         IsSystemAssignedIdentity = false,
-                        ManagedIdentityResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/asmaskarRG1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/asmaskartestmsi",
+                        ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/asmaskarRG1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/asmaskartestmsi"),
                     },
                 },
             };
@@ -176,22 +176,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 {
                     RecoveryPointId = "348916168024334",
                     RecoveryType = RecoveryType.RestoreDisks,
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
-                    Region = "southeastasia",
-                    CreateNewCloudService = true,
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
+                    Region = new AzureLocation("southeastasia"),
+                    DoesCreateNewCloudService = true,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new EncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails()
                     {
-                        EncryptionEnabled = false,
+                        IsEncryptionEnabled = false,
                     },
                     IdentityInfo = new IdentityInfo()
                     {
                         IsSystemAssignedIdentity = false,
-                        ManagedIdentityResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/asmaskarRG1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/asmaskartestmsi",
+                        ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/asmaskarRG1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/asmaskartestmsi"),
                     },
                     IdentityBasedRestoreDetails = new IdentityBasedRestoreDetails()
                     {
-                        TargetStorageAccountId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testingRg/providers/Microsoft.Storage/storageAccounts/testAccount",
+                        TargetStorageAccountId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testingRg/providers/Microsoft.Storage/storageAccounts/testAccount"),
                     },
                 },
             };
@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     },
                     RecoveryPointId = "348916168024334",
                     RecoveryType = RecoveryType.RestoreDisks,
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
-                    StorageAccountId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testingRg/providers/Microsoft.Storage/storageAccounts/testAccount",
-                    Region = "southeastasia",
-                    CreateNewCloudService = true,
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
+                    StorageAccountId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testingRg/providers/Microsoft.Storage/storageAccounts/testAccount"),
+                    Region = new AzureLocation("southeastasia"),
+                    DoesCreateNewCloudService = true,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new EncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails()
                     {
-                        EncryptionEnabled = false,
+                        IsEncryptionEnabled = false,
                     },
                 },
             };
@@ -285,18 +285,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 {
                     RecoveryPointId = "348916168024334",
                     RecoveryType = RecoveryType.AlternateLocation,
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
-                    TargetVirtualMachineId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2/providers/Microsoft.Compute/virtualmachines/RSMDALRVM981435",
-                    TargetResourceGroupId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2",
-                    StorageAccountId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Storage/storageAccounts/testingAccount",
-                    VirtualNetworkId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet",
-                    SubnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet/subnets/default",
-                    Region = "southeastasia",
-                    CreateNewCloudService = false,
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
+                    TargetVirtualMachineId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2/providers/Microsoft.Compute/virtualmachines/RSMDALRVM981435"),
+                    TargetResourceGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2"),
+                    StorageAccountId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Storage/storageAccounts/testingAccount"),
+                    VirtualNetworkId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet"),
+                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet/subnets/default"),
+                    Region = new AzureLocation("southeastasia"),
+                    DoesCreateNewCloudService = false,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new EncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails()
                     {
-                        EncryptionEnabled = false,
+                        IsEncryptionEnabled = false,
                     },
                     IdentityInfo = new IdentityInfo()
                     {
@@ -341,17 +341,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 {
                     RecoveryPointId = "348916168024334",
                     RecoveryType = RecoveryType.AlternateLocation,
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
-                    TargetVirtualMachineId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2/providers/Microsoft.Compute/virtualmachines/RSMDALRVM981435",
-                    TargetResourceGroupId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2",
-                    VirtualNetworkId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet",
-                    SubnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet/subnets/default",
-                    Region = "southeastasia",
-                    CreateNewCloudService = false,
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
+                    TargetVirtualMachineId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2/providers/Microsoft.Compute/virtualmachines/RSMDALRVM981435"),
+                    TargetResourceGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2"),
+                    VirtualNetworkId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet"),
+                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet/subnets/default"),
+                    Region = new AzureLocation("southeastasia"),
+                    DoesCreateNewCloudService = false,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new EncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails()
                     {
-                        EncryptionEnabled = false,
+                        IsEncryptionEnabled = false,
                     },
                     IdentityInfo = new IdentityInfo()
                     {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     },
                     IdentityBasedRestoreDetails = new IdentityBasedRestoreDetails()
                     {
-                        TargetStorageAccountId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Storage/storageAccounts/testingAccount",
+                        TargetStorageAccountId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Storage/storageAccounts/testingAccount"),
                     },
                 },
             };
@@ -405,18 +405,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     },
                     RecoveryPointId = "348916168024334",
                     RecoveryType = RecoveryType.AlternateLocation,
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
-                    TargetVirtualMachineId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2/providers/Microsoft.Compute/virtualmachines/RSMDALRVM981435",
-                    TargetResourceGroupId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2",
-                    StorageAccountId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Storage/storageAccounts/testingAccount",
-                    VirtualNetworkId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet",
-                    SubnetId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet/subnets/default",
-                    Region = "southeastasia",
-                    CreateNewCloudService = false,
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
+                    TargetVirtualMachineId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2/providers/Microsoft.Compute/virtualmachines/RSMDALRVM981435"),
+                    TargetResourceGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg2"),
+                    StorageAccountId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Storage/storageAccounts/testingAccount"),
+                    VirtualNetworkId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet"),
+                    SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Network/virtualNetworks/testNet/subnets/default"),
+                    Region = new AzureLocation("southeastasia"),
+                    DoesCreateNewCloudService = false,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new EncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails()
                     {
-                        EncryptionEnabled = false,
+                        IsEncryptionEnabled = false,
                     },
                 },
             };
@@ -451,17 +451,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
 
             // invoke the operation
-            ILRRequestResource ilrRequestResource = new ILRRequestResource(new AzureLocation("placeholder"))
+            IlrRequestContent content = new IlrRequestContent(new AzureLocation("placeholder"))
             {
                 Properties = new IaasVmilrRegistrationRequest()
                 {
                     RecoveryPointId = "38823086363464",
-                    VirtualMachineId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/pysdktestrg/providers/Microsoft.Compute/virtualMachines/pysdktestv2vm1",
+                    VirtualMachineId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/pysdktestrg/providers/Microsoft.Compute/virtualMachines/pysdktestv2vm1"),
                     InitiatorName = "Hello World",
                     RenewExistingRegistration = true,
                 },
             };
-            await backupRecoveryPoint.ProvisionItemLevelRecoveryConnectionAsync(ilrRequestResource);
+            await backupRecoveryPoint.ProvisionItemLevelRecoveryConnectionAsync(content);
 
             Console.WriteLine($"Succeeded");
         }

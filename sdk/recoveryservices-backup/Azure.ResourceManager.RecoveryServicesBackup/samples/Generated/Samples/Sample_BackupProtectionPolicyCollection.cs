@@ -293,9 +293,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string policyName = "dailyPolicy2";
             BackupProtectionPolicyData data = new BackupProtectionPolicyData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureFileShareProtectionPolicy()
+                Properties = new FileShareProtectionPolicy()
                 {
-                    WorkLoadType = WorkloadType.AzureFileShare,
+                    WorkLoadType = BackupWorkloadType.AzureFileShare,
                     SchedulePolicy = new SimpleSchedulePolicy()
                     {
                         ScheduleRunFrequency = ScheduleRunType.Daily,
@@ -322,7 +322,7 @@ DateTimeOffset.Parse("2021-09-29T08:00:00.000Z")
                         {
                             DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                             RetentionTimes =
 {
@@ -341,11 +341,11 @@ DateTimeOffset.Parse("2021-09-29T08:00:00.000Z")
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.First
+BackupWeekOfMonth.First
 },
                             },
                             RetentionTimes =
@@ -363,17 +363,17 @@ DateTimeOffset.Parse("2021-09-29T08:00:00.000Z")
                             RetentionScheduleFormatType = RetentionScheduleFormat.Weekly,
                             MonthsOfYear =
 {
-MonthOfYear.January
+BackupMonthOfYear.January
 },
                             RetentionScheduleWeekly = new WeeklyRetentionFormat()
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.First
+BackupWeekOfMonth.First
 },
                             },
                             RetentionTimes =
@@ -428,12 +428,12 @@ DateTimeOffset.Parse("2021-09-29T08:00:00.000Z")
             string policyName = "v2-daily-sample";
             BackupProtectionPolicyData data = new BackupProtectionPolicyData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureIaasVmProtectionPolicy()
+                Properties = new IaasVmProtectionPolicy()
                 {
                     SchedulePolicy = new SimpleSchedulePolicyV2()
                     {
                         ScheduleRunFrequency = ScheduleRunType.Hourly,
-                        HourlySchedule = new HourlySchedule()
+                        HourlySchedule = new BackupHourlySchedule()
                         {
                             Interval = 4,
                             ScheduleWindowStartOn = DateTimeOffset.Parse("2021-12-17T08:00:00Z"),
@@ -458,7 +458,7 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
                         {
                             DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                             RetentionTimes =
 {
@@ -477,11 +477,11 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.First
+BackupWeekOfMonth.First
 },
                             },
                             RetentionTimes =
@@ -499,17 +499,17 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
                             RetentionScheduleFormatType = RetentionScheduleFormat.Weekly,
                             MonthsOfYear =
 {
-MonthOfYear.January
+BackupMonthOfYear.January
 },
                             RetentionScheduleWeekly = new WeeklyRetentionFormat()
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.First
+BackupWeekOfMonth.First
 },
                             },
                             RetentionTimes =
@@ -566,7 +566,7 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
             string policyName = "v2-daily-sample";
             BackupProtectionPolicyData data = new BackupProtectionPolicyData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureIaasVmProtectionPolicy()
+                Properties = new IaasVmProtectionPolicy()
                 {
                     SchedulePolicy = new SimpleSchedulePolicyV2()
                     {
@@ -594,7 +594,7 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
                         {
                             DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                             RetentionTimes =
 {
@@ -613,11 +613,11 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.First
+BackupWeekOfMonth.First
 },
                             },
                             RetentionTimes =
@@ -635,17 +635,17 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
                             RetentionScheduleFormatType = RetentionScheduleFormat.Weekly,
                             MonthsOfYear =
 {
-MonthOfYear.January
+BackupMonthOfYear.January
 },
                             RetentionScheduleWeekly = new WeeklyRetentionFormat()
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.First
+BackupWeekOfMonth.First
 },
                             },
                             RetentionTimes =
@@ -702,14 +702,14 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
             string policyName = "testPolicy1";
             BackupProtectionPolicyData data = new BackupProtectionPolicyData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureIaasVmProtectionPolicy()
+                Properties = new IaasVmProtectionPolicy()
                 {
                     SchedulePolicy = new SimpleSchedulePolicy()
                     {
                         ScheduleRunFrequency = ScheduleRunType.Weekly,
                         ScheduleRunDays =
 {
-DayOfWeek.Monday,DayOfWeek.Wednesday,DayOfWeek.Thursday
+BackupDayOfWeek.Monday,BackupDayOfWeek.Wednesday,BackupDayOfWeek.Thursday
 },
                         ScheduleRunTimes =
 {
@@ -722,7 +722,7 @@ DateTimeOffset.Parse("2018-01-24T10:00:00Z")
                         {
                             DaysOfTheWeek =
 {
-DayOfWeek.Monday,DayOfWeek.Wednesday,DayOfWeek.Thursday
+BackupDayOfWeek.Monday,BackupDayOfWeek.Wednesday,BackupDayOfWeek.Thursday
 },
                             RetentionTimes =
 {
@@ -741,11 +741,11 @@ DateTimeOffset.Parse("2018-01-24T10:00:00Z")
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Wednesday,DayOfWeek.Thursday
+BackupDayOfWeek.Wednesday,BackupDayOfWeek.Thursday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.First,WeekOfMonth.Third
+BackupWeekOfMonth.First,BackupWeekOfMonth.Third
 },
                             },
                             RetentionTimes =
@@ -763,17 +763,17 @@ DateTimeOffset.Parse("2018-01-24T10:00:00Z")
                             RetentionScheduleFormatType = RetentionScheduleFormat.Weekly,
                             MonthsOfYear =
 {
-MonthOfYear.February,MonthOfYear.November
+BackupMonthOfYear.February,BackupMonthOfYear.November
 },
                             RetentionScheduleWeekly = new WeeklyRetentionFormat()
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Monday,DayOfWeek.Thursday
+BackupDayOfWeek.Monday,BackupDayOfWeek.Thursday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.Fourth
+BackupWeekOfMonth.Fourth
 },
                             },
                             RetentionTimes =
@@ -828,10 +828,10 @@ DateTimeOffset.Parse("2018-01-24T10:00:00Z")
             string policyName = "testPolicy1";
             BackupProtectionPolicyData data = new BackupProtectionPolicyData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureVmWorkloadProtectionPolicy()
+                Properties = new VmWorkloadProtectionPolicy()
                 {
-                    WorkLoadType = WorkloadType.SQLDataBase,
-                    Settings = new Settings()
+                    WorkLoadType = BackupWorkloadType.SqlDataBase,
+                    Settings = new BackupCommonSettings()
                     {
                         TimeZone = "Pacific Standard Time",
                         IsSqlCompression = false,
@@ -840,13 +840,13 @@ DateTimeOffset.Parse("2018-01-24T10:00:00Z")
 {
 new SubProtectionPolicy()
 {
-PolicyType = PolicyType.Full,
+PolicyType = SubProtectionPolicyType.Full,
 SchedulePolicy = new SimpleSchedulePolicy()
 {
 ScheduleRunFrequency = ScheduleRunType.Weekly,
 ScheduleRunDays =
 {
-DayOfWeek.Sunday,DayOfWeek.Tuesday
+BackupDayOfWeek.Sunday,BackupDayOfWeek.Tuesday
 },
 ScheduleRunTimes =
 {
@@ -859,7 +859,7 @@ WeeklySchedule = new WeeklyRetentionSchedule()
 {
 DaysOfTheWeek =
 {
-DayOfWeek.Sunday,DayOfWeek.Tuesday
+BackupDayOfWeek.Sunday,BackupDayOfWeek.Tuesday
 },
 RetentionTimes =
 {
@@ -878,11 +878,11 @@ RetentionScheduleWeekly = new WeeklyRetentionFormat()
 {
 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
 WeeksOfTheMonth =
 {
-WeekOfMonth.Second
+BackupWeekOfMonth.Second
 },
 },
 RetentionTimes =
@@ -900,17 +900,17 @@ YearlySchedule = new YearlyRetentionSchedule()
 RetentionScheduleFormatType = RetentionScheduleFormat.Weekly,
 MonthsOfYear =
 {
-MonthOfYear.January,MonthOfYear.June,MonthOfYear.December
+BackupMonthOfYear.January,BackupMonthOfYear.June,BackupMonthOfYear.December
 },
 RetentionScheduleWeekly = new WeeklyRetentionFormat()
 {
 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
 WeeksOfTheMonth =
 {
-WeekOfMonth.Last
+BackupWeekOfMonth.Last
 },
 },
 RetentionTimes =
@@ -926,13 +926,13 @@ DurationType = RetentionDurationType.Years,
 },
 },new SubProtectionPolicy()
 {
-PolicyType = PolicyType.Differential,
+PolicyType = SubProtectionPolicyType.Differential,
 SchedulePolicy = new SimpleSchedulePolicy()
 {
 ScheduleRunFrequency = ScheduleRunType.Weekly,
 ScheduleRunDays =
 {
-DayOfWeek.Friday
+BackupDayOfWeek.Friday
 },
 ScheduleRunTimes =
 {
@@ -949,7 +949,7 @@ DurationType = RetentionDurationType.Days,
 },
 },new SubProtectionPolicy()
 {
-PolicyType = PolicyType.Log,
+PolicyType = SubProtectionPolicyType.Log,
 SchedulePolicy = new LogSchedulePolicy()
 {
 ScheduleFrequencyInMins = 60,
@@ -1004,13 +1004,13 @@ DurationType = RetentionDurationType.Days,
             string policyName = "newPolicy2";
             BackupProtectionPolicyData data = new BackupProtectionPolicyData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureFileShareProtectionPolicy()
+                Properties = new FileShareProtectionPolicy()
                 {
-                    WorkLoadType = WorkloadType.AzureFileShare,
+                    WorkLoadType = BackupWorkloadType.AzureFileShare,
                     SchedulePolicy = new SimpleSchedulePolicy()
                     {
                         ScheduleRunFrequency = ScheduleRunType.Hourly,
-                        HourlySchedule = new HourlySchedule()
+                        HourlySchedule = new BackupHourlySchedule()
                         {
                             Interval = 4,
                             ScheduleWindowStartOn = DateTimeOffset.Parse("2021-09-29T08:00:00.000Z"),
@@ -1034,7 +1034,7 @@ DurationType = RetentionDurationType.Days,
                         {
                             DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                             RetentionTimes =
 {
@@ -1052,11 +1052,11 @@ DayOfWeek.Sunday
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.First
+BackupWeekOfMonth.First
 },
                             },
                             RetentionTimes =
@@ -1073,17 +1073,17 @@ WeekOfMonth.First
                             RetentionScheduleFormatType = RetentionScheduleFormat.Weekly,
                             MonthsOfYear =
 {
-MonthOfYear.January
+BackupMonthOfYear.January
 },
                             RetentionScheduleWeekly = new WeeklyRetentionFormat()
                             {
                                 DaysOfTheWeek =
 {
-DayOfWeek.Sunday
+BackupDayOfWeek.Sunday
 },
                                 WeeksOfTheMonth =
 {
-WeekOfMonth.First
+BackupWeekOfMonth.First
 },
                             },
                             RetentionTimes =
@@ -1137,7 +1137,7 @@ WeekOfMonth.First
             string policyName = "testPolicy1";
             BackupProtectionPolicyData data = new BackupProtectionPolicyData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureIaasVmProtectionPolicy()
+                Properties = new IaasVmProtectionPolicy()
                 {
                     SchedulePolicy = new SimpleSchedulePolicy()
                     {

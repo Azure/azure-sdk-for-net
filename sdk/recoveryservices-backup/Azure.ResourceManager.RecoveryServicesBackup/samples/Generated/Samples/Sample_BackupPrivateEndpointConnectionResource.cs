@@ -123,34 +123,5 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 
             Console.WriteLine($"Succeeded");
         }
-
-        // Get OperationStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOperationStatusPrivateEndpoint_GetOperationStatus()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/PrivateEndpointConnection/GetPrivateEndpointConnectionOperationStatus.json
-            // this example is just showing the usage of "PrivateEndpoint_GetOperationStatus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BackupPrivateEndpointConnectionResource created on azure
-            // for more information of creating BackupPrivateEndpointConnectionResource, please refer to the document of BackupPrivateEndpointConnectionResource
-            string subscriptionId = "04cf684a-d41f-4550-9f70-7708a3a2283b";
-            string resourceGroupName = "gaallaRG";
-            string vaultName = "gaallavaultbvtd2msi";
-            string privateEndpointConnectionName = "gaallatestpe2.5704c932-249a-490b-a142-1396838cd3b";
-            ResourceIdentifier backupPrivateEndpointConnectionResourceId = BackupPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, privateEndpointConnectionName);
-            BackupPrivateEndpointConnectionResource backupPrivateEndpointConnection = client.GetBackupPrivateEndpointConnectionResource(backupPrivateEndpointConnectionResourceId);
-
-            // invoke the operation
-            string operationId = "0f48183b-0a44-4dca-aec1-bba5daab888a";
-            OperationStatus result = await backupPrivateEndpointConnection.GetOperationStatusPrivateEndpointAsync(operationId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
     }
 }

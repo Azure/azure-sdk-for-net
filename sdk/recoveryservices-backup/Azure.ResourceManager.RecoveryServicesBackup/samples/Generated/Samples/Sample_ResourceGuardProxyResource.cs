@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             {
                 Properties = new ResourceGuardProxyProperties()
                 {
-                    ResourceGuardResourceId = "/subscriptions/c999d45b-944f-418c-a0d8-c3fcfd1802c8/resourceGroups/vaultguardRGNew/providers/Microsoft.DataProtection/resourceGuards/VaultGuardTestNew",
+                    ResourceGuardResourceId = new ResourceIdentifier("/subscriptions/c999d45b-944f-418c-a0d8-c3fcfd1802c8/resourceGroups/vaultguardRGNew/providers/Microsoft.DataProtection/resourceGuards/VaultGuardTestNew"),
                 },
             };
             ArmOperation<ResourceGuardProxyResource> lro = await resourceGuardProxy.UpdateAsync(WaitUntil.Completed, data);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 },
                 ResourceToBeDeleted = "/subscriptions/62b829ee-7936-40c9-a1c9-47a93f9f3965/resourceGroups/gaallarg/providers/Microsoft.RecoveryServices/vaults/MercuryCrrVault/backupFabrics/Azure/protectionContainers/VMAppContainer;compute;crrtestrg;crrtestvm/protectedItems/SQLDataBase;mssqlserver;testdb",
             };
-            UnlockDeleteResponse result = await resourceGuardProxy.UnlockDeleteAsync(content);
+            UnlockDeleteResult result = await resourceGuardProxy.UnlockDeleteAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

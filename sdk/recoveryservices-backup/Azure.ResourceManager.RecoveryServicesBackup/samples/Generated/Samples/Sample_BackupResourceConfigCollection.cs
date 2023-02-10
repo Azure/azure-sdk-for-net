@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             {
                 Properties = new BackupResourceConfigProperties()
                 {
-                    StorageType = StorageType.LocallyRedundant,
+                    StorageType = BackupStorageType.LocallyRedundant,
                     StorageTypeState = StorageTypeState.Unlocked,
                 },
             };

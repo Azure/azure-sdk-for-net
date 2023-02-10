@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string azureRegion = "southeastasia";
             PreValidateEnableBackupContent content = new PreValidateEnableBackupContent()
             {
-                ResourceType = DataSourceType.Vm,
-                ResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/arunaupgrade/providers/Microsoft.Compute/VirtualMachines/upgrade1",
-                VaultId = "/Subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.RecoveryServices/Vaults/myVault",
+                ResourceType = BackupDataSourceType.Vm,
+                ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/arunaupgrade/providers/Microsoft.Compute/VirtualMachines/upgrade1"),
+                VaultId = new ResourceIdentifier("/Subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.RecoveryServices/Vaults/myVault"),
                 Properties = "",
             };
-            PreValidateEnableBackupResponse result = await subscriptionResource.ValidateProtectionIntentAsync(azureRegion, content);
+            PreValidateEnableBackupResult result = await subscriptionResource.ValidateProtectionIntentAsync(azureRegion, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation
             BackupProtectionIntentData data = new BackupProtectionIntentData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureResourceProtectionIntent()
+                Properties = new ResourceProtectionIntent()
                 {
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/chamsrgtest/providers/Microsoft.Compute/virtualMachines/chamscandel",
-                    PolicyId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.RecoveryServices/vaults/myVault/backupPolicies/myPolicy",
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/chamsrgtest/providers/Microsoft.Compute/virtualMachines/chamscandel"),
+                    PolicyId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.RecoveryServices/vaults/myVault/backupPolicies/myPolicy"),
                 },
             };
             ArmOperation<BackupProtectionIntentResource> lro = await backupProtectionIntent.UpdateAsync(WaitUntil.Completed, data);

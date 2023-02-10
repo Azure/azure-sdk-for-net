@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string protectedItemName = "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1";
             BackupProtectedItemData data = new BackupProtectedItemData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureIaaSComputeVmProtectedItem()
+                Properties = new IaasComputeVmProtectedItem()
                 {
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
-                    PolicyId = "/Subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/SwaggerTestRg/providers/Microsoft.RecoveryServices/vaults/NetSDKTestRsVault/backupPolicies/DefaultPolicy",
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
+                    PolicyId = new ResourceIdentifier("/Subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/SwaggerTestRg/providers/Microsoft.RecoveryServices/vaults/NetSDKTestRsVault/backupPolicies/DefaultPolicy"),
                 },
             };
             ArmOperation<BackupProtectedItemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, protectedItemName, data);
@@ -234,10 +234,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string protectedItemName = "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1";
             BackupProtectedItemData data = new BackupProtectedItemData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureIaaSComputeVmProtectedItem()
+                Properties = new IaasComputeVmProtectedItem()
                 {
                     ProtectionState = ProtectionState.ProtectionStopped,
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
                 },
             };
             ArmOperation<BackupProtectedItemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, protectedItemName, data);

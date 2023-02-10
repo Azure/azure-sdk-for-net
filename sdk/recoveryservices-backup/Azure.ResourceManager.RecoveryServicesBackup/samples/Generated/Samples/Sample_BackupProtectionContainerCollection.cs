@@ -116,9 +116,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string containerName = "StorageContainer;Storage;SwaggerTestRg;swaggertestsa";
             BackupProtectionContainerData data = new BackupProtectionContainerData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureStorageContainer()
+                Properties = new StorageContainer()
                 {
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/SwaggerTestRg/providers/Microsoft.Storage/storageAccounts/swaggertestsa",
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/SwaggerTestRg/providers/Microsoft.Storage/storageAccounts/swaggertestsa"),
                     AcquireStorageAccountLock = AcquireStorageAccountLock.Acquire,
                     FriendlyName = "swaggertestsa",
                     BackupManagementType = BackupManagementType.AzureStorage,

@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string intentObjectName = "vm;iaasvmcontainerv2;chamsrgtest;chamscandel";
             BackupProtectionIntentData data = new BackupProtectionIntentData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureResourceProtectionIntent()
+                Properties = new ResourceProtectionIntent()
                 {
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/chamsrgtest/providers/Microsoft.Compute/virtualMachines/chamscandel",
-                    PolicyId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.RecoveryServices/vaults/myVault/backupPolicies/myPolicy",
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/chamsrgtest/providers/Microsoft.Compute/virtualMachines/chamscandel"),
+                    PolicyId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.RecoveryServices/vaults/myVault/backupPolicies/myPolicy"),
                 },
             };
             ArmOperation<BackupProtectionIntentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, fabricName, intentObjectName, data);

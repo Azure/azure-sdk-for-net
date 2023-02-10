@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation
             BackupProtectedItemData data = new BackupProtectedItemData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureIaaSComputeVmProtectedItem()
+                Properties = new IaasComputeVmProtectedItem()
                 {
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
-                    PolicyId = "/Subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/SwaggerTestRg/providers/Microsoft.RecoveryServices/vaults/NetSDKTestRsVault/backupPolicies/DefaultPolicy",
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
+                    PolicyId = new ResourceIdentifier("/Subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/SwaggerTestRg/providers/Microsoft.RecoveryServices/vaults/NetSDKTestRsVault/backupPolicies/DefaultPolicy"),
                 },
             };
             ArmOperation<BackupProtectedItemResource> lro = await backupProtectedItem.UpdateAsync(WaitUntil.Completed, data);
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation
             BackupProtectedItemData data = new BackupProtectedItemData(new AzureLocation("placeholder"))
             {
-                Properties = new AzureIaaSComputeVmProtectedItem()
+                Properties = new IaasComputeVmProtectedItem()
                 {
                     ProtectionState = ProtectionState.ProtectionStopped,
-                    SourceResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1",
+                    SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
                 },
             };
             ArmOperation<BackupProtectedItemResource> lro = await backupProtectedItem.UpdateAsync(WaitUntil.Completed, data);
@@ -227,50 +227,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupProtectedItemResource backupProtectedItem = client.GetBackupProtectedItemResource(backupProtectedItemResourceId);
 
             // invoke the operation
-            BackupRequestResource backupRequestResource = new BackupRequestResource(new AzureLocation("placeholder"))
+            BackupRequestContent content = new BackupRequestContent(new AzureLocation("placeholder"))
             {
                 Properties = new IaasVmBackupRequest(),
             };
-            await backupProtectedItem.TriggerBackupAsync(backupRequestResource);
+            await backupProtectedItem.TriggerBackupAsync(content);
 
             Console.WriteLine($"Succeeded");
-        }
-
-        // Get Operation Status of Protected Vm
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetProtectedItemOperationStatus_GetOperationStatusOfProtectedVm()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/ProtectedItemOperationStatus.json
-            // this example is just showing the usage of "ProtectedItemOperationStatuses_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BackupProtectedItemResource created on azure
-            // for more information of creating BackupProtectedItemResource, please refer to the document of BackupProtectedItemResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "SwaggerTestRg";
-            string vaultName = "NetSDKTestRsVault";
-            string fabricName = "Azure";
-            string containerName = "IaasVMContainer;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1";
-            string protectedItemName = "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1";
-            ResourceIdentifier backupProtectedItemResourceId = BackupProtectedItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName);
-            BackupProtectedItemResource backupProtectedItem = client.GetBackupProtectedItemResource(backupProtectedItemResourceId);
-
-            // invoke the operation
-            string operationId = "00000000-0000-0000-0000-000000000000";
-            OperationStatus result = await backupProtectedItem.GetProtectedItemOperationStatusAsync(operationId);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Get Protected Azure Vm Recovery Points Recommended for Move
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetRecoveryPointsRecommendedForMoves_GetProtectedAzureVmRecoveryPointsRecommendedForMove()
+        public async Task GetRecoveryPointsRecommendedForMove_GetProtectedAzureVmRecoveryPointsRecommendedForMove()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/AzureIaasVm/RecoveryPointsRecommendedForMove_List.json
             // this example is just showing the usage of "RecoveryPointsRecommendedForMove_List" operation, for the dependent resources, they will have to be created separately.
@@ -292,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupProtectedItemResource backupProtectedItem = client.GetBackupProtectedItemResource(backupProtectedItemResourceId);
 
             // invoke the operation and iterate over the result
-            ListRecoveryPointsRecommendedForMoveContent content = new ListRecoveryPointsRecommendedForMoveContent()
+            RecoveryPointsRecommendedForMoveContent content = new RecoveryPointsRecommendedForMoveContent()
             {
                 ObjectType = "ListRecoveryPointsRecommendedForMoveRequest",
                 ExcludedRPList =
@@ -300,7 +269,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 "348916168024334","348916168024335"
 },
             };
-            await foreach (BackupRecoveryPointResource item in backupProtectedItem.GetRecoveryPointsRecommendedForMovesAsync(content))
+            await foreach (BackupRecoveryPointResource item in backupProtectedItem.GetRecoveryPointsRecommendedForMoveAsync(content))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
