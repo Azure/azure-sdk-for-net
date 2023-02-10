@@ -12,11 +12,11 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
-    //[LiveOnly]
+    [LiveOnly]
     public class ErrorTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public ErrorTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ErrorTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -209,8 +209,21 @@ namespace Azure.Monitor.Ingestion.Tests
             bool isTriggered = false;
             var cts = new CancellationTokenSource();
             options.UploadFailedEventHandler += Options_UploadFailed;
-            var exceptions = Assert.ThrowsAsync<OperationCanceledException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options, cts.Token).ConfigureAwait(false); });
+            AggregateException exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options, cts.Token).ConfigureAwait(false); });
             Assert.IsTrue(isTriggered);
+            Assert.IsTrue(cts.IsCancellationRequested);
+            bool hasBeenCancelled = false;
+            // check if OperationCanceledException is in the Exception list
+            // may not be first one in async case
+            foreach (var exception in exceptions.InnerExceptions)
+            {
+                if (exception is OperationCanceledException)
+                {
+                    hasBeenCancelled = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(hasBeenCancelled);
             Task Options_UploadFailed(UploadFailedEventArgs e)
             {
                 cts.Cancel();

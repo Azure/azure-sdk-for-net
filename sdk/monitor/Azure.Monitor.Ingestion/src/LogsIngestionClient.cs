@@ -241,13 +241,13 @@ namespace Azure.Monitor.Ingestion
                             var eventArgs = new UploadFailedEventArgs(batch.Logs, new RequestFailedException(response), isRunningSynchronously: true, ClientDiagnostics, cancellationToken);
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
                             // sync/async parameter in eventArgs
-                            var exceptionOnUpload = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
+                            var userThrownException = options.OnUploadFailedAsync(eventArgs).EnsureCompleted();
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
                             // if exception is thrown stop processing future batches
-                            if (exceptionOnUpload != null)
+                            if (userThrownException != null)
                             {
                                 shouldAbort = true;
-                                AddException(ref exceptions, exceptionOnUpload);
+                                AddException(ref exceptions, userThrownException);
                             }
                         }
                     }
@@ -281,6 +281,7 @@ namespace Azure.Monitor.Ingestion
                     if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
                     {
                         shouldAbort = true;
+                        AddException(ref exceptions, new OperationCanceledException());
                     }
                 }
             }
@@ -403,6 +404,7 @@ namespace Azure.Monitor.Ingestion
                     if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
                     {
                         shouldAbort = true;
+                        AddException(ref exceptions, new OperationCanceledException());
                     }
                 }
             }
