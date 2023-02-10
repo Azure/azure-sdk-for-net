@@ -232,8 +232,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.CreateRecommendedActionSessionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateCreateRecommendedActionSessionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName).Request, response, OperationFinalStateVia.Location);
+                using var message = _defaultRestClient.CreateCreateRecommendedActionSessionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName);
+                var response = await _defaultRestClient.CreateRecommendedActionSessionAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MySqlArmOperation(_defaultClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -270,8 +271,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = _defaultRestClient.CreateRecommendedActionSession(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, cancellationToken);
-                var operation = new MySqlArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateCreateRecommendedActionSessionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName).Request, response, OperationFinalStateVia.Location);
+                using var message = _defaultRestClient.CreateCreateRecommendedActionSessionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName);
+                var response = _defaultRestClient.CreateRecommendedActionSession(message, cancellationToken);
+                var operation = new MySqlArmOperation(_defaultClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

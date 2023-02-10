@@ -176,8 +176,9 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.RestrictMovementAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restrictMovement, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateRestrictMovementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restrictMovement).Request, response, OperationFinalStateVia.Location);
+                using var message = _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateRestrictMovementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restrictMovement);
+                var response = await _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.RestrictMovementAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,8 +215,9 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.RestrictMovement(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restrictMovement, cancellationToken);
-                var operation = new AvsArmOperation(_avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateRestrictMovementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restrictMovement).Request, response, OperationFinalStateVia.Location);
+                using var message = _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateRestrictMovementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restrictMovement);
+                var response = _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.RestrictMovement(message, cancellationToken);
+                var operation = new AvsArmOperation(_avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

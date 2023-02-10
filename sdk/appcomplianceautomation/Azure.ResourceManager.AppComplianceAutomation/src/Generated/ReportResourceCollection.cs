@@ -86,8 +86,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             scope.Start();
             try
             {
-                var response = await _reportResourceReportRestClient.CreateOrUpdateAsync(reportName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateCreateOrUpdateRequest(reportName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _reportResourceReportRestClient.CreateCreateOrUpdateRequest(reportName, data);
+                var response = await _reportResourceReportRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,8 +128,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             scope.Start();
             try
             {
-                var response = _reportResourceReportRestClient.CreateOrUpdate(reportName, data, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateCreateOrUpdateRequest(reportName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _reportResourceReportRestClient.CreateCreateOrUpdateRequest(reportName, data);
+                var response = _reportResourceReportRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

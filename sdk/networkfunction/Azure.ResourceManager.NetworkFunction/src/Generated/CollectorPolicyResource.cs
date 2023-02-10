@@ -173,8 +173,9 @@ namespace Azure.ResourceManager.NetworkFunction
             scope.Start();
             try
             {
-                var response = await _collectorPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkFunctionArmOperation(_collectorPolicyClientDiagnostics, Pipeline, _collectorPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _collectorPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _collectorPolicyRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkFunctionArmOperation(_collectorPolicyClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,8 +208,9 @@ namespace Azure.ResourceManager.NetworkFunction
             scope.Start();
             try
             {
-                var response = _collectorPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkFunctionArmOperation(_collectorPolicyClientDiagnostics, Pipeline, _collectorPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _collectorPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _collectorPolicyRestClient.Delete(message, cancellationToken);
+                var operation = new NetworkFunctionArmOperation(_collectorPolicyClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

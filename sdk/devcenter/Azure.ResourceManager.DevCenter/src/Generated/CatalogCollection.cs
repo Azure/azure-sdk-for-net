@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = await _catalogRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<CatalogResource>(new CatalogOperationSource(Client), _catalogClientDiagnostics, Pipeline, _catalogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _catalogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data);
+                var response = await _catalogRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DevCenterArmOperation<CatalogResource>(new CatalogOperationSource(Client), _catalogClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = _catalogRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<CatalogResource>(new CatalogOperationSource(Client), _catalogClientDiagnostics, Pipeline, _catalogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _catalogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, catalogName, data);
+                var response = _catalogRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DevCenterArmOperation<CatalogResource>(new CatalogOperationSource(Client), _catalogClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

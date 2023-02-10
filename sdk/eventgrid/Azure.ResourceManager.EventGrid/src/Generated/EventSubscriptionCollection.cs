@@ -72,8 +72,9 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = await _eventSubscriptionRestClient.CreateOrUpdateAsync(Id, eventSubscriptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _eventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id, eventSubscriptionName, data);
+                var response = await _eventSubscriptionRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,8 +114,9 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = _eventSubscriptionRestClient.CreateOrUpdate(Id, eventSubscriptionName, data, cancellationToken);
-                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id, eventSubscriptionName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _eventSubscriptionRestClient.CreateCreateOrUpdateRequest(Id, eventSubscriptionName, data);
+                var response = _eventSubscriptionRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

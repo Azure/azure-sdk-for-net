@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.Batch
             scope.Start();
             try
             {
-                var response = await _batchAccountRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation<BatchAccountResource>(new BatchAccountOperationSource(Client), _batchAccountClientDiagnostics, Pipeline, _batchAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _batchAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content);
+                var response = await _batchAccountRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BatchArmOperation<BatchAccountResource>(new BatchAccountOperationSource(Client), _batchAccountClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.Batch
             scope.Start();
             try
             {
-                var response = _batchAccountRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, content, cancellationToken);
-                var operation = new BatchArmOperation<BatchAccountResource>(new BatchAccountOperationSource(Client), _batchAccountClientDiagnostics, Pipeline, _batchAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _batchAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content);
+                var response = _batchAccountRestClient.Create(message, cancellationToken);
+                var operation = new BatchArmOperation<BatchAccountResource>(new BatchAccountOperationSource(Client), _batchAccountClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

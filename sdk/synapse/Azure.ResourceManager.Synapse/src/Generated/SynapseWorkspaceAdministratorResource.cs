@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics, Pipeline, _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var response = await _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation(_synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,8 +206,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics, Pipeline, _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var response = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.Delete(message, cancellationToken);
+                var operation = new SynapseArmOperation(_synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,8 +245,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseWorkspaceAdministratorResource>(new SynapseWorkspaceAdministratorResourceOperationSource(Client), _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics, Pipeline, _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
+                var response = await _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseWorkspaceAdministratorResource>(new SynapseWorkspaceAdministratorResourceOperationSource(Client), _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +284,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseWorkspaceAdministratorResource>(new SynapseWorkspaceAdministratorResourceOperationSource(Client), _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics, Pipeline, _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
+                var response = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseWorkspaceAdministratorResource>(new SynapseWorkspaceAdministratorResourceOperationSource(Client), _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

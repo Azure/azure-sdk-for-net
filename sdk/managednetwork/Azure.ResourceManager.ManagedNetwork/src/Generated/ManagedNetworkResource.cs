@@ -280,8 +280,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = await _managedNetworkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation(_managedNetworkClientDiagnostics, Pipeline, _managedNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _managedNetworkRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkArmOperation(_managedNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -314,8 +315,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = _managedNetworkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkArmOperation(_managedNetworkClientDiagnostics, Pipeline, _managedNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _managedNetworkRestClient.Delete(message, cancellationToken);
+                var operation = new ManagedNetworkArmOperation(_managedNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -352,8 +354,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = await _managedNetworkRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkResource>(new ManagedNetworkOperationSource(Client), _managedNetworkClientDiagnostics, Pipeline, _managedNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = await _managedNetworkRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkResource>(new ManagedNetworkOperationSource(Client), _managedNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -390,8 +393,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = _managedNetworkRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkResource>(new ManagedNetworkOperationSource(Client), _managedNetworkClientDiagnostics, Pipeline, _managedNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = _managedNetworkRestClient.Update(message, cancellationToken);
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkResource>(new ManagedNetworkOperationSource(Client), _managedNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

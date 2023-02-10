@@ -121,6 +121,11 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal HttpMessage CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticProactiveLogCollectionSettingData data)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(data, nameof(data));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -145,21 +150,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Updates the proactive log collection settings on a Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="data"> The proactive log collection settings. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateDiagnosticProactiveLogCollectionSettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticProactiveLogCollectionSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> UpdateDiagnosticProactiveLogCollectionSettingsAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(subscriptionId, resourceGroupName, deviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -172,21 +169,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Updates the proactive log collection settings on a Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="data"> The proactive log collection settings. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateDiagnosticProactiveLogCollectionSettings(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticProactiveLogCollectionSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response UpdateDiagnosticProactiveLogCollectionSettings(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(subscriptionId, resourceGroupName, deviceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -283,6 +272,11 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal HttpMessage CreateUpdateDiagnosticRemoteSupportSettingsRequest(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticRemoteSupportSettingData data)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
+            Argument.AssertNotNull(data, nameof(data));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -307,21 +301,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="data"> The diagnostic remote support settings. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateDiagnosticRemoteSupportSettingsAsync(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticRemoteSupportSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> UpdateDiagnosticRemoteSupportSettingsAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateUpdateDiagnosticRemoteSupportSettingsRequest(subscriptionId, resourceGroupName, deviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -334,21 +320,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="deviceName"> The device name. </param>
-        /// <param name="data"> The diagnostic remote support settings. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateDiagnosticRemoteSupportSettings(string subscriptionId, string resourceGroupName, string deviceName, DiagnosticRemoteSupportSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response UpdateDiagnosticRemoteSupportSettings(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateUpdateDiagnosticRemoteSupportSettingsRequest(subscriptionId, resourceGroupName, deviceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

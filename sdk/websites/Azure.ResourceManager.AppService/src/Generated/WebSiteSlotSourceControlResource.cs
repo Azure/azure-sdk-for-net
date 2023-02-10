@@ -313,8 +313,9 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webSiteSlotSourceControlWebAppsRestClient.CreateOrUpdateSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotSourceControlResource>(new WebSiteSlotSourceControlOperationSource(Client), _webSiteSlotSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSlotSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _webSiteSlotSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var response = await _webSiteSlotSourceControlWebAppsRestClient.CreateOrUpdateSourceControlSlotAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<WebSiteSlotSourceControlResource>(new WebSiteSlotSourceControlOperationSource(Client), _webSiteSlotSourceControlWebAppsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -351,8 +352,9 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webSiteSlotSourceControlWebAppsRestClient.CreateOrUpdateSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotSourceControlResource>(new WebSiteSlotSourceControlOperationSource(Client), _webSiteSlotSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSlotSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _webSiteSlotSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var response = _webSiteSlotSourceControlWebAppsRestClient.CreateOrUpdateSourceControlSlot(message, cancellationToken);
+                var operation = new AppServiceArmOperation<WebSiteSlotSourceControlResource>(new WebSiteSlotSourceControlOperationSource(Client), _webSiteSlotSourceControlWebAppsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = await _mediaLiveEventLiveEventsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart).Request, response, OperationFinalStateVia.Location);
+                using var message = _mediaLiveEventLiveEventsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart);
+                var response = await _mediaLiveEventLiveEventsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = _mediaLiveEventLiveEventsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart, cancellationToken);
-                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, _mediaLiveEventLiveEventsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart).Request, response, OperationFinalStateVia.Location);
+                using var message = _mediaLiveEventLiveEventsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, data, autoStart);
+                var response = _mediaLiveEventLiveEventsRestClient.Create(message, cancellationToken);
+                var operation = new MediaArmOperation<MediaLiveEventResource>(new MediaLiveEventOperationSource(Client), _mediaLiveEventLiveEventsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

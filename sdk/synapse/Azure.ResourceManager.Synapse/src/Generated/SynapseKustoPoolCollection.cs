@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseKustoPoolKustoPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kustoPoolName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseKustoPoolResource>(new SynapseKustoPoolOperationSource(Client), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kustoPoolName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseKustoPoolKustoPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kustoPoolName, data, ifMatch, ifNoneMatch);
+                var response = await _synapseKustoPoolKustoPoolsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseKustoPoolResource>(new SynapseKustoPoolOperationSource(Client), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,8 +126,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseKustoPoolKustoPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kustoPoolName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseKustoPoolResource>(new SynapseKustoPoolOperationSource(Client), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, _synapseKustoPoolKustoPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kustoPoolName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseKustoPoolKustoPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kustoPoolName, data, ifMatch, ifNoneMatch);
+                var response = _synapseKustoPoolKustoPoolsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseKustoPoolResource>(new SynapseKustoPoolOperationSource(Client), _synapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

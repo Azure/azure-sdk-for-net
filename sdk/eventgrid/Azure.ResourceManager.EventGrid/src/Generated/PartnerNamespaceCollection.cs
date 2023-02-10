@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = await _partnerNamespaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerNamespaceResource>(new PartnerNamespaceOperationSource(Client), _partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _partnerNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data);
+                var response = await _partnerNamespaceRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<PartnerNamespaceResource>(new PartnerNamespaceOperationSource(Client), _partnerNamespaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = _partnerNamespaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerNamespaceResource>(new PartnerNamespaceOperationSource(Client), _partnerNamespaceClientDiagnostics, Pipeline, _partnerNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _partnerNamespaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerNamespaceName, data);
+                var response = _partnerNamespaceRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new EventGridArmOperation<PartnerNamespaceResource>(new PartnerNamespaceOperationSource(Client), _partnerNamespaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

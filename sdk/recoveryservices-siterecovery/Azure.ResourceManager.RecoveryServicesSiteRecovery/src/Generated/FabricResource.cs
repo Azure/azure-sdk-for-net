@@ -497,8 +497,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = await _fabricReplicationFabricsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -535,8 +536,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = _fabricReplicationFabricsRestClient.Create(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -569,8 +571,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.CheckConsistencyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCheckConsistencyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateCheckConsistencyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _fabricReplicationFabricsRestClient.CheckConsistencyAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -603,8 +606,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.CheckConsistency(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateCheckConsistencyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateCheckConsistencyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _fabricReplicationFabricsRestClient.CheckConsistency(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -637,8 +641,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.MigrateToAadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateMigrateToAadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateMigrateToAadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _fabricReplicationFabricsRestClient.MigrateToAadAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -671,8 +676,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.MigrateToAad(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateMigrateToAadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateMigrateToAadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _fabricReplicationFabricsRestClient.MigrateToAad(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -709,8 +715,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.ReassociateGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateReassociateGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateReassociateGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = await _fabricReplicationFabricsRestClient.ReassociateGatewayAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -747,8 +754,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.ReassociateGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateReassociateGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateReassociateGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = _fabricReplicationFabricsRestClient.ReassociateGateway(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -781,8 +789,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _fabricReplicationFabricsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -815,8 +824,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _fabricReplicationFabricsRestClient.Delete(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation(_fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -853,8 +863,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _fabricReplicationFabricsRestClient.RenewCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateRenewCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateRenewCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = await _fabricReplicationFabricsRestClient.RenewCertificateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -891,8 +902,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _fabricReplicationFabricsRestClient.RenewCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, _fabricReplicationFabricsRestClient.CreateRenewCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _fabricReplicationFabricsRestClient.CreateRenewCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = _fabricReplicationFabricsRestClient.RenewCertificate(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<FabricResource>(new FabricOperationSource(Client), _fabricReplicationFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

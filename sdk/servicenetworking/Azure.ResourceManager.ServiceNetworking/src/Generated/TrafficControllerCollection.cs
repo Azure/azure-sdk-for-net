@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var response = await _trafficControllerTrafficControllerInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceNetworkingArmOperation<TrafficControllerResource>(new TrafficControllerOperationSource(Client), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, _trafficControllerTrafficControllerInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _trafficControllerTrafficControllerInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, data);
+                var response = await _trafficControllerTrafficControllerInterfaceRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceNetworkingArmOperation<TrafficControllerResource>(new TrafficControllerOperationSource(Client), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var response = _trafficControllerTrafficControllerInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, data, cancellationToken);
-                var operation = new ServiceNetworkingArmOperation<TrafficControllerResource>(new TrafficControllerOperationSource(Client), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, _trafficControllerTrafficControllerInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _trafficControllerTrafficControllerInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, data);
+                var response = _trafficControllerTrafficControllerInterfaceRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ServiceNetworkingArmOperation<TrafficControllerResource>(new TrafficControllerOperationSource(Client), _trafficControllerTrafficControllerInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

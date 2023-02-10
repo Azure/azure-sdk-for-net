@@ -173,8 +173,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(_billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name);
+                var response = await _billingSubscriptionRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingArmOperation(_billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,8 +208,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(_billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name);
+                var response = _billingSubscriptionRestClient.Delete(message, cancellationToken);
+                var operation = new BillingArmOperation(_billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,8 +247,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.UpdateAsync(Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, data);
+                var response = await _billingSubscriptionRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,8 +286,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.Update(Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, data);
+                var response = _billingSubscriptionRestClient.Update(message, cancellationToken);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -321,8 +325,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.MoveAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content);
+                var response = await _billingSubscriptionRestClient.MoveAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -359,8 +364,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.Move(Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content);
+                var response = _billingSubscriptionRestClient.Move(message, cancellationToken);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -465,8 +471,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.MergeAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, content);
+                var response = await _billingSubscriptionRestClient.MergeAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -503,8 +510,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.Merge(Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, content);
+                var response = _billingSubscriptionRestClient.Merge(message, cancellationToken);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -541,8 +549,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = await _billingSubscriptionRestClient.SplitAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, content);
+                var response = await _billingSubscriptionRestClient.SplitAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -579,8 +588,9 @@ namespace Azure.ResourceManager.Billing
             scope.Start();
             try
             {
-                var response = _billingSubscriptionRestClient.Split(Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, _billingSubscriptionRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _billingSubscriptionRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, content);
+                var response = _billingSubscriptionRestClient.Split(message, cancellationToken);
+                var operation = new BillingArmOperation<BillingSubscriptionResource>(new BillingSubscriptionOperationSource(Client), _billingSubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

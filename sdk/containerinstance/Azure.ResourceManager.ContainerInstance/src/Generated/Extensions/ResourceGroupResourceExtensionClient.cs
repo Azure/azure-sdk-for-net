@@ -72,8 +72,9 @@ namespace Azure.ResourceManager.ContainerInstance
             scope.Start();
             try
             {
-                var response = await SubnetServiceAssociationLinkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName).Request, response, OperationFinalStateVia.Location);
+                using var message = SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName);
+                var response = await SubnetServiceAssociationLinkRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,8 +109,9 @@ namespace Azure.ResourceManager.ContainerInstance
             scope.Start();
             try
             {
-                var response = SubnetServiceAssociationLinkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName, cancellationToken);
-                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName).Request, response, OperationFinalStateVia.Location);
+                using var message = SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName);
+                var response = SubnetServiceAssociationLinkRestClient.Delete(message, cancellationToken);
+                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

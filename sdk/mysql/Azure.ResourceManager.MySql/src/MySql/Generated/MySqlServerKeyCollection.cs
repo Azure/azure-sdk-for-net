@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = await _mySqlServerKeyServerKeysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlServerKeyResource>(new MySqlServerKeyOperationSource(Client), _mySqlServerKeyServerKeysClientDiagnostics, Pipeline, _mySqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data);
+                var response = await _mySqlServerKeyServerKeysRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MySqlArmOperation<MySqlServerKeyResource>(new MySqlServerKeyOperationSource(Client), _mySqlServerKeyServerKeysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = _mySqlServerKeyServerKeysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlServerKeyResource>(new MySqlServerKeyOperationSource(Client), _mySqlServerKeyServerKeysClientDiagnostics, Pipeline, _mySqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data);
+                var response = _mySqlServerKeyServerKeysRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MySqlArmOperation<MySqlServerKeyResource>(new MySqlServerKeyOperationSource(Client), _mySqlServerKeyServerKeysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

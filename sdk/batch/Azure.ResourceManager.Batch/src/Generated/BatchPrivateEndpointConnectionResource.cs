@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.Batch
             scope.Start();
             try
             {
-                var response = await _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation(_batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BatchArmOperation(_batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,8 +206,9 @@ namespace Azure.ResourceManager.Batch
             scope.Start();
             try
             {
-                var response = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BatchArmOperation(_batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Delete(message, cancellationToken);
+                var operation = new BatchArmOperation(_batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,8 +246,9 @@ namespace Azure.ResourceManager.Batch
             scope.Start();
             try
             {
-                var response = await _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation<BatchPrivateEndpointConnectionResource>(new BatchPrivateEndpointConnectionOperationSource(Client), _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var response = await _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BatchArmOperation<BatchPrivateEndpointConnectionResource>(new BatchPrivateEndpointConnectionOperationSource(Client), _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,8 +286,9 @@ namespace Azure.ResourceManager.Batch
             scope.Start();
             try
             {
-                var response = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new BatchArmOperation<BatchPrivateEndpointConnectionResource>(new BatchPrivateEndpointConnectionOperationSource(Client), _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var response = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Update(message, cancellationToken);
+                var operation = new BatchArmOperation<BatchPrivateEndpointConnectionResource>(new BatchPrivateEndpointConnectionOperationSource(Client), _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

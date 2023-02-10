@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseWorkloadGroupResource>(new SynapseWorkloadGroupOperationSource(Client), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data);
+                var response = await _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseWorkloadGroupResource>(new SynapseWorkloadGroupOperationSource(Client), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseWorkloadGroupResource>(new SynapseWorkloadGroupOperationSource(Client), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workloadGroupName, data);
+                var response = _synapseWorkloadGroupSqlPoolWorkloadGroupRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseWorkloadGroupResource>(new SynapseWorkloadGroupOperationSource(Client), _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

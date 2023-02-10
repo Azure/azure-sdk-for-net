@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.CognitiveServices
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesDeletedAccountDeletedAccountsRestClient.PurgeAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation(_cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, _cognitiveServicesDeletedAccountDeletedAccountsRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
+                var response = await _cognitiveServicesDeletedAccountDeletedAccountsRestClient.PurgeAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CognitiveServicesArmOperation(_cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.CognitiveServices
             scope.Start();
             try
             {
-                var response = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.Purge(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CognitiveServicesArmOperation(_cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, _cognitiveServicesDeletedAccountDeletedAccountsRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
+                var response = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.Purge(message, cancellationToken);
+                var operation = new CognitiveServicesArmOperation(_cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

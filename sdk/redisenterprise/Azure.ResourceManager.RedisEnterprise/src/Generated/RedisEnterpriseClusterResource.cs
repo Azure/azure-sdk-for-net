@@ -284,8 +284,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             scope.Start();
             try
             {
-                var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, _redisEnterpriseClusterRedisEnterpriseRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _redisEnterpriseClusterRedisEnterpriseRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -318,8 +319,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             scope.Start();
             try
             {
-                var response = _redisEnterpriseClusterRedisEnterpriseRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, _redisEnterpriseClusterRedisEnterpriseRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _redisEnterpriseClusterRedisEnterpriseRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _redisEnterpriseClusterRedisEnterpriseRestClient.Delete(message, cancellationToken);
+                var operation = new RedisEnterpriseArmOperation(_redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -356,8 +358,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             scope.Start();
             try
             {
-                var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(new RedisEnterpriseClusterOperationSource(Client), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, _redisEnterpriseClusterRedisEnterpriseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _redisEnterpriseClusterRedisEnterpriseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(new RedisEnterpriseClusterOperationSource(Client), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -394,8 +397,9 @@ namespace Azure.ResourceManager.RedisEnterprise
             scope.Start();
             try
             {
-                var response = _redisEnterpriseClusterRedisEnterpriseRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(new RedisEnterpriseClusterOperationSource(Client), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, _redisEnterpriseClusterRedisEnterpriseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _redisEnterpriseClusterRedisEnterpriseRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = _redisEnterpriseClusterRedisEnterpriseRestClient.Update(message, cancellationToken);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(new RedisEnterpriseClusterOperationSource(Client), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

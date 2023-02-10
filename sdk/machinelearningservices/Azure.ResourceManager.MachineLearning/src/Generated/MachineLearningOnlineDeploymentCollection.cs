@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.MachineLearning
             scope.Start();
             try
             {
-                var response = await _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningOnlineDeploymentResource>(new MachineLearningOnlineDeploymentOperationSource(Client), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data);
+                var response = await _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningArmOperation<MachineLearningOnlineDeploymentResource>(new MachineLearningOnlineDeploymentOperationSource(Client), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.MachineLearning
             scope.Start();
             try
             {
-                var response = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningOnlineDeploymentResource>(new MachineLearningOnlineDeploymentOperationSource(Client), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data);
+                var response = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MachineLearningArmOperation<MachineLearningOnlineDeploymentResource>(new MachineLearningOnlineDeploymentOperationSource(Client), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

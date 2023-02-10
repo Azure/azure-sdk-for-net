@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = await _devTestLabDiskDisksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(new DevTestLabDiskOperationSource(Client), _devTestLabDiskDisksClientDiagnostics, Pipeline, _devTestLabDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _devTestLabDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data);
+                var response = await _devTestLabDiskDisksRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(new DevTestLabDiskOperationSource(Client), _devTestLabDiskDisksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = _devTestLabDiskDisksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(new DevTestLabDiskOperationSource(Client), _devTestLabDiskDisksClientDiagnostics, Pipeline, _devTestLabDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _devTestLabDiskDisksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data);
+                var response = _devTestLabDiskDisksRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(new DevTestLabDiskOperationSource(Client), _devTestLabDiskDisksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

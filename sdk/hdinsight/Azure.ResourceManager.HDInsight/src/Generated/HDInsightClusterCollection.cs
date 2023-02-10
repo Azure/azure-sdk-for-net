@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.HDInsight
             scope.Start();
             try
             {
-                var response = await _hdInsightClusterClustersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _hdInsightClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, content);
+                var response = await _hdInsightClusterClustersRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HDInsightArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.HDInsight
             scope.Start();
             try
             {
-                var response = _hdInsightClusterClustersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, content, cancellationToken);
-                var operation = new HDInsightArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, _hdInsightClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _hdInsightClusterClustersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, content);
+                var response = _hdInsightClusterClustersRestClient.Create(message, cancellationToken);
+                var operation = new HDInsightArmOperation<HDInsightClusterResource>(new HDInsightClusterOperationSource(Client), _hdInsightClusterClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

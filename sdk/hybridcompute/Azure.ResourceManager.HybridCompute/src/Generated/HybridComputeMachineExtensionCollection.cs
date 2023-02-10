@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.HybridCompute
             scope.Start();
             try
             {
-                var response = await _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputeMachineExtensionResource>(new HybridComputeMachineExtensionOperationSource(Client), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, data);
+                var response = await _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation<HybridComputeMachineExtensionResource>(new HybridComputeMachineExtensionOperationSource(Client), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.HybridCompute
             scope.Start();
             try
             {
-                var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputeMachineExtensionResource>(new HybridComputeMachineExtensionOperationSource(Client), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, data);
+                var response = _hybridComputeMachineExtensionMachineExtensionsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new HybridComputeArmOperation<HybridComputeMachineExtensionResource>(new HybridComputeMachineExtensionOperationSource(Client), _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

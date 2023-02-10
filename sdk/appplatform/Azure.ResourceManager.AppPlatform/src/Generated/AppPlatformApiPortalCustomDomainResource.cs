@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,8 +206,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.Delete(message, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,8 +245,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +284,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

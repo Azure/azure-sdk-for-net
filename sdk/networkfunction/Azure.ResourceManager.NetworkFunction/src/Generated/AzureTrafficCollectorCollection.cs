@@ -86,8 +86,9 @@ namespace Azure.ResourceManager.NetworkFunction
             scope.Start();
             try
             {
-                var response = await _azureTrafficCollectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(new AzureTrafficCollectorOperationSource(Client), _azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _azureTrafficCollectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data);
+                var response = await _azureTrafficCollectorRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(new AzureTrafficCollectorOperationSource(Client), _azureTrafficCollectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,8 +128,9 @@ namespace Azure.ResourceManager.NetworkFunction
             scope.Start();
             try
             {
-                var response = _azureTrafficCollectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data, cancellationToken);
-                var operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(new AzureTrafficCollectorOperationSource(Client), _azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _azureTrafficCollectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, data);
+                var response = _azureTrafficCollectorRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(new AzureTrafficCollectorOperationSource(Client), _azureTrafficCollectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

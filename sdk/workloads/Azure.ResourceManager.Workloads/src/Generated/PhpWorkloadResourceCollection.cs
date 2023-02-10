@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = await _phpWorkloadResourcePhpWorkloadsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, phpWorkloadName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<PhpWorkloadResource>(new PhpWorkloadResourceOperationSource(Client), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, _phpWorkloadResourcePhpWorkloadsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, phpWorkloadName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _phpWorkloadResourcePhpWorkloadsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, phpWorkloadName, data);
+                var response = await _phpWorkloadResourcePhpWorkloadsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<PhpWorkloadResource>(new PhpWorkloadResourceOperationSource(Client), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = _phpWorkloadResourcePhpWorkloadsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, phpWorkloadName, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<PhpWorkloadResource>(new PhpWorkloadResourceOperationSource(Client), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, _phpWorkloadResourcePhpWorkloadsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, phpWorkloadName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _phpWorkloadResourcePhpWorkloadsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, phpWorkloadName, data);
+                var response = _phpWorkloadResourcePhpWorkloadsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new WorkloadsArmOperation<PhpWorkloadResource>(new PhpWorkloadResourceOperationSource(Client), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

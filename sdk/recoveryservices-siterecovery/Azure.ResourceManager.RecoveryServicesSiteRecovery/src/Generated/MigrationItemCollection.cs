@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _migrationItemReplicationMigrationItemsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<MigrationItemResource>(new MigrationItemOperationSource(Client), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _migrationItemReplicationMigrationItemsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _migrationItemReplicationMigrationItemsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content);
+                var response = await _migrationItemReplicationMigrationItemsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<MigrationItemResource>(new MigrationItemOperationSource(Client), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _migrationItemReplicationMigrationItemsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<MigrationItemResource>(new MigrationItemOperationSource(Client), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _migrationItemReplicationMigrationItemsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _migrationItemReplicationMigrationItemsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content);
+                var response = _migrationItemReplicationMigrationItemsRestClient.Create(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<MigrationItemResource>(new MigrationItemOperationSource(Client), _migrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

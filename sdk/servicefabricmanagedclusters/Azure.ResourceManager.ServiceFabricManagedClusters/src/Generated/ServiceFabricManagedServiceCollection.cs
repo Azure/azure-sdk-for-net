@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             scope.Start();
             try
             {
-                var response = await _serviceFabricManagedServiceServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedServiceResource>(new ServiceFabricManagedServiceOperationSource(Client), _serviceFabricManagedServiceServicesClientDiagnostics, Pipeline, _serviceFabricManagedServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _serviceFabricManagedServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, data);
+                var response = await _serviceFabricManagedServiceServicesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedServiceResource>(new ServiceFabricManagedServiceOperationSource(Client), _serviceFabricManagedServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             scope.Start();
             try
             {
-                var response = _serviceFabricManagedServiceServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, data, cancellationToken);
-                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedServiceResource>(new ServiceFabricManagedServiceOperationSource(Client), _serviceFabricManagedServiceServicesClientDiagnostics, Pipeline, _serviceFabricManagedServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _serviceFabricManagedServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serviceName, data);
+                var response = _serviceFabricManagedServiceServicesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedServiceResource>(new ServiceFabricManagedServiceOperationSource(Client), _serviceFabricManagedServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

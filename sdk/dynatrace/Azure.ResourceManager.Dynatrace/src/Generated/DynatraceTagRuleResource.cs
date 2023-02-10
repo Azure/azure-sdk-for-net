@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.Dynatrace
             scope.Start();
             try
             {
-                var response = await _dynatraceTagRuleTagRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DynatraceArmOperation(_dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _dynatraceTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _dynatraceTagRuleTagRulesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DynatraceArmOperation(_dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.Dynatrace
             scope.Start();
             try
             {
-                var response = _dynatraceTagRuleTagRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DynatraceArmOperation(_dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _dynatraceTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _dynatraceTagRuleTagRulesRestClient.Delete(message, cancellationToken);
+                var operation = new DynatraceArmOperation(_dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

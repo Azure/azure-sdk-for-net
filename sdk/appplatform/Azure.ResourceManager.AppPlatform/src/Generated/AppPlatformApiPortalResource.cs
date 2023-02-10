@@ -225,8 +225,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformApiPortalApiPortalsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformApiPortalApiPortalsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _appPlatformApiPortalApiPortalsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -259,8 +260,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformApiPortalApiPortalsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformApiPortalApiPortalsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _appPlatformApiPortalApiPortalsRestClient.Delete(message, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -297,8 +299,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformApiPortalApiPortalsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _appPlatformApiPortalApiPortalsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -335,8 +338,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformApiPortalApiPortalsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _appPlatformApiPortalApiPortalsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

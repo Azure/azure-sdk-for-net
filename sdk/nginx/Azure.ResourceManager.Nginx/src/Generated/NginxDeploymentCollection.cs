@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Nginx
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentDeploymentsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _nginxDeploymentDeploymentsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data);
+                var response = await _nginxDeploymentDeploymentsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Nginx
             scope.Start();
             try
             {
-                var response = _nginxDeploymentDeploymentsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data, cancellationToken);
-                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _nginxDeploymentDeploymentsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data);
+                var response = _nginxDeploymentDeploymentsRestClient.Create(message, cancellationToken);
+                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

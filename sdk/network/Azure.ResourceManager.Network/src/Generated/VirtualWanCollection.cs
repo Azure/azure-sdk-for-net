@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _virtualWanRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VirtualWanResource>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, data);
+                var response = await _virtualWanRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VirtualWanResource>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _virtualWanRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, data, cancellationToken);
-                var operation = new NetworkArmOperation<VirtualWanResource>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, data);
+                var response = _virtualWanRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new NetworkArmOperation<VirtualWanResource>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

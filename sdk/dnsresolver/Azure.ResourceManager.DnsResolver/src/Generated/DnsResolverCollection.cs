@@ -83,8 +83,9 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsResolverRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsResolverResource>(new DnsResolverOperationSource(Client), _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _dnsResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch);
+                var response = await _dnsResolverRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<DnsResolverResource>(new DnsResolverOperationSource(Client), _dnsResolverClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,8 +127,9 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsResolverRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsResolverResource>(new DnsResolverOperationSource(Client), _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _dnsResolverRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverName, data, ifMatch, ifNoneMatch);
+                var response = _dnsResolverRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DnsResolverArmOperation<DnsResolverResource>(new DnsResolverOperationSource(Client), _dnsResolverClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

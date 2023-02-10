@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = await _poolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<PoolResource>(new PoolOperationSource(Client), _poolClientDiagnostics, Pipeline, _poolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _poolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data);
+                var response = await _poolRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DevCenterArmOperation<PoolResource>(new PoolOperationSource(Client), _poolClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = _poolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<PoolResource>(new PoolOperationSource(Client), _poolClientDiagnostics, Pipeline, _poolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _poolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data);
+                var response = _poolRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DevCenterArmOperation<PoolResource>(new PoolOperationSource(Client), _poolClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = await _orbitalContactProfileContactProfilesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation<OrbitalContactProfileResource>(new OrbitalContactProfileOperationSource(Client), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, _orbitalContactProfileContactProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _orbitalContactProfileContactProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, data);
+                var response = await _orbitalContactProfileContactProfilesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new OrbitalArmOperation<OrbitalContactProfileResource>(new OrbitalContactProfileOperationSource(Client), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = _orbitalContactProfileContactProfilesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, data, cancellationToken);
-                var operation = new OrbitalArmOperation<OrbitalContactProfileResource>(new OrbitalContactProfileOperationSource(Client), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, _orbitalContactProfileContactProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _orbitalContactProfileContactProfilesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, data);
+                var response = _orbitalContactProfileContactProfilesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new OrbitalArmOperation<OrbitalContactProfileResource>(new OrbitalContactProfileOperationSource(Client), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

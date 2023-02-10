@@ -176,8 +176,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = await _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlServerSecurityAlertPolicyResource>(new MySqlServerSecurityAlertPolicyOperationSource(Client), _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MySqlArmOperation<MySqlServerSecurityAlertPolicyResource>(new MySqlServerSecurityAlertPolicyOperationSource(Client), _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,8 +215,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlServerSecurityAlertPolicyResource>(new MySqlServerSecurityAlertPolicyOperationSource(Client), _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MySqlArmOperation<MySqlServerSecurityAlertPolicyResource>(new MySqlServerSecurityAlertPolicyOperationSource(Client), _mySqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

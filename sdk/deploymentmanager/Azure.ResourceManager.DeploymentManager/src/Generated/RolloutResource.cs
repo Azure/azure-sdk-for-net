@@ -248,8 +248,9 @@ namespace Azure.ResourceManager.DeploymentManager
             scope.Start();
             try
             {
-                var response = await _rolloutRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentManagerArmOperation<RolloutResource>(new RolloutOperationSource(Client), _rolloutClientDiagnostics, Pipeline, _rolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _rolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = await _rolloutRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DeploymentManagerArmOperation<RolloutResource>(new RolloutOperationSource(Client), _rolloutClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -286,8 +287,9 @@ namespace Azure.ResourceManager.DeploymentManager
             scope.Start();
             try
             {
-                var response = _rolloutRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new DeploymentManagerArmOperation<RolloutResource>(new RolloutOperationSource(Client), _rolloutClientDiagnostics, Pipeline, _rolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _rolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = _rolloutRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DeploymentManagerArmOperation<RolloutResource>(new RolloutOperationSource(Client), _rolloutClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

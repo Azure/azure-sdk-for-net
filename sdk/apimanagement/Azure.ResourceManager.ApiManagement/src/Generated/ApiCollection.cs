@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = await _apiRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiResource>(new ApiOperationSource(Client), _apiClientDiagnostics, Pipeline, _apiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _apiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch);
+                var response = await _apiRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiResource>(new ApiOperationSource(Client), _apiClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,8 +125,9 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = _apiRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiResource>(new ApiOperationSource(Client), _apiClientDiagnostics, Pipeline, _apiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _apiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch);
+                var response = _apiRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiResource>(new ApiOperationSource(Client), _apiClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

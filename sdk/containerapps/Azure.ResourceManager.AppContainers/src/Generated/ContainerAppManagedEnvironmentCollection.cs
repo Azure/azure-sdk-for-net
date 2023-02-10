@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data);
+                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, environmentName, data);
+                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

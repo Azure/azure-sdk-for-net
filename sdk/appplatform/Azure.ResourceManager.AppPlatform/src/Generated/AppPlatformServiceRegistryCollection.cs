@@ -78,8 +78,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceRegistryServiceRegistriesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformServiceRegistryResource>(new AppPlatformServiceRegistryOperationSource(Client), _appPlatformServiceRegistryServiceRegistriesClientDiagnostics, Pipeline, _appPlatformServiceRegistryServiceRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceRegistryServiceRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName);
+                var response = await _appPlatformServiceRegistryServiceRegistriesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformServiceRegistryResource>(new AppPlatformServiceRegistryOperationSource(Client), _appPlatformServiceRegistryServiceRegistriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,8 +118,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformServiceRegistryServiceRegistriesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformServiceRegistryResource>(new AppPlatformServiceRegistryOperationSource(Client), _appPlatformServiceRegistryServiceRegistriesClientDiagnostics, Pipeline, _appPlatformServiceRegistryServiceRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceRegistryServiceRegistriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceRegistryName);
+                var response = _appPlatformServiceRegistryServiceRegistriesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformServiceRegistryResource>(new AppPlatformServiceRegistryOperationSource(Client), _appPlatformServiceRegistryServiceRegistriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

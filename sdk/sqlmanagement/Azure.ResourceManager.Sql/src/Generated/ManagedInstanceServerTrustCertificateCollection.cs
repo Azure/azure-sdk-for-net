@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceServerTrustCertificateResource>(new ManagedInstanceServerTrustCertificateOperationSource(Client), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data);
+                var response = await _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedInstanceServerTrustCertificateResource>(new ManagedInstanceServerTrustCertificateOperationSource(Client), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceServerTrustCertificateResource>(new ManagedInstanceServerTrustCertificateOperationSource(Client), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data);
+                var response = _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SqlArmOperation<ManagedInstanceServerTrustCertificateResource>(new ManagedInstanceServerTrustCertificateOperationSource(Client), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

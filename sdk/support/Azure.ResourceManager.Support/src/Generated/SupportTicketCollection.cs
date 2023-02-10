@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Support
             scope.Start();
             try
             {
-                var response = await _supportTicketRestClient.CreateAsync(Id.SubscriptionId, supportTicketName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SupportArmOperation<SupportTicketResource>(new SupportTicketOperationSource(Client), _supportTicketClientDiagnostics, Pipeline, _supportTicketRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _supportTicketRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data);
+                var response = await _supportTicketRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SupportArmOperation<SupportTicketResource>(new SupportTicketOperationSource(Client), _supportTicketClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Support
             scope.Start();
             try
             {
-                var response = _supportTicketRestClient.Create(Id.SubscriptionId, supportTicketName, data, cancellationToken);
-                var operation = new SupportArmOperation<SupportTicketResource>(new SupportTicketOperationSource(Client), _supportTicketClientDiagnostics, Pipeline, _supportTicketRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _supportTicketRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data);
+                var response = _supportTicketRestClient.Create(message, cancellationToken);
+                var operation = new SupportArmOperation<SupportTicketResource>(new SupportTicketOperationSource(Client), _supportTicketClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

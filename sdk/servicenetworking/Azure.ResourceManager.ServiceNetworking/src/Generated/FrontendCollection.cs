@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var response = await _frontendFrontendsInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceNetworkingArmOperation<FrontendResource>(new FrontendOperationSource(Client), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, _frontendFrontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _frontendFrontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data);
+                var response = await _frontendFrontendsInterfaceRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceNetworkingArmOperation<FrontendResource>(new FrontendOperationSource(Client), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var response = _frontendFrontendsInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data, cancellationToken);
-                var operation = new ServiceNetworkingArmOperation<FrontendResource>(new FrontendOperationSource(Client), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, _frontendFrontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _frontendFrontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data);
+                var response = _frontendFrontendsInterfaceRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ServiceNetworkingArmOperation<FrontendResource>(new FrontendOperationSource(Client), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

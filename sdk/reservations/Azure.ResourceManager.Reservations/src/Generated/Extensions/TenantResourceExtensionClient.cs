@@ -193,8 +193,9 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await CalculateExchangeRestClient.PostAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = CalculateExchangeRestClient.CreatePostRequest(content);
+                var response = await CalculateExchangeRestClient.PostAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,8 +230,9 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = CalculateExchangeRestClient.Post(content, cancellationToken);
-                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = CalculateExchangeRestClient.CreatePostRequest(content);
+                var response = CalculateExchangeRestClient.Post(message, cancellationToken);
+                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -265,8 +267,9 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await ExchangeRestClient.PostAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = ExchangeRestClient.CreatePostRequest(content);
+                var response = await ExchangeRestClient.PostAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -301,8 +304,9 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = ExchangeRestClient.Post(content, cancellationToken);
-                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = ExchangeRestClient.CreatePostRequest(content);
+                var response = ExchangeRestClient.Post(message, cancellationToken);
+                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

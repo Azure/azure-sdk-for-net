@@ -92,8 +92,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data);
+                var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,8 +134,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data);
+                var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

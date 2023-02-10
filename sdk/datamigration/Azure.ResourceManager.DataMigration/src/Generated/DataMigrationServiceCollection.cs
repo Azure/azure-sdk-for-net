@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.DataMigration
             scope.Start();
             try
             {
-                var response = await _dataMigrationServiceServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<DataMigrationServiceResource>(new DataMigrationServiceOperationSource(Client), _dataMigrationServiceServicesClientDiagnostics, Pipeline, _dataMigrationServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataMigrationServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data);
+                var response = await _dataMigrationServiceServicesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataMigrationArmOperation<DataMigrationServiceResource>(new DataMigrationServiceOperationSource(Client), _dataMigrationServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.DataMigration
             scope.Start();
             try
             {
-                var response = _dataMigrationServiceServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<DataMigrationServiceResource>(new DataMigrationServiceOperationSource(Client), _dataMigrationServiceServicesClientDiagnostics, Pipeline, _dataMigrationServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataMigrationServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceName, data);
+                var response = _dataMigrationServiceServicesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DataMigrationArmOperation<DataMigrationServiceResource>(new DataMigrationServiceOperationSource(Client), _dataMigrationServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

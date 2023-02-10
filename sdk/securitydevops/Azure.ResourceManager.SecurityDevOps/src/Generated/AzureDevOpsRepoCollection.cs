@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.SecurityDevOps
             scope.Start();
             try
             {
-                var response = await _azureDevOpsRepoRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, azureDevOpsRepoName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityDevOpsArmOperation<AzureDevOpsRepoResource>(new AzureDevOpsRepoOperationSource(Client), _azureDevOpsRepoClientDiagnostics, Pipeline, _azureDevOpsRepoRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, azureDevOpsRepoName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _azureDevOpsRepoRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, azureDevOpsRepoName, data);
+                var response = await _azureDevOpsRepoRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityDevOpsArmOperation<AzureDevOpsRepoResource>(new AzureDevOpsRepoOperationSource(Client), _azureDevOpsRepoClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.SecurityDevOps
             scope.Start();
             try
             {
-                var response = _azureDevOpsRepoRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, azureDevOpsRepoName, data, cancellationToken);
-                var operation = new SecurityDevOpsArmOperation<AzureDevOpsRepoResource>(new AzureDevOpsRepoOperationSource(Client), _azureDevOpsRepoClientDiagnostics, Pipeline, _azureDevOpsRepoRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, azureDevOpsRepoName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _azureDevOpsRepoRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, azureDevOpsRepoName, data);
+                var response = _azureDevOpsRepoRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SecurityDevOpsArmOperation<AzureDevOpsRepoResource>(new AzureDevOpsRepoOperationSource(Client), _azureDevOpsRepoClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

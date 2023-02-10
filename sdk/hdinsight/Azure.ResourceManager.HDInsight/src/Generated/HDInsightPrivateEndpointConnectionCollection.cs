@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.HDInsight
             scope.Start();
             try
             {
-                var response = await _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource>(new HDInsightPrivateEndpointConnectionOperationSource(Client), _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var response = await _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource>(new HDInsightPrivateEndpointConnectionOperationSource(Client), _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.HDInsight
             scope.Start();
             try
             {
-                var response = _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource>(new HDInsightPrivateEndpointConnectionOperationSource(Client), _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var response = _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource>(new HDInsightPrivateEndpointConnectionOperationSource(Client), _hdInsightPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

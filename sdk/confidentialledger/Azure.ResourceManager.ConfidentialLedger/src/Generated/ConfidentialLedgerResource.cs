@@ -173,8 +173,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             scope.Start();
             try
             {
-                var response = await _confidentialLedgerLedgerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation(_confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _confidentialLedgerLedgerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _confidentialLedgerLedgerRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation(_confidentialLedgerLedgerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,8 +208,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             scope.Start();
             try
             {
-                var response = _confidentialLedgerLedgerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation(_confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _confidentialLedgerLedgerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _confidentialLedgerLedgerRestClient.Delete(message, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation(_confidentialLedgerLedgerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,8 +247,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             scope.Start();
             try
             {
-                var response = await _confidentialLedgerLedgerRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _confidentialLedgerLedgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = await _confidentialLedgerLedgerRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,8 +286,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             scope.Start();
             try
             {
-                var response = _confidentialLedgerLedgerRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _confidentialLedgerLedgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = _confidentialLedgerLedgerRestClient.Update(message, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

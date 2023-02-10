@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             scope.Start();
             try
             {
-                var response = await _confidentialLedgerLedgerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _confidentialLedgerLedgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data);
+                var response = await _confidentialLedgerLedgerRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
             scope.Start();
             try
             {
-                var response = _confidentialLedgerLedgerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, _confidentialLedgerLedgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _confidentialLedgerLedgerRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, data);
+                var response = _confidentialLedgerLedgerRestClient.Create(message, cancellationToken);
+                var operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(new ConfidentialLedgerOperationSource(Client), _confidentialLedgerLedgerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

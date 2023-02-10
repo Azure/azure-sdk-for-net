@@ -831,6 +831,8 @@ namespace Azure.ResourceManager.PolicyInsights
 
         internal HttpMessage CreateTriggerSubscriptionEvaluationRequest(string subscriptionId)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -847,15 +849,13 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Triggers a policy evaluation scan for all the resources under the subscription. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TriggerSubscriptionEvaluationAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> TriggerSubscriptionEvaluationAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateTriggerSubscriptionEvaluationRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -868,15 +868,13 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Triggers a policy evaluation scan for all the resources under the subscription. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response TriggerSubscriptionEvaluation(string subscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response TriggerSubscriptionEvaluation(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateTriggerSubscriptionEvaluationRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -890,6 +888,9 @@ namespace Azure.ResourceManager.PolicyInsights
 
         internal HttpMessage CreateTriggerResourceGroupEvaluationRequest(string subscriptionId, string resourceGroupName)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -908,17 +909,13 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Triggers a policy evaluation scan for all the resources under the resource group. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TriggerResourceGroupEvaluationAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> TriggerResourceGroupEvaluationAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateTriggerResourceGroupEvaluationRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -931,17 +928,13 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Triggers a policy evaluation scan for all the resources under the resource group. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response TriggerResourceGroupEvaluation(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response TriggerResourceGroupEvaluation(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateTriggerResourceGroupEvaluationRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

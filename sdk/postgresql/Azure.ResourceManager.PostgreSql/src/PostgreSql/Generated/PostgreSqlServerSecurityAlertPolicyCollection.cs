@@ -79,8 +79,9 @@ namespace Azure.ResourceManager.PostgreSql
             scope.Start();
             try
             {
-                var response = await _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerSecurityAlertPolicyResource>(new PostgreSqlServerSecurityAlertPolicyOperationSource(Client), _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, data);
+                var response = await _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerSecurityAlertPolicyResource>(new PostgreSqlServerSecurityAlertPolicyOperationSource(Client), _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,8 +119,9 @@ namespace Azure.ResourceManager.PostgreSql
             scope.Start();
             try
             {
-                var response = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, data, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerSecurityAlertPolicyResource>(new PostgreSqlServerSecurityAlertPolicyOperationSource(Client), _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, data);
+                var response = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerSecurityAlertPolicyResource>(new PostgreSqlServerSecurityAlertPolicyOperationSource(Client), _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

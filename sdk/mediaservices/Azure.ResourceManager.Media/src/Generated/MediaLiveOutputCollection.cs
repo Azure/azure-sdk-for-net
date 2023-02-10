@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = await _mediaLiveOutputLiveOutputsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data);
+                var response = await _mediaLiveOutputLiveOutputsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = _mediaLiveOutputLiveOutputsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data);
+                var response = _mediaLiveOutputLiveOutputsRestClient.Create(message, cancellationToken);
+                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

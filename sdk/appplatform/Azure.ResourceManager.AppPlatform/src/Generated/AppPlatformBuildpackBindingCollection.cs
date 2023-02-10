@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildpackBindingResource>(new AppPlatformBuildpackBindingOperationSource(Client), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data);
+                var response = await _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformBuildpackBindingResource>(new AppPlatformBuildpackBindingOperationSource(Client), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildpackBindingResource>(new AppPlatformBuildpackBindingOperationSource(Client), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data);
+                var response = _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformBuildpackBindingResource>(new AppPlatformBuildpackBindingOperationSource(Client), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

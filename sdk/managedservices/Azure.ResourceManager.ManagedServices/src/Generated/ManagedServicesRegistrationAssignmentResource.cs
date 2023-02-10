@@ -173,8 +173,9 @@ namespace Azure.ResourceManager.ManagedServices
             scope.Start();
             try
             {
-                var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedServicesArmOperation(_managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateDeleteRequest(Id.Parent, Id.Name);
+                var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedServicesArmOperation(_managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,8 +208,9 @@ namespace Azure.ResourceManager.ManagedServices
             scope.Start();
             try
             {
-                var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ManagedServicesArmOperation(_managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateDeleteRequest(Id.Parent, Id.Name);
+                var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.Delete(message, cancellationToken);
+                var operation = new ManagedServicesArmOperation(_managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,8 +247,9 @@ namespace Azure.ResourceManager.ManagedServices
             scope.Start();
             try
             {
-                var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data);
+                var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,8 +286,9 @@ namespace Azure.ResourceManager.ManagedServices
             scope.Start();
             try
             {
-                var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data);
+                var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

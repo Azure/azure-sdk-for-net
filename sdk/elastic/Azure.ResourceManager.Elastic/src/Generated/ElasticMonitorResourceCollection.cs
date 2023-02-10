@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Elastic
             scope.Start();
             try
             {
-                var response = await _elasticMonitorResourceMonitorsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorResourceOperationSource(Client), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, _elasticMonitorResourceMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _elasticMonitorResourceMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data);
+                var response = await _elasticMonitorResourceMonitorsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorResourceOperationSource(Client), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Elastic
             scope.Start();
             try
             {
-                var response = _elasticMonitorResourceMonitorsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorResourceOperationSource(Client), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, _elasticMonitorResourceMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _elasticMonitorResourceMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data);
+                var response = _elasticMonitorResourceMonitorsRestClient.Create(message, cancellationToken);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorResourceOperationSource(Client), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics, Pipeline, _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var response = await _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation(_synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,8 +206,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics, Pipeline, _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var response = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.Delete(message, cancellationToken);
+                var operation = new SynapseArmOperation(_synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,8 +245,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseWorkspaceSqlAdministratorResource>(new SynapseWorkspaceSqlAdministratorResourceOperationSource(Client), _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics, Pipeline, _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
+                var response = await _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseWorkspaceSqlAdministratorResource>(new SynapseWorkspaceSqlAdministratorResourceOperationSource(Client), _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +284,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseWorkspaceSqlAdministratorResource>(new SynapseWorkspaceSqlAdministratorResourceOperationSource(Client), _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics, Pipeline, _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
+                var response = _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseWorkspaceSqlAdministratorResource>(new SynapseWorkspaceSqlAdministratorResourceOperationSource(Client), _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

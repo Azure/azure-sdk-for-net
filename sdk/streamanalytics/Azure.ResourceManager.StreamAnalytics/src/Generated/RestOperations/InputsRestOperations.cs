@@ -492,6 +492,11 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal HttpMessage CreateTestRequest(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -521,22 +526,13 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
 
         /// <summary> Tests whether an input’s datasource is reachable and usable by the Azure Stream Analytics service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="jobName"> The name of the streaming job. </param>
-        /// <param name="inputName"> The name of the input. </param>
-        /// <param name="input"> If the input specified does not already exist, this parameter must contain the full input definition intended to be tested. If the input specified already exists, this parameter can be left null to test the existing input as is or if specified, the properties specified will overwrite the corresponding properties in the existing input (exactly like a PATCH operation) and the resulting input will be tested. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> TestAsync(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> TestAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateTestRequest(subscriptionId, resourceGroupName, jobName, inputName, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -549,22 +545,13 @@ namespace Azure.ResourceManager.StreamAnalytics
         }
 
         /// <summary> Tests whether an input’s datasource is reachable and usable by the Azure Stream Analytics service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="jobName"> The name of the streaming job. </param>
-        /// <param name="inputName"> The name of the input. </param>
-        /// <param name="input"> If the input specified does not already exist, this parameter must contain the full input definition intended to be tested. If the input specified already exists, this parameter can be left null to test the existing input as is or if specified, the properties specified will overwrite the corresponding properties in the existing input (exactly like a PATCH operation) and the resulting input will be tested. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Test(string subscriptionId, string resourceGroupName, string jobName, string inputName, StreamingJobInputData input = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Test(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNullOrEmpty(inputName, nameof(inputName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateTestRequest(subscriptionId, resourceGroupName, jobName, inputName, input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

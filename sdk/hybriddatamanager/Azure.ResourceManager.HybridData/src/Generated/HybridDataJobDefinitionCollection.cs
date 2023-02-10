@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.HybridData
             scope.Start();
             try
             {
-                var response = await _hybridDataJobDefinitionJobDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridDataArmOperation<HybridDataJobDefinitionResource>(new HybridDataJobDefinitionOperationSource(Client), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, _hybridDataJobDefinitionJobDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridDataJobDefinitionJobDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data);
+                var response = await _hybridDataJobDefinitionJobDefinitionsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridDataArmOperation<HybridDataJobDefinitionResource>(new HybridDataJobDefinitionOperationSource(Client), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.HybridData
             scope.Start();
             try
             {
-                var response = _hybridDataJobDefinitionJobDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data, cancellationToken);
-                var operation = new HybridDataArmOperation<HybridDataJobDefinitionResource>(new HybridDataJobDefinitionOperationSource(Client), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, _hybridDataJobDefinitionJobDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridDataJobDefinitionJobDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data);
+                var response = _hybridDataJobDefinitionJobDefinitionsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new HybridDataArmOperation<HybridDataJobDefinitionResource>(new HybridDataJobDefinitionOperationSource(Client), _hybridDataJobDefinitionJobDefinitionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

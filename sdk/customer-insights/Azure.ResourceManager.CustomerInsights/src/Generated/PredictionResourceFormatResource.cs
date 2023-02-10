@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = await _predictionResourceFormatPredictionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation(_predictionResourceFormatPredictionsClientDiagnostics, Pipeline, _predictionResourceFormatPredictionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _predictionResourceFormatPredictionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _predictionResourceFormatPredictionsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CustomerInsightsArmOperation(_predictionResourceFormatPredictionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = _predictionResourceFormatPredictionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CustomerInsightsArmOperation(_predictionResourceFormatPredictionsClientDiagnostics, Pipeline, _predictionResourceFormatPredictionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _predictionResourceFormatPredictionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _predictionResourceFormatPredictionsRestClient.Delete(message, cancellationToken);
+                var operation = new CustomerInsightsArmOperation(_predictionResourceFormatPredictionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,8 +246,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = await _predictionResourceFormatPredictionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<PredictionResourceFormatResource>(new PredictionResourceFormatOperationSource(Client), _predictionResourceFormatPredictionsClientDiagnostics, Pipeline, _predictionResourceFormatPredictionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _predictionResourceFormatPredictionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _predictionResourceFormatPredictionsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CustomerInsightsArmOperation<PredictionResourceFormatResource>(new PredictionResourceFormatOperationSource(Client), _predictionResourceFormatPredictionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,8 +285,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = _predictionResourceFormatPredictionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<PredictionResourceFormatResource>(new PredictionResourceFormatOperationSource(Client), _predictionResourceFormatPredictionsClientDiagnostics, Pipeline, _predictionResourceFormatPredictionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _predictionResourceFormatPredictionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _predictionResourceFormatPredictionsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new CustomerInsightsArmOperation<PredictionResourceFormatResource>(new PredictionResourceFormatOperationSource(Client), _predictionResourceFormatPredictionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource>(new ProtectionContainerMappingOperationSource(Client), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content);
+                var response = await _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource>(new ProtectionContainerMappingOperationSource(Client), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource>(new ProtectionContainerMappingOperationSource(Client), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content);
+                var response = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.Create(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource>(new ProtectionContainerMappingOperationSource(Client), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -574,8 +574,9 @@ namespace Azure.ResourceManager.OperationalInsights
             scope.Start();
             try
             {
-                var response = await _operationalInsightsWorkspaceWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation(_operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, _operationalInsightsWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                using var message = _operationalInsightsWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force);
+                var response = await _operationalInsightsWorkspaceWorkspacesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new OperationalInsightsArmOperation(_operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -609,8 +610,9 @@ namespace Azure.ResourceManager.OperationalInsights
             scope.Start();
             try
             {
-                var response = _operationalInsightsWorkspaceWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
-                var operation = new OperationalInsightsArmOperation(_operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, _operationalInsightsWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.Location);
+                using var message = _operationalInsightsWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force);
+                var response = _operationalInsightsWorkspaceWorkspacesRestClient.Delete(message, cancellationToken);
+                var operation = new OperationalInsightsArmOperation(_operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

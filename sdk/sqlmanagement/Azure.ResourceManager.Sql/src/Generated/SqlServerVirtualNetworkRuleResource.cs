@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,8 +206,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation(_sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.Delete(message, cancellationToken);
+                var operation = new SqlArmOperation(_sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,8 +245,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +284,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SqlArmOperation<SqlServerVirtualNetworkRuleResource>(new SqlServerVirtualNetworkRuleOperationSource(Client), _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

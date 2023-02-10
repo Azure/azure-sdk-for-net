@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = await _orbitalSpacecraftSpacecraftsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, spacecraftName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation<OrbitalSpacecraftResource>(new OrbitalSpacecraftOperationSource(Client), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, spacecraftName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _orbitalSpacecraftSpacecraftsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, spacecraftName, data);
+                var response = await _orbitalSpacecraftSpacecraftsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new OrbitalArmOperation<OrbitalSpacecraftResource>(new OrbitalSpacecraftOperationSource(Client), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = _orbitalSpacecraftSpacecraftsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, spacecraftName, data, cancellationToken);
-                var operation = new OrbitalArmOperation<OrbitalSpacecraftResource>(new OrbitalSpacecraftOperationSource(Client), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, _orbitalSpacecraftSpacecraftsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, spacecraftName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _orbitalSpacecraftSpacecraftsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, spacecraftName, data);
+                var response = _orbitalSpacecraftSpacecraftsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new OrbitalArmOperation<OrbitalSpacecraftResource>(new OrbitalSpacecraftOperationSource(Client), _orbitalSpacecraftSpacecraftsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

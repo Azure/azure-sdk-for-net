@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Purview
             scope.Start();
             try
             {
-                var response = await _purviewAccountAccountsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PurviewArmOperation<PurviewAccountResource>(new PurviewAccountOperationSource(Client), _purviewAccountAccountsClientDiagnostics, Pipeline, _purviewAccountAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _purviewAccountAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data);
+                var response = await _purviewAccountAccountsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PurviewArmOperation<PurviewAccountResource>(new PurviewAccountOperationSource(Client), _purviewAccountAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Purview
             scope.Start();
             try
             {
-                var response = _purviewAccountAccountsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new PurviewArmOperation<PurviewAccountResource>(new PurviewAccountOperationSource(Client), _purviewAccountAccountsClientDiagnostics, Pipeline, _purviewAccountAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _purviewAccountAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data);
+                var response = _purviewAccountAccountsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new PurviewArmOperation<PurviewAccountResource>(new PurviewAccountOperationSource(Client), _purviewAccountAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

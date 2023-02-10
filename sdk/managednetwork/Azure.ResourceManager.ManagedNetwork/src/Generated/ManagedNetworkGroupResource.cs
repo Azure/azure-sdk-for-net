@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = await _managedNetworkGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation(_managedNetworkGroupClientDiagnostics, Pipeline, _managedNetworkGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _managedNetworkGroupRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkArmOperation(_managedNetworkGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,8 +206,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = _managedNetworkGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkArmOperation(_managedNetworkGroupClientDiagnostics, Pipeline, _managedNetworkGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _managedNetworkGroupRestClient.Delete(message, cancellationToken);
+                var operation = new ManagedNetworkArmOperation(_managedNetworkGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,8 +245,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = await _managedNetworkGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkGroupResource>(new ManagedNetworkGroupOperationSource(Client), _managedNetworkGroupClientDiagnostics, Pipeline, _managedNetworkGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _managedNetworkGroupRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkGroupResource>(new ManagedNetworkGroupOperationSource(Client), _managedNetworkGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +284,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = _managedNetworkGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkGroupResource>(new ManagedNetworkGroupOperationSource(Client), _managedNetworkGroupClientDiagnostics, Pipeline, _managedNetworkGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _managedNetworkGroupRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkGroupResource>(new ManagedNetworkGroupOperationSource(Client), _managedNetworkGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

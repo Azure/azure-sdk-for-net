@@ -83,8 +83,9 @@ namespace Azure.ResourceManager.PrivateDns
             scope.Start();
             try
             {
-                var response = await _privateDnsZonePrivateZonesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new PrivateDnsArmOperation<PrivateDnsZoneResource>(new PrivateDnsZoneOperationSource(Client), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, _privateDnsZonePrivateZonesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _privateDnsZonePrivateZonesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch);
+                var response = await _privateDnsZonePrivateZonesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PrivateDnsArmOperation<PrivateDnsZoneResource>(new PrivateDnsZoneOperationSource(Client), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,8 +127,9 @@ namespace Azure.ResourceManager.PrivateDns
             scope.Start();
             try
             {
-                var response = _privateDnsZonePrivateZonesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new PrivateDnsArmOperation<PrivateDnsZoneResource>(new PrivateDnsZoneOperationSource(Client), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, _privateDnsZonePrivateZonesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _privateDnsZonePrivateZonesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, data, ifMatch, ifNoneMatch);
+                var response = _privateDnsZonePrivateZonesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new PrivateDnsArmOperation<PrivateDnsZoneResource>(new PrivateDnsZoneOperationSource(Client), _privateDnsZonePrivateZonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

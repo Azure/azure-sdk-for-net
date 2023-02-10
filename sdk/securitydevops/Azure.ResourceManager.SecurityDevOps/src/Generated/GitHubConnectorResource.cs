@@ -236,8 +236,9 @@ namespace Azure.ResourceManager.SecurityDevOps
             scope.Start();
             try
             {
-                var response = await _gitHubConnectorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityDevOpsArmOperation(_gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _gitHubConnectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _gitHubConnectorRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityDevOpsArmOperation(_gitHubConnectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -270,8 +271,9 @@ namespace Azure.ResourceManager.SecurityDevOps
             scope.Start();
             try
             {
-                var response = _gitHubConnectorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SecurityDevOpsArmOperation(_gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _gitHubConnectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _gitHubConnectorRestClient.Delete(message, cancellationToken);
+                var operation = new SecurityDevOpsArmOperation(_gitHubConnectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -308,8 +310,9 @@ namespace Azure.ResourceManager.SecurityDevOps
             scope.Start();
             try
             {
-                var response = await _gitHubConnectorRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _gitHubConnectorRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = await _gitHubConnectorRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -346,8 +349,9 @@ namespace Azure.ResourceManager.SecurityDevOps
             scope.Start();
             try
             {
-                var response = _gitHubConnectorRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _gitHubConnectorRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = _gitHubConnectorRestClient.Update(message, cancellationToken);
+                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.PolicyInsights
 
         internal HttpMessage CreateCreateOrUpdateAtResourceRequest(string resourceId, string attestationName, PolicyAttestationData data)
         {
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
+            Argument.AssertNotNull(data, nameof(data));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -135,19 +139,13 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Creates or updates an attestation at resource scope. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="data"> The attestation parameters. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAtResourceAsync(string resourceId, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAtResourceAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateAtResourceRequest(resourceId, attestationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -160,19 +158,13 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Creates or updates an attestation at resource scope. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="attestationName"> The name of the attestation. </param>
-        /// <param name="data"> The attestation parameters. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateAtResource(string resourceId, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response CreateOrUpdateAtResource(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateAtResourceRequest(resourceId, attestationName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

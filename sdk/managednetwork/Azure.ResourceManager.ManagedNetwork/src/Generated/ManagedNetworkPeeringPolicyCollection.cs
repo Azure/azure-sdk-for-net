@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = await _managedNetworkPeeringPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkPeeringPolicyResource>(new ManagedNetworkPeeringPolicyOperationSource(Client), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, _managedNetworkPeeringPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkPeeringPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data);
+                var response = await _managedNetworkPeeringPolicyRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkPeeringPolicyResource>(new ManagedNetworkPeeringPolicyOperationSource(Client), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             scope.Start();
             try
             {
-                var response = _managedNetworkPeeringPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data, cancellationToken);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkPeeringPolicyResource>(new ManagedNetworkPeeringPolicyOperationSource(Client), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, _managedNetworkPeeringPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _managedNetworkPeeringPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data);
+                var response = _managedNetworkPeeringPolicyRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkPeeringPolicyResource>(new ManagedNetworkPeeringPolicyOperationSource(Client), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

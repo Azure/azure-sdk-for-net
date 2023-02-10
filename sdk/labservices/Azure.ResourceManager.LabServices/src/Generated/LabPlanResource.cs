@@ -226,8 +226,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labPlanRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation(_labPlanClientDiagnostics, Pipeline, _labPlanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labPlanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _labPlanRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation(_labPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -260,8 +261,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labPlanRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LabServicesArmOperation(_labPlanClientDiagnostics, Pipeline, _labPlanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labPlanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _labPlanRestClient.Delete(message, cancellationToken);
+                var operation = new LabServicesArmOperation(_labPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -298,8 +300,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labPlanRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation<LabPlanResource>(new LabPlanOperationSource(Client), _labPlanClientDiagnostics, Pipeline, _labPlanRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _labPlanRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = await _labPlanRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation<LabPlanResource>(new LabPlanOperationSource(Client), _labPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -336,8 +339,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labPlanRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new LabServicesArmOperation<LabPlanResource>(new LabPlanOperationSource(Client), _labPlanClientDiagnostics, Pipeline, _labPlanRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _labPlanRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = _labPlanRestClient.Update(message, cancellationToken);
+                var operation = new LabServicesArmOperation<LabPlanResource>(new LabPlanOperationSource(Client), _labPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -374,8 +378,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labPlanRestClient.SaveImageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation(_labPlanClientDiagnostics, Pipeline, _labPlanRestClient.CreateSaveImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _labPlanRestClient.CreateSaveImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = await _labPlanRestClient.SaveImageAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation(_labPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -412,8 +417,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labPlanRestClient.SaveImage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new LabServicesArmOperation(_labPlanClientDiagnostics, Pipeline, _labPlanRestClient.CreateSaveImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _labPlanRestClient.CreateSaveImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = _labPlanRestClient.SaveImage(message, cancellationToken);
+                var operation = new LabServicesArmOperation(_labPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -177,8 +177,9 @@ namespace Azure.ResourceManager.Quota
             scope.Start();
             try
             {
-                var response = await _currentQuotaLimitBaseQuotaRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                using var message = _currentQuotaLimitBaseQuotaRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data);
+                var response = await _currentQuotaLimitBaseQuotaRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,8 +218,9 @@ namespace Azure.ResourceManager.Quota
             scope.Start();
             try
             {
-                var response = _currentQuotaLimitBaseQuotaRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, _currentQuotaLimitBaseQuotaRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                using var message = _currentQuotaLimitBaseQuotaRestClient.CreateUpdateRequest(Id.Parent, Id.Name, data);
+                var response = _currentQuotaLimitBaseQuotaRestClient.Update(message, cancellationToken);
+                var operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseOperationSource(Client), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

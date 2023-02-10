@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.PostgreSql
             scope.Start();
             try
             {
-                var response = await _postgreSqlServerKeyServerKeysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerKeyResource>(new PostgreSqlServerKeyOperationSource(Client), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, _postgreSqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _postgreSqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data);
+                var response = await _postgreSqlServerKeyServerKeysRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerKeyResource>(new PostgreSqlServerKeyOperationSource(Client), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.PostgreSql
             scope.Start();
             try
             {
-                var response = _postgreSqlServerKeyServerKeysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerKeyResource>(new PostgreSqlServerKeyOperationSource(Client), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, _postgreSqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _postgreSqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data);
+                var response = _postgreSqlServerKeyServerKeysRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerKeyResource>(new PostgreSqlServerKeyOperationSource(Client), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

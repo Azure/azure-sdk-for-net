@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _cassandraClusterRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _cassandraClusterRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data);
+                var response = await _cassandraClusterRestClient.CreateUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _cassandraClusterRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, _cassandraClusterRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _cassandraClusterRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data);
+                var response = _cassandraClusterRestClient.CreateUpdate(message, cancellationToken);
+                var operation = new CosmosDBArmOperation<CassandraClusterResource>(new CassandraClusterOperationSource(Client), _cassandraClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.DataShare
             scope.Start();
             try
             {
-                var response = await _dataShareTriggerTriggersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareTriggerResource>(new DataShareTriggerOperationSource(Client), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataShareTriggerTriggersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, data);
+                var response = await _dataShareTriggerTriggersRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataShareArmOperation<DataShareTriggerResource>(new DataShareTriggerOperationSource(Client), _dataShareTriggerTriggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.DataShare
             scope.Start();
             try
             {
-                var response = _dataShareTriggerTriggersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, data, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareTriggerResource>(new DataShareTriggerOperationSource(Client), _dataShareTriggerTriggersClientDiagnostics, Pipeline, _dataShareTriggerTriggersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataShareTriggerTriggersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, data);
+                var response = _dataShareTriggerTriggersRestClient.Create(message, cancellationToken);
+                var operation = new DataShareArmOperation<DataShareTriggerResource>(new DataShareTriggerOperationSource(Client), _dataShareTriggerTriggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

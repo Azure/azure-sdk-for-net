@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreatePortMirroringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworkPortMirroringProfileOperationSource(Client), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateCreatePortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateCreatePortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, data);
+                var response = await _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreatePortMirroringAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworkPortMirroringProfileOperationSource(Client), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreatePortMirroring(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworkPortMirroringProfileOperationSource(Client), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateCreatePortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateCreatePortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, data);
+                var response = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreatePortMirroring(message, cancellationToken);
+                var operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(new WorkloadNetworkPortMirroringProfileOperationSource(Client), _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

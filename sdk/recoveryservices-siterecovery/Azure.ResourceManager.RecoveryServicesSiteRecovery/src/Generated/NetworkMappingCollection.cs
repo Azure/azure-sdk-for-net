@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _networkMappingReplicationNetworkMappingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<NetworkMappingResource>(new NetworkMappingOperationSource(Client), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, _networkMappingReplicationNetworkMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _networkMappingReplicationNetworkMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content);
+                var response = await _networkMappingReplicationNetworkMappingsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<NetworkMappingResource>(new NetworkMappingOperationSource(Client), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _networkMappingReplicationNetworkMappingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<NetworkMappingResource>(new NetworkMappingOperationSource(Client), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, _networkMappingReplicationNetworkMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _networkMappingReplicationNetworkMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, networkMappingName, content);
+                var response = _networkMappingReplicationNetworkMappingsRestClient.Create(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<NetworkMappingResource>(new NetworkMappingOperationSource(Client), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

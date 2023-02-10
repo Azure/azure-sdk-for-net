@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = await _eventGridTopicTopicsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, topicName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<EventGridTopicResource>(new EventGridTopicOperationSource(Client), _eventGridTopicTopicsClientDiagnostics, Pipeline, _eventGridTopicTopicsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, topicName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _eventGridTopicTopicsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, topicName, data);
+                var response = await _eventGridTopicTopicsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<EventGridTopicResource>(new EventGridTopicOperationSource(Client), _eventGridTopicTopicsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = _eventGridTopicTopicsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, topicName, data, cancellationToken);
-                var operation = new EventGridArmOperation<EventGridTopicResource>(new EventGridTopicOperationSource(Client), _eventGridTopicTopicsClientDiagnostics, Pipeline, _eventGridTopicTopicsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, topicName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _eventGridTopicTopicsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, topicName, data);
+                var response = _eventGridTopicTopicsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new EventGridArmOperation<EventGridTopicResource>(new EventGridTopicOperationSource(Client), _eventGridTopicTopicsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

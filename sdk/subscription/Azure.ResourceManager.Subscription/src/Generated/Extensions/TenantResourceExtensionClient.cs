@@ -87,8 +87,9 @@ namespace Azure.ResourceManager.Subscription
             scope.Start();
             try
             {
-                var response = await SubscriptionRestClient.AcceptOwnershipAsync(subscriptionId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content).Request, response, OperationFinalStateVia.Location);
+                using var message = SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content);
+                var response = await SubscriptionRestClient.AcceptOwnershipAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.Subscription
             scope.Start();
             try
             {
-                var response = SubscriptionRestClient.AcceptOwnership(subscriptionId, content, cancellationToken);
-                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content).Request, response, OperationFinalStateVia.Location);
+                using var message = SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content);
+                var response = SubscriptionRestClient.AcceptOwnership(message, cancellationToken);
+                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

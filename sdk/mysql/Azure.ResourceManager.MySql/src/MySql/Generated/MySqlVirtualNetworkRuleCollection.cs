@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = await _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlVirtualNetworkRuleResource>(new MySqlVirtualNetworkRuleOperationSource(Client), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data);
+                var response = await _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MySqlArmOperation<MySqlVirtualNetworkRuleResource>(new MySqlVirtualNetworkRuleOperationSource(Client), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlVirtualNetworkRuleResource>(new MySqlVirtualNetworkRuleOperationSource(Client), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data);
+                var response = _mySqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MySqlArmOperation<MySqlVirtualNetworkRuleResource>(new MySqlVirtualNetworkRuleOperationSource(Client), _mySqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

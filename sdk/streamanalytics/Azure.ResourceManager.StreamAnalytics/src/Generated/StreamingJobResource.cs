@@ -388,8 +388,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = await _streamingJobRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _streamingJobRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -422,8 +423,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = _streamingJobRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _streamingJobRestClient.Delete(message, cancellationToken);
+                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -527,8 +529,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = await _streamingJobRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = await _streamingJobRestClient.StartAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -562,8 +565,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = _streamingJobRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = _streamingJobRestClient.Start(message, cancellationToken);
+                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -596,8 +600,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = await _streamingJobRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _streamingJobRestClient.StopAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -630,8 +635,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = _streamingJobRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _streamingJobRestClient.Stop(message, cancellationToken);
+                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -665,8 +671,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = await _streamingJobRestClient.ScaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateScaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateScaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = await _streamingJobRestClient.ScaleAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -700,8 +707,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = _streamingJobRestClient.Scale(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateScaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateScaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = _streamingJobRestClient.Scale(message, cancellationToken);
+                var operation = new StreamAnalyticsArmOperation(_streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

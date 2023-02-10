@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _customIPPrefixRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<CustomIPPrefixResource>(new CustomIPPrefixOperationSource(Client), _customIPPrefixClientDiagnostics, Pipeline, _customIPPrefixRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _customIPPrefixRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data);
+                var response = await _customIPPrefixRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<CustomIPPrefixResource>(new CustomIPPrefixOperationSource(Client), _customIPPrefixClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _customIPPrefixRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data, cancellationToken);
-                var operation = new NetworkArmOperation<CustomIPPrefixResource>(new CustomIPPrefixOperationSource(Client), _customIPPrefixClientDiagnostics, Pipeline, _customIPPrefixRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _customIPPrefixRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data);
+                var response = _customIPPrefixRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new NetworkArmOperation<CustomIPPrefixResource>(new CustomIPPrefixOperationSource(Client), _customIPPrefixClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

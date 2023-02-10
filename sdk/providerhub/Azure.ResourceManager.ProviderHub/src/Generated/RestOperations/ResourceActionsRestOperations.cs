@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.ProviderHub
 
         internal HttpMessage CreateDeleteResourcesRequest(string subscriptionId, string providerNamespace, string resourceActionName, ResourceManagementAction properties)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(resourceActionName, nameof(resourceActionName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -62,21 +67,13 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Deletes resources. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceActionName"> The resource action name. </param>
-        /// <param name="properties"> The properties supplied to the DeleteResources operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceActionName"/> or <paramref name="properties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteResourcesAsync(string subscriptionId, string providerNamespace, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> DeleteResourcesAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceActionName, nameof(resourceActionName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteResourcesRequest(subscriptionId, providerNamespace, resourceActionName, properties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -88,21 +85,13 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Deletes resources. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
-        /// <param name="resourceActionName"> The resource action name. </param>
-        /// <param name="properties"> The properties supplied to the DeleteResources operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/>, <paramref name="resourceActionName"/> or <paramref name="properties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="resourceActionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteResources(string subscriptionId, string providerNamespace, string resourceActionName, ResourceManagementAction properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response DeleteResources(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
-            Argument.AssertNotNullOrEmpty(resourceActionName, nameof(resourceActionName));
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteResourcesRequest(subscriptionId, providerNamespace, resourceActionName, properties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

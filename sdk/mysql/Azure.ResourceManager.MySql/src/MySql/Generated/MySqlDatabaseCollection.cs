@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = await _mySqlDatabaseDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlDatabaseResource>(new MySqlDatabaseOperationSource(Client), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data);
+                var response = await _mySqlDatabaseDatabasesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MySqlArmOperation<MySqlDatabaseResource>(new MySqlDatabaseOperationSource(Client), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.MySql
             scope.Start();
             try
             {
-                var response = _mySqlDatabaseDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlDatabaseResource>(new MySqlDatabaseOperationSource(Client), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, _mySqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data);
+                var response = _mySqlDatabaseDatabasesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MySqlArmOperation<MySqlDatabaseResource>(new MySqlDatabaseOperationSource(Client), _mySqlDatabaseDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

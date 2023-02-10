@@ -227,8 +227,9 @@ namespace Azure.ResourceManager.NetworkFunction
             scope.Start();
             try
             {
-                var response = await _azureTrafficCollectorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _azureTrafficCollectorRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -261,8 +262,9 @@ namespace Azure.ResourceManager.NetworkFunction
             scope.Start();
             try
             {
-                var response = _azureTrafficCollectorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _azureTrafficCollectorRestClient.Delete(message, cancellationToken);
+                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

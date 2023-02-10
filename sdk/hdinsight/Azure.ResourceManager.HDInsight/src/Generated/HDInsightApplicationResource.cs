@@ -173,8 +173,9 @@ namespace Azure.ResourceManager.HDInsight
             scope.Start();
             try
             {
-                var response = await _hdInsightApplicationApplicationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation(_hdInsightApplicationApplicationsClientDiagnostics, Pipeline, _hdInsightApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _hdInsightApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _hdInsightApplicationApplicationsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HDInsightArmOperation(_hdInsightApplicationApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,8 +208,9 @@ namespace Azure.ResourceManager.HDInsight
             scope.Start();
             try
             {
-                var response = _hdInsightApplicationApplicationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HDInsightArmOperation(_hdInsightApplicationApplicationsClientDiagnostics, Pipeline, _hdInsightApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _hdInsightApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _hdInsightApplicationApplicationsRestClient.Delete(message, cancellationToken);
+                var operation = new HDInsightArmOperation(_hdInsightApplicationApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,8 +247,9 @@ namespace Azure.ResourceManager.HDInsight
             scope.Start();
             try
             {
-                var response = await _hdInsightApplicationApplicationsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HDInsightArmOperation<HDInsightApplicationResource>(new HDInsightApplicationOperationSource(Client), _hdInsightApplicationApplicationsClientDiagnostics, Pipeline, _hdInsightApplicationApplicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _hdInsightApplicationApplicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _hdInsightApplicationApplicationsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HDInsightArmOperation<HDInsightApplicationResource>(new HDInsightApplicationOperationSource(Client), _hdInsightApplicationApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,8 +286,9 @@ namespace Azure.ResourceManager.HDInsight
             scope.Start();
             try
             {
-                var response = _hdInsightApplicationApplicationsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new HDInsightArmOperation<HDInsightApplicationResource>(new HDInsightApplicationOperationSource(Client), _hdInsightApplicationApplicationsClientDiagnostics, Pipeline, _hdInsightApplicationApplicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _hdInsightApplicationApplicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _hdInsightApplicationApplicationsRestClient.Create(message, cancellationToken);
+                var operation = new HDInsightArmOperation<HDInsightApplicationResource>(new HDInsightApplicationOperationSource(Client), _hdInsightApplicationApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineVirtualMachinesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _labVirtualMachineVirtualMachinesRestClient.StartAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labVirtualMachineVirtualMachinesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _labVirtualMachineVirtualMachinesRestClient.Start(message, cancellationToken);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -240,8 +242,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineVirtualMachinesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _labVirtualMachineVirtualMachinesRestClient.StopAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -274,8 +277,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labVirtualMachineVirtualMachinesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _labVirtualMachineVirtualMachinesRestClient.Stop(message, cancellationToken);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -308,8 +312,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineVirtualMachinesRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _labVirtualMachineVirtualMachinesRestClient.ReimageAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -342,8 +347,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labVirtualMachineVirtualMachinesRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _labVirtualMachineVirtualMachinesRestClient.Reimage(message, cancellationToken);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -376,8 +382,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineVirtualMachinesRestClient.RedeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _labVirtualMachineVirtualMachinesRestClient.RedeployAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -410,8 +417,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labVirtualMachineVirtualMachinesRestClient.Redeploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _labVirtualMachineVirtualMachinesRestClient.Redeploy(message, cancellationToken);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -448,8 +456,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labVirtualMachineVirtualMachinesRestClient.ResetPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateResetPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateResetPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = await _labVirtualMachineVirtualMachinesRestClient.ResetPasswordAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -486,8 +495,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labVirtualMachineVirtualMachinesRestClient.ResetPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, _labVirtualMachineVirtualMachinesRestClient.CreateResetPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _labVirtualMachineVirtualMachinesRestClient.CreateResetPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = _labVirtualMachineVirtualMachinesRestClient.ResetPassword(message, cancellationToken);
+                var operation = new LabServicesArmOperation(_labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

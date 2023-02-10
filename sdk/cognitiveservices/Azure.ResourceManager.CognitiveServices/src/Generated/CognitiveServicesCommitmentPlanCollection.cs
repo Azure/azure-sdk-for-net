@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.CognitiveServices
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateOrUpdatePlanAsync(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data);
+                var response = await _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateOrUpdatePlanAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.CognitiveServices
             scope.Start();
             try
             {
-                var response = _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateOrUpdatePlan(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, data);
+                var response = _cognitiveServicesCommitmentPlanCommitmentPlansRestClient.CreateOrUpdatePlan(message, cancellationToken);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(new CognitiveServicesCommitmentPlanOperationSource(Client), _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

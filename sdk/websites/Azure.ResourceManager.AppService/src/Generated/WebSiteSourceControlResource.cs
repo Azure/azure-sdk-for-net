@@ -313,8 +313,9 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webSiteSourceControlWebAppsRestClient.CreateOrUpdateSourceControlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSourceControlResource>(new WebSiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = await _webSiteSourceControlWebAppsRestClient.CreateOrUpdateSourceControlAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<WebSiteSourceControlResource>(new WebSiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -351,8 +352,9 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webSiteSourceControlWebAppsRestClient.CreateOrUpdateSourceControl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSourceControlResource>(new WebSiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = _webSiteSourceControlWebAppsRestClient.CreateOrUpdateSourceControl(message, cancellationToken);
+                var operation = new AppServiceArmOperation<WebSiteSourceControlResource>(new WebSiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

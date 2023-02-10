@@ -132,6 +132,13 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, HealthcareApisIotFhirDestinationData data)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            Argument.AssertNotNull(data, nameof(data));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -159,25 +166,13 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Creates or updates an IoT Connector FHIR destination resource with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
-        /// <param name="workspaceName"> The name of workspace resource. </param>
-        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
-        /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
-        /// <param name="data"> The parameters for creating or updating an IoT Connector FHIR destination resource. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/>, <paramref name="fhirDestinationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,25 +186,13 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Creates or updates an IoT Connector FHIR destination resource with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
-        /// <param name="workspaceName"> The name of workspace resource. </param>
-        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
-        /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
-        /// <param name="data"> The parameters for creating or updating an IoT Connector FHIR destination resource. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/>, <paramref name="fhirDestinationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, HealthcareApisIotFhirDestinationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response CreateOrUpdate(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -224,6 +207,12 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
@@ -247,23 +236,13 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Deletes an IoT Connector FHIR destination. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
-        /// <param name="workspaceName"> The name of workspace resource. </param>
-        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
-        /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> DeleteAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -277,23 +256,13 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Deletes an IoT Connector FHIR destination. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
-        /// <param name="workspaceName"> The name of workspace resource. </param>
-        /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
-        /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="iotConnectorName"/> or <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Delete(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
-            Argument.AssertNotNullOrEmpty(fhirDestinationName, nameof(fhirDestinationName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName, iotConnectorName, fhirDestinationName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

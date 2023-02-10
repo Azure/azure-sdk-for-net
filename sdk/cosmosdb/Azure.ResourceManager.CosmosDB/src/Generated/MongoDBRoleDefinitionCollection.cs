@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateUpdateMongoRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(new MongoDBRoleDefinitionOperationSource(Client), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content);
+                var response = await _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateUpdateMongoRoleDefinitionAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(new MongoDBRoleDefinitionOperationSource(Client), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateUpdateMongoRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(new MongoDBRoleDefinitionOperationSource(Client), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content);
+                var response = _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateUpdateMongoRoleDefinition(message, cancellationToken);
+                var operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(new MongoDBRoleDefinitionOperationSource(Client), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

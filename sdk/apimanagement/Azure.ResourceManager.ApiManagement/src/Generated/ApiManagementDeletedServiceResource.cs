@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = await _apiManagementDeletedServiceDeletedServicesRestClient.PurgeAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation(_apiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, _apiManagementDeletedServiceDeletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _apiManagementDeletedServiceDeletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
+                var response = await _apiManagementDeletedServiceDeletedServicesRestClient.PurgeAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation(_apiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = _apiManagementDeletedServiceDeletedServicesRestClient.Purge(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var operation = new ApiManagementArmOperation(_apiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, _apiManagementDeletedServiceDeletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _apiManagementDeletedServiceDeletedServicesRestClient.CreatePurgeRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
+                var response = _apiManagementDeletedServiceDeletedServicesRestClient.Purge(message, cancellationToken);
+                var operation = new ApiManagementArmOperation(_apiManagementDeletedServiceDeletedServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

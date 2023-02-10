@@ -174,8 +174,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             scope.Start();
             try
             {
-                var response = await _dedicatedCapacityCapacitiesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dedicatedCapacityCapacitiesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _dedicatedCapacityCapacitiesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,8 +209,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             scope.Start();
             try
             {
-                var response = _dedicatedCapacityCapacitiesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dedicatedCapacityCapacitiesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _dedicatedCapacityCapacitiesRestClient.Delete(message, cancellationToken);
+                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,8 +248,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             scope.Start();
             try
             {
-                var response = await _dedicatedCapacityCapacitiesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _dedicatedCapacityCapacitiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = await _dedicatedCapacityCapacitiesRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,8 +287,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             scope.Start();
             try
             {
-                var response = _dedicatedCapacityCapacitiesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _dedicatedCapacityCapacitiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = _dedicatedCapacityCapacitiesRestClient.Update(message, cancellationToken);
+                var operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(new DedicatedCapacityOperationSource(Client), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -318,8 +322,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             scope.Start();
             try
             {
-                var response = await _dedicatedCapacityCapacitiesRestClient.SuspendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dedicatedCapacityCapacitiesRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _dedicatedCapacityCapacitiesRestClient.SuspendAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -352,8 +357,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             scope.Start();
             try
             {
-                var response = _dedicatedCapacityCapacitiesRestClient.Suspend(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dedicatedCapacityCapacitiesRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _dedicatedCapacityCapacitiesRestClient.Suspend(message, cancellationToken);
+                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -386,8 +392,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             scope.Start();
             try
             {
-                var response = await _dedicatedCapacityCapacitiesRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dedicatedCapacityCapacitiesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _dedicatedCapacityCapacitiesRestClient.ResumeAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -420,8 +427,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             scope.Start();
             try
             {
-                var response = _dedicatedCapacityCapacitiesRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, _dedicatedCapacityCapacitiesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dedicatedCapacityCapacitiesRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _dedicatedCapacityCapacitiesRestClient.Resume(message, cancellationToken);
+                var operation = new PowerBIDedicatedArmOperation(_dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

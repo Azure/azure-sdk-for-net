@@ -175,8 +175,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = await _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.UpdateDiagnosticProactiveLogCollectionSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(new DiagnosticProactiveLogCollectionSettingOperationSource(Client), _diagnosticProactiveLogCollectionSettingDiagnosticSettingsClientDiagnostics, Pipeline, _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = await _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.UpdateDiagnosticProactiveLogCollectionSettingsAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(new DiagnosticProactiveLogCollectionSettingOperationSource(Client), _diagnosticProactiveLogCollectionSettingDiagnosticSettingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,8 +214,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.UpdateDiagnosticProactiveLogCollectionSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(new DiagnosticProactiveLogCollectionSettingOperationSource(Client), _diagnosticProactiveLogCollectionSettingDiagnosticSettingsClientDiagnostics, Pipeline, _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = _diagnosticProactiveLogCollectionSettingDiagnosticSettingsRestClient.UpdateDiagnosticProactiveLogCollectionSettings(message, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(new DiagnosticProactiveLogCollectionSettingOperationSource(Client), _diagnosticProactiveLogCollectionSettingDiagnosticSettingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

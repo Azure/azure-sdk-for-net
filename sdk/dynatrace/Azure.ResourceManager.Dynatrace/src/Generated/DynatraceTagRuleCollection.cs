@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Dynatrace
             scope.Start();
             try
             {
-                var response = await _dynatraceTagRuleTagRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
+                var response = await _dynatraceTagRuleTagRulesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Dynatrace
             scope.Start();
             try
             {
-                var response = _dynatraceTagRuleTagRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken);
-                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _dynatraceTagRuleTagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
+                var response = _dynatraceTagRuleTagRulesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DynatraceArmOperation<DynatraceTagRuleResource>(new DynatraceTagRuleOperationSource(Client), _dynatraceTagRuleTagRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

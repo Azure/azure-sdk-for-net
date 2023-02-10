@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _computePrivateEndpointConnectionDiskAccessesRestClient.DeleteAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _computePrivateEndpointConnectionDiskAccessesRestClient.CreateDeleteAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _computePrivateEndpointConnectionDiskAccessesRestClient.CreateDeleteAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _computePrivateEndpointConnectionDiskAccessesRestClient.DeleteAPrivateEndpointConnectionAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,8 +206,9 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _computePrivateEndpointConnectionDiskAccessesRestClient.DeleteAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _computePrivateEndpointConnectionDiskAccessesRestClient.CreateDeleteAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _computePrivateEndpointConnectionDiskAccessesRestClient.CreateDeleteAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _computePrivateEndpointConnectionDiskAccessesRestClient.DeleteAPrivateEndpointConnection(message, cancellationToken);
+                var operation = new ComputeArmOperation(_computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,8 +245,9 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _computePrivateEndpointConnectionDiskAccessesRestClient.UpdateAPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<ComputePrivateEndpointConnectionResource>(new ComputePrivateEndpointConnectionOperationSource(Client), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _computePrivateEndpointConnectionDiskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _computePrivateEndpointConnectionDiskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _computePrivateEndpointConnectionDiskAccessesRestClient.UpdateAPrivateEndpointConnectionAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<ComputePrivateEndpointConnectionResource>(new ComputePrivateEndpointConnectionOperationSource(Client), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +284,9 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _computePrivateEndpointConnectionDiskAccessesRestClient.UpdateAPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ComputeArmOperation<ComputePrivateEndpointConnectionResource>(new ComputePrivateEndpointConnectionOperationSource(Client), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, _computePrivateEndpointConnectionDiskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _computePrivateEndpointConnectionDiskAccessesRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _computePrivateEndpointConnectionDiskAccessesRestClient.UpdateAPrivateEndpointConnection(message, cancellationToken);
+                var operation = new ComputeArmOperation<ComputePrivateEndpointConnectionResource>(new ComputePrivateEndpointConnectionOperationSource(Client), _computePrivateEndpointConnectionDiskAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

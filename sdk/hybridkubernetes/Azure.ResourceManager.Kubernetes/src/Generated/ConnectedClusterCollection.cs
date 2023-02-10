@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Kubernetes
             scope.Start();
             try
             {
-                var response = await _connectedClusterRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesArmOperation<ConnectedClusterResource>(new ConnectedClusterOperationSource(Client), _connectedClusterClientDiagnostics, Pipeline, _connectedClusterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _connectedClusterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data);
+                var response = await _connectedClusterRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new KubernetesArmOperation<ConnectedClusterResource>(new ConnectedClusterOperationSource(Client), _connectedClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Kubernetes
             scope.Start();
             try
             {
-                var response = _connectedClusterRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
-                var operation = new KubernetesArmOperation<ConnectedClusterResource>(new ConnectedClusterOperationSource(Client), _connectedClusterClientDiagnostics, Pipeline, _connectedClusterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _connectedClusterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data);
+                var response = _connectedClusterRestClient.Create(message, cancellationToken);
+                var operation = new KubernetesArmOperation<ConnectedClusterResource>(new ConnectedClusterOperationSource(Client), _connectedClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

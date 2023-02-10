@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeOrderOrdersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeOrderOrdersClientDiagnostics, Pipeline, _dataBoxEdgeOrderOrdersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataBoxEdgeOrderOrdersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var response = await _dataBoxEdgeOrderOrdersRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeOrderOrdersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeOrderOrdersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeOrderOrdersClientDiagnostics, Pipeline, _dataBoxEdgeOrderOrdersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataBoxEdgeOrderOrdersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var response = _dataBoxEdgeOrderOrdersRestClient.Delete(message, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeOrderOrdersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,8 +246,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeOrderOrdersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeOrderResource>(new DataBoxEdgeOrderOperationSource(Client), _dataBoxEdgeOrderOrdersClientDiagnostics, Pipeline, _dataBoxEdgeOrderOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataBoxEdgeOrderOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = await _dataBoxEdgeOrderOrdersRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeOrderResource>(new DataBoxEdgeOrderOperationSource(Client), _dataBoxEdgeOrderOrdersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,8 +285,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeOrderOrdersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeOrderResource>(new DataBoxEdgeOrderOperationSource(Client), _dataBoxEdgeOrderOrdersClientDiagnostics, Pipeline, _dataBoxEdgeOrderOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataBoxEdgeOrderOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = _dataBoxEdgeOrderOrdersRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeOrderResource>(new DataBoxEdgeOrderOperationSource(Client), _dataBoxEdgeOrderOrdersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

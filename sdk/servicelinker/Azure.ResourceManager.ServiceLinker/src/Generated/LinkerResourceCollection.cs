@@ -70,8 +70,9 @@ namespace Azure.ResourceManager.ServiceLinker
             scope.Start();
             try
             {
-                var response = await _linkerResourceLinkerRestClient.CreateOrUpdateAsync(Id, linkerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateCreateOrUpdateRequest(Id, linkerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _linkerResourceLinkerRestClient.CreateCreateOrUpdateRequest(Id, linkerName, data);
+                var response = await _linkerResourceLinkerRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,8 +112,9 @@ namespace Azure.ResourceManager.ServiceLinker
             scope.Start();
             try
             {
-                var response = _linkerResourceLinkerRestClient.CreateOrUpdate(Id, linkerName, data, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateCreateOrUpdateRequest(Id, linkerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _linkerResourceLinkerRestClient.CreateCreateOrUpdateRequest(Id, linkerName, data);
+                var response = _linkerResourceLinkerRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -118,6 +118,12 @@ namespace Azure.ResourceManager.MySql
 
         internal HttpMessage CreateCreateRecommendedActionSessionRequest(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string databaseName)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -140,23 +146,13 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary> Create recommendation action session for the advisor. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="advisorName"> The advisor name for recommendation action. </param>
-        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="advisorName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateRecommendedActionSessionAsync(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> CreateRecommendedActionSessionAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateRecommendedActionSessionRequest(subscriptionId, resourceGroupName, serverName, advisorName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -169,23 +165,13 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary> Create recommendation action session for the advisor. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="advisorName"> The advisor name for recommendation action. </param>
-        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="advisorName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateRecommendedActionSession(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string databaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response CreateRecommendedActionSession(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
-            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateRecommendedActionSessionRequest(subscriptionId, resourceGroupName, serverName, advisorName, databaseName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

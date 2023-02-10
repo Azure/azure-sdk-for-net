@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,8 +206,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.Delete(message, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation(_dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,8 +245,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +284,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

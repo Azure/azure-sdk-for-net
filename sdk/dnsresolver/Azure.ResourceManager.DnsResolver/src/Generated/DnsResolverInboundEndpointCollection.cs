@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointOperationSource(Client), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch);
+                var response = await _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointOperationSource(Client), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,8 +126,9 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointOperationSource(Client), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, data, ifMatch, ifNoneMatch);
+                var response = _dnsResolverInboundEndpointInboundEndpointsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(new DnsResolverInboundEndpointOperationSource(Client), _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

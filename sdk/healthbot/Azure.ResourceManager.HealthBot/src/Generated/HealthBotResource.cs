@@ -174,8 +174,9 @@ namespace Azure.ResourceManager.HealthBot
             scope.Start();
             try
             {
-                var response = await _healthBotBotsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthBotArmOperation(_healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _healthBotBotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _healthBotBotsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthBotArmOperation(_healthBotBotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,8 +209,9 @@ namespace Azure.ResourceManager.HealthBot
             scope.Start();
             try
             {
-                var response = _healthBotBotsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HealthBotArmOperation(_healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _healthBotBotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _healthBotBotsRestClient.Delete(message, cancellationToken);
+                var operation = new HealthBotArmOperation(_healthBotBotsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

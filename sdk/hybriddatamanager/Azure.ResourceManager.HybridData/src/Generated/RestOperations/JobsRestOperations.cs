@@ -242,6 +242,13 @@ namespace Azure.ResourceManager.HybridData
 
         internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataManagerName, nameof(dataManagerName));
+            Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
+            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -267,25 +274,13 @@ namespace Azure.ResourceManager.HybridData
         }
 
         /// <summary> Cancels the given job. </summary>
-        /// <param name="subscriptionId"> The Subscription Id. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
-        /// <param name="dataManagerName"> The name of the DataManager Resource within the specified resource group. DataManager names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="dataServiceName"> The name of the data service of the job definition. </param>
-        /// <param name="jobDefinitionName"> The name of the job definition of the job. </param>
-        /// <param name="jobId"> The job id of the job queried. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> CancelAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataManagerName, nameof(dataManagerName));
-            Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, dataManagerName, dataServiceName, jobDefinitionName, jobId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -298,25 +293,13 @@ namespace Azure.ResourceManager.HybridData
         }
 
         /// <summary> Cancels the given job. </summary>
-        /// <param name="subscriptionId"> The Subscription Id. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
-        /// <param name="dataManagerName"> The name of the DataManager Resource within the specified resource group. DataManager names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="dataServiceName"> The name of the data service of the job definition. </param>
-        /// <param name="jobDefinitionName"> The name of the job definition of the job. </param>
-        /// <param name="jobId"> The job id of the job queried. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Cancel(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Cancel(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataManagerName, nameof(dataManagerName));
-            Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, dataManagerName, dataServiceName, jobDefinitionName, jobId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -330,6 +313,13 @@ namespace Azure.ResourceManager.HybridData
 
         internal HttpMessage CreateResumeRequest(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataManagerName, nameof(dataManagerName));
+            Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
+            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -355,25 +345,13 @@ namespace Azure.ResourceManager.HybridData
         }
 
         /// <summary> Resumes the given job. </summary>
-        /// <param name="subscriptionId"> The Subscription Id. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
-        /// <param name="dataManagerName"> The name of the DataManager Resource within the specified resource group. DataManager names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="dataServiceName"> The name of the data service of the job definition. </param>
-        /// <param name="jobDefinitionName"> The name of the job definition of the job. </param>
-        /// <param name="jobId"> The job id of the job queried. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResumeAsync(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> ResumeAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataManagerName, nameof(dataManagerName));
-            Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateResumeRequest(subscriptionId, resourceGroupName, dataManagerName, dataServiceName, jobDefinitionName, jobId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -386,25 +364,13 @@ namespace Azure.ResourceManager.HybridData
         }
 
         /// <summary> Resumes the given job. </summary>
-        /// <param name="subscriptionId"> The Subscription Id. </param>
-        /// <param name="resourceGroupName"> The Resource Group Name. </param>
-        /// <param name="dataManagerName"> The name of the DataManager Resource within the specified resource group. DataManager names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
-        /// <param name="dataServiceName"> The name of the data service of the job definition. </param>
-        /// <param name="jobDefinitionName"> The name of the job definition of the job. </param>
-        /// <param name="jobId"> The job id of the job queried. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dataManagerName"/>, <paramref name="dataServiceName"/>, <paramref name="jobDefinitionName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Resume(string subscriptionId, string resourceGroupName, string dataManagerName, string dataServiceName, string jobDefinitionName, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Resume(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dataManagerName, nameof(dataManagerName));
-            Argument.AssertNotNullOrEmpty(dataServiceName, nameof(dataServiceName));
-            Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateResumeRequest(subscriptionId, resourceGroupName, dataManagerName, dataServiceName, jobDefinitionName, jobId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

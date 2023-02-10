@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data);
+                var response = await _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, data);
+                var response = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SqlArmOperation<SqlServerDevOpsAuditingSettingResource>(new SqlServerDevOpsAuditingSettingOperationSource(Client), _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -439,8 +439,9 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = await _healthcareApisWorkspaceWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation(_healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _healthcareApisWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _healthcareApisWorkspaceWorkspacesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation(_healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -473,8 +474,9 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = _healthcareApisWorkspaceWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HealthcareApisArmOperation(_healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _healthcareApisWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _healthcareApisWorkspaceWorkspacesRestClient.Delete(message, cancellationToken);
+                var operation = new HealthcareApisArmOperation(_healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -511,8 +513,9 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = await _healthcareApisWorkspaceWorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _healthcareApisWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = await _healthcareApisWorkspaceWorkspacesRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -549,8 +552,9 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = _healthcareApisWorkspaceWorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, _healthcareApisWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _healthcareApisWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = _healthcareApisWorkspaceWorkspacesRestClient.Update(message, cancellationToken);
+                var operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(new HealthcareApisWorkspaceOperationSource(Client), _healthcareApisWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

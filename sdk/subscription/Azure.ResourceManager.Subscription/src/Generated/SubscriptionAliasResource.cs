@@ -245,8 +245,9 @@ namespace Azure.ResourceManager.Subscription
             scope.Start();
             try
             {
-                var response = await _subscriptionAliasAliasRestClient.CreateAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, _subscriptionAliasAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _subscriptionAliasAliasRestClient.CreateCreateRequest(Id.Name, content);
+                var response = await _subscriptionAliasAliasRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,8 +284,9 @@ namespace Azure.ResourceManager.Subscription
             scope.Start();
             try
             {
-                var response = _subscriptionAliasAliasRestClient.Create(Id.Name, content, cancellationToken);
-                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, _subscriptionAliasAliasRestClient.CreateCreateRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _subscriptionAliasAliasRestClient.CreateCreateRequest(Id.Name, content);
+                var response = _subscriptionAliasAliasRestClient.Create(message, cancellationToken);
+                var operation = new SubscriptionArmOperation<SubscriptionAliasResource>(new SubscriptionAliasOperationSource(Client), _subscriptionAliasAliasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

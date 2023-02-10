@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.NetApp
             scope.Start();
             try
             {
-                var response = await _netAppVolumeBackupBackupsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<NetAppVolumeBackupResource>(new NetAppVolumeBackupOperationSource(Client), _netAppVolumeBackupBackupsClientDiagnostics, Pipeline, _netAppVolumeBackupBackupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _netAppVolumeBackupBackupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupName, data);
+                var response = await _netAppVolumeBackupBackupsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetAppVolumeBackupResource>(new NetAppVolumeBackupOperationSource(Client), _netAppVolumeBackupBackupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.NetApp
             scope.Start();
             try
             {
-                var response = _netAppVolumeBackupBackupsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupName, data, cancellationToken);
-                var operation = new NetAppArmOperation<NetAppVolumeBackupResource>(new NetAppVolumeBackupOperationSource(Client), _netAppVolumeBackupBackupsClientDiagnostics, Pipeline, _netAppVolumeBackupBackupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _netAppVolumeBackupBackupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupName, data);
+                var response = _netAppVolumeBackupBackupsRestClient.Create(message, cancellationToken);
+                var operation = new NetAppArmOperation<NetAppVolumeBackupResource>(new NetAppVolumeBackupOperationSource(Client), _netAppVolumeBackupBackupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

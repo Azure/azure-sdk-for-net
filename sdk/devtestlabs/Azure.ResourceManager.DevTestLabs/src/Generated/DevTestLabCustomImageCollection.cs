@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = await _devTestLabCustomImageCustomImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
+                var response = await _devTestLabCustomImageCustomImagesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = _devTestLabCustomImageCustomImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
+                var response = _devTestLabCustomImageCustomImagesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

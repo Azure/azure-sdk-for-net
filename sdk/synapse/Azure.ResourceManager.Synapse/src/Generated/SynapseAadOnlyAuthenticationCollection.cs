@@ -79,8 +79,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseAadOnlyAuthenticationResource>(new SynapseAadOnlyAuthenticationOperationSource(Client), _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, data);
+                var response = await _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseAadOnlyAuthenticationResource>(new SynapseAadOnlyAuthenticationOperationSource(Client), _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,8 +119,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseAadOnlyAuthenticationResource>(new SynapseAadOnlyAuthenticationOperationSource(Client), _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, data);
+                var response = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.Create(message, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseAadOnlyAuthenticationResource>(new SynapseAadOnlyAuthenticationOperationSource(Client), _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

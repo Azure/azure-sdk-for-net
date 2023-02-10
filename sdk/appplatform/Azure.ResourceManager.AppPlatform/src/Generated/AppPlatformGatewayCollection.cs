@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformGatewayGatewaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformGatewayResource>(new AppPlatformGatewayOperationSource(Client), _appPlatformGatewayGatewaysClientDiagnostics, Pipeline, _appPlatformGatewayGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformGatewayGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayName, data);
+                var response = await _appPlatformGatewayGatewaysRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformGatewayResource>(new AppPlatformGatewayOperationSource(Client), _appPlatformGatewayGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformGatewayGatewaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformGatewayResource>(new AppPlatformGatewayOperationSource(Client), _appPlatformGatewayGatewaysClientDiagnostics, Pipeline, _appPlatformGatewayGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformGatewayGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gatewayName, data);
+                var response = _appPlatformGatewayGatewaysRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformGatewayResource>(new AppPlatformGatewayOperationSource(Client), _appPlatformGatewayGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

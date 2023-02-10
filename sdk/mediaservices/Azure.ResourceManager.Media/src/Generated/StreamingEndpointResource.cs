@@ -173,8 +173,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = await _streamingEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _streamingEndpointRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,8 +208,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = _streamingEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _streamingEndpointRestClient.Delete(message, cancellationToken);
+                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,8 +247,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = await _streamingEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<StreamingEndpointResource>(new StreamingEndpointOperationSource(Client), _streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _streamingEndpointRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation<StreamingEndpointResource>(new StreamingEndpointOperationSource(Client), _streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,8 +286,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = _streamingEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MediaArmOperation<StreamingEndpointResource>(new StreamingEndpointOperationSource(Client), _streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _streamingEndpointRestClient.Update(message, cancellationToken);
+                var operation = new MediaArmOperation<StreamingEndpointResource>(new StreamingEndpointOperationSource(Client), _streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -359,8 +363,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = await _streamingEndpointRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _streamingEndpointRestClient.StartAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -393,8 +398,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = _streamingEndpointRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _streamingEndpointRestClient.Start(message, cancellationToken);
+                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -427,8 +433,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = await _streamingEndpointRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _streamingEndpointRestClient.StopAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -461,8 +468,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = _streamingEndpointRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _streamingEndpointRestClient.Stop(message, cancellationToken);
+                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -499,8 +507,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = await _streamingEndpointRestClient.ScaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, streamingEntityScaleUnit, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateScaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, streamingEntityScaleUnit).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateScaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, streamingEntityScaleUnit);
+                var response = await _streamingEndpointRestClient.ScaleAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -537,8 +546,9 @@ namespace Azure.ResourceManager.Media
             scope.Start();
             try
             {
-                var response = _streamingEndpointRestClient.Scale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, streamingEntityScaleUnit, cancellationToken);
-                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, _streamingEndpointRestClient.CreateScaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, streamingEntityScaleUnit).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingEndpointRestClient.CreateScaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, streamingEntityScaleUnit);
+                var response = _streamingEndpointRestClient.Scale(message, cancellationToken);
+                var operation = new MediaArmOperation(_streamingEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

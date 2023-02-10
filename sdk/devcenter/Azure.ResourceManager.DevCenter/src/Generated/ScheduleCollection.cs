@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = await _scheduleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<ScheduleResource>(new ScheduleOperationSource(Client), _scheduleClientDiagnostics, Pipeline, _scheduleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _scheduleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top);
+                var response = await _scheduleRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DevCenterArmOperation<ScheduleResource>(new ScheduleOperationSource(Client), _scheduleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = _scheduleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top, cancellationToken);
-                var operation = new DevCenterArmOperation<ScheduleResource>(new ScheduleOperationSource(Client), _scheduleClientDiagnostics, Pipeline, _scheduleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _scheduleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, data, top);
+                var response = _scheduleRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DevCenterArmOperation<ScheduleResource>(new ScheduleOperationSource(Client), _scheduleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

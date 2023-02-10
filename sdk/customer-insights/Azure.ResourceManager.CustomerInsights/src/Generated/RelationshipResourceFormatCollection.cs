@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = await _relationshipResourceFormatRelationshipsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<RelationshipResourceFormatResource>(new RelationshipResourceFormatOperationSource(Client), _relationshipResourceFormatRelationshipsClientDiagnostics, Pipeline, _relationshipResourceFormatRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _relationshipResourceFormatRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data);
+                var response = await _relationshipResourceFormatRelationshipsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CustomerInsightsArmOperation<RelationshipResourceFormatResource>(new RelationshipResourceFormatOperationSource(Client), _relationshipResourceFormatRelationshipsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = _relationshipResourceFormatRelationshipsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<RelationshipResourceFormatResource>(new RelationshipResourceFormatOperationSource(Client), _relationshipResourceFormatRelationshipsClientDiagnostics, Pipeline, _relationshipResourceFormatRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _relationshipResourceFormatRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relationshipName, data);
+                var response = _relationshipResourceFormatRelationshipsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new CustomerInsightsArmOperation<RelationshipResourceFormatResource>(new RelationshipResourceFormatOperationSource(Client), _relationshipResourceFormatRelationshipsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

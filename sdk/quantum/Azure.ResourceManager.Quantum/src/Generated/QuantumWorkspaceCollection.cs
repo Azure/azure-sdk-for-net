@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Quantum
             scope.Start();
             try
             {
-                var response = await _quantumWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new QuantumArmOperation<QuantumWorkspaceResource>(new QuantumWorkspaceOperationSource(Client), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, _quantumWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _quantumWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
+                var response = await _quantumWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new QuantumArmOperation<QuantumWorkspaceResource>(new QuantumWorkspaceOperationSource(Client), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Quantum
             scope.Start();
             try
             {
-                var response = _quantumWorkspaceWorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new QuantumArmOperation<QuantumWorkspaceResource>(new QuantumWorkspaceOperationSource(Client), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, _quantumWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _quantumWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
+                var response = _quantumWorkspaceWorkspacesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new QuantumArmOperation<QuantumWorkspaceResource>(new QuantumWorkspaceOperationSource(Client), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -502,8 +502,9 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var response = await _automationRunbookRunbookRestClient.PublishAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation(_automationRunbookRunbookClientDiagnostics, Pipeline, _automationRunbookRunbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _automationRunbookRunbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _automationRunbookRunbookRestClient.PublishAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AutomationArmOperation(_automationRunbookRunbookClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -536,8 +537,9 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var response = _automationRunbookRunbookRestClient.Publish(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AutomationArmOperation(_automationRunbookRunbookClientDiagnostics, Pipeline, _automationRunbookRunbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _automationRunbookRunbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _automationRunbookRunbookRestClient.Publish(message, cancellationToken);
+                var operation = new AutomationArmOperation(_automationRunbookRunbookClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

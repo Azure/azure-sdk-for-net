@@ -439,8 +439,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = await _mobileNetworkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkClientDiagnostics, Pipeline, _mobileNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _mobileNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _mobileNetworkRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -473,8 +474,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = _mobileNetworkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkClientDiagnostics, Pipeline, _mobileNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _mobileNetworkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _mobileNetworkRestClient.Delete(message, cancellationToken);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

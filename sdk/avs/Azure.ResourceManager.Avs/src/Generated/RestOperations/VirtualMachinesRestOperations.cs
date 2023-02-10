@@ -218,6 +218,13 @@ namespace Azure.ResourceManager.Avs
 
         internal HttpMessage CreateRestrictMovementRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string virtualMachineId, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+            Argument.AssertNotNull(restrictMovement, nameof(restrictMovement));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -246,25 +253,13 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Enable or disable DRS-driven VM movement restriction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
-        /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
-        /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (Enabled) or not (Disabled). </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="virtualMachineId"/> or <paramref name="restrictMovement"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/> or <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestrictMovementAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string virtualMachineId, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> RestrictMovementAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
-            Argument.AssertNotNull(restrictMovement, nameof(restrictMovement));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateRestrictMovementRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, virtualMachineId, restrictMovement);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -276,25 +271,13 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary> Enable or disable DRS-driven VM movement restriction. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
-        /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
-        /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (Enabled) or not (Disabled). </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="virtualMachineId"/> or <paramref name="restrictMovement"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/> or <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RestrictMovement(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, string virtualMachineId, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response RestrictMovement(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
-            Argument.AssertNotNull(restrictMovement, nameof(restrictMovement));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateRestrictMovementRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName, virtualMachineId, restrictMovement);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

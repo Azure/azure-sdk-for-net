@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = await _simRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<SimResource>(new SimOperationSource(Client), _simClientDiagnostics, Pipeline, _simRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _simRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simName, data);
+                var response = await _simRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation<SimResource>(new SimOperationSource(Client), _simClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = _simRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simName, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<SimResource>(new SimOperationSource(Client), _simClientDiagnostics, Pipeline, _simRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _simRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simName, data);
+                var response = _simRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MobileNetworkArmOperation<SimResource>(new SimOperationSource(Client), _simClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

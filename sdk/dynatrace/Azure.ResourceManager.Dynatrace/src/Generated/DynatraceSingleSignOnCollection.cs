@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Dynatrace
             scope.Start();
             try
             {
-                var response = await _dynatraceSingleSignOnSingleSignOnRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(new DynatraceSingleSignOnOperationSource(Client), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, _dynatraceSingleSignOnSingleSignOnRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _dynatraceSingleSignOnSingleSignOnRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data);
+                var response = await _dynatraceSingleSignOnSingleSignOnRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(new DynatraceSingleSignOnOperationSource(Client), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Dynatrace
             scope.Start();
             try
             {
-                var response = _dynatraceSingleSignOnSingleSignOnRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data, cancellationToken);
-                var operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(new DynatraceSingleSignOnOperationSource(Client), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, _dynatraceSingleSignOnSingleSignOnRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _dynatraceSingleSignOnSingleSignOnRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, data);
+                var response = _dynatraceSingleSignOnSingleSignOnRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(new DynatraceSingleSignOnOperationSource(Client), _dynatraceSingleSignOnSingleSignOnClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

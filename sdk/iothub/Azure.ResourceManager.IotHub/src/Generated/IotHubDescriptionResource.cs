@@ -397,8 +397,9 @@ namespace Azure.ResourceManager.IotHub
             scope.Start();
             try
             {
-                var response = await _iotHubDescriptionIotHubResourceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _iotHubDescriptionIotHubResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _iotHubDescriptionIotHubResourceRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -431,8 +432,9 @@ namespace Azure.ResourceManager.IotHub
             scope.Start();
             try
             {
-                var response = _iotHubDescriptionIotHubResourceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _iotHubDescriptionIotHubResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _iotHubDescriptionIotHubResourceRestClient.Delete(message, cancellationToken);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -469,8 +471,9 @@ namespace Azure.ResourceManager.IotHub
             scope.Start();
             try
             {
-                var response = await _iotHubDescriptionIotHubResourceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _iotHubDescriptionIotHubResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = await _iotHubDescriptionIotHubResourceRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -507,8 +510,9 @@ namespace Azure.ResourceManager.IotHub
             scope.Start();
             try
             {
-                var response = _iotHubDescriptionIotHubResourceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _iotHubDescriptionIotHubResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = _iotHubDescriptionIotHubResourceRestClient.Update(message, cancellationToken);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1237,8 +1241,9 @@ namespace Azure.ResourceManager.IotHub
             scope.Start();
             try
             {
-                var response = await _iotHubRestClient.ManualFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation(_iotHubClientDiagnostics, Pipeline, _iotHubRestClient.CreateManualFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _iotHubRestClient.CreateManualFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = await _iotHubRestClient.ManualFailoverAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new IotHubArmOperation(_iotHubClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1275,8 +1280,9 @@ namespace Azure.ResourceManager.IotHub
             scope.Start();
             try
             {
-                var response = _iotHubRestClient.ManualFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new IotHubArmOperation(_iotHubClientDiagnostics, Pipeline, _iotHubRestClient.CreateManualFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _iotHubRestClient.CreateManualFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = _iotHubRestClient.ManualFailover(message, cancellationToken);
+                var operation = new IotHubArmOperation(_iotHubClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

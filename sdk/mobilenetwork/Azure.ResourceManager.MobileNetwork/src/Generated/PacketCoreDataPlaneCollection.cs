@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = await _packetCoreDataPlaneRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<PacketCoreDataPlaneResource>(new PacketCoreDataPlaneOperationSource(Client), _packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _packetCoreDataPlaneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data);
+                var response = await _packetCoreDataPlaneRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation<PacketCoreDataPlaneResource>(new PacketCoreDataPlaneOperationSource(Client), _packetCoreDataPlaneClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = _packetCoreDataPlaneRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<PacketCoreDataPlaneResource>(new PacketCoreDataPlaneOperationSource(Client), _packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _packetCoreDataPlaneRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCoreDataPlaneName, data);
+                var response = _packetCoreDataPlaneRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MobileNetworkArmOperation<PacketCoreDataPlaneResource>(new PacketCoreDataPlaneOperationSource(Client), _packetCoreDataPlaneClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

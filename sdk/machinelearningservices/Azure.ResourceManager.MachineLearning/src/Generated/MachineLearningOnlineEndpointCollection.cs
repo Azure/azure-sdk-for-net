@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.MachineLearning
             scope.Start();
             try
             {
-                var response = await _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningOnlineEndpointResource>(new MachineLearningOnlineEndpointOperationSource(Client), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data);
+                var response = await _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningArmOperation<MachineLearningOnlineEndpointResource>(new MachineLearningOnlineEndpointOperationSource(Client), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.MachineLearning
             scope.Start();
             try
             {
-                var response = _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningOnlineEndpointResource>(new MachineLearningOnlineEndpointOperationSource(Client), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data);
+                var response = _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MachineLearningArmOperation<MachineLearningOnlineEndpointResource>(new MachineLearningOnlineEndpointOperationSource(Client), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

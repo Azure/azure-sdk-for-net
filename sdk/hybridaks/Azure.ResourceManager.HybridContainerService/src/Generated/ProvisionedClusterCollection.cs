@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = await _provisionedClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _provisionedClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content);
+                var response = await _provisionedClusterRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = _provisionedClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, _provisionedClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _provisionedClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisionedClustersName, content);
+                var response = _provisionedClusterRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = await _connectorResourceFormatConnectorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<ConnectorResourceFormatResource>(new ConnectorResourceFormatOperationSource(Client), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, _connectorResourceFormatConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _connectorResourceFormatConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data);
+                var response = await _connectorResourceFormatConnectorsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CustomerInsightsArmOperation<ConnectorResourceFormatResource>(new ConnectorResourceFormatOperationSource(Client), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = _connectorResourceFormatConnectorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<ConnectorResourceFormatResource>(new ConnectorResourceFormatOperationSource(Client), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, _connectorResourceFormatConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _connectorResourceFormatConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectorName, data);
+                var response = _connectorResourceFormatConnectorsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new CustomerInsightsArmOperation<ConnectorResourceFormatResource>(new ConnectorResourceFormatOperationSource(Client), _connectorResourceFormatConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -174,8 +174,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = await _orbitalContactProfileContactProfilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation(_orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, _orbitalContactProfileContactProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _orbitalContactProfileContactProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _orbitalContactProfileContactProfilesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new OrbitalArmOperation(_orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,8 +209,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = _orbitalContactProfileContactProfilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new OrbitalArmOperation(_orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, _orbitalContactProfileContactProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _orbitalContactProfileContactProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _orbitalContactProfileContactProfilesRestClient.Delete(message, cancellationToken);
+                var operation = new OrbitalArmOperation(_orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,8 +248,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = await _orbitalContactProfileContactProfilesRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation<OrbitalContactProfileResource>(new OrbitalContactProfileOperationSource(Client), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, _orbitalContactProfileContactProfilesRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags).Request, response, OperationFinalStateVia.Location);
+                using var message = _orbitalContactProfileContactProfilesRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags);
+                var response = await _orbitalContactProfileContactProfilesRestClient.UpdateTagsAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new OrbitalArmOperation<OrbitalContactProfileResource>(new OrbitalContactProfileOperationSource(Client), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,8 +287,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = _orbitalContactProfileContactProfilesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags, cancellationToken);
-                var operation = new OrbitalArmOperation<OrbitalContactProfileResource>(new OrbitalContactProfileOperationSource(Client), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, _orbitalContactProfileContactProfilesRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags).Request, response, OperationFinalStateVia.Location);
+                using var message = _orbitalContactProfileContactProfilesRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orbitalSpacecraftTags);
+                var response = _orbitalContactProfileContactProfilesRestClient.UpdateTags(message, cancellationToken);
+                var operation = new OrbitalArmOperation<OrbitalContactProfileResource>(new OrbitalContactProfileOperationSource(Client), _orbitalContactProfileContactProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

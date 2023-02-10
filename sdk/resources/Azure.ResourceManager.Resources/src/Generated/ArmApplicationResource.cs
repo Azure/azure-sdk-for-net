@@ -173,8 +173,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _armApplicationApplicationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _armApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _armApplicationApplicationsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,8 +208,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _armApplicationApplicationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _armApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _armApplicationApplicationsRestClient.Delete(message, cancellationToken);
+                var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -309,8 +311,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _armApplicationApplicationsRestClient.RefreshPermissionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _armApplicationApplicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _armApplicationApplicationsRestClient.RefreshPermissionsAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -343,8 +346,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _armApplicationApplicationsRestClient.RefreshPermissions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _armApplicationApplicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _armApplicationApplicationsRestClient.RefreshPermissions(message, cancellationToken);
+                var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

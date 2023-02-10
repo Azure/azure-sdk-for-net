@@ -206,6 +206,12 @@ namespace Azure.ResourceManager.FrontDoor
 
         internal HttpMessage CreateEnableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+            Argument.AssertNotNull(customHttpsConfiguration, nameof(customHttpsConfiguration));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -232,23 +238,13 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Enables a frontendEndpoint for HTTPS traffic. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
-        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
-        /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/>, <paramref name="frontendEndpointName"/> or <paramref name="customHttpsConfiguration"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> EnableHttpsAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> EnableHttpsAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
-            Argument.AssertNotNull(customHttpsConfiguration, nameof(customHttpsConfiguration));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateEnableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName, customHttpsConfiguration);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -261,23 +257,13 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Enables a frontendEndpoint for HTTPS traffic. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
-        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
-        /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/>, <paramref name="frontendEndpointName"/> or <paramref name="customHttpsConfiguration"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response EnableHttps(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response EnableHttps(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
-            Argument.AssertNotNull(customHttpsConfiguration, nameof(customHttpsConfiguration));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateEnableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName, customHttpsConfiguration);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -291,6 +277,11 @@ namespace Azure.ResourceManager.FrontDoor
 
         internal HttpMessage CreateDisableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -313,21 +304,13 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Disables a frontendEndpoint for HTTPS traffic. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
-        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DisableHttpsAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> DisableHttpsAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDisableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -340,21 +323,13 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Disables a frontendEndpoint for HTTPS traffic. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
-        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
-        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DisableHttps(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response DisableHttps(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDisableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

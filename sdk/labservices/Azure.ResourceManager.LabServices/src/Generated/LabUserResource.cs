@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labUserUsersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation(_labUserUsersClientDiagnostics, Pipeline, _labUserUsersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labUserUsersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _labUserUsersRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation(_labUserUsersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labUserUsersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new LabServicesArmOperation(_labUserUsersClientDiagnostics, Pipeline, _labUserUsersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _labUserUsersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _labUserUsersRestClient.Delete(message, cancellationToken);
+                var operation = new LabServicesArmOperation(_labUserUsersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,8 +246,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labUserUsersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation<LabUserResource>(new LabUserOperationSource(Client), _labUserUsersClientDiagnostics, Pipeline, _labUserUsersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _labUserUsersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch);
+                var response = await _labUserUsersRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation<LabUserResource>(new LabUserOperationSource(Client), _labUserUsersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,8 +285,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labUserUsersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new LabServicesArmOperation<LabUserResource>(new LabUserOperationSource(Client), _labUserUsersClientDiagnostics, Pipeline, _labUserUsersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _labUserUsersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch);
+                var response = _labUserUsersRestClient.Update(message, cancellationToken);
+                var operation = new LabServicesArmOperation<LabUserResource>(new LabUserOperationSource(Client), _labUserUsersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -320,8 +324,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labUserUsersRestClient.InviteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation(_labUserUsersClientDiagnostics, Pipeline, _labUserUsersRestClient.CreateInviteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _labUserUsersRestClient.CreateInviteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = await _labUserUsersRestClient.InviteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation(_labUserUsersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -358,8 +363,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labUserUsersRestClient.Invite(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new LabServicesArmOperation(_labUserUsersClientDiagnostics, Pipeline, _labUserUsersRestClient.CreateInviteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _labUserUsersRestClient.CreateInviteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = _labUserUsersRestClient.Invite(message, cancellationToken);
+                var operation = new LabServicesArmOperation(_labUserUsersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

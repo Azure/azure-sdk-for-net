@@ -175,8 +175,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServerConfigurationConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(new MySqlFlexibleServerConfigurationOperationSource(Client), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _mySqlFlexibleServerConfigurationConfigurationsRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(new MySqlFlexibleServerConfigurationOperationSource(Client), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,8 +214,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServerConfigurationConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(new MySqlFlexibleServerConfigurationOperationSource(Client), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _mySqlFlexibleServerConfigurationConfigurationsRestClient.Update(message, cancellationToken);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(new MySqlFlexibleServerConfigurationOperationSource(Client), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

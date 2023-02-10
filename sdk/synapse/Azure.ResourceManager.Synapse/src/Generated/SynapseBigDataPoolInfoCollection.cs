@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, info, force, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseBigDataPoolInfoResource>(new SynapseBigDataPoolInfoOperationSource(Client), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, info, force).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, info, force);
+                var response = await _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseBigDataPoolInfoResource>(new SynapseBigDataPoolInfoOperationSource(Client), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, info, force, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseBigDataPoolInfoResource>(new SynapseBigDataPoolInfoOperationSource(Client), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, info, force).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, info, force);
+                var response = _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseBigDataPoolInfoResource>(new SynapseBigDataPoolInfoOperationSource(Client), _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

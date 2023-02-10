@@ -550,8 +550,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             scope.Start();
             try
             {
-                var response = await ValidateOperationRestClient.TriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest).Request, response, OperationFinalStateVia.Location);
+                using var message = ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest);
+                var response = await ValidateOperationRestClient.TriggerAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -586,8 +587,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             scope.Start();
             try
             {
-                var response = ValidateOperationRestClient.Trigger(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest).Request, response, OperationFinalStateVia.Location);
+                using var message = ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest);
+                var response = ValidateOperationRestClient.Trigger(message, cancellationToken);
+                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

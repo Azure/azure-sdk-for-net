@@ -289,8 +289,9 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = await OperationResultsRestClient.GetAsync(Id.SubscriptionId, operationResultId, cancellationToken).ConfigureAwait(false);
-                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsClientDiagnostics, Pipeline, OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId).Request, response, OperationFinalStateVia.Location);
+                using var message = OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId);
+                var response = await OperationResultsRestClient.GetAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -324,8 +325,9 @@ namespace Azure.ResourceManager.BotService
             scope.Start();
             try
             {
-                var response = OperationResultsRestClient.Get(Id.SubscriptionId, operationResultId, cancellationToken);
-                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsClientDiagnostics, Pipeline, OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId).Request, response, OperationFinalStateVia.Location);
+                using var message = OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId);
+                var response = OperationResultsRestClient.Get(message, cancellationToken);
+                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

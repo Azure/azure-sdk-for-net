@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.PostgreSql
             scope.Start();
             try
             {
-                var response = await _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlVirtualNetworkRuleResource>(new PostgreSqlVirtualNetworkRuleOperationSource(Client), _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data);
+                var response = await _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PostgreSqlArmOperation<PostgreSqlVirtualNetworkRuleResource>(new PostgreSqlVirtualNetworkRuleOperationSource(Client), _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.PostgreSql
             scope.Start();
             try
             {
-                var response = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlVirtualNetworkRuleResource>(new PostgreSqlVirtualNetworkRuleOperationSource(Client), _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkRuleName, data);
+                var response = _postgreSqlVirtualNetworkRuleVirtualNetworkRulesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new PostgreSqlArmOperation<PostgreSqlVirtualNetworkRuleResource>(new PostgreSqlVirtualNetworkRuleOperationSource(Client), _postgreSqlVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

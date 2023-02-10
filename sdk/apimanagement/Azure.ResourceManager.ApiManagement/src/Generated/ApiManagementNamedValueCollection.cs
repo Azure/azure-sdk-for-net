@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = await _apiManagementNamedValueNamedValueRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _apiManagementNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch);
+                var response = await _apiManagementNamedValueNamedValueRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,8 +125,9 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = _apiManagementNamedValueNamedValueRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, _apiManagementNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _apiManagementNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch);
+                var response = _apiManagementNamedValueNamedValueRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementNamedValueResource>(new ApiManagementNamedValueOperationSource(Client), _apiManagementNamedValueNamedValueClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

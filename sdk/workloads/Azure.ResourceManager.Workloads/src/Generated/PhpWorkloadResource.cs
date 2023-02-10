@@ -182,8 +182,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = await _phpWorkloadResourcePhpWorkloadsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteInfra, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation(_phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, _phpWorkloadResourcePhpWorkloadsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteInfra).Request, response, OperationFinalStateVia.Location);
+                using var message = _phpWorkloadResourcePhpWorkloadsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteInfra);
+                var response = await _phpWorkloadResourcePhpWorkloadsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation(_phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,8 +218,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = _phpWorkloadResourcePhpWorkloadsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteInfra, cancellationToken);
-                var operation = new WorkloadsArmOperation(_phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, _phpWorkloadResourcePhpWorkloadsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteInfra).Request, response, OperationFinalStateVia.Location);
+                using var message = _phpWorkloadResourcePhpWorkloadsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteInfra);
+                var response = _phpWorkloadResourcePhpWorkloadsRestClient.Delete(message, cancellationToken);
+                var operation = new WorkloadsArmOperation(_phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

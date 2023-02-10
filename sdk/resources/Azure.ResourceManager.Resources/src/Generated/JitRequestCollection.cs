@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _jitRequestRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<JitRequestResource>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data);
+                var response = await _jitRequestRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<JitRequestResource>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _jitRequestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<JitRequestResource>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _jitRequestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, data);
+                var response = _jitRequestRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ResourcesArmOperation<JitRequestResource>(new JitRequestOperationSource(Client), _jitRequestClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

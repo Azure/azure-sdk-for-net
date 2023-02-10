@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.Reservations
 
         internal HttpMessage CreateAvailableScopesRequest(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -64,16 +66,13 @@ namespace Azure.ResourceManager.Reservations
         /// Get Available Scopes for `Reservation`.
         /// 
         /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="content"> The AvailableScopesContent to use. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response> AvailableScopesAsync(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> AvailableScopesAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateAvailableScopesRequest(reservationOrderId, reservationId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -88,16 +87,13 @@ namespace Azure.ResourceManager.Reservations
         /// Get Available Scopes for `Reservation`.
         /// 
         /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="content"> The AvailableScopesContent to use. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response AvailableScopes(Guid reservationOrderId, Guid reservationId, AvailableScopesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response AvailableScopes(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateAvailableScopesRequest(reservationOrderId, reservationId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -110,6 +106,8 @@ namespace Azure.ResourceManager.Reservations
 
         internal HttpMessage CreateSplitRequest(Guid reservationOrderId, SplitContent content)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -130,15 +128,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed to Split a reservation item. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response> SplitAsync(Guid reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> SplitAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateSplitRequest(reservationOrderId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -151,15 +147,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Split a `Reservation` into two `Reservation`s with specified quantity distribution. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed to Split a reservation item. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response Split(Guid reservationOrderId, SplitContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Split(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateSplitRequest(reservationOrderId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -173,6 +167,8 @@ namespace Azure.ResourceManager.Reservations
 
         internal HttpMessage CreateMergeRequest(Guid reservationOrderId, MergeContent content)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -193,15 +189,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed for commercial request for a reservation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response> MergeAsync(Guid reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> MergeAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateMergeRequest(reservationOrderId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -214,15 +208,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Merge the specified `Reservation`s into a new `Reservation`. The two `Reservation`s being merged must have same properties. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed for commercial request for a reservation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response Merge(Guid reservationOrderId, MergeContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Merge(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateMergeRequest(reservationOrderId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -367,6 +359,8 @@ namespace Azure.ResourceManager.Reservations
 
         internal HttpMessage CreateUpdateRequest(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
@@ -388,16 +382,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Updates the applied scopes of the `Reservation`. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="patch"> Information needed to patch a reservation item. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public async Task<Response> UpdateAsync(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> UpdateAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateUpdateRequest(reservationOrderId, reservationId, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -410,16 +401,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Updates the applied scopes of the `Reservation`. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="patch"> Information needed to patch a reservation item. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public Response Update(Guid reservationOrderId, Guid reservationId, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Update(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateUpdateRequest(reservationOrderId, reservationId, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

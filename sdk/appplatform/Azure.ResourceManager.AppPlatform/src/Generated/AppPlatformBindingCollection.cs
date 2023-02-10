@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformBindingBindingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, bindingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBindingResource>(new AppPlatformBindingOperationSource(Client), _appPlatformBindingBindingsClientDiagnostics, Pipeline, _appPlatformBindingBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, bindingName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformBindingBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, bindingName, data);
+                var response = await _appPlatformBindingBindingsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformBindingResource>(new AppPlatformBindingOperationSource(Client), _appPlatformBindingBindingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformBindingBindingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, bindingName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBindingResource>(new AppPlatformBindingOperationSource(Client), _appPlatformBindingBindingsClientDiagnostics, Pipeline, _appPlatformBindingBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, bindingName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformBindingBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, bindingName, data);
+                var response = _appPlatformBindingBindingsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformBindingResource>(new AppPlatformBindingOperationSource(Client), _appPlatformBindingBindingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

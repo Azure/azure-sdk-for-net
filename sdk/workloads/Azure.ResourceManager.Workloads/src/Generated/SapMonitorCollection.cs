@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = await _sapMonitormonitorsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<SapMonitorResource>(new SapMonitorOperationSource(Client), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sapMonitormonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data);
+                var response = await _sapMonitormonitorsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<SapMonitorResource>(new SapMonitorOperationSource(Client), _sapMonitormonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = _sapMonitormonitorsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<SapMonitorResource>(new SapMonitorOperationSource(Client), _sapMonitormonitorsClientDiagnostics, Pipeline, _sapMonitormonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sapMonitormonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data);
+                var response = _sapMonitormonitorsRestClient.Create(message, cancellationToken);
+                var operation = new WorkloadsArmOperation<SapMonitorResource>(new SapMonitorOperationSource(Client), _sapMonitormonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = await _orbitalContactContactsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OrbitalArmOperation<OrbitalContactResource>(new OrbitalContactOperationSource(Client), _orbitalContactContactsClientDiagnostics, Pipeline, _orbitalContactContactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _orbitalContactContactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data);
+                var response = await _orbitalContactContactsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new OrbitalArmOperation<OrbitalContactResource>(new OrbitalContactOperationSource(Client), _orbitalContactContactsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Orbital
             scope.Start();
             try
             {
-                var response = _orbitalContactContactsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data, cancellationToken);
-                var operation = new OrbitalArmOperation<OrbitalContactResource>(new OrbitalContactOperationSource(Client), _orbitalContactContactsClientDiagnostics, Pipeline, _orbitalContactContactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _orbitalContactContactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contactName, data);
+                var response = _orbitalContactContactsRestClient.Create(message, cancellationToken);
+                var operation = new OrbitalArmOperation<OrbitalContactResource>(new OrbitalContactOperationSource(Client), _orbitalContactContactsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

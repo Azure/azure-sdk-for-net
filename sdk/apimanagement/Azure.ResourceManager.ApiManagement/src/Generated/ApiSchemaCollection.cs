@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = await _apiSchemaRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiSchemaResource>(new ApiSchemaOperationSource(Client), _apiSchemaClientDiagnostics, Pipeline, _apiSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _apiSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, data, ifMatch);
+                var response = await _apiSchemaRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiSchemaResource>(new ApiSchemaOperationSource(Client), _apiSchemaClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.ApiManagement
             scope.Start();
             try
             {
-                var response = _apiSchemaRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiSchemaResource>(new ApiSchemaOperationSource(Client), _apiSchemaClientDiagnostics, Pipeline, _apiSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _apiSchemaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaId, data, ifMatch);
+                var response = _apiSchemaRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiSchemaResource>(new ApiSchemaOperationSource(Client), _apiSchemaClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

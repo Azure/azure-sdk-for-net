@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _avsCloudLinkCloudLinksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<AvsCloudLinkResource>(new AvsCloudLinkOperationSource(Client), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, _avsCloudLinkCloudLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _avsCloudLinkCloudLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data);
+                var response = await _avsCloudLinkCloudLinksRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<AvsCloudLinkResource>(new AvsCloudLinkOperationSource(Client), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _avsCloudLinkCloudLinksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data, cancellationToken);
-                var operation = new AvsArmOperation<AvsCloudLinkResource>(new AvsCloudLinkOperationSource(Client), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, _avsCloudLinkCloudLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _avsCloudLinkCloudLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data);
+                var response = _avsCloudLinkCloudLinksRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AvsArmOperation<AvsCloudLinkResource>(new AvsCloudLinkOperationSource(Client), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

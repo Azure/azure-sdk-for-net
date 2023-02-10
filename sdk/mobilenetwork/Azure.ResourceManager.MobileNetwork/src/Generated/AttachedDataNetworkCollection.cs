@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = await _attachedDataNetworkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDataNetworkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<AttachedDataNetworkResource>(new AttachedDataNetworkOperationSource(Client), _attachedDataNetworkClientDiagnostics, Pipeline, _attachedDataNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDataNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _attachedDataNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDataNetworkName, data);
+                var response = await _attachedDataNetworkRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation<AttachedDataNetworkResource>(new AttachedDataNetworkOperationSource(Client), _attachedDataNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = _attachedDataNetworkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDataNetworkName, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<AttachedDataNetworkResource>(new AttachedDataNetworkOperationSource(Client), _attachedDataNetworkClientDiagnostics, Pipeline, _attachedDataNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDataNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _attachedDataNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, attachedDataNetworkName, data);
+                var response = _attachedDataNetworkRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MobileNetworkArmOperation<AttachedDataNetworkResource>(new AttachedDataNetworkOperationSource(Client), _attachedDataNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = await _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabVirtualNetworkResource>(new DevTestLabVirtualNetworkOperationSource(Client), _devTestLabVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
+                var response = await _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation<DevTestLabVirtualNetworkResource>(new DevTestLabVirtualNetworkOperationSource(Client), _devTestLabVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.DevTestLabs
             scope.Start();
             try
             {
-                var response = _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabVirtualNetworkResource>(new DevTestLabVirtualNetworkOperationSource(Client), _devTestLabVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
+                var response = _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DevTestLabsArmOperation<DevTestLabVirtualNetworkResource>(new DevTestLabVirtualNetworkOperationSource(Client), _devTestLabVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

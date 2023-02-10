@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.DigitalTwins
             scope.Start();
             try
             {
-                var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data);
+                var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.DigitalTwins
             scope.Start();
             try
             {
-                var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data);
+                var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

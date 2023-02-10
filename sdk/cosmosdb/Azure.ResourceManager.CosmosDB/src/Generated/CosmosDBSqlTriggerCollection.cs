@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _cosmosDBSqlTriggerSqlResourcesRestClient.CreateUpdateSqlTriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlTriggerResource>(new CosmosDBSqlTriggerOperationSource(Client), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _cosmosDBSqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content);
+                var response = await _cosmosDBSqlTriggerSqlResourcesRestClient.CreateUpdateSqlTriggerAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlTriggerResource>(new CosmosDBSqlTriggerOperationSource(Client), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _cosmosDBSqlTriggerSqlResourcesRestClient.CreateUpdateSqlTrigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlTriggerResource>(new CosmosDBSqlTriggerOperationSource(Client), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _cosmosDBSqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content);
+                var response = _cosmosDBSqlTriggerSqlResourcesRestClient.CreateUpdateSqlTrigger(message, cancellationToken);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlTriggerResource>(new CosmosDBSqlTriggerOperationSource(Client), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = await _projectRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, projectName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<ProjectResource>(new ProjectOperationSource(Client), _projectClientDiagnostics, Pipeline, _projectRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, projectName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _projectRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, projectName, data);
+                var response = await _projectRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DevCenterArmOperation<ProjectResource>(new ProjectOperationSource(Client), _projectClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = _projectRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, projectName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<ProjectResource>(new ProjectOperationSource(Client), _projectClientDiagnostics, Pipeline, _projectRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, projectName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _projectRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, projectName, data);
+                var response = _projectRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DevCenterArmOperation<ProjectResource>(new ProjectOperationSource(Client), _projectClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

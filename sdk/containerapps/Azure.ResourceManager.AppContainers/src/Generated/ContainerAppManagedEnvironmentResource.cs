@@ -397,8 +397,9 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation(_containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -431,8 +432,9 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Delete(message, cancellationToken);
+                var operation = new AppContainersArmOperation(_containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -469,8 +471,9 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = await _containerAppManagedEnvironmentManagedEnvironmentsRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -507,8 +510,9 @@ namespace Azure.ResourceManager.AppContainers
             scope.Start();
             try
             {
-                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = _containerAppManagedEnvironmentManagedEnvironmentsRestClient.Update(message, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(new ContainerAppManagedEnvironmentOperationSource(Client), _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

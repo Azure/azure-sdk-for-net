@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = await _sliceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sliceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<SliceResource>(new SliceOperationSource(Client), _sliceClientDiagnostics, Pipeline, _sliceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sliceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sliceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sliceName, data);
+                var response = await _sliceRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation<SliceResource>(new SliceOperationSource(Client), _sliceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = _sliceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sliceName, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<SliceResource>(new SliceOperationSource(Client), _sliceClientDiagnostics, Pipeline, _sliceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sliceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sliceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sliceName, data);
+                var response = _sliceRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MobileNetworkArmOperation<SliceResource>(new SliceOperationSource(Client), _sliceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

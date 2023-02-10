@@ -83,8 +83,9 @@ namespace Azure.ResourceManager.Search
             scope.Start();
             try
             {
-                var response = await _searchServiceServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
-                var operation = new SearchArmOperation<SearchServiceResource>(new SearchServiceOperationSource(Client), _searchServiceServicesClientDiagnostics, Pipeline, _searchServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions).Request, response, OperationFinalStateVia.Location);
+                using var message = _searchServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions);
+                var response = await _searchServiceServicesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SearchArmOperation<SearchServiceResource>(new SearchServiceOperationSource(Client), _searchServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,8 +126,9 @@ namespace Azure.ResourceManager.Search
             scope.Start();
             try
             {
-                var response = _searchServiceServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions, cancellationToken);
-                var operation = new SearchArmOperation<SearchServiceResource>(new SearchServiceOperationSource(Client), _searchServiceServicesClientDiagnostics, Pipeline, _searchServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions).Request, response, OperationFinalStateVia.Location);
+                using var message = _searchServiceServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, searchServiceName, data, searchManagementRequestOptions);
+                var response = _searchServiceServicesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SearchArmOperation<SearchServiceResource>(new SearchServiceOperationSource(Client), _searchServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

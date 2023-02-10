@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.ArcScVmm
             scope.Start();
             try
             {
-                var response = await _scVmmVirtualNetworkVirtualNetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation<ScVmmVirtualNetworkResource>(new ScVmmVirtualNetworkOperationSource(Client), _scVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, _scVmmVirtualNetworkVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _scVmmVirtualNetworkVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, data);
+                var response = await _scVmmVirtualNetworkVirtualNetworksRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ArcScVmmArmOperation<ScVmmVirtualNetworkResource>(new ScVmmVirtualNetworkOperationSource(Client), _scVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.ArcScVmm
             scope.Start();
             try
             {
-                var response = _scVmmVirtualNetworkVirtualNetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, data, cancellationToken);
-                var operation = new ArcScVmmArmOperation<ScVmmVirtualNetworkResource>(new ScVmmVirtualNetworkOperationSource(Client), _scVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, _scVmmVirtualNetworkVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _scVmmVirtualNetworkVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, data);
+                var response = _scVmmVirtualNetworkVirtualNetworksRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ArcScVmmArmOperation<ScVmmVirtualNetworkResource>(new ScVmmVirtualNetworkOperationSource(Client), _scVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

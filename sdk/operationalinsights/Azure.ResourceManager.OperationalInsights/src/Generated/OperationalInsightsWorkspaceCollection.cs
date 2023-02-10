@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.OperationalInsights
             scope.Start();
             try
             {
-                var response = await _operationalInsightsWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceOperationSource(Client), _operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, _operationalInsightsWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _operationalInsightsWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
+                var response = await _operationalInsightsWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceOperationSource(Client), _operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.OperationalInsights
             scope.Start();
             try
             {
-                var response = _operationalInsightsWorkspaceWorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceOperationSource(Client), _operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, _operationalInsightsWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _operationalInsightsWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
+                var response = _operationalInsightsWorkspaceWorkspacesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsWorkspaceResource>(new OperationalInsightsWorkspaceOperationSource(Client), _operationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = await _analysisServerServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data);
+                var response = await _analysisServerServersRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = _analysisServerServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, serverName, data, cancellationToken);
-                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, data);
+                var response = _analysisServerServersRestClient.Create(message, cancellationToken);
+                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

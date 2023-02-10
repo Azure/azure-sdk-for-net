@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             scope.Start();
             try
             {
-                var response = await _dataLakeAnalyticsAccountAccountsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeAnalyticsArmOperation<DataLakeAnalyticsAccountResource>(new DataLakeAnalyticsAccountOperationSource(Client), _dataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, _dataLakeAnalyticsAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataLakeAnalyticsAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content);
+                var response = await _dataLakeAnalyticsAccountAccountsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataLakeAnalyticsArmOperation<DataLakeAnalyticsAccountResource>(new DataLakeAnalyticsAccountOperationSource(Client), _dataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             scope.Start();
             try
             {
-                var response = _dataLakeAnalyticsAccountAccountsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, content, cancellationToken);
-                var operation = new DataLakeAnalyticsArmOperation<DataLakeAnalyticsAccountResource>(new DataLakeAnalyticsAccountOperationSource(Client), _dataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, _dataLakeAnalyticsAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataLakeAnalyticsAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content);
+                var response = _dataLakeAnalyticsAccountAccountsRestClient.Create(message, cancellationToken);
+                var operation = new DataLakeAnalyticsArmOperation<DataLakeAnalyticsAccountResource>(new DataLakeAnalyticsAccountOperationSource(Client), _dataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

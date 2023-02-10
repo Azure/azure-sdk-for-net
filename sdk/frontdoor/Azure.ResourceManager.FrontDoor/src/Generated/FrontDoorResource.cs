@@ -284,8 +284,9 @@ namespace Azure.ResourceManager.FrontDoor
             scope.Start();
             try
             {
-                var response = await _frontDoorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation(_frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _frontDoorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _frontDoorRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation(_frontDoorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -318,8 +319,9 @@ namespace Azure.ResourceManager.FrontDoor
             scope.Start();
             try
             {
-                var response = _frontDoorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new FrontDoorArmOperation(_frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _frontDoorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _frontDoorRestClient.Delete(message, cancellationToken);
+                var operation = new FrontDoorArmOperation(_frontDoorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -356,8 +358,9 @@ namespace Azure.ResourceManager.FrontDoor
             scope.Start();
             try
             {
-                var response = await _frontDoorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = await _frontDoorRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -394,8 +397,9 @@ namespace Azure.ResourceManager.FrontDoor
             scope.Start();
             try
             {
-                var response = _frontDoorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = _frontDoorRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -500,8 +504,9 @@ namespace Azure.ResourceManager.FrontDoor
             scope.Start();
             try
             {
-                var response = await _endpointsRestClient.PurgeContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation(_endpointsClientDiagnostics, Pipeline, _endpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _endpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = await _endpointsRestClient.PurgeContentAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation(_endpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -538,8 +543,9 @@ namespace Azure.ResourceManager.FrontDoor
             scope.Start();
             try
             {
-                var response = _endpointsRestClient.PurgeContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new FrontDoorArmOperation(_endpointsClientDiagnostics, Pipeline, _endpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _endpointsRestClient.CreatePurgeContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = _endpointsRestClient.PurgeContent(message, cancellationToken);
+                var operation = new FrontDoorArmOperation(_endpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

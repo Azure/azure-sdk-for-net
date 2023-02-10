@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.OperationalInsights
             scope.Start();
             try
             {
-                var response = await _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data);
+                var response = await _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.OperationalInsights
             scope.Start();
             try
             {
-                var response = _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data);
+                var response = _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

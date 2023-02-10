@@ -797,8 +797,9 @@ namespace Azure.ResourceManager.Logic
             scope.Start();
             try
             {
-                var response = await _logicWorkflowWorkflowsRestClient.MoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation(_logicWorkflowWorkflowsClientDiagnostics, Pipeline, _logicWorkflowWorkflowsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move).Request, response, OperationFinalStateVia.Location);
+                using var message = _logicWorkflowWorkflowsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move);
+                var response = await _logicWorkflowWorkflowsRestClient.MoveAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LogicArmOperation(_logicWorkflowWorkflowsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -835,8 +836,9 @@ namespace Azure.ResourceManager.Logic
             scope.Start();
             try
             {
-                var response = _logicWorkflowWorkflowsRestClient.Move(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move, cancellationToken);
-                var operation = new LogicArmOperation(_logicWorkflowWorkflowsClientDiagnostics, Pipeline, _logicWorkflowWorkflowsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move).Request, response, OperationFinalStateVia.Location);
+                using var message = _logicWorkflowWorkflowsRestClient.CreateMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, move);
+                var response = _logicWorkflowWorkflowsRestClient.Move(message, cancellationToken);
+                var operation = new LogicArmOperation(_logicWorkflowWorkflowsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

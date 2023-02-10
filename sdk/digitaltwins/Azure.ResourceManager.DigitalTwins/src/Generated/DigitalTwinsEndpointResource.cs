@@ -171,8 +171,9 @@ namespace Azure.ResourceManager.DigitalTwins
             scope.Start();
             try
             {
-                var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -205,8 +206,9 @@ namespace Azure.ResourceManager.DigitalTwins
             scope.Start();
             try
             {
-                var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.Delete(message, cancellationToken);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -243,8 +245,9 @@ namespace Azure.ResourceManager.DigitalTwins
             scope.Start();
             try
             {
-                var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +284,9 @@ namespace Azure.ResourceManager.DigitalTwins
             scope.Start();
             try
             {
-                var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

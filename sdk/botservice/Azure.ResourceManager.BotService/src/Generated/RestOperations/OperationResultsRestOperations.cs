@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.BotService
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string operationResultId)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
@@ -54,17 +57,13 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary> Get the operation result for a long running operation. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationResultId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetAsync(string subscriptionId, string operationResultId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> GetAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateGetRequest(subscriptionId, operationResultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -77,17 +76,13 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary> Get the operation result for a long running operation. </summary>
-        /// <param name="subscriptionId"> Azure Subscription ID. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationResultId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Get(string subscriptionId, string operationResultId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Get(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateGetRequest(subscriptionId, operationResultId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

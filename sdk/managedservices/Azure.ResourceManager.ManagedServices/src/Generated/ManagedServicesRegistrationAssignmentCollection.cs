@@ -70,8 +70,9 @@ namespace Azure.ResourceManager.ManagedServices
             scope.Start();
             try
             {
-                var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdateAsync(Id, registrationAssignmentId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id, registrationAssignmentId, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id, registrationAssignmentId, data);
+                var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -111,8 +112,9 @@ namespace Azure.ResourceManager.ManagedServices
             scope.Start();
             try
             {
-                var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdate(Id, registrationAssignmentId, data, cancellationToken);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id, registrationAssignmentId, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id, registrationAssignmentId, data);
+                var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

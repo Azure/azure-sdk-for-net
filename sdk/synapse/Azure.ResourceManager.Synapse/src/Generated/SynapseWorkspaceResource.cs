@@ -1189,8 +1189,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseWorkspaceWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, _synapseWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _synapseWorkspaceWorkspacesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1223,8 +1224,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseWorkspaceWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, _synapseWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _synapseWorkspaceWorkspacesRestClient.Delete(message, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1261,8 +1263,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseWorkspaceWorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, _synapseWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = await _synapseWorkspaceWorkspacesRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1299,8 +1302,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseWorkspaceWorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, _synapseWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = _synapseWorkspaceWorkspacesRestClient.Update(message, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseWorkspaceResource>(new SynapseWorkspaceOperationSource(Client), _synapseWorkspaceWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1337,8 +1341,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAllAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = await _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAllAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1375,8 +1380,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAll(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAll(message, cancellationToken);
+                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

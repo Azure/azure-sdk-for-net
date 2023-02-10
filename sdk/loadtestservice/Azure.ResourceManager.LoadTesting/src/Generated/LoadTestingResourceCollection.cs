@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.LoadTesting
             scope.Start();
             try
             {
-                var response = await _loadTestingResourceLoadTestsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _loadTestingResourceLoadTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data);
+                var response = await _loadTestingResourceLoadTestsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.LoadTesting
             scope.Start();
             try
             {
-                var response = _loadTestingResourceLoadTestsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data, cancellationToken);
-                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _loadTestingResourceLoadTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data);
+                var response = _loadTestingResourceLoadTestsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

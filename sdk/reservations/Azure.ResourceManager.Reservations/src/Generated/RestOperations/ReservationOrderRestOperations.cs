@@ -161,6 +161,8 @@ namespace Azure.ResourceManager.Reservations
 
         internal HttpMessage CreatePurchaseRequest(Guid reservationOrderId, ReservationPurchaseContent content)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -180,15 +182,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Purchase `ReservationOrder` and create resource under the specified URI. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response> PurchaseAsync(Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> PurchaseAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreatePurchaseRequest(reservationOrderId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -201,15 +201,13 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Purchase `ReservationOrder` and create resource under the specified URI. </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response Purchase(Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Purchase(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreatePurchaseRequest(reservationOrderId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

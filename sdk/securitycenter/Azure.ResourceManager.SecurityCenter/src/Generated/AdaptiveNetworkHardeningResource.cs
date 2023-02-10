@@ -178,8 +178,9 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _adaptiveNetworkHardeningRestClient.EnforceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_adaptiveNetworkHardeningClientDiagnostics, Pipeline, _adaptiveNetworkHardeningRestClient.CreateEnforceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _adaptiveNetworkHardeningRestClient.CreateEnforceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content);
+                var response = await _adaptiveNetworkHardeningRestClient.EnforceAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityCenterArmOperation(_adaptiveNetworkHardeningClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -216,8 +217,9 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _adaptiveNetworkHardeningRestClient.Enforce(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_adaptiveNetworkHardeningClientDiagnostics, Pipeline, _adaptiveNetworkHardeningRestClient.CreateEnforceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _adaptiveNetworkHardeningRestClient.CreateEnforceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, content);
+                var response = _adaptiveNetworkHardeningRestClient.Enforce(message, cancellationToken);
+                var operation = new SecurityCenterArmOperation(_adaptiveNetworkHardeningClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

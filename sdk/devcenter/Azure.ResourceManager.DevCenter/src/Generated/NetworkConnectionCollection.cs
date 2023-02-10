@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = await _networkConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<NetworkConnectionResource>(new NetworkConnectionOperationSource(Client), _networkConnectionClientDiagnostics, Pipeline, _networkConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _networkConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data);
+                var response = await _networkConnectionRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DevCenterArmOperation<NetworkConnectionResource>(new NetworkConnectionOperationSource(Client), _networkConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.DevCenter
             scope.Start();
             try
             {
-                var response = _networkConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<NetworkConnectionResource>(new NetworkConnectionOperationSource(Client), _networkConnectionClientDiagnostics, Pipeline, _networkConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _networkConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data);
+                var response = _networkConnectionRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DevCenterArmOperation<NetworkConnectionResource>(new NetworkConnectionOperationSource(Client), _networkConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

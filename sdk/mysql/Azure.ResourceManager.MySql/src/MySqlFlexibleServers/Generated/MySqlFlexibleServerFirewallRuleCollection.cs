@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource>(new MySqlFlexibleServerFirewallRuleOperationSource(Client), _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data);
+                var response = await _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource>(new MySqlFlexibleServerFirewallRuleOperationSource(Client), _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource>(new MySqlFlexibleServerFirewallRuleOperationSource(Client), _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data);
+                var response = _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerFirewallRuleResource>(new MySqlFlexibleServerFirewallRuleOperationSource(Client), _mySqlFlexibleServerFirewallRuleFirewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

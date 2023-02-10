@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Kusto
             scope.Start();
             try
             {
-                var response = await _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoDatabasePrincipalAssignmentResource>(new KustoDatabasePrincipalAssignmentOperationSource(Client), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data);
+                var response = await _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new KustoArmOperation<KustoDatabasePrincipalAssignmentResource>(new KustoDatabasePrincipalAssignmentOperationSource(Client), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Kusto
             scope.Start();
             try
             {
-                var response = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoDatabasePrincipalAssignmentResource>(new KustoDatabasePrincipalAssignmentOperationSource(Client), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, principalAssignmentName, data);
+                var response = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new KustoArmOperation<KustoDatabasePrincipalAssignmentResource>(new KustoDatabasePrincipalAssignmentOperationSource(Client), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

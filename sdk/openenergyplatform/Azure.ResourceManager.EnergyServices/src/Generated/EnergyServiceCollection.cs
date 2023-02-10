@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.EnergyServices
             scope.Start();
             try
             {
-                var response = await _energyServiceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EnergyServicesArmOperation<EnergyServiceResource>(new EnergyServiceOperationSource(Client), _energyServiceClientDiagnostics, Pipeline, _energyServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _energyServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var response = await _energyServiceRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new EnergyServicesArmOperation<EnergyServiceResource>(new EnergyServiceOperationSource(Client), _energyServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.EnergyServices
             scope.Start();
             try
             {
-                var response = _energyServiceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new EnergyServicesArmOperation<EnergyServiceResource>(new EnergyServiceOperationSource(Client), _energyServiceClientDiagnostics, Pipeline, _energyServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _energyServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var response = _energyServiceRestClient.Create(message, cancellationToken);
+                var operation = new EnergyServicesArmOperation<EnergyServiceResource>(new EnergyServiceOperationSource(Client), _energyServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

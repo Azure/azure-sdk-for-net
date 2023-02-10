@@ -83,8 +83,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = await _streamingJobRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobResource>(new StreamingJobOperationSource(Client), _streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch);
+                var response = await _streamingJobRestClient.CreateOrReplaceAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new StreamAnalyticsArmOperation<StreamingJobResource>(new StreamingJobOperationSource(Client), _streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,8 +127,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             scope.Start();
             try
             {
-                var response = _streamingJobRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobResource>(new StreamingJobOperationSource(Client), _streamingJobClientDiagnostics, Pipeline, _streamingJobRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _streamingJobRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, ifMatch, ifNoneMatch);
+                var response = _streamingJobRestClient.CreateOrReplace(message, cancellationToken);
+                var operation = new StreamAnalyticsArmOperation<StreamingJobResource>(new StreamingJobOperationSource(Client), _streamingJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

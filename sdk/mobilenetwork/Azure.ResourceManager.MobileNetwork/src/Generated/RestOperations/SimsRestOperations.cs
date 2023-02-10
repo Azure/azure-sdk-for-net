@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
@@ -60,21 +65,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Deletes the specified SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> DeleteAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, simGroupName, simName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -88,21 +85,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Deletes the specified SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string simGroupName, string simName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Delete(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, simGroupName, simName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -205,6 +194,12 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName, SimData data)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+            Argument.AssertNotNull(data, nameof(data));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -230,23 +225,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Creates or updates a SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
-        /// <param name="data"> Parameters supplied to the create or update SIM operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/>, <paramref name="simName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string simGroupName, string simName, SimData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, simGroupName, simName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -259,23 +244,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Creates or updates a SIM. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simName"> The name of the SIM. </param>
-        /// <param name="data"> Parameters supplied to the create or update SIM operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/>, <paramref name="simName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string simGroupName, string simName, SimData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response CreateOrUpdate(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, simGroupName, simName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -368,6 +343,11 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal HttpMessage CreateBulkUploadRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -392,21 +372,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Bulk upload SIMs to a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simUploadList"> Parameters supplied to the bulk SIM upload operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simUploadList"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BulkUploadAsync(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> BulkUploadAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateBulkUploadRequest(subscriptionId, resourceGroupName, simGroupName, simUploadList);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -419,21 +391,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Bulk upload SIMs to a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simUploadList"> Parameters supplied to the bulk SIM upload operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simUploadList"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response BulkUpload(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response BulkUpload(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simUploadList, nameof(simUploadList));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateBulkUploadRequest(subscriptionId, resourceGroupName, simGroupName, simUploadList);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -447,6 +411,11 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal HttpMessage CreateBulkDeleteRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -471,21 +440,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Bulk delete SIMs from a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simDeleteList"> Parameters supplied to the bulk SIM delete operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simDeleteList"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BulkDeleteAsync(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> BulkDeleteAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateBulkDeleteRequest(subscriptionId, resourceGroupName, simGroupName, simDeleteList);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -499,21 +460,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Bulk delete SIMs from a SIM group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="simDeleteList"> Parameters supplied to the bulk SIM delete operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="simDeleteList"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response BulkDelete(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response BulkDelete(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(simDeleteList, nameof(simDeleteList));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateBulkDeleteRequest(subscriptionId, resourceGroupName, simGroupName, simDeleteList);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -528,6 +481,11 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal HttpMessage CreateBulkUploadEncryptedRequest(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
+            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -552,21 +510,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Bulk upload SIMs in encrypted form to a SIM group. The SIM credentials must be encrypted. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="encryptedSimUploadList"> Parameters supplied to the encrypted SIMs upload operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="encryptedSimUploadList"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BulkUploadEncryptedAsync(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> BulkUploadEncryptedAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateBulkUploadEncryptedRequest(subscriptionId, resourceGroupName, simGroupName, encryptedSimUploadList);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -579,21 +529,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Bulk upload SIMs in encrypted form to a SIM group. The SIM credentials must be encrypted. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="simGroupName"> The name of the SIM Group. </param>
-        /// <param name="encryptedSimUploadList"> Parameters supplied to the encrypted SIMs upload operation. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="simGroupName"/> or <paramref name="encryptedSimUploadList"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="simGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response BulkUploadEncrypted(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response BulkUploadEncrypted(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(simGroupName, nameof(simGroupName));
-            Argument.AssertNotNull(encryptedSimUploadList, nameof(encryptedSimUploadList));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateBulkUploadEncryptedRequest(subscriptionId, resourceGroupName, simGroupName, encryptedSimUploadList);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

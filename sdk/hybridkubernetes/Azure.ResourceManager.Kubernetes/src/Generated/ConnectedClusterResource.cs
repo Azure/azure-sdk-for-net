@@ -174,8 +174,9 @@ namespace Azure.ResourceManager.Kubernetes
             scope.Start();
             try
             {
-                var response = await _connectedClusterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesArmOperation(_connectedClusterClientDiagnostics, Pipeline, _connectedClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _connectedClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _connectedClusterRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new KubernetesArmOperation(_connectedClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,8 +209,9 @@ namespace Azure.ResourceManager.Kubernetes
             scope.Start();
             try
             {
-                var response = _connectedClusterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new KubernetesArmOperation(_connectedClusterClientDiagnostics, Pipeline, _connectedClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _connectedClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _connectedClusterRestClient.Delete(message, cancellationToken);
+                var operation = new KubernetesArmOperation(_connectedClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

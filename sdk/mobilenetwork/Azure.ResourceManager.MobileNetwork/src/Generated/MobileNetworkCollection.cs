@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = await _mobileNetworkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, mobileNetworkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<MobileNetworkResource>(new MobileNetworkOperationSource(Client), _mobileNetworkClientDiagnostics, Pipeline, _mobileNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mobileNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _mobileNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mobileNetworkName, data);
+                var response = await _mobileNetworkRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MobileNetworkArmOperation<MobileNetworkResource>(new MobileNetworkOperationSource(Client), _mobileNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.MobileNetwork
             scope.Start();
             try
             {
-                var response = _mobileNetworkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, mobileNetworkName, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<MobileNetworkResource>(new MobileNetworkOperationSource(Client), _mobileNetworkClientDiagnostics, Pipeline, _mobileNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mobileNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _mobileNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mobileNetworkName, data);
+                var response = _mobileNetworkRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MobileNetworkArmOperation<MobileNetworkResource>(new MobileNetworkOperationSource(Client), _mobileNetworkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

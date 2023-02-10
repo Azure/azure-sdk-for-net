@@ -829,8 +829,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await ReplicationVaultHealthRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(new VaultHealthDetailsOperationSource(), ReplicationVaultHealthClientDiagnostics, Pipeline, ReplicationVaultHealthRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName).Request, response, OperationFinalStateVia.Location);
+                using var message = ReplicationVaultHealthRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+                var response = await ReplicationVaultHealthRestClient.RefreshAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(new VaultHealthDetailsOperationSource(), ReplicationVaultHealthClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -864,8 +865,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = ReplicationVaultHealthRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(new VaultHealthDetailsOperationSource(), ReplicationVaultHealthClientDiagnostics, Pipeline, ReplicationVaultHealthRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName).Request, response, OperationFinalStateVia.Location);
+                using var message = ReplicationVaultHealthRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
+                var response = ReplicationVaultHealthRestClient.Refresh(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(new VaultHealthDetailsOperationSource(), ReplicationVaultHealthClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

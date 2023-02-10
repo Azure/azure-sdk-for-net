@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.DataLakeStore
             scope.Start();
             try
             {
-                var response = await _dataLakeStoreAccountAccountsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreAccountResource>(new DataLakeStoreAccountOperationSource(Client), _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataLakeStoreAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content);
+                var response = await _dataLakeStoreAccountAccountsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreAccountResource>(new DataLakeStoreAccountOperationSource(Client), _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,8 +124,9 @@ namespace Azure.ResourceManager.DataLakeStore
             scope.Start();
             try
             {
-                var response = _dataLakeStoreAccountAccountsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, content, cancellationToken);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreAccountResource>(new DataLakeStoreAccountOperationSource(Client), _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, _dataLakeStoreAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _dataLakeStoreAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, content);
+                var response = _dataLakeStoreAccountAccountsRestClient.Create(message, cancellationToken);
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreAccountResource>(new DataLakeStoreAccountOperationSource(Client), _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

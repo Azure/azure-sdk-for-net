@@ -176,8 +176,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             scope.Start();
             try
             {
-                var response = await _snapshotResourceSnapshotRestClient.DownloadAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content);
+                var response = await _snapshotResourceSnapshotRestClient.DownloadAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,8 +215,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             scope.Start();
             try
             {
-                var response = _snapshotResourceSnapshotRestClient.Download(Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content);
+                var response = _snapshotResourceSnapshotRestClient.Download(message, cancellationToken);
+                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -225,8 +225,9 @@ namespace Azure.ResourceManager.StorageMover
             scope.Start();
             try
             {
-                var response = await _storageMoverProjectProjectsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageMoverArmOperation(_storageMoverProjectProjectsClientDiagnostics, Pipeline, _storageMoverProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _storageMoverProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _storageMoverProjectProjectsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageMoverArmOperation(_storageMoverProjectProjectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -259,8 +260,9 @@ namespace Azure.ResourceManager.StorageMover
             scope.Start();
             try
             {
-                var response = _storageMoverProjectProjectsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StorageMoverArmOperation(_storageMoverProjectProjectsClientDiagnostics, Pipeline, _storageMoverProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _storageMoverProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _storageMoverProjectProjectsRestClient.Delete(message, cancellationToken);
+                var operation = new StorageMoverArmOperation(_storageMoverProjectProjectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

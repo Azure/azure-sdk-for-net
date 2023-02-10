@@ -174,8 +174,9 @@ namespace Azure.ResourceManager.EnergyServices
             scope.Start();
             try
             {
-                var response = await _energyServiceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EnergyServicesArmOperation(_energyServiceClientDiagnostics, Pipeline, _energyServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _energyServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _energyServiceRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new EnergyServicesArmOperation(_energyServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,8 +209,9 @@ namespace Azure.ResourceManager.EnergyServices
             scope.Start();
             try
             {
-                var response = _energyServiceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EnergyServicesArmOperation(_energyServiceClientDiagnostics, Pipeline, _energyServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _energyServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _energyServiceRestClient.Delete(message, cancellationToken);
+                var operation = new EnergyServicesArmOperation(_energyServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -309,8 +311,9 @@ namespace Azure.ResourceManager.EnergyServices
             scope.Start();
             try
             {
-                var response = await _energyServiceRestClient.AddPartitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new EnergyServicesArmOperation<DataPartitionAddOrRemoveContent>(new DataPartitionAddOrRemoveContentOperationSource(), _energyServiceClientDiagnostics, Pipeline, _energyServiceRestClient.CreateAddPartitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _energyServiceRestClient.CreateAddPartitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = await _energyServiceRestClient.AddPartitionAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new EnergyServicesArmOperation<DataPartitionAddOrRemoveContent>(new DataPartitionAddOrRemoveContentOperationSource(), _energyServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -344,8 +347,9 @@ namespace Azure.ResourceManager.EnergyServices
             scope.Start();
             try
             {
-                var response = _energyServiceRestClient.AddPartition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new EnergyServicesArmOperation<DataPartitionAddOrRemoveContent>(new DataPartitionAddOrRemoveContentOperationSource(), _energyServiceClientDiagnostics, Pipeline, _energyServiceRestClient.CreateAddPartitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _energyServiceRestClient.CreateAddPartitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = _energyServiceRestClient.AddPartition(message, cancellationToken);
+                var operation = new EnergyServicesArmOperation<DataPartitionAddOrRemoveContent>(new DataPartitionAddOrRemoveContentOperationSource(), _energyServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -379,8 +383,9 @@ namespace Azure.ResourceManager.EnergyServices
             scope.Start();
             try
             {
-                var response = await _energyServiceRestClient.RemovePartitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new EnergyServicesArmOperation<DataPartitionAddOrRemoveContent>(new DataPartitionAddOrRemoveContentOperationSource(), _energyServiceClientDiagnostics, Pipeline, _energyServiceRestClient.CreateRemovePartitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _energyServiceRestClient.CreateRemovePartitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = await _energyServiceRestClient.RemovePartitionAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new EnergyServicesArmOperation<DataPartitionAddOrRemoveContent>(new DataPartitionAddOrRemoveContentOperationSource(), _energyServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -414,8 +419,9 @@ namespace Azure.ResourceManager.EnergyServices
             scope.Start();
             try
             {
-                var response = _energyServiceRestClient.RemovePartition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new EnergyServicesArmOperation<DataPartitionAddOrRemoveContent>(new DataPartitionAddOrRemoveContentOperationSource(), _energyServiceClientDiagnostics, Pipeline, _energyServiceRestClient.CreateRemovePartitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _energyServiceRestClient.CreateRemovePartitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+                var response = _energyServiceRestClient.RemovePartition(message, cancellationToken);
+                var operation = new EnergyServicesArmOperation<DataPartitionAddOrRemoveContent>(new DataPartitionAddOrRemoveContentOperationSource(), _energyServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

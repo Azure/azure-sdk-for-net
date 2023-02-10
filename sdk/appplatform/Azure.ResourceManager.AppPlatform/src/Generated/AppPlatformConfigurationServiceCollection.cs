@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformConfigurationServiceResource>(new AppPlatformConfigurationServiceOperationSource(Client), _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics, Pipeline, _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data);
+                var response = await _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformConfigurationServiceResource>(new AppPlatformConfigurationServiceOperationSource(Client), _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformConfigurationServiceResource>(new AppPlatformConfigurationServiceOperationSource(Client), _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics, Pipeline, _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationServiceName, data);
+                var response = _appPlatformConfigurationServiceConfigurationServicesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformConfigurationServiceResource>(new AppPlatformConfigurationServiceOperationSource(Client), _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

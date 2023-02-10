@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.FrontDoor
             scope.Start();
             try
             {
-                var response = await _frontDoorRulesEngineRulesEnginesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data);
+                var response = await _frontDoorRulesEngineRulesEnginesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.FrontDoor
             scope.Start();
             try
             {
-                var response = _frontDoorRulesEngineRulesEnginesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data);
+                var response = _frontDoorRulesEngineRulesEnginesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

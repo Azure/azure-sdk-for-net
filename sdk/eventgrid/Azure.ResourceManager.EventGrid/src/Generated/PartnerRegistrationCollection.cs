@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = await _partnerRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data);
+                var response = await _partnerRegistrationRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.EventGrid
             scope.Start();
             try
             {
-                var response = _partnerRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data);
+                var response = _partnerRegistrationRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

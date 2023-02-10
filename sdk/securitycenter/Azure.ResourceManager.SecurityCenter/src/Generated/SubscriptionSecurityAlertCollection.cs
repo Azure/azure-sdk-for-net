@@ -200,8 +200,9 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _alertsRestClient.SimulateAsync(Id.SubscriptionId, new AzureLocation(Id.Name), content, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), content).Request, response, OperationFinalStateVia.OriginalUri);
+                using var message = _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), content);
+                var response = await _alertsRestClient.SimulateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -238,8 +239,9 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _alertsRestClient.Simulate(Id.SubscriptionId, new AzureLocation(Id.Name), content, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), content).Request, response, OperationFinalStateVia.OriginalUri);
+                using var message = _alertsRestClient.CreateSimulateRequest(Id.SubscriptionId, new AzureLocation(Id.Name), content);
+                var response = _alertsRestClient.Simulate(message, cancellationToken);
+                var operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

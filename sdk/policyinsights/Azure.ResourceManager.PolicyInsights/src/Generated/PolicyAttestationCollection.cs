@@ -71,8 +71,9 @@ namespace Azure.ResourceManager.PolicyInsights
             scope.Start();
             try
             {
-                var response = await _policyAttestationAttestationsRestClient.CreateOrUpdateAtResourceAsync(Id, attestationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data);
+                var response = await _policyAttestationAttestationsRestClient.CreateOrUpdateAtResourceAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,8 +113,9 @@ namespace Azure.ResourceManager.PolicyInsights
             scope.Start();
             try
             {
-                var response = _policyAttestationAttestationsRestClient.CreateOrUpdateAtResource(Id, attestationName, data, cancellationToken);
-                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data);
+                var response = _policyAttestationAttestationsRestClient.CreateOrUpdateAtResource(message, cancellationToken);
+                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

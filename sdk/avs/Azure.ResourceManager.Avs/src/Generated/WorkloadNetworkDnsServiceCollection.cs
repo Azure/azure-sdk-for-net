@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = await _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateDnsServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsServiceId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkDnsServiceResource>(new WorkloadNetworkDnsServiceOperationSource(Client), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateCreateDnsServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsServiceId, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateCreateDnsServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsServiceId, data);
+                var response = await _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateDnsServiceAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<WorkloadNetworkDnsServiceResource>(new WorkloadNetworkDnsServiceOperationSource(Client), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Avs
             scope.Start();
             try
             {
-                var response = _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateDnsService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsServiceId, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkDnsServiceResource>(new WorkloadNetworkDnsServiceOperationSource(Client), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateCreateDnsServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsServiceId, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateCreateDnsServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsServiceId, data);
+                var response = _workloadNetworkDnsServiceWorkloadNetworksRestClient.CreateDnsService(message, cancellationToken);
+                var operation = new AvsArmOperation<WorkloadNetworkDnsServiceResource>(new WorkloadNetworkDnsServiceOperationSource(Client), _workloadNetworkDnsServiceWorkloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

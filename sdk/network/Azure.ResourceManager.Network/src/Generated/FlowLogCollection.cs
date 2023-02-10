@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _flowLogRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<FlowLogResource>(new FlowLogOperationSource(Client), _flowLogClientDiagnostics, Pipeline, _flowLogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _flowLogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, data);
+                var response = await _flowLogRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<FlowLogResource>(new FlowLogOperationSource(Client), _flowLogClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _flowLogRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, data, cancellationToken);
-                var operation = new NetworkArmOperation<FlowLogResource>(new FlowLogOperationSource(Client), _flowLogClientDiagnostics, Pipeline, _flowLogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _flowLogRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, data);
+                var response = _flowLogRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new NetworkArmOperation<FlowLogResource>(new FlowLogOperationSource(Client), _flowLogClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

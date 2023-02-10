@@ -237,6 +237,12 @@ namespace Azure.ResourceManager.DataShare
 
         internal HttpMessage CreateRevokeRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -261,23 +267,13 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary> Revoke share subscription in a provider share. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="accountName"> The name of the share account. </param>
-        /// <param name="shareName"> The name of the share. </param>
-        /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/> or <paramref name="providerShareSubscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/> or <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RevokeAsync(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> RevokeAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
-            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateRevokeRequest(subscriptionId, resourceGroupName, accountName, shareName, providerShareSubscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -290,23 +286,13 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary> Revoke share subscription in a provider share. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The resource group name. </param>
-        /// <param name="accountName"> The name of the share account. </param>
-        /// <param name="shareName"> The name of the share. </param>
-        /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/> or <paramref name="providerShareSubscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="shareName"/> or <paramref name="providerShareSubscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Revoke(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Revoke(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
-            Argument.AssertNotNullOrEmpty(providerShareSubscriptionId, nameof(providerShareSubscriptionId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateRevokeRequest(subscriptionId, resourceGroupName, accountName, shareName, providerShareSubscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

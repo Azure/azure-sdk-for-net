@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _deletedServerRestClient.RecoverAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
+                var response = await _deletedServerRestClient.RecoverAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _deletedServerRestClient.Recover(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name);
+                var response = _deletedServerRestClient.Recover(message, cancellationToken);
+                var operation = new SqlArmOperation<DeletedServerResource>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

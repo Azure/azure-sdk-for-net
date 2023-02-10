@@ -608,8 +608,9 @@ namespace Azure.ResourceManager.DataFactory
             scope.Start();
             try
             {
-                var response = await _factoryIntegrationRuntimeIntegrationRuntimesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<IntegrationRuntimeStatusResult>(new IntegrationRuntimeStatusResultOperationSource(), _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _factoryIntegrationRuntimeIntegrationRuntimesRestClient.StartAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<IntegrationRuntimeStatusResult>(new IntegrationRuntimeStatusResultOperationSource(), _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -642,8 +643,9 @@ namespace Azure.ResourceManager.DataFactory
             scope.Start();
             try
             {
-                var response = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<IntegrationRuntimeStatusResult>(new IntegrationRuntimeStatusResultOperationSource(), _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.Start(message, cancellationToken);
+                var operation = new DataFactoryArmOperation<IntegrationRuntimeStatusResult>(new IntegrationRuntimeStatusResultOperationSource(), _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -676,8 +678,9 @@ namespace Azure.ResourceManager.DataFactory
             scope.Start();
             try
             {
-                var response = await _factoryIntegrationRuntimeIntegrationRuntimesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation(_factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _factoryIntegrationRuntimeIntegrationRuntimesRestClient.StopAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation(_factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -710,8 +713,9 @@ namespace Azure.ResourceManager.DataFactory
             scope.Start();
             try
             {
-                var response = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation(_factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _factoryIntegrationRuntimeIntegrationRuntimesRestClient.Stop(message, cancellationToken);
+                var operation = new DataFactoryArmOperation(_factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1060,8 +1064,9 @@ namespace Azure.ResourceManager.DataFactory
             scope.Start();
             try
             {
-                var response = await _integrationRuntimeObjectMetadataRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _integrationRuntimeObjectMetadataRestClient.RefreshAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1094,8 +1099,9 @@ namespace Azure.ResourceManager.DataFactory
             scope.Start();
             try
             {
-                var response = _integrationRuntimeObjectMetadataRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _integrationRuntimeObjectMetadataRestClient.Refresh(message, cancellationToken);
+                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -1523,8 +1523,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await LoadBalancerRestClient.SwapPublicIPAddressesAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                using var message = LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, content);
+                var response = await LoadBalancerRestClient.SwapPublicIPAddressesAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1559,8 +1560,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = LoadBalancerRestClient.SwapPublicIPAddresses(Id.SubscriptionId, location, content, cancellationToken);
-                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                using var message = LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, content);
+                var response = LoadBalancerRestClient.SwapPublicIPAddresses(message, cancellationToken);
+                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1991,8 +1993,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityAsync(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest).Request, response, OperationFinalStateVia.Location);
+                using var message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest);
+                var response = await PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -2027,8 +2030,9 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibility(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
-                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest).Request, response, OperationFinalStateVia.Location);
+                using var message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest);
+                var response = PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibility(message, cancellationToken);
+                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

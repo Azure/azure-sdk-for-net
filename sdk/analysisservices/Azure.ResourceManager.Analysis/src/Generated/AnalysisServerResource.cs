@@ -174,8 +174,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = await _analysisServerServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _analysisServerServersRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,8 +209,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = _analysisServerServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _analysisServerServersRestClient.Delete(message, cancellationToken);
+                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,8 +248,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = await _analysisServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = await _analysisServerServersRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,8 +287,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = _analysisServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch);
+                var response = _analysisServerServersRestClient.Update(message, cancellationToken);
+                var operation = new AnalysisArmOperation<AnalysisServerResource>(new AnalysisServerOperationSource(Client), _analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -318,8 +322,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = await _analysisServerServersRestClient.SuspendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _analysisServerServersRestClient.SuspendAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -352,8 +357,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = _analysisServerServersRestClient.Suspend(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _analysisServerServersRestClient.Suspend(message, cancellationToken);
+                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -386,8 +392,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = await _analysisServerServersRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _analysisServerServersRestClient.ResumeAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -420,8 +427,9 @@ namespace Azure.ResourceManager.Analysis
             scope.Start();
             try
             {
-                var response = _analysisServerServersRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, _analysisServerServersRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _analysisServerServersRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _analysisServerServersRestClient.Resume(message, cancellationToken);
+                var operation = new AnalysisArmOperation(_analysisServerServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

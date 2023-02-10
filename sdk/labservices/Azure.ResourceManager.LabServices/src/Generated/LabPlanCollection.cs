@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = await _labPlanRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation<LabPlanResource>(new LabPlanOperationSource(Client), _labPlanClientDiagnostics, Pipeline, _labPlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                using var message = _labPlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, data);
+                var response = await _labPlanRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new LabServicesArmOperation<LabPlanResource>(new LabPlanOperationSource(Client), _labPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.LabServices
             scope.Start();
             try
             {
-                var response = _labPlanRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, data, cancellationToken);
-                var operation = new LabServicesArmOperation<LabPlanResource>(new LabPlanOperationSource(Client), _labPlanClientDiagnostics, Pipeline, _labPlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                using var message = _labPlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labPlanName, data);
+                var response = _labPlanRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new LabServicesArmOperation<LabPlanResource>(new LabPlanOperationSource(Client), _labPlanClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

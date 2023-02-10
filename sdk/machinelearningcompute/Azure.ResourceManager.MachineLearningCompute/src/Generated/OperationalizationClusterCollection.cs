@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
             scope.Start();
             try
             {
-                var response = await _operationalizationClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningComputeArmOperation<OperationalizationClusterResource>(new OperationalizationClusterOperationSource(Client), _operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _operationalizationClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data);
+                var response = await _operationalizationClusterRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningComputeArmOperation<OperationalizationClusterResource>(new OperationalizationClusterOperationSource(Client), _operationalizationClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
             scope.Start();
             try
             {
-                var response = _operationalizationClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
-                var operation = new MachineLearningComputeArmOperation<OperationalizationClusterResource>(new OperationalizationClusterOperationSource(Client), _operationalizationClusterClientDiagnostics, Pipeline, _operationalizationClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _operationalizationClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data);
+                var response = _operationalizationClusterRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new MachineLearningComputeArmOperation<OperationalizationClusterResource>(new OperationalizationClusterOperationSource(Client), _operationalizationClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

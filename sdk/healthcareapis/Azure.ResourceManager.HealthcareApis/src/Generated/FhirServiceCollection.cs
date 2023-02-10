@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = await _fhirServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<FhirServiceResource>(new FhirServiceOperationSource(Client), _fhirServiceClientDiagnostics, Pipeline, _fhirServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _fhirServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, data);
+                var response = await _fhirServiceRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<FhirServiceResource>(new FhirServiceOperationSource(Client), _fhirServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = _fhirServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<FhirServiceResource>(new FhirServiceOperationSource(Client), _fhirServiceClientDiagnostics, Pipeline, _fhirServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _fhirServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, data);
+                var response = _fhirServiceRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new HealthcareApisArmOperation<FhirServiceResource>(new FhirServiceOperationSource(Client), _fhirServiceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.ArcScVmm
             scope.Start();
             try
             {
-                var response = await _scVmmServerVmmServersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vmmServerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation<ScVmmServerResource>(new ScVmmServerOperationSource(Client), _scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmmServerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _scVmmServerVmmServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmmServerName, data);
+                var response = await _scVmmServerVmmServersRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ArcScVmmArmOperation<ScVmmServerResource>(new ScVmmServerOperationSource(Client), _scVmmServerVmmServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.ArcScVmm
             scope.Start();
             try
             {
-                var response = _scVmmServerVmmServersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vmmServerName, data, cancellationToken);
-                var operation = new ArcScVmmArmOperation<ScVmmServerResource>(new ScVmmServerOperationSource(Client), _scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmmServerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _scVmmServerVmmServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmmServerName, data);
+                var response = _scVmmServerVmmServersRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ArcScVmmArmOperation<ScVmmServerResource>(new ScVmmServerOperationSource(Client), _scVmmServerVmmServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

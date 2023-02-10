@@ -280,8 +280,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = await _synapsePrivateLinkHubPrivateLinkHubsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation(_synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _synapsePrivateLinkHubPrivateLinkHubsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation(_synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -314,8 +315,9 @@ namespace Azure.ResourceManager.Synapse
             scope.Start();
             try
             {
-                var response = _synapsePrivateLinkHubPrivateLinkHubsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation(_synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _synapsePrivateLinkHubPrivateLinkHubsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _synapsePrivateLinkHubPrivateLinkHubsRestClient.Delete(message, cancellationToken);
+                var operation = new SynapseArmOperation(_synapsePrivateLinkHubPrivateLinkHubsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

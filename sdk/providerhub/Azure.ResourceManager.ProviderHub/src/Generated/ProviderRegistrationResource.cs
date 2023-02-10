@@ -465,8 +465,9 @@ namespace Azure.ResourceManager.ProviderHub
             scope.Start();
             try
             {
-                var response = await _providerRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, data);
+                var response = await _providerRegistrationRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -503,8 +504,9 @@ namespace Azure.ResourceManager.ProviderHub
             scope.Start();
             try
             {
-                var response = _providerRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, data);
+                var response = _providerRegistrationRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -714,8 +716,9 @@ namespace Azure.ResourceManager.ProviderHub
             scope.Start();
             try
             {
-                var response = await _resourceActionsRestClient.DeleteResourcesAsync(Id.SubscriptionId, Id.Name, resourceActionName, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ResourceManagementAction>(new ResourceManagementActionOperationSource(), _resourceActionsClientDiagnostics, Pipeline, _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties);
+                var response = await _resourceActionsRestClient.DeleteResourcesAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation<ResourceManagementAction>(new ResourceManagementActionOperationSource(), _resourceActionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -755,8 +758,9 @@ namespace Azure.ResourceManager.ProviderHub
             scope.Start();
             try
             {
-                var response = _resourceActionsRestClient.DeleteResources(Id.SubscriptionId, Id.Name, resourceActionName, properties, cancellationToken);
-                var operation = new ProviderHubArmOperation<ResourceManagementAction>(new ResourceManagementActionOperationSource(), _resourceActionsClientDiagnostics, Pipeline, _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _resourceActionsRestClient.CreateDeleteResourcesRequest(Id.SubscriptionId, Id.Name, resourceActionName, properties);
+                var response = _resourceActionsRestClient.DeleteResources(message, cancellationToken);
+                var operation = new ProviderHubArmOperation<ResourceManagementAction>(new ResourceManagementActionOperationSource(), _resourceActionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.ProviderHub
             scope.Start();
             try
             {
-                var response = await _providerRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, providerNamespace, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, providerNamespace, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, providerNamespace, data);
+                var response = await _providerRegistrationRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.ProviderHub
             scope.Start();
             try
             {
-                var response = _providerRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, providerNamespace, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, providerNamespace, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, providerNamespace, data);
+                var response = _providerRegistrationRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

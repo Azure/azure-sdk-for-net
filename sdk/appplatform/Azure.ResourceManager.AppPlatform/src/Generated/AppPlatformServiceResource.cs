@@ -624,8 +624,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _appPlatformServiceServicesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -658,8 +659,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformServiceServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _appPlatformServiceServicesRestClient.Delete(message, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -696,8 +698,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformServiceResource>(new AppPlatformServiceOperationSource(Client), _appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = await _appPlatformServiceServicesRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformServiceResource>(new AppPlatformServiceOperationSource(Client), _appPlatformServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -734,8 +737,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformServiceServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformServiceResource>(new AppPlatformServiceOperationSource(Client), _appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceServicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data);
+                var response = _appPlatformServiceServicesRestClient.Update(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformServiceResource>(new AppPlatformServiceOperationSource(Client), _appPlatformServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1016,8 +1020,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceServicesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceServicesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _appPlatformServiceServicesRestClient.StopAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1050,8 +1055,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformServiceServicesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceServicesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _appPlatformServiceServicesRestClient.Stop(message, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1084,8 +1090,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformServiceServicesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _appPlatformServiceServicesRestClient.StartAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1118,8 +1125,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformServiceServicesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, _appPlatformServiceServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformServiceServicesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _appPlatformServiceServicesRestClient.Start(message, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appPlatformServiceServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1156,8 +1164,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformConfigServerConfigServersRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<ConfigServerSettingsValidateResult>(new ConfigServerSettingsValidateResultOperationSource(), _appPlatformConfigServerConfigServersClientDiagnostics, Pipeline, _appPlatformConfigServerConfigServersRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformConfigServerConfigServersRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings);
+                var response = await _appPlatformConfigServerConfigServersRestClient.ValidateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<ConfigServerSettingsValidateResult>(new ConfigServerSettingsValidateResultOperationSource(), _appPlatformConfigServerConfigServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1194,8 +1203,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformConfigServerConfigServersRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings, cancellationToken);
-                var operation = new AppPlatformArmOperation<ConfigServerSettingsValidateResult>(new ConfigServerSettingsValidateResultOperationSource(), _appPlatformConfigServerConfigServersClientDiagnostics, Pipeline, _appPlatformConfigServerConfigServersRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformConfigServerConfigServersRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settings);
+                var response = _appPlatformConfigServerConfigServersRestClient.Validate(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<ConfigServerSettingsValidateResult>(new ConfigServerSettingsValidateResultOperationSource(), _appPlatformConfigServerConfigServersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

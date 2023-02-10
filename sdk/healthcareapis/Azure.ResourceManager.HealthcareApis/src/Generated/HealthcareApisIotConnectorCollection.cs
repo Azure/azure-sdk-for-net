@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = await _healthcareApisIotConnectorIotConnectorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthcareApisArmOperation<HealthcareApisIotConnectorResource>(new HealthcareApisIotConnectorOperationSource(Client), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, _healthcareApisIotConnectorIotConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _healthcareApisIotConnectorIotConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, data);
+                var response = await _healthcareApisIotConnectorIotConnectorsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotConnectorResource>(new HealthcareApisIotConnectorOperationSource(Client), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.HealthcareApis
             scope.Start();
             try
             {
-                var response = _healthcareApisIotConnectorIotConnectorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, data, cancellationToken);
-                var operation = new HealthcareApisArmOperation<HealthcareApisIotConnectorResource>(new HealthcareApisIotConnectorOperationSource(Client), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, _healthcareApisIotConnectorIotConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _healthcareApisIotConnectorIotConnectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iotConnectorName, data);
+                var response = _healthcareApisIotConnectorIotConnectorsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new HealthcareApisArmOperation<HealthcareApisIotConnectorResource>(new HealthcareApisIotConnectorOperationSource(Client), _healthcareApisIotConnectorIotConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

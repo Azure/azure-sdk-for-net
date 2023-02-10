@@ -179,6 +179,10 @@ namespace Azure.ResourceManager.ManagedServices
 
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string registrationId, ManagedServicesRegistrationData data)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
+            Argument.AssertNotNull(data, nameof(data));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
@@ -200,19 +204,13 @@ namespace Azure.ResourceManager.ManagedServices
         }
 
         /// <summary> Creates or updates a registration definition. </summary>
-        /// <param name="scope"> The scope of the resource. </param>
-        /// <param name="registrationId"> The GUID of the registration definition. </param>
-        /// <param name="data"> The parameters required to create a new registration definition. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="registrationId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string scope, string registrationId, ManagedServicesRegistrationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateRequest(scope, registrationId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -225,19 +223,13 @@ namespace Azure.ResourceManager.ManagedServices
         }
 
         /// <summary> Creates or updates a registration definition. </summary>
-        /// <param name="scope"> The scope of the resource. </param>
-        /// <param name="registrationId"> The GUID of the registration definition. </param>
-        /// <param name="data"> The parameters required to create a new registration definition. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="registrationId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="registrationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string scope, string registrationId, ManagedServicesRegistrationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response CreateOrUpdate(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(registrationId, nameof(registrationId));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateCreateOrUpdateRequest(scope, registrationId, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -82,8 +82,9 @@ namespace Azure.ResourceManager.Search
             scope.Start();
             try
             {
-                var response = await _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
-                var operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(new SharedSearchServicePrivateLinkResourceOperationSource(Client), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, searchManagementRequestOptions).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, searchManagementRequestOptions);
+                var response = await _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(new SharedSearchServicePrivateLinkResourceOperationSource(Client), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,8 +125,9 @@ namespace Azure.ResourceManager.Search
             scope.Start();
             try
             {
-                var response = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, searchManagementRequestOptions, cancellationToken);
-                var operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(new SharedSearchServicePrivateLinkResourceOperationSource(Client), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, searchManagementRequestOptions).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, searchManagementRequestOptions);
+                var response = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(new SharedSearchServicePrivateLinkResourceOperationSource(Client), _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

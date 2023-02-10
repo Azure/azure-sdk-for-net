@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = await _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.UpdatePutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildServiceAgentPoolResource>(new AppPlatformBuildServiceAgentPoolOperationSource(Client), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data);
+                var response = await _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.UpdatePutAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformBuildServiceAgentPoolResource>(new AppPlatformBuildServiceAgentPoolOperationSource(Client), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.AppPlatform
             scope.Start();
             try
             {
-                var response = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.UpdatePut(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildServiceAgentPoolResource>(new AppPlatformBuildServiceAgentPoolOperationSource(Client), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, agentPoolName, data);
+                var response = _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolRestClient.UpdatePut(message, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformBuildServiceAgentPoolResource>(new AppPlatformBuildServiceAgentPoolOperationSource(Client), _appPlatformBuildServiceAgentPoolBuildServiceAgentPoolClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Dynatrace
             scope.Start();
             try
             {
-                var response = await _dynatraceMonitorMonitorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DynatraceArmOperation<DynatraceMonitorResource>(new DynatraceMonitorOperationSource(Client), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _dynatraceMonitorMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data);
+                var response = await _dynatraceMonitorMonitorsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DynatraceArmOperation<DynatraceMonitorResource>(new DynatraceMonitorOperationSource(Client), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Dynatrace
             scope.Start();
             try
             {
-                var response = _dynatraceMonitorMonitorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken);
-                var operation = new DynatraceArmOperation<DynatraceMonitorResource>(new DynatraceMonitorOperationSource(Client), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _dynatraceMonitorMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data);
+                var response = _dynatraceMonitorMonitorsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DynatraceArmOperation<DynatraceMonitorResource>(new DynatraceMonitorOperationSource(Client), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

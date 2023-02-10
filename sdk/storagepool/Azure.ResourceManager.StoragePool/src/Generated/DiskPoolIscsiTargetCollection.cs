@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.StoragePool
             scope.Start();
             try
             {
-                var response = await _diskPoolIscsiTargetIscsiTargetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation<DiskPoolIscsiTargetResource>(new DiskPoolIscsiTargetOperationSource(Client), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, _diskPoolIscsiTargetIscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _diskPoolIscsiTargetIscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content);
+                var response = await _diskPoolIscsiTargetIscsiTargetsRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new StoragePoolArmOperation<DiskPoolIscsiTargetResource>(new DiskPoolIscsiTargetOperationSource(Client), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.StoragePool
             scope.Start();
             try
             {
-                var response = _diskPoolIscsiTargetIscsiTargetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content, cancellationToken);
-                var operation = new StoragePoolArmOperation<DiskPoolIscsiTargetResource>(new DiskPoolIscsiTargetOperationSource(Client), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, _diskPoolIscsiTargetIscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _diskPoolIscsiTargetIscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content);
+                var response = _diskPoolIscsiTargetIscsiTargetsRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new StoragePoolArmOperation<DiskPoolIscsiTargetResource>(new DiskPoolIscsiTargetOperationSource(Client), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

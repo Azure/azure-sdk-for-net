@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServiceIotDpsResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _deviceProvisioningServiceIotDpsResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data);
+                var response = await _deviceProvisioningServiceIotDpsResourceRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServiceIotDpsResourceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, _deviceProvisioningServiceIotDpsResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _deviceProvisioningServiceIotDpsResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data);
+                var response = _deviceProvisioningServiceIotDpsResourceRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

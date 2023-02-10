@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.DeleteSqlRoleAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateDeleteSqlRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateDeleteSqlRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.DeleteSqlRoleAssignmentAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation(_cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.DeleteSqlRoleAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateDeleteSqlRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateDeleteSqlRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.DeleteSqlRoleAssignment(message, cancellationToken);
+                var operation = new CosmosDBArmOperation(_cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,8 +246,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateUpdateSqlRoleAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleAssignmentResource>(new CosmosDBSqlRoleAssignmentOperationSource(Client), _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateCreateUpdateSqlRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateCreateUpdateSqlRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = await _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateUpdateSqlRoleAssignmentAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleAssignmentResource>(new CosmosDBSqlRoleAssignmentOperationSource(Client), _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,8 +285,9 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateUpdateSqlRoleAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleAssignmentResource>(new CosmosDBSqlRoleAssignmentOperationSource(Client), _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateCreateUpdateSqlRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateCreateUpdateSqlRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var response = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateUpdateSqlRoleAssignment(message, cancellationToken);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlRoleAssignmentResource>(new CosmosDBSqlRoleAssignmentOperationSource(Client), _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

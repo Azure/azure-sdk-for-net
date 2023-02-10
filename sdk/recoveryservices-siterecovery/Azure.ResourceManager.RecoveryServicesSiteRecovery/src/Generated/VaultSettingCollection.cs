@@ -87,8 +87,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = await _vaultSettingReplicationVaultSettingRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultSettingResource>(new VaultSettingOperationSource(Client), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, _vaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _vaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content);
+                var response = await _vaultSettingReplicationVaultSettingRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultSettingResource>(new VaultSettingOperationSource(Client), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -128,8 +129,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             scope.Start();
             try
             {
-                var response = _vaultSettingReplicationVaultSettingRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultSettingResource>(new VaultSettingOperationSource(Client), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, _vaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _vaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content);
+                var response = _vaultSettingReplicationVaultSettingRestClient.Create(message, cancellationToken);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<VaultSettingResource>(new VaultSettingOperationSource(Client), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

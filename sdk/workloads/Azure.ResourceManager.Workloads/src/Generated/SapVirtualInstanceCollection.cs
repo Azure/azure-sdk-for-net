@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data);
+                var response = await _sapVirtualInstanceSapVirtualInstancesRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _sapVirtualInstanceSapVirtualInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapVirtualInstanceName, data);
+                var response = _sapVirtualInstanceSapVirtualInstancesRestClient.Create(message, cancellationToken);
+                var operation = new WorkloadsArmOperation<SapVirtualInstanceResource>(new SapVirtualInstanceOperationSource(Client), _sapVirtualInstanceSapVirtualInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

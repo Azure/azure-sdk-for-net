@@ -79,8 +79,9 @@ namespace Azure.ResourceManager.BillingBenefits
             scope.Start();
             try
             {
-                var response = await _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.CreateAsync(savingsPlanOrderAliasName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client), _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics, Pipeline, _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.CreateCreateRequest(savingsPlanOrderAliasName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.CreateCreateRequest(savingsPlanOrderAliasName, data);
+                var response = await _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client), _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,8 +121,9 @@ namespace Azure.ResourceManager.BillingBenefits
             scope.Start();
             try
             {
-                var response = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.Create(savingsPlanOrderAliasName, data, cancellationToken);
-                var operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client), _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics, Pipeline, _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.CreateCreateRequest(savingsPlanOrderAliasName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.CreateCreateRequest(savingsPlanOrderAliasName, data);
+                var response = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.Create(message, cancellationToken);
+                var operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client), _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

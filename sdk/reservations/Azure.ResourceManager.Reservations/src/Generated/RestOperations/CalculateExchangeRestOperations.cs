@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.Reservations
 
         internal HttpMessage CreatePostRequest(CalculateExchangeContent content)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -59,14 +61,13 @@ namespace Azure.ResourceManager.Reservations
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
         /// 
         /// </summary>
-        /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response> PostAsync(CalculateExchangeContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> PostAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreatePostRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -82,14 +83,13 @@ namespace Azure.ResourceManager.Reservations
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
         /// 
         /// </summary>
-        /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response Post(CalculateExchangeContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response Post(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreatePostRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

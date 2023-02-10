@@ -280,8 +280,9 @@ namespace Azure.ResourceManager.HybridCompute
             scope.Start();
             try
             {
-                var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation(_hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation(_hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -314,8 +315,9 @@ namespace Azure.ResourceManager.HybridCompute
             scope.Start();
             try
             {
-                var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HybridComputeArmOperation(_hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.Delete(message, cancellationToken);
+                var operation = new HybridComputeArmOperation(_hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

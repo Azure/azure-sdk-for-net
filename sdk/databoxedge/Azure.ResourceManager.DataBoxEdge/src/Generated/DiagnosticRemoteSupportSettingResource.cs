@@ -175,8 +175,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = await _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.UpdateDiagnosticRemoteSupportSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(new DiagnosticRemoteSupportSettingOperationSource(Client), _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics, Pipeline, _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = await _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.UpdateDiagnosticRemoteSupportSettingsAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(new DiagnosticRemoteSupportSettingOperationSource(Client), _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,8 +214,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             scope.Start();
             try
             {
-                var response = _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.UpdateDiagnosticRemoteSupportSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(new DiagnosticRemoteSupportSettingOperationSource(Client), _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics, Pipeline, _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.UpdateDiagnosticRemoteSupportSettings(message, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(new DiagnosticRemoteSupportSettingOperationSource(Client), _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

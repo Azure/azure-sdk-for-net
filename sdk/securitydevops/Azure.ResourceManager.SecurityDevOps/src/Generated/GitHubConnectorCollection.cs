@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.SecurityDevOps
             scope.Start();
             try
             {
-                var response = await _gitHubConnectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _gitHubConnectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data);
+                var response = await _gitHubConnectorRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.SecurityDevOps
             scope.Start();
             try
             {
-                var response = _gitHubConnectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data, cancellationToken);
-                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, _gitHubConnectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _gitHubConnectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, data);
+                var response = _gitHubConnectorRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SecurityDevOpsArmOperation<GitHubConnectorResource>(new GitHubConnectorOperationSource(Client), _gitHubConnectorClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

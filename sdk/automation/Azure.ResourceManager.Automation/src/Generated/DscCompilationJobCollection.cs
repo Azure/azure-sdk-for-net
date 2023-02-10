@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var response = await _dscCompilationJobRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content);
+                var response = await _dscCompilationJobRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var response = _dscCompilationJobRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content, cancellationToken);
-                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content);
+                var response = _dscCompilationJobRestClient.Create(message, cancellationToken);
+                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

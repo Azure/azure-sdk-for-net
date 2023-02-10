@@ -172,8 +172,9 @@ namespace Azure.ResourceManager.ServiceLinker
             scope.Start();
             try
             {
-                var response = await _linkerResourceLinkerRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation(_linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _linkerResourceLinkerRestClient.CreateDeleteRequest(Id.Parent, Id.Name);
+                var response = await _linkerResourceLinkerRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation(_linkerResourceLinkerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,8 +207,9 @@ namespace Azure.ResourceManager.ServiceLinker
             scope.Start();
             try
             {
-                var response = _linkerResourceLinkerRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ServiceLinkerArmOperation(_linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _linkerResourceLinkerRestClient.CreateDeleteRequest(Id.Parent, Id.Name);
+                var response = _linkerResourceLinkerRestClient.Delete(message, cancellationToken);
+                var operation = new ServiceLinkerArmOperation(_linkerResourceLinkerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,8 +246,9 @@ namespace Azure.ResourceManager.ServiceLinker
             scope.Start();
             try
             {
-                var response = await _linkerResourceLinkerRestClient.UpdateAsync(Id.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _linkerResourceLinkerRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch);
+                var response = await _linkerResourceLinkerRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,8 +285,9 @@ namespace Azure.ResourceManager.ServiceLinker
             scope.Start();
             try
             {
-                var response = _linkerResourceLinkerRestClient.Update(Id.Parent, Id.Name, patch, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _linkerResourceLinkerRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch);
+                var response = _linkerResourceLinkerRestClient.Update(message, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<LinkerResource>(new LinkerResourceOperationSource(Client), _linkerResourceLinkerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -316,8 +320,9 @@ namespace Azure.ResourceManager.ServiceLinker
             scope.Start();
             try
             {
-                var response = await _linkerResourceLinkerRestClient.ValidateAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name);
+                var response = await _linkerResourceLinkerRestClient.ValidateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -350,8 +355,9 @@ namespace Azure.ResourceManager.ServiceLinker
             scope.Start();
             try
             {
-                var response = _linkerResourceLinkerRestClient.Validate(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _linkerResourceLinkerRestClient.CreateValidateRequest(Id.Parent, Id.Name);
+                var response = _linkerResourceLinkerRestClient.Validate(message, cancellationToken);
+                var operation = new ServiceLinkerArmOperation<LinkerValidateOperationResult>(new LinkerValidateOperationResultOperationSource(), _linkerResourceLinkerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

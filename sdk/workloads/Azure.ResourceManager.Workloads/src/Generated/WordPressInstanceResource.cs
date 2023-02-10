@@ -243,8 +243,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = await _wordPressInstanceResourceWordPressInstancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<WordPressInstanceResource>(new WordPressInstanceResourceOperationSource(Client), _wordPressInstanceResourceWordPressInstancesClientDiagnostics, Pipeline, _wordPressInstanceResourceWordPressInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _wordPressInstanceResourceWordPressInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = await _wordPressInstanceResourceWordPressInstancesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<WordPressInstanceResource>(new WordPressInstanceResourceOperationSource(Client), _wordPressInstanceResourceWordPressInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +282,9 @@ namespace Azure.ResourceManager.Workloads
             scope.Start();
             try
             {
-                var response = _wordPressInstanceResourceWordPressInstancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<WordPressInstanceResource>(new WordPressInstanceResourceOperationSource(Client), _wordPressInstanceResourceWordPressInstancesClientDiagnostics, Pipeline, _wordPressInstanceResourceWordPressInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _wordPressInstanceResourceWordPressInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var response = _wordPressInstanceResourceWordPressInstancesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new WorkloadsArmOperation<WordPressInstanceResource>(new WordPressInstanceResourceOperationSource(Client), _wordPressInstanceResourceWordPressInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

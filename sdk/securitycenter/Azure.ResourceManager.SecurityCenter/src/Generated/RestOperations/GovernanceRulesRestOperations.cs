@@ -260,6 +260,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal HttpMessage CreateRuleIdExecuteSingleSubscriptionRequest(string subscriptionId, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -285,18 +288,13 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Execute a security GovernanceRule on the given subscription. </summary>
-        /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="executeGovernanceRuleParams"> GovernanceRule over a subscription scope. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RuleIdExecuteSingleSubscriptionAsync(string subscriptionId, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> RuleIdExecuteSingleSubscriptionAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateRuleIdExecuteSingleSubscriptionRequest(subscriptionId, ruleId, executeGovernanceRuleParams);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -308,18 +306,13 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Execute a security GovernanceRule on the given subscription. </summary>
-        /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="executeGovernanceRuleParams"> GovernanceRule over a subscription scope. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RuleIdExecuteSingleSubscription(string subscriptionId, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response RuleIdExecuteSingleSubscription(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateRuleIdExecuteSingleSubscriptionRequest(subscriptionId, ruleId, executeGovernanceRuleParams);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -332,6 +325,11 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal HttpMessage CreateRuleIdExecuteSingleSecurityConnectorRequest(string subscriptionId, string resourceGroupName, string securityConnectorName, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams)
         {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
@@ -361,22 +359,13 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Execute a security GovernanceRule on the given security connector. </summary>
-        /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="securityConnectorName"> The security connector name. </param>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="executeGovernanceRuleParams"> GovernanceRule over a subscription scope. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RuleIdExecuteSingleSecurityConnectorAsync(string subscriptionId, string resourceGroupName, string securityConnectorName, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public async Task<Response> RuleIdExecuteSingleSecurityConnectorAsync(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateRuleIdExecuteSingleSecurityConnectorRequest(subscriptionId, resourceGroupName, securityConnectorName, ruleId, executeGovernanceRuleParams);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -388,22 +377,13 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Execute a security GovernanceRule on the given security connector. </summary>
-        /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
-        /// <param name="securityConnectorName"> The security connector name. </param>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="executeGovernanceRuleParams"> GovernanceRule over a subscription scope. </param>
+        /// <param name="message"> The HTTP context flowing through the pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="securityConnectorName"/> or <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RuleIdExecuteSingleSecurityConnector(string subscriptionId, string resourceGroupName, string securityConnectorName, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
+        public Response RuleIdExecuteSingleSecurityConnector(HttpMessage message, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(securityConnectorName, nameof(securityConnectorName));
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(message, nameof(message));
 
-            using var message = CreateRuleIdExecuteSingleSecurityConnectorRequest(subscriptionId, resourceGroupName, securityConnectorName, ruleId, executeGovernanceRuleParams);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = await _kpiResourceFormatKpiRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<KpiResourceFormatResource>(new KpiResourceFormatOperationSource(Client), _kpiResourceFormatKpiClientDiagnostics, Pipeline, _kpiResourceFormatKpiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _kpiResourceFormatKpiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, data);
+                var response = await _kpiResourceFormatKpiRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new CustomerInsightsArmOperation<KpiResourceFormatResource>(new KpiResourceFormatOperationSource(Client), _kpiResourceFormatKpiClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.CustomerInsights
             scope.Start();
             try
             {
-                var response = _kpiResourceFormatKpiRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<KpiResourceFormatResource>(new KpiResourceFormatOperationSource(Client), _kpiResourceFormatKpiClientDiagnostics, Pipeline, _kpiResourceFormatKpiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _kpiResourceFormatKpiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kpiName, data);
+                var response = _kpiResourceFormatKpiRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new CustomerInsightsArmOperation<KpiResourceFormatResource>(new KpiResourceFormatOperationSource(Client), _kpiResourceFormatKpiClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

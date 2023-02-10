@@ -79,8 +79,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _managedInstanceDtcRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data);
+                var response = await _managedInstanceDtcRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,8 +119,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _managedInstanceDtcRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _managedInstanceDtcRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dtcName, data);
+                var response = _managedInstanceDtcRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SqlArmOperation<ManagedInstanceDtcResource>(new ManagedInstanceDtcOperationSource(Client), _managedInstanceDtcClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

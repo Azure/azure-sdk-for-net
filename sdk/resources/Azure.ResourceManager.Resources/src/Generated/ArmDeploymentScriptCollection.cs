@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await _armDeploymentScriptDeploymentScriptsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data);
+                var response = await _armDeploymentScriptDeploymentScriptsRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = _armDeploymentScriptDeploymentScriptsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data);
+                var response = _armDeploymentScriptDeploymentScriptsRestClient.Create(message, cancellationToken);
+                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

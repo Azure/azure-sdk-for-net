@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.NetworkFunction
             scope.Start();
             try
             {
-                var response = await _collectorPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(new CollectorPolicyOperationSource(Client), _collectorPolicyClientDiagnostics, Pipeline, _collectorPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _collectorPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data);
+                var response = await _collectorPolicyRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(new CollectorPolicyOperationSource(Client), _collectorPolicyClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.NetworkFunction
             scope.Start();
             try
             {
-                var response = _collectorPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data, cancellationToken);
-                var operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(new CollectorPolicyOperationSource(Client), _collectorPolicyClientDiagnostics, Pipeline, _collectorPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _collectorPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, data);
+                var response = _collectorPolicyRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(new CollectorPolicyOperationSource(Client), _collectorPolicyClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

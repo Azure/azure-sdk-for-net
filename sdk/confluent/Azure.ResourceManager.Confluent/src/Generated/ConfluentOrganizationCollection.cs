@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.Confluent
             scope.Start();
             try
             {
-                var response = await _confluentOrganizationOrganizationRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _confluentOrganizationOrganizationRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data);
+                var response = await _confluentOrganizationOrganizationRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,8 +123,9 @@ namespace Azure.ResourceManager.Confluent
             scope.Start();
             try
             {
-                var response = _confluentOrganizationOrganizationRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
-                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                using var message = _confluentOrganizationOrganizationRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data);
+                var response = _confluentOrganizationOrganizationRestClient.Create(message, cancellationToken);
+                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

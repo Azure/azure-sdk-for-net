@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _reservationOrderRestClient.PurchaseAsync(reservationOrderId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _reservationOrderRestClient.CreatePurchaseRequest(reservationOrderId, content);
+                var response = await _reservationOrderRestClient.PurchaseAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,8 +120,9 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _reservationOrderRestClient.Purchase(reservationOrderId, content, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
+                using var message = _reservationOrderRestClient.CreatePurchaseRequest(reservationOrderId, content);
+                var response = _reservationOrderRestClient.Purchase(message, cancellationToken);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

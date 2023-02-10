@@ -78,8 +78,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _sqlServerDnsAliasServerDnsAliasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerDnsAliasResource>(new SqlServerDnsAliasOperationSource(Client), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, _sqlServerDnsAliasServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response, OperationFinalStateVia.Location);
+                using var message = _sqlServerDnsAliasServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName);
+                var response = await _sqlServerDnsAliasServerDnsAliasesRestClient.CreateOrUpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SqlServerDnsAliasResource>(new SqlServerDnsAliasOperationSource(Client), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,8 +118,9 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _sqlServerDnsAliasServerDnsAliasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerDnsAliasResource>(new SqlServerDnsAliasOperationSource(Client), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, _sqlServerDnsAliasServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response, OperationFinalStateVia.Location);
+                using var message = _sqlServerDnsAliasServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName);
+                var response = _sqlServerDnsAliasServerDnsAliasesRestClient.CreateOrUpdate(message, cancellationToken);
+                var operation = new SqlArmOperation<SqlServerDnsAliasResource>(new SqlServerDnsAliasOperationSource(Client), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -247,8 +247,9 @@ namespace Azure.ResourceManager.Elastic
             scope.Start();
             try
             {
-                var response = await _elasticMonitorResourceMonitorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation(_elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, _elasticMonitorResourceMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _elasticMonitorResourceMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _elasticMonitorResourceMonitorsRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticArmOperation(_elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,8 +282,9 @@ namespace Azure.ResourceManager.Elastic
             scope.Start();
             try
             {
-                var response = _elasticMonitorResourceMonitorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ElasticArmOperation(_elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, _elasticMonitorResourceMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _elasticMonitorResourceMonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _elasticMonitorResourceMonitorsRestClient.Delete(message, cancellationToken);
+                var operation = new ElasticArmOperation(_elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

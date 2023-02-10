@@ -266,8 +266,9 @@ namespace Azure.ResourceManager.PolicyInsights
             scope.Start();
             try
             {
-                var response = await PolicyStatesRestClient.TriggerResourceGroupEvaluationAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, PolicyStatesRestClient.CreateTriggerResourceGroupEvaluationRequest(Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                using var message = PolicyStatesRestClient.CreateTriggerResourceGroupEvaluationRequest(Id.SubscriptionId, Id.ResourceGroupName);
+                var response = await PolicyStatesRestClient.TriggerResourceGroupEvaluationAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -300,8 +301,9 @@ namespace Azure.ResourceManager.PolicyInsights
             scope.Start();
             try
             {
-                var response = PolicyStatesRestClient.TriggerResourceGroupEvaluation(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, PolicyStatesRestClient.CreateTriggerResourceGroupEvaluationRequest(Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                using var message = PolicyStatesRestClient.CreateTriggerResourceGroupEvaluationRequest(Id.SubscriptionId, Id.ResourceGroupName);
+                var response = PolicyStatesRestClient.TriggerResourceGroupEvaluation(message, cancellationToken);
+                var operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

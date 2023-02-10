@@ -396,8 +396,9 @@ namespace Azure.ResourceManager.HybridData
             scope.Start();
             try
             {
-                var response = await _hybridDataManagerDataManagersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridDataArmOperation(_hybridDataManagerDataManagersClientDiagnostics, Pipeline, _hybridDataManagerDataManagersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridDataManagerDataManagersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _hybridDataManagerDataManagersRestClient.DeleteAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridDataArmOperation(_hybridDataManagerDataManagersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -430,8 +431,9 @@ namespace Azure.ResourceManager.HybridData
             scope.Start();
             try
             {
-                var response = _hybridDataManagerDataManagersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HybridDataArmOperation(_hybridDataManagerDataManagersClientDiagnostics, Pipeline, _hybridDataManagerDataManagersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridDataManagerDataManagersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _hybridDataManagerDataManagersRestClient.Delete(message, cancellationToken);
+                var operation = new HybridDataArmOperation(_hybridDataManagerDataManagersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -469,8 +471,9 @@ namespace Azure.ResourceManager.HybridData
             scope.Start();
             try
             {
-                var response = await _hybridDataManagerDataManagersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridDataArmOperation<HybridDataManagerResource>(new HybridDataManagerOperationSource(Client), _hybridDataManagerDataManagersClientDiagnostics, Pipeline, _hybridDataManagerDataManagersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridDataManagerDataManagersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch);
+                var response = await _hybridDataManagerDataManagersRestClient.UpdateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridDataArmOperation<HybridDataManagerResource>(new HybridDataManagerOperationSource(Client), _hybridDataManagerDataManagersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -508,8 +511,9 @@ namespace Azure.ResourceManager.HybridData
             scope.Start();
             try
             {
-                var response = _hybridDataManagerDataManagersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new HybridDataArmOperation<HybridDataManagerResource>(new HybridDataManagerOperationSource(Client), _hybridDataManagerDataManagersClientDiagnostics, Pipeline, _hybridDataManagerDataManagersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.Location);
+                using var message = _hybridDataManagerDataManagersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch);
+                var response = _hybridDataManagerDataManagersRestClient.Update(message, cancellationToken);
+                var operation = new HybridDataArmOperation<HybridDataManagerResource>(new HybridDataManagerOperationSource(Client), _hybridDataManagerDataManagersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

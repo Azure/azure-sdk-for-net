@@ -80,8 +80,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             scope.Start();
             try
             {
-                var response = await _exportPipelineRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportPipelineName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ExportPipelineResource>(new ExportPipelineOperationSource(Client), _exportPipelineClientDiagnostics, Pipeline, _exportPipelineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportPipelineName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _exportPipelineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportPipelineName, data);
+                var response = await _exportPipelineRestClient.CreateAsync(message, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerRegistryArmOperation<ExportPipelineResource>(new ExportPipelineOperationSource(Client), _exportPipelineClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -121,8 +122,9 @@ namespace Azure.ResourceManager.ContainerRegistry
             scope.Start();
             try
             {
-                var response = _exportPipelineRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportPipelineName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ExportPipelineResource>(new ExportPipelineOperationSource(Client), _exportPipelineClientDiagnostics, Pipeline, _exportPipelineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportPipelineName, data).Request, response, OperationFinalStateVia.Location);
+                using var message = _exportPipelineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportPipelineName, data);
+                var response = _exportPipelineRestClient.Create(message, cancellationToken);
+                var operation = new ContainerRegistryArmOperation<ExportPipelineResource>(new ExportPipelineOperationSource(Client), _exportPipelineClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
