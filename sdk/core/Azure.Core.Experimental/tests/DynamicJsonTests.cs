@@ -12,10 +12,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetIntProperty()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : 1
-                }");
+                  "Foo" : 1
+                }
+            """);
 
             int value = jsonData.Foo;
 
@@ -25,12 +26,13 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetNestedIntProperty()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : {
-                    ""Bar"" : 1
+                  "Foo" : {
+                    "Bar" : 1
                   }
-                }");
+                }
+                """);
 
             int value = jsonData.Foo.Bar;
 
@@ -40,10 +42,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetIntProperty()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : 1
-                }");
+                  "Foo" : 1
+                }
+                """);
 
             jsonData.Foo = 2;
 
@@ -53,12 +56,13 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetNestedIntProperty()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : {
-                    ""Bar"" : 1
+                  "Foo" : {
+                    "Bar" : 1
                   }
-                }");
+                }
+                """);
 
             jsonData.Foo.Bar = 2;
 
@@ -68,7 +72,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetArrayValue()
         {
-            dynamic jsonData = GetDynamicJson(@"[0, 1, 2]");
+            dynamic jsonData = GetDynamicJson("""[0, 1, 2]""");
 
             Assert.AreEqual(0, (int)jsonData[0]);
             Assert.AreEqual(1, (int)jsonData[1]);
@@ -78,10 +82,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetNestedArrayValue()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"": [0, 1, 2]
-                }");
+                  "Foo": [0, 1, 2]
+                }
+                """);
 
             Assert.AreEqual(0, (int)jsonData.Foo[0]);
             Assert.AreEqual(1, (int)jsonData.Foo[1]);
@@ -91,10 +96,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetPropertyViaIndexer()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : 1
-                }");
+                  "Foo" : 1
+                }
+                """);
 
             Assert.AreEqual(1, (int)jsonData["Foo"]);
         }
@@ -102,12 +108,13 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetNestedPropertyViaIndexer()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : {
-                    ""Bar"" : 1
+                  "Foo" : {
+                    "Bar" : 1
                   }
-                }");
+                }
+                """);
 
             Assert.AreEqual(1, (int)jsonData.Foo["Bar"]);
         }
@@ -115,7 +122,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetArrayValues()
         {
-            dynamic jsonData = GetDynamicJson(@"[0, 1, 2]");
+            dynamic jsonData = GetDynamicJson("""[0, 1, 2]""");
 
             jsonData[0] = 4;
             jsonData[1] = 5;
@@ -129,10 +136,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetNestedArrayValues()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"": [0, 1, 2]
-                }");
+                  "Foo": [0, 1, 2]
+                }
+                """);
 
             jsonData.Foo[0] = 4;
             jsonData.Foo[1] = 5;
@@ -146,7 +154,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetArrayValuesToDifferentTypes()
         {
-            dynamic jsonData = GetDynamicJson(@"[0, 1, 2, 3]");
+            dynamic jsonData = GetDynamicJson("""[0, 1, 2, 3]""");
 
             jsonData[1] = 4;
             jsonData[2] = true;
@@ -161,10 +169,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetNestedArrayValuesToDifferentTypes()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"": [0, 1, 2, 3]
-                }");
+                  "Foo": [0, 1, 2, 3]
+                }
+                """);
 
             jsonData.Foo[1] = 4;
             jsonData.Foo[2] = true;
@@ -179,7 +188,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetNullPropertyValue()
         {
-            dynamic jsonData = GetDynamicJson(@"{ ""Foo"" : null }");
+            dynamic jsonData = GetDynamicJson("""{ "Foo" : null }""");
 
             Assert.IsNull((CustomType)jsonData.Foo);
             Assert.IsNull((int?)jsonData.Foo);
@@ -188,7 +197,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanGetNullArrayValue()
         {
-            dynamic jsonData = GetDynamicJson(@"[ null ]");
+            dynamic jsonData = GetDynamicJson("""[ null ]""");
 
             Assert.IsNull((CustomType)jsonData[0]);
             Assert.IsNull((int?)jsonData[0]);
@@ -197,7 +206,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetPropertyValueToNull()
         {
-            dynamic jsonData = GetDynamicJson(@"{ ""Foo"" : null }");
+            dynamic jsonData = GetDynamicJson("""{ "Foo" : null }""");
 
             jsonData.Foo = null;
 
@@ -208,7 +217,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetArrayValueToNull()
         {
-            dynamic jsonData = GetDynamicJson(@"[0]");
+            dynamic jsonData = GetDynamicJson("""[0]""");
 
             jsonData[0] = null;
 
@@ -219,10 +228,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetPropertyViaIndexer()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : 1
-                }");
+                  "Foo" : 1
+                }
+                """);
 
             jsonData["Foo"] = 4;
 
@@ -232,12 +242,13 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanSetNestedPropertyViaIndexer()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : {
-                    ""Bar"" : 1
+                  "Foo" : {
+                    "Bar" : 1
                   }
-                }");
+                }
+                """);
 
             jsonData["Foo"]["Bar"] = 4;
 
@@ -247,10 +258,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanAddNewProperty()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : 1
-                }");
+                  "Foo" : 1
+                }
+                """);
 
             jsonData.Bar = 2;
 
@@ -261,10 +273,11 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanMakeChangesAndAddNewProperty()
         {
-            dynamic jsonData = GetDynamicJson(@"
+            dynamic jsonData = GetDynamicJson("""
                 {
-                  ""Foo"" : 1
-                }");
+                  "Foo" : 1
+                }
+                """);
 
             Assert.AreEqual(1, (int)jsonData.Foo);
 

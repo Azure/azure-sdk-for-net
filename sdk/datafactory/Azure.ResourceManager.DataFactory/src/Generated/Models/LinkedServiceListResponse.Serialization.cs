@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<FactoryLinkedServiceData> array = new List<FactoryLinkedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

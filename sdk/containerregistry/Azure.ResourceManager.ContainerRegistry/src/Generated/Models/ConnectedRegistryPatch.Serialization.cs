@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SyncProperties))
             {
-                writer.WritePropertyName("syncProperties");
+                writer.WritePropertyName("syncProperties"u8);
                 writer.WriteObjectValue(SyncProperties);
             }
             if (Optional.IsDefined(Logging))
             {
-                writer.WritePropertyName("logging");
+                writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
             if (Optional.IsCollectionDefined(ClientTokenIds))
             {
-                writer.WritePropertyName("clientTokenIds");
+                writer.WritePropertyName("clientTokenIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClientTokenIds)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsCollectionDefined(NotificationsList))
             {
-                writer.WritePropertyName("notificationsList");
+                writer.WritePropertyName("notificationsList"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotificationsList)
                 {

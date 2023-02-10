@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> macAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("age"))
+                if (property.NameEquals("age"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Network.Models
                     age = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("interface"))
+                if (property.NameEquals("interface"u8))
                 {
                     @interface = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("macAddress"))
+                if (property.NameEquals("macAddress"u8))
                 {
                     macAddress = property.Value.GetString();
                     continue;

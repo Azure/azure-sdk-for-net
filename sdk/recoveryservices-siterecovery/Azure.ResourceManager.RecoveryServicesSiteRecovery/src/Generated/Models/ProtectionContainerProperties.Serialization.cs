@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ProtectionContainerFabricSpecificDetails> fabricSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fabricFriendlyName"))
+                if (property.NameEquals("fabricFriendlyName"u8))
                 {
                     fabricFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricType"))
+                if (property.NameEquals("fabricType"u8))
                 {
                     fabricType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemCount"))
+                if (property.NameEquals("protectedItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedItemCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pairingStatus"))
+                if (property.NameEquals("pairingStatus"u8))
                 {
                     pairingStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     role = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricSpecificDetails"))
+                if (property.NameEquals("fabricSpecificDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

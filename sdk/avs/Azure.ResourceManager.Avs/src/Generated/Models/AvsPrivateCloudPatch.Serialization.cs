@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.Avs.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagementCluster))
             {
-                writer.WritePropertyName("managementCluster");
+                writer.WritePropertyName("managementCluster"u8);
                 writer.WriteObjectValue(ManagementCluster);
             }
             if (Optional.IsDefined(Internet))
             {
-                writer.WritePropertyName("internet");
+                writer.WritePropertyName("internet"u8);
                 writer.WriteStringValue(Internet.Value.ToString());
             }
             if (Optional.IsCollectionDefined(IdentitySources))
             {
-                writer.WritePropertyName("identitySources");
+                writer.WritePropertyName("identitySources"u8);
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Avs.Models
             }
             if (Optional.IsDefined(Availability))
             {
-                writer.WritePropertyName("availability");
+                writer.WritePropertyName("availability"u8);
                 writer.WriteObjectValue(Availability);
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
             writer.WriteEndObject();

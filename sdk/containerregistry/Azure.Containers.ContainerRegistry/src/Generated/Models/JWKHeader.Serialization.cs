@@ -21,27 +21,27 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> y = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("crv"))
+                if (property.NameEquals("crv"u8))
                 {
                     crv = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kid"))
+                if (property.NameEquals("kid"u8))
                 {
                     kid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kty"))
+                if (property.NameEquals("kty"u8))
                 {
                     kty = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x"))
+                if (property.NameEquals("x"u8))
                 {
                     x = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("y"))
+                if (property.NameEquals("y"u8))
                 {
                     y = property.Value.GetString();
                     continue;

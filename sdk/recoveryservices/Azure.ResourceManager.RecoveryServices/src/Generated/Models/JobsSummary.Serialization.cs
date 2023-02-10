@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<int> inProgressJobs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("failedJobs"))
+                if (property.NameEquals("failedJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     failedJobs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("suspendedJobs"))
+                if (property.NameEquals("suspendedJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     suspendedJobs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inProgressJobs"))
+                if (property.NameEquals("inProgressJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

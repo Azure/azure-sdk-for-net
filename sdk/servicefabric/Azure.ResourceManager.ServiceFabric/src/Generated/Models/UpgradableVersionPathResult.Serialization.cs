@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<IReadOnlyList<string>> supportedPath = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedPath"))
+                if (property.NameEquals("supportedPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

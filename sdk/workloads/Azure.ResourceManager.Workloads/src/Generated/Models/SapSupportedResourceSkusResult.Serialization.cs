@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<IReadOnlyList<SapSupportedSku>> supportedSkus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedSkus"))
+                if (property.NameEquals("supportedSkus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Models
             Optional<TimeSpan> retention = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeGrain"))
+                if (property.NameEquals("timeGrain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query.Models
                     timeGrain = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("retention"))
+                if (property.NameEquals("retention"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

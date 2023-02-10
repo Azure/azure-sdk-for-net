@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NumberOfDisksIncludedInBackup))
             {
-                writer.WritePropertyName("numberOfDisksIncludedInBackup");
+                writer.WritePropertyName("numberOfDisksIncludedInBackup"u8);
                 writer.WriteNumberValue(NumberOfDisksIncludedInBackup.Value);
             }
             if (Optional.IsDefined(NumberOfDisksAttachedToVm))
             {
-                writer.WritePropertyName("numberOfDisksAttachedToVm");
+                writer.WritePropertyName("numberOfDisksAttachedToVm"u8);
                 writer.WriteNumberValue(NumberOfDisksAttachedToVm.Value);
             }
             if (Optional.IsCollectionDefined(IncludedDiskList))
             {
-                writer.WritePropertyName("includedDiskList");
+                writer.WritePropertyName("includedDiskList"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedDiskList)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(ExcludedDiskList))
             {
-                writer.WritePropertyName("excludedDiskList");
+                writer.WritePropertyName("excludedDiskList"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedDiskList)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<DiskInformation>> excludedDiskList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("numberOfDisksIncludedInBackup"))
+                if (property.NameEquals("numberOfDisksIncludedInBackup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     numberOfDisksIncludedInBackup = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numberOfDisksAttachedToVm"))
+                if (property.NameEquals("numberOfDisksAttachedToVm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     numberOfDisksAttachedToVm = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("includedDiskList"))
+                if (property.NameEquals("includedDiskList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     includedDiskList = array;
                     continue;
                 }
-                if (property.NameEquals("excludedDiskList"))
+                if (property.NameEquals("excludedDiskList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

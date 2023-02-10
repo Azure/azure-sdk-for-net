@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("meterId");
+            writer.WritePropertyName("meterId"u8);
             writer.WriteStringValue(MeterId);
             if (Optional.IsDefined(Quantity))
             {
-                writer.WritePropertyName("quantity");
+                writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
             if (Optional.IsDefined(ExtendedUnit))
             {
-                writer.WritePropertyName("extendedUnit");
+                writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterId"))
+                if (property.NameEquals("meterId"u8))
                 {
                     meterId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quantity"))
+                if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     quantity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("extendedUnit"))
+                if (property.NameEquals("extendedUnit"u8))
                 {
                     extendedUnit = property.Value.GetString();
                     continue;

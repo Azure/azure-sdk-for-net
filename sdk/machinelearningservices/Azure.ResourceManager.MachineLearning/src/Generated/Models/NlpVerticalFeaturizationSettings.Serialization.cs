@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (DatasetLanguage != null)
                 {
-                    writer.WritePropertyName("datasetLanguage");
+                    writer.WritePropertyName("datasetLanguage"u8);
                     writer.WriteStringValue(DatasetLanguage);
                 }
                 else
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> datasetLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datasetLanguage"))
+                if (property.NameEquals("datasetLanguage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

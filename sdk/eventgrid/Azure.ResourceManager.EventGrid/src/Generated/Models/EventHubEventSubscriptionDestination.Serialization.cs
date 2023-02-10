@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointType");
+            writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
             {
-                writer.WritePropertyName("deliveryAttributeMappings");
+                writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in DeliveryAttributeMappings)
                 {
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointType"))
+                if (property.NameEquals("endpointType"u8))
                 {
                     endpointType = new EndpointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("resourceId"))
+                        if (property0.NameEquals("resourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("deliveryAttributeMappings"))
+                        if (property0.NameEquals("deliveryAttributeMappings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

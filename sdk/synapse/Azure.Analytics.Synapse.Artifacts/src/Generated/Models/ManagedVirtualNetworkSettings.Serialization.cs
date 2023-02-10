@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PreventDataExfiltration))
             {
-                writer.WritePropertyName("preventDataExfiltration");
+                writer.WritePropertyName("preventDataExfiltration"u8);
                 writer.WriteBooleanValue(PreventDataExfiltration.Value);
             }
             if (Optional.IsDefined(LinkedAccessCheckOnTargetResource))
             {
-                writer.WritePropertyName("linkedAccessCheckOnTargetResource");
+                writer.WritePropertyName("linkedAccessCheckOnTargetResource"u8);
                 writer.WriteBooleanValue(LinkedAccessCheckOnTargetResource.Value);
             }
             if (Optional.IsCollectionDefined(AllowedAadTenantIdsForLinking))
             {
-                writer.WritePropertyName("allowedAadTenantIdsForLinking");
+                writer.WritePropertyName("allowedAadTenantIdsForLinking"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedAadTenantIdsForLinking)
                 {
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IList<string>> allowedAadTenantIdsForLinking = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preventDataExfiltration"))
+                if (property.NameEquals("preventDataExfiltration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     preventDataExfiltration = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("linkedAccessCheckOnTargetResource"))
+                if (property.NameEquals("linkedAccessCheckOnTargetResource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     linkedAccessCheckOnTargetResource = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowedAadTenantIdsForLinking"))
+                if (property.NameEquals("allowedAadTenantIdsForLinking"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

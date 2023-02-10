@@ -19,12 +19,12 @@ namespace Azure.Communication.Identity
             DateTimeOffset expiresOn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("token"))
+                if (property.NameEquals("token"u8))
                 {
                     token = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiresOn"))
+                if (property.NameEquals("expiresOn"u8))
                 {
                     expiresOn = property.Value.GetDateTimeOffset("O");
                     continue;

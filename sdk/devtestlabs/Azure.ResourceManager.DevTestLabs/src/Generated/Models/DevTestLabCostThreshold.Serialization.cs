@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ThresholdId))
             {
-                writer.WritePropertyName("thresholdId");
+                writer.WritePropertyName("thresholdId"u8);
                 writer.WriteStringValue(ThresholdId);
             }
             if (Optional.IsDefined(PercentageThreshold))
             {
-                writer.WritePropertyName("percentageThreshold");
+                writer.WritePropertyName("percentageThreshold"u8);
                 writer.WriteObjectValue(PercentageThreshold);
             }
             if (Optional.IsDefined(DisplayOnChart))
             {
-                writer.WritePropertyName("displayOnChart");
+                writer.WritePropertyName("displayOnChart"u8);
                 writer.WriteStringValue(DisplayOnChart.Value.ToString());
             }
             if (Optional.IsDefined(SendNotificationWhenExceeded))
             {
-                writer.WritePropertyName("sendNotificationWhenExceeded");
+                writer.WritePropertyName("sendNotificationWhenExceeded"u8);
                 writer.WriteStringValue(SendNotificationWhenExceeded.Value.ToString());
             }
             if (Optional.IsDefined(NotificationSent))
             {
-                writer.WritePropertyName("notificationSent");
+                writer.WritePropertyName("notificationSent"u8);
                 writer.WriteStringValue(NotificationSent);
             }
             writer.WriteEndObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> notificationSent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("thresholdId"))
+                if (property.NameEquals("thresholdId"u8))
                 {
                     thresholdId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("percentageThreshold"))
+                if (property.NameEquals("percentageThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     percentageThreshold = PercentageCostThresholdProperties.DeserializePercentageCostThresholdProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("displayOnChart"))
+                if (property.NameEquals("displayOnChart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     displayOnChart = new DevTestLabCostThresholdStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sendNotificationWhenExceeded"))
+                if (property.NameEquals("sendNotificationWhenExceeded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     sendNotificationWhenExceeded = new DevTestLabCostThresholdStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("notificationSent"))
+                if (property.NameEquals("notificationSent"u8))
                 {
                     notificationSent = property.Value.GetString();
                     continue;

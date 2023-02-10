@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Billing.Models
             Optional<float> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currency"))
+                if (property.NameEquals("currency"u8))
                 {
                     currency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

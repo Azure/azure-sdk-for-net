@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Query != null)
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             if (QuerySubscriptions != null)
             {
-                writer.WritePropertyName("querySubscriptions");
+                writer.WritePropertyName("querySubscriptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in QuerySubscriptions)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IList<string> querySubscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     query = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("querySubscriptions"))
+                if (property.NameEquals("querySubscriptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

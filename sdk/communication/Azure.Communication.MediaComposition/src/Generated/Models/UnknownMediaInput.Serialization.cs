@@ -15,11 +15,11 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(PlaceholderImageUri))
             {
-                writer.WritePropertyName("placeholderImageUri");
+                writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.Communication.MediaComposition
             Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new MediaInputType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("placeholderImageUri"))
+                if (property.NameEquals("placeholderImageUri"u8))
                 {
                     placeholderImageUri = property.Value.GetString();
                     continue;

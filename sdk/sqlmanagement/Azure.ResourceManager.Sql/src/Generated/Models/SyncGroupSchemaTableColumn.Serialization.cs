@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QuotedName))
             {
-                writer.WritePropertyName("quotedName");
+                writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
             }
             if (Optional.IsDefined(DataSize))
             {
-                writer.WritePropertyName("dataSize");
+                writer.WritePropertyName("dataSize"u8);
                 writer.WriteStringValue(DataSize);
             }
             if (Optional.IsDefined(DataType))
             {
-                writer.WritePropertyName("dataType");
+                writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> dataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("quotedName"))
+                if (property.NameEquals("quotedName"u8))
                 {
                     quotedName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSize"))
+                if (property.NameEquals("dataSize"u8))
                 {
                     dataSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataType"))
+                if (property.NameEquals("dataType"u8))
                 {
                     dataType = property.Value.GetString();
                     continue;

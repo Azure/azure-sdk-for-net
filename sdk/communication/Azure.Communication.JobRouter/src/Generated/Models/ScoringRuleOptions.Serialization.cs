@@ -18,12 +18,12 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             if (Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize");
+                writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
             if (Optional.IsCollectionDefined(ScoringParameters))
             {
-                writer.WritePropertyName("scoringParameters");
+                writer.WritePropertyName("scoringParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScoringParameters)
                 {
@@ -33,12 +33,12 @@ namespace Azure.Communication.JobRouter
             }
             if (Optional.IsDefined(AllowScoringBatchOfWorkers))
             {
-                writer.WritePropertyName("allowScoringBatchOfWorkers");
+                writer.WritePropertyName("allowScoringBatchOfWorkers"u8);
                 writer.WriteBooleanValue(AllowScoringBatchOfWorkers.Value);
             }
             if (Optional.IsDefined(DescendingOrder))
             {
-                writer.WritePropertyName("descendingOrder");
+                writer.WritePropertyName("descendingOrder"u8);
                 writer.WriteBooleanValue(DescendingOrder.Value);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.Communication.JobRouter
             Optional<bool> descendingOrder = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("batchSize"))
+                if (property.NameEquals("batchSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter
                     batchSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scoringParameters"))
+                if (property.NameEquals("scoringParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.Communication.JobRouter
                     scoringParameters = array;
                     continue;
                 }
-                if (property.NameEquals("allowScoringBatchOfWorkers"))
+                if (property.NameEquals("allowScoringBatchOfWorkers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.Communication.JobRouter
                     allowScoringBatchOfWorkers = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("descendingOrder"))
+                if (property.NameEquals("descendingOrder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

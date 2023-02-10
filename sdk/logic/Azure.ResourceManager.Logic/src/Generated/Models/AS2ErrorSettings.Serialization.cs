@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("suspendDuplicateMessage");
+            writer.WritePropertyName("suspendDuplicateMessage"u8);
             writer.WriteBooleanValue(SuspendDuplicateMessage);
-            writer.WritePropertyName("resendIfMDNNotReceived");
+            writer.WritePropertyName("resendIfMDNNotReceived"u8);
             writer.WriteBooleanValue(ResendIfMdnNotReceived);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Logic.Models
             bool resendIfMdnNotReceived = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("suspendDuplicateMessage"))
+                if (property.NameEquals("suspendDuplicateMessage"u8))
                 {
                     suspendDuplicateMessage = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resendIfMDNNotReceived"))
+                if (property.NameEquals("resendIfMDNNotReceived"u8))
                 {
                     resendIfMdnNotReceived = property.Value.GetBoolean();
                     continue;

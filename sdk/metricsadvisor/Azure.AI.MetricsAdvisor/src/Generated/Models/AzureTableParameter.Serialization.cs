@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (ConnectionString != null)
                 {
-                    writer.WritePropertyName("connectionString");
+                    writer.WritePropertyName("connectionString"u8);
                     writer.WriteStringValue(ConnectionString);
                 }
                 else
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Table != null)
             {
-                writer.WritePropertyName("table");
+                writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
             else
@@ -38,7 +38,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Query != null)
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             else
@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("table"))
+                if (property.NameEquals("table"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     table = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

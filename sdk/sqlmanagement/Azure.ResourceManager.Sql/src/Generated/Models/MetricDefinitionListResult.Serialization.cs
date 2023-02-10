@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
             IReadOnlyList<SqlMetricDefinition> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SqlMetricDefinition> array = new List<SqlMetricDefinition>();
                     foreach (var item in property.Value.EnumerateArray())

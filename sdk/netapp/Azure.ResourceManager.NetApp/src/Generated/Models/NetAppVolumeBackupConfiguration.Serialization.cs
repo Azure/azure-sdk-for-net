@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupPolicyId))
             {
-                writer.WritePropertyName("backupPolicyId");
+                writer.WritePropertyName("backupPolicyId"u8);
                 writer.WriteStringValue(BackupPolicyId);
             }
             if (Optional.IsDefined(IsPolicyEnforced))
             {
-                writer.WritePropertyName("policyEnforced");
+                writer.WritePropertyName("policyEnforced"u8);
                 writer.WriteBooleanValue(IsPolicyEnforced.Value);
             }
             if (Optional.IsDefined(VaultId))
             {
-                writer.WritePropertyName("vaultId");
+                writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
             }
             if (Optional.IsDefined(IsBackupEnabled))
             {
-                writer.WritePropertyName("backupEnabled");
+                writer.WritePropertyName("backupEnabled"u8);
                 writer.WriteBooleanValue(IsBackupEnabled.Value);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> backupEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupPolicyId"))
+                if (property.NameEquals("backupPolicyId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     backupPolicyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyEnforced"))
+                if (property.NameEquals("policyEnforced"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     policyEnforced = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("vaultId"))
+                if (property.NameEquals("vaultId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     vaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backupEnabled"))
+                if (property.NameEquals("backupEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

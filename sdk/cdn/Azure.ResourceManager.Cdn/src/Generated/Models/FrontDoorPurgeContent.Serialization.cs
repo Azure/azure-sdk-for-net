@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("contentPaths");
+            writer.WritePropertyName("contentPaths"u8);
             writer.WriteStartArray();
             foreach (var item in ContentPaths)
             {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Domains))
             {
-                writer.WritePropertyName("domains");
+                writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
                 foreach (var item in Domains)
                 {

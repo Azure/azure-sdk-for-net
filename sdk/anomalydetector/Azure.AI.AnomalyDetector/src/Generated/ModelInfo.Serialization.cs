@@ -18,13 +18,13 @@ namespace Azure.AI.AnomalyDetector
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSource");
+            writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
             if (Optional.IsDefined(DataSchema))
             {
                 if (DataSchema != null)
                 {
-                    writer.WritePropertyName("dataSchema");
+                    writer.WritePropertyName("dataSchema"u8);
                     writer.WriteStringValue(DataSchema.Value.ToString());
                 }
                 else
@@ -32,20 +32,20 @@ namespace Azure.AI.AnomalyDetector
                     writer.WriteNull("dataSchema");
                 }
             }
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
-            writer.WritePropertyName("endTime");
+            writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndTime, "O");
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(SlidingWindow))
             {
                 if (SlidingWindow != null)
                 {
-                    writer.WritePropertyName("slidingWindow");
+                    writer.WritePropertyName("slidingWindow"u8);
                     writer.WriteNumberValue(SlidingWindow.Value);
                 }
                 else
@@ -55,14 +55,14 @@ namespace Azure.AI.AnomalyDetector
             }
             if (Optional.IsDefined(AlignPolicy))
             {
-                writer.WritePropertyName("alignPolicy");
+                writer.WritePropertyName("alignPolicy"u8);
                 writer.WriteObjectValue(AlignPolicy);
             }
             if (Optional.IsDefined(Status))
             {
                 if (Status != null)
                 {
-                    writer.WritePropertyName("status");
+                    writer.WritePropertyName("status"u8);
                     writer.WriteStringValue(Status.Value.ToSerialString());
                 }
                 else
@@ -72,7 +72,7 @@ namespace Azure.AI.AnomalyDetector
             }
             if (Optional.IsDefined(DiagnosticsInfo))
             {
-                writer.WritePropertyName("diagnosticsInfo");
+                writer.WritePropertyName("diagnosticsInfo"u8);
                 writer.WriteObjectValue(DiagnosticsInfo);
             }
             writer.WriteEndObject();
@@ -92,12 +92,12 @@ namespace Azure.AI.AnomalyDetector
             Optional<DiagnosticsInfo> diagnosticsInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     dataSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSchema"))
+                if (property.NameEquals("dataSchema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,22 +107,22 @@ namespace Azure.AI.AnomalyDetector
                     dataSchema = new DataSchema(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("slidingWindow"))
+                if (property.NameEquals("slidingWindow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.AI.AnomalyDetector
                     slidingWindow = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("alignPolicy"))
+                if (property.NameEquals("alignPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,7 +142,7 @@ namespace Azure.AI.AnomalyDetector
                     alignPolicy = AlignPolicy.DeserializeAlignPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +152,7 @@ namespace Azure.AI.AnomalyDetector
                     status = property.Value.GetString().ToModelStatus();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,7 +167,7 @@ namespace Azure.AI.AnomalyDetector
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("diagnosticsInfo"))
+                if (property.NameEquals("diagnosticsInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

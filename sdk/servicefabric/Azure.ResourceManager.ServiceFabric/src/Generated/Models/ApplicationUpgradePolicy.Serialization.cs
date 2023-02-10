@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
-                writer.WritePropertyName("upgradeReplicaSetCheckTimeout");
+                writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteStringValue(UpgradeReplicaSetCheckTimeout.Value, "c");
             }
             if (Optional.IsDefined(ForceRestart))
             {
-                writer.WritePropertyName("forceRestart");
+                writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
             if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
-                writer.WritePropertyName("rollingUpgradeMonitoringPolicy");
+                writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
                 writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
             if (Optional.IsDefined(ApplicationHealthPolicy))
             {
-                writer.WritePropertyName("applicationHealthPolicy");
+                writer.WritePropertyName("applicationHealthPolicy"u8);
                 writer.WriteObjectValue(ApplicationHealthPolicy);
             }
             if (Optional.IsDefined(UpgradeMode))
             {
-                writer.WritePropertyName("upgradeMode");
+                writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
             if (Optional.IsDefined(RecreateApplication))
             {
-                writer.WritePropertyName("recreateApplication");
+                writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);
             }
             writer.WriteEndObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<bool> recreateApplication = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("upgradeReplicaSetCheckTimeout"))
+                if (property.NameEquals("upgradeReplicaSetCheckTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     upgradeReplicaSetCheckTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("forceRestart"))
+                if (property.NameEquals("forceRestart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     forceRestart = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rollingUpgradeMonitoringPolicy"))
+                if (property.NameEquals("rollingUpgradeMonitoringPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     rollingUpgradeMonitoringPolicy = ArmRollingUpgradeMonitoringPolicy.DeserializeArmRollingUpgradeMonitoringPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("applicationHealthPolicy"))
+                if (property.NameEquals("applicationHealthPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     applicationHealthPolicy = ArmApplicationHealthPolicy.DeserializeArmApplicationHealthPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("upgradeMode"))
+                if (property.NameEquals("upgradeMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     upgradeMode = new ApplicationRollingUpgradeMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recreateApplication"))
+                if (property.NameEquals("recreateApplication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

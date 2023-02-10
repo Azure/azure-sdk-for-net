@@ -19,20 +19,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlDedicatedGatewayEndpoint))
             {
-                writer.WritePropertyName("sqlDedicatedGatewayEndpoint");
+                writer.WritePropertyName("sqlDedicatedGatewayEndpoint"u8);
                 writer.WriteStringValue(SqlDedicatedGatewayEndpoint);
             }
             if (Optional.IsDefined(InstanceSize))
             {
-                writer.WritePropertyName("instanceSize");
+                writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
             if (Optional.IsDefined(InstanceCount))
             {
-                writer.WritePropertyName("instanceCount");
+                writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            writer.WritePropertyName("serviceType");
+            writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
             foreach (var item in AdditionalProperties)
             {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlDedicatedGatewayEndpoint"))
+                if (property.NameEquals("sqlDedicatedGatewayEndpoint"u8))
                 {
                     sqlDedicatedGatewayEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("instanceSize"))
+                if (property.NameEquals("instanceSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     instanceSize = new CosmosDBServiceSize(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceCount"))
+                if (property.NameEquals("instanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     instanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("serviceType"))
+                if (property.NameEquals("serviceType"u8))
                 {
                     serviceType = new CosmosDBServiceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

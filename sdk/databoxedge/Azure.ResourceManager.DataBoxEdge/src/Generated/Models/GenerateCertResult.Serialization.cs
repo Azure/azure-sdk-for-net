@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DateTimeOffset> expiryTimeInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicKey"))
+                if (property.NameEquals("publicKey"u8))
                 {
                     publicKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateKey"))
+                if (property.NameEquals("privateKey"u8))
                 {
                     privateKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiryTimeInUTC"))
+                if (property.NameEquals("expiryTimeInUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

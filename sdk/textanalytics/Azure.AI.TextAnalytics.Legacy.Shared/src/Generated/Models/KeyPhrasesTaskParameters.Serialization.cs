@@ -17,12 +17,12 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("model-version");
+                writer.WritePropertyName("model-version"u8);
                 writer.WriteStringValue(ModelVersion);
             }
             if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("loggingOptOut");
+                writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();

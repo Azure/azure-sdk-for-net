@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(DisableTraceRoute))
             {
-                writer.WritePropertyName("disableTraceRoute");
+                writer.WritePropertyName("disableTraceRoute"u8);
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
             }
             if (Optional.IsDefined(DestinationPortBehavior))
             {
-                writer.WritePropertyName("destinationPortBehavior");
+                writer.WritePropertyName("destinationPortBehavior"u8);
                 writer.WriteStringValue(DestinationPortBehavior.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<DestinationPortBehavior> destinationPortBehavior = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("disableTraceRoute"))
+                if (property.NameEquals("disableTraceRoute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
                     disableTraceRoute = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("destinationPortBehavior"))
+                if (property.NameEquals("destinationPortBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

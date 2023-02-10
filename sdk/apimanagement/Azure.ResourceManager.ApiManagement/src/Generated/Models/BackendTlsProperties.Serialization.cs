@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ShouldValidateCertificateChain))
             {
-                writer.WritePropertyName("validateCertificateChain");
+                writer.WritePropertyName("validateCertificateChain"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateChain.Value);
             }
             if (Optional.IsDefined(ShouldValidateCertificateName))
             {
-                writer.WritePropertyName("validateCertificateName");
+                writer.WritePropertyName("validateCertificateName"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateName.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> validateCertificateName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validateCertificateChain"))
+                if (property.NameEquals("validateCertificateChain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     validateCertificateChain = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("validateCertificateName"))
+                if (property.NameEquals("validateCertificateName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

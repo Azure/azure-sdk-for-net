@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<string> supportedServerVersions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedSku"))
+                if (property.NameEquals("supportedSku"u8))
                 {
                     supportedSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedStorageGb"))
+                if (property.NameEquals("supportedStorageGb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedStorageGb = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("supportedServerVersions"))
+                if (property.NameEquals("supportedServerVersions"u8))
                 {
                     supportedServerVersions = property.Value.GetString();
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> requiredFeature = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dataLocationToServiceLocationMap"))
+                        if (property0.NameEquals("dataLocationToServiceLocationMap"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             dataLocationToServiceLocationMap = array;
                             continue;
                         }
-                        if (property0.NameEquals("capacity"))
+                        if (property0.NameEquals("capacity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("costs"))
+                        if (property0.NameEquals("costs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             costs = array;
                             continue;
                         }
-                        if (property0.NameEquals("apiVersions"))
+                        if (property0.NameEquals("apiVersions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             apiVersions = array;
                             continue;
                         }
-                        if (property0.NameEquals("disabledReason"))
+                        if (property0.NameEquals("disabledReason"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.DataBox.Models
                             disabledReason = property0.Value.GetString().ToSkuDisabledReason();
                             continue;
                         }
-                        if (property0.NameEquals("disabledReasonMessage"))
+                        if (property0.NameEquals("disabledReasonMessage"u8))
                         {
                             disabledReasonMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requiredFeature"))
+                        if (property0.NameEquals("requiredFeature"u8))
                         {
                             requiredFeature = property0.Value.GetString();
                             continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SchemaType))
             {
-                writer.WritePropertyName("schemaType");
+                writer.WritePropertyName("schemaType"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<AnalyticalStorageSchemaType> schemaType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("schemaType"))
+                if (property.NameEquals("schemaType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

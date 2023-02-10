@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<AzureLocation> serviceLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataLocation"))
+                if (property.NameEquals("dataLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     dataLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serviceLocation"))
+                if (property.NameEquals("serviceLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

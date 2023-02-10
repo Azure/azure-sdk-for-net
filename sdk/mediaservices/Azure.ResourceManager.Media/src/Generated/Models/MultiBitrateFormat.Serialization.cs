@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(OutputFiles))
             {
-                writer.WritePropertyName("outputFiles");
+                writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in OutputFiles)
                 {
@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            writer.WritePropertyName("filenamePattern");
+            writer.WritePropertyName("filenamePattern"u8);
             writer.WriteStringValue(FilenamePattern);
             writer.WriteEndObject();
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("outputFiles"))
+                if (property.NameEquals("outputFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Media.Models
                     outputFiles = array;
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filenamePattern"))
+                if (property.NameEquals("filenamePattern"u8))
                 {
                     filenamePattern = property.Value.GetString();
                     continue;

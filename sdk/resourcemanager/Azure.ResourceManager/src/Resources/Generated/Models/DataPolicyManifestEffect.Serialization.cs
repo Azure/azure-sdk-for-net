@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<BinaryData> detailsSchema = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detailsSchema"))
+                if (property.NameEquals("detailsSchema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

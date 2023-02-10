@@ -20,7 +20,7 @@ namespace Azure.Security.Attestation
             writer.WriteStartObject();
             if (Optional.IsDefined(InternalPolicyCertificate))
             {
-                writer.WritePropertyName("policyCertificate");
+                writer.WritePropertyName("policyCertificate"u8);
                 writer.WriteObjectValue(InternalPolicyCertificate);
             }
             writer.WriteEndObject();
@@ -31,7 +31,7 @@ namespace Azure.Security.Attestation
             Optional<JsonWebKey> policyCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policyCertificate"))
+                if (property.NameEquals("policyCertificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

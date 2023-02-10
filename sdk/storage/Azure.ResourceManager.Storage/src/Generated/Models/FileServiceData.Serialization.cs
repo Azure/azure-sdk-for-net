@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.Storage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Cors))
             {
-                writer.WritePropertyName("cors");
+                writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
             if (Optional.IsDefined(ShareDeleteRetentionPolicy))
             {
-                writer.WritePropertyName("shareDeleteRetentionPolicy");
+                writer.WritePropertyName("shareDeleteRetentionPolicy"u8);
                 writer.WriteObjectValue(ShareDeleteRetentionPolicy);
             }
             if (Optional.IsDefined(ProtocolSettings))
             {
-                writer.WritePropertyName("protocolSettings");
+                writer.WritePropertyName("protocolSettings"u8);
                 writer.WriteObjectValue(ProtocolSettings);
             }
             writer.WriteEndObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
             Optional<ProtocolSettings> protocolSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.Storage
                     sku = StorageSku.DeserializeStorageSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("cors"))
+                        if (property0.NameEquals("cors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage
                             cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("shareDeleteRetentionPolicy"))
+                        if (property0.NameEquals("shareDeleteRetentionPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Storage
                             shareDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("protocolSettings"))
+                        if (property0.NameEquals("protocolSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

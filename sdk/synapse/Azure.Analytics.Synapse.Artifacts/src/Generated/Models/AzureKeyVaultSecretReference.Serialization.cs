@@ -18,16 +18,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("store");
+            writer.WritePropertyName("store"u8);
             writer.WriteObjectValue(Store);
-            writer.WritePropertyName("secretName");
+            writer.WritePropertyName("secretName"u8);
             writer.WriteObjectValue(SecretName);
             if (Optional.IsDefined(SecretVersion))
             {
-                writer.WritePropertyName("secretVersion");
+                writer.WritePropertyName("secretVersion"u8);
                 writer.WriteObjectValue(SecretVersion);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
         }
@@ -40,17 +40,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("store"))
+                if (property.NameEquals("store"u8))
                 {
                     store = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("secretName"))
+                if (property.NameEquals("secretName"u8))
                 {
                     secretName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("secretVersion"))
+                if (property.NameEquals("secretVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     secretVersion = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

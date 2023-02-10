@@ -20,17 +20,17 @@ namespace Azure.Maps.Search.Models
             Optional<LatLongPairAbbreviated> to = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rangeLeft"))
+                if (property.NameEquals("rangeLeft"u8))
                 {
                     rangeLeft = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rangeRight"))
+                if (property.NameEquals("rangeRight"u8))
                 {
                     rangeRight = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("from"))
+                if (property.NameEquals("from"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.Maps.Search.Models
                     @from = LatLongPairAbbreviated.DeserializeLatLongPairAbbreviated(property.Value);
                     continue;
                 }
-                if (property.NameEquals("to"))
+                if (property.NameEquals("to"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

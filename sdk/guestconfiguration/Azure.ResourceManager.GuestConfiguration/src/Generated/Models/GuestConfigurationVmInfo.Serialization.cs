@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<Guid> uuid = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("uuid"))
+                if (property.NameEquals("uuid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

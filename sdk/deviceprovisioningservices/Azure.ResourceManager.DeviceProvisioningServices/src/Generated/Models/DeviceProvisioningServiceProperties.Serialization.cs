@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsCollectionDefined(IPFilterRules))
             {
-                writer.WritePropertyName("ipFilterRules");
+                writer.WritePropertyName("ipFilterRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPFilterRules)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                writer.WritePropertyName("privateEndpointConnections");
+                writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsCollectionDefined(IotHubs))
             {
-                writer.WritePropertyName("iotHubs");
+                writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             if (Optional.IsDefined(AllocationPolicy))
             {
-                writer.WritePropertyName("allocationPolicy");
+                writer.WritePropertyName("allocationPolicy"u8);
                 writer.WriteStringValue(AllocationPolicy.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AuthorizationPolicies))
             {
-                writer.WritePropertyName("authorizationPolicies");
+                writer.WritePropertyName("authorizationPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationPolicies)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
             if (Optional.IsDefined(IsDataResidencyEnabled))
             {
-                writer.WritePropertyName("enableDataResidency");
+                writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(IsDataResidencyEnabled.Value);
             }
             writer.WriteEndObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Optional<bool> enableDataResidency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     state = new DeviceProvisioningServicesState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     publicNetworkAccess = new DeviceProvisioningServicesPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipFilterRules"))
+                if (property.NameEquals("ipFilterRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     ipFilterRules = array;
                     continue;
                 }
-                if (property.NameEquals("privateEndpointConnections"))
+                if (property.NameEquals("privateEndpointConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iotHubs"))
+                if (property.NameEquals("iotHubs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     iotHubs = array;
                     continue;
                 }
-                if (property.NameEquals("allocationPolicy"))
+                if (property.NameEquals("allocationPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,22 +181,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     allocationPolicy = new DeviceProvisioningServicesAllocationPolicy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serviceOperationsHostName"))
+                if (property.NameEquals("serviceOperationsHostName"u8))
                 {
                     serviceOperationsHostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceProvisioningHostName"))
+                if (property.NameEquals("deviceProvisioningHostName"u8))
                 {
                     deviceProvisioningHostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("idScope"))
+                if (property.NameEquals("idScope"u8))
                 {
                     idScope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authorizationPolicies"))
+                if (property.NameEquals("authorizationPolicies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     authorizationPolicies = array;
                     continue;
                 }
-                if (property.NameEquals("enableDataResidency"))
+                if (property.NameEquals("enableDataResidency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

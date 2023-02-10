@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageType");
+            writer.WritePropertyName("storageType"u8);
             writer.WriteStringValue(StorageType.ToSerialString());
             if (Optional.IsDefined(SizeInGB))
             {
-                writer.WritePropertyName("sizeInGB");
+                writer.WritePropertyName("sizeInGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<long> sizeInGB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageType"))
+                if (property.NameEquals("storageType"u8))
                 {
                     storageType = property.Value.GetString().ToDiskStorageType();
                     continue;
                 }
-                if (property.NameEquals("sizeInGB"))
+                if (property.NameEquals("sizeInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
