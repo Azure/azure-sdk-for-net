@@ -142,7 +142,7 @@
 
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="3.1.31" />
+    <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="3.1.32" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
