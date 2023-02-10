@@ -99,7 +99,7 @@ namespace Azure.Core.Pipeline
             }
             else
             {
-                scope.AddAttribute($"http.status_code", message.Response.Status, static i => i.ToString(CultureInfo.InvariantCulture));
+                scope.AddAttribute("http.status_code", message.Response.Status, static i => i.ToString(CultureInfo.InvariantCulture));
             }
 
             if (message.Response.Headers.RequestId is string serviceRequestId)
