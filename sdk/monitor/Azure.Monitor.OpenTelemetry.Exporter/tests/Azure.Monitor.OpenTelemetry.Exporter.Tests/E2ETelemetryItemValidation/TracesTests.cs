@@ -316,57 +316,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedSpanId: spanId,
                 expectedTraceId: traceId);
         }
-
-        //[Fact]
-        //public void InvestigatingBug()
-        //{
-        //    // SETUP
-        //    var uniqueTestId = Guid.NewGuid();
-
-        //    var activitySourceName = $"activitySourceName{uniqueTestId}";
-        //    using var activitySource = new ActivitySource(activitySourceName);
-
-        //    var tracerProvider = Sdk.CreateTracerProviderBuilder()
-        //        .AddSource(activitySourceName)
-        //        .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
-        //        .Build();
-
-        //    // ACT
-        //    string spanId = null, traceId = null;
-
-        //    using (var activity = activitySource.StartActivity(name: "ActivityWithException"))
-        //    {
-        //        traceId = activity.TraceId.ToHexString();
-        //        spanId = activity.SpanId.ToHexString();
-
-        //        activity.SetTag("intArray", new int[] { 1, 2, 3 });
-
-        //        var eventTags = new Dictionary<string, object>
-        //        {
-        //            { "intArray", new int[] { 1, 2, 3 } }
-        //        };
-        //        activity?.AddEvent(new("Gonna try it!", DateTimeOffset.Now, new(eventTags)));
-        //    }
-
-        //    // CLEANUP
-        //    tracerProvider.Dispose();
-
-        //    // ASSERT
-        //    Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
-        //    this.telemetryOutput.Write(telemetryItems);
-
-        //    var dependencyTelemetryItem = telemetryItems.First(x => x.Name == "RemoteDependency");
-        //    var dependencyData = dependencyTelemetryItem.Data.BaseData as RemoteDependencyData;
-        //    Assert.Equal("1,2,3", dependencyData.Properties["intArray"]); // TODO: This is correct
-
-        //    var messageTelemetryItem = telemetryItems.First(x => x.Name == "Message");
-        //    var messageData = messageTelemetryItem.Data.BaseData as MessageData;
-        //    Assert.Equal("System.Int32[]" , messageData.Properties["intArray"]); // TODO: This is wrong
-
-        //    var array = new int[] { 1, 2, 3 };
-        //    Assert.Equal("System.Int32[]", array.ToString());
-        //    object testObject = array;
-        //    Assert.Equal("System.Int32[]", testObject.ToString());
-        //}
     }
 }
