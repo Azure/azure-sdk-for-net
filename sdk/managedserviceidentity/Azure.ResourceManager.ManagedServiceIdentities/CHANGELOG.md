@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0
+## 2.0.0 (2023-01-20)
 
 ### Features Added
 Create/Update/Delete federated identity credentials.
