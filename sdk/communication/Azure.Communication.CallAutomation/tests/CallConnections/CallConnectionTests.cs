@@ -124,11 +124,31 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public async Task TransferCallToParticipantAsync_simpleMethod_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public async Task TransferCallToParticipantAsync_202Accepted(CallInvite callInvite)
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite)).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyOperationContext(response);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
+        public void TransferCallToParticipant_simpleMethod_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = callConnection.TransferCallToParticipant(callInvite);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
