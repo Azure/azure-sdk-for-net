@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="enableCrossRegionRestore"> Opt in details of Cross Region Restore feature. </param>
         /// <param name="dedupState"> Vault Dedup state. </param>
         /// <param name="xcoolState"> Vault x-cool state. </param>
-        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, StorageTypeState? storageTypeState, bool? enableCrossRegionRestore, VaultDedupState? dedupState, VaultXcoolState? xcoolState)
+        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, BackupStorageTypeState? storageTypeState, bool? enableCrossRegionRestore, VaultDedupState? dedupState, VaultXcoolState? xcoolState)
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Storage type. </summary>
         public BackupStorageType? StorageType { get; set; }
         /// <summary> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </summary>
-        public StorageTypeState? StorageTypeState { get; set; }
+        public BackupStorageTypeState? StorageTypeState { get; set; }
         /// <summary> Opt in details of Cross Region Restore feature. </summary>
         public bool? EnableCrossRegionRestore { get; set; }
         /// <summary> Vault Dedup state. </summary>

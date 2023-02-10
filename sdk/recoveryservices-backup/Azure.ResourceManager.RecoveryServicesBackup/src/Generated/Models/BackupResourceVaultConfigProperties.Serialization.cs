@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<BackupStorageType> storageModelType = default;
             Optional<BackupStorageType> storageType = default;
-            Optional<StorageTypeState> storageTypeState = default;
+            Optional<BackupStorageTypeState> storageTypeState = default;
             Optional<EnhancedSecurityState> enhancedSecurityState = default;
             Optional<SoftDeleteFeatureState> softDeleteFeatureState = default;
             Optional<IList<string>> resourceGuardOperationRequests = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageTypeState = new StorageTypeState(property.Value.GetString());
+                    storageTypeState = new BackupStorageTypeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enhancedSecurityState"u8))

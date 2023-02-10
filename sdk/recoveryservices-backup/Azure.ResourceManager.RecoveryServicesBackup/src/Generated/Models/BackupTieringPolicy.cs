@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Tiering Policy for a target tier.
     /// If the policy is not specified for a given target tier, service retains the existing configured tiering policy for that tier
     /// </summary>
-    public partial class TieringPolicy
+    public partial class BackupTieringPolicy
     {
-        /// <summary> Initializes a new instance of TieringPolicy. </summary>
-        public TieringPolicy()
+        /// <summary> Initializes a new instance of BackupTieringPolicy. </summary>
+        public BackupTieringPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of TieringPolicy. </summary>
+        /// <summary> Initializes a new instance of BackupTieringPolicy. </summary>
         /// <param name="tieringMode">
         /// Tiering Mode to control automatic tiering of recovery points. Supported values are:
         /// 1. TierRecommended: Tier all recovery points recommended to be tiered
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Retention duration type: days/weeks/months/years
         /// Used only if TieringMode is set to TierAfter
         /// </param>
-        internal TieringPolicy(TieringMode? tieringMode, int? durationValue, RetentionDurationType? durationType)
+        internal BackupTieringPolicy(TieringMode? tieringMode, int? durationValue, RetentionDurationType? durationType)
         {
             TieringMode = tieringMode;
             DurationValue = durationValue;

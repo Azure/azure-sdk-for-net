@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupProtectionPolicyProperties : IUtf8JsonSerializable
+    public partial class BackupGenericProtectionPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static BackupProtectionPolicyProperties DeserializeBackupProtectionPolicyProperties(JsonElement element)
+        internal static BackupGenericProtectionPolicy DeserializeBackupGenericProtectionPolicy(JsonElement element)
         {
             if (element.TryGetProperty("backupManagementType", out JsonElement discriminator))
             {

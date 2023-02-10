@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// JobResource properties
-        /// Please note <see cref="BackupJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="BackupGenericJob"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="IaasVmJob"/>, <see cref="IaasVmJobV2"/>, <see cref="StorageJob"/>, <see cref="WorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal BackupJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupJobProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal BackupJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericJob properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary>
         /// JobResource properties
-        /// Please note <see cref="BackupJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="BackupGenericJob"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="IaasVmJob"/>, <see cref="IaasVmJobV2"/>, <see cref="StorageJob"/>, <see cref="WorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
         /// </summary>
-        public BackupJobProperties Properties { get; set; }
+        public BackupGenericJob Properties { get; set; }
         /// <summary> Optional ETag. </summary>
         public ETag? ETag { get; set; }
     }

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure IaaS VM workload-specific job object. </summary>
-    public partial class IaasVmJob : BackupJobProperties
+    public partial class IaasVmJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of IaasVmJob. </summary>
         public IaasVmJob()

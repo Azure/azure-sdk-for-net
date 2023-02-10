@@ -12,22 +12,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup policy. Workload-specific backup policies are derived from this class.
-    /// Please note <see cref="BackupProtectionPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="BackupGenericProtectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="VmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
     /// </summary>
-    public abstract partial class BackupProtectionPolicyProperties
+    public abstract partial class BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of BackupProtectionPolicyProperties. </summary>
-        protected BackupProtectionPolicyProperties()
+        /// <summary> Initializes a new instance of BackupGenericProtectionPolicy. </summary>
+        protected BackupGenericProtectionPolicy()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BackupProtectionPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of BackupGenericProtectionPolicy. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
-        internal BackupProtectionPolicyProperties(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests)
+        internal BackupGenericProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests)
         {
             ProtectedItemsCount = protectedItemsCount;
             BackupManagementType = backupManagementType;

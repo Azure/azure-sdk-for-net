@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional information on Backup engine specific backup item. </summary>
-    public partial class DpmProtectedItem : BackupProtectedItemProperties
+    public partial class DpmProtectedItem : BackupGenericProtectedItem
     {
         /// <summary> Initializes a new instance of DpmProtectedItem. </summary>
         public DpmProtectedItem()

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         internal static BackupProtectionIntentData DeserializeBackupProtectionIntentData(JsonElement element)
         {
-            Optional<BackupProtectionIntentProperties> properties = default;
+            Optional<BackupGenericProtectionIntent> properties = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = BackupProtectionIntentProperties.DeserializeBackupProtectionIntentProperties(property.Value);
+                    properties = BackupGenericProtectionIntent.DeserializeBackupGenericProtectionIntent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static WorkloadPointInTimeRestoreContent DeserializeWorkloadPointInTimeRestoreContent(JsonElement element)
         {
             Optional<DateTimeOffset> pointInTime = default;
-            Optional<RecoveryType> recoveryType = default;
+            Optional<FileShareRecoveryType> recoveryType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<TargetRestoreInfo> targetInfo = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recoveryType = new RecoveryType(property.Value.GetString());
+                    recoveryType = new FileShareRecoveryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceResourceId"u8))

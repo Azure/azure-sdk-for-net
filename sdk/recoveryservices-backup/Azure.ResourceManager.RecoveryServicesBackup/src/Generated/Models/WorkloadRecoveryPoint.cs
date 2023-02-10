@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="WorkloadRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/> and <see cref="WorkloadSqlRecoveryPoint"/>.
     /// </summary>
-    public partial class WorkloadRecoveryPoint : BackupRecoveryPointProperties
+    public partial class WorkloadRecoveryPoint : BackupGenericRecoveryPoint
     {
         /// <summary> Initializes a new instance of WorkloadRecoveryPoint. </summary>
         public WorkloadRecoveryPoint()

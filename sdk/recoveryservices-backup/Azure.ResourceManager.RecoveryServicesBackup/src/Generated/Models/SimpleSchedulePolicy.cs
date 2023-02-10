@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Simple policy schedule. </summary>
-    public partial class SimpleSchedulePolicy : SchedulePolicy
+    public partial class SimpleSchedulePolicy : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of SimpleSchedulePolicy. </summary>
         public SimpleSchedulePolicy()

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure File Share workload-specific backup item. </summary>
-    public partial class FileshareProtectedItem : BackupProtectedItemProperties
+    public partial class FileshareProtectedItem : BackupGenericProtectedItem
     {
         /// <summary> Initializes a new instance of FileshareProtectedItem. </summary>
         public FileshareProtectedItem()

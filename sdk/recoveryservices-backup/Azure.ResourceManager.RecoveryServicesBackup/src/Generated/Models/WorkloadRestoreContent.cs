@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// This is the complete ARM Id of the target VM
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
         /// </param>
-        internal WorkloadRestoreContent(string objectType, RecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId) : base(objectType)
+        internal WorkloadRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId) : base(objectType)
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Type of this recovery. </summary>
-        public RecoveryType? RecoveryType { get; set; }
+        public FileShareRecoveryType? RecoveryType { get; set; }
         /// <summary> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary> Workload specific property bag. </summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RetentionPolicy : IUtf8JsonSerializable
+    public partial class BackupRetentionPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static RetentionPolicy DeserializeRetentionPolicy(JsonElement element)
+        internal static BackupRetentionPolicy DeserializeBackupRetentionPolicy(JsonElement element)
         {
             if (element.TryGetProperty("retentionPolicyType", out JsonElement discriminator))
             {

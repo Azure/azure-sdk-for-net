@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="restoreRequestType"> Restore Type (FullShareRestore or ItemLevelRestore). </param>
         /// <param name="restoreFileSpecs"> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </param>
         /// <param name="targetDetails"> Target File Share Details. </param>
-        internal FileShareRestoreContent(string objectType, RecoveryType? recoveryType, ResourceIdentifier sourceResourceId, CopyOption? copyOptions, RestoreRequestType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType)
+        internal FileShareRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, FileShareCopyOption? copyOptions, FileShareRestoreType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType)
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Type of this recovery. </summary>
-        public RecoveryType? RecoveryType { get; set; }
+        public FileShareRecoveryType? RecoveryType { get; set; }
         /// <summary> Source storage account ARM Id. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary> Options to resolve copy conflicts. </summary>
-        public CopyOption? CopyOptions { get; set; }
+        public FileShareCopyOption? CopyOptions { get; set; }
         /// <summary> Restore Type (FullShareRestore or ItemLevelRestore). </summary>
-        public RestoreRequestType? RestoreRequestType { get; set; }
+        public FileShareRestoreType? RestoreRequestType { get; set; }
         /// <summary> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </summary>
         public IList<RestoreFileSpecs> RestoreFileSpecs { get; }
         /// <summary> Target File Share Details. </summary>

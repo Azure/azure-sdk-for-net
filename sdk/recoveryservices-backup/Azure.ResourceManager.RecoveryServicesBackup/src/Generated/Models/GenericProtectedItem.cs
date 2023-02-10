@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Base class for backup items. </summary>
-    public partial class GenericProtectedItem : BackupProtectedItemProperties
+    public partial class GenericProtectedItem : BackupGenericProtectedItem
     {
         /// <summary> Initializes a new instance of GenericProtectedItem. </summary>
         public GenericProtectedItem()

@@ -645,15 +645,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="securityPinBase"> security pin request. </param>
+        /// <param name="content"> security pin request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TokenInformation>> GetSecurityPinAsync(string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TokenInformation>> GetSecurityPinAsync(string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = SecurityPINsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityPin");
             scope.Start();
             try
             {
-                var response = await SecurityPINsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, securityPinBase, cancellationToken).ConfigureAwait(false);
+                var response = await SecurityPINsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -677,15 +677,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="securityPinBase"> security pin request. </param>
+        /// <param name="content"> security pin request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TokenInformation> GetSecurityPin(string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
+        public virtual Response<TokenInformation> GetSecurityPin(string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = SecurityPINsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityPin");
             scope.Start();
             try
             {
-                var response = SecurityPINsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, securityPinBase, cancellationToken);
+                var response = SecurityPINsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

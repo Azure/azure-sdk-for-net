@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SchedulePolicy : IUtf8JsonSerializable
+    public partial class BackupSchedulePolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static SchedulePolicy DeserializeSchedulePolicy(JsonElement element)
+        internal static BackupSchedulePolicy DeserializeBackupSchedulePolicy(JsonElement element)
         {
             if (element.TryGetProperty("schedulePolicyType", out JsonElement discriminator))
             {

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> MAB workload-specific job. </summary>
-    public partial class MabJob : BackupJobProperties
+    public partial class MabJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of MabJob. </summary>
         public MabJob()

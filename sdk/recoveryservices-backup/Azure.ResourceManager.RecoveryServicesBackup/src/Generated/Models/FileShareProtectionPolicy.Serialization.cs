@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static FileShareProtectionPolicy DeserializeFileShareProtectionPolicy(JsonElement element)
         {
             Optional<BackupWorkloadType> workLoadType = default;
-            Optional<SchedulePolicy> schedulePolicy = default;
-            Optional<RetentionPolicy> retentionPolicy = default;
+            Optional<BackupSchedulePolicy> schedulePolicy = default;
+            Optional<BackupRetentionPolicy> retentionPolicy = default;
             Optional<string> timeZone = default;
             Optional<int> protectedItemsCount = default;
             string backupManagementType = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schedulePolicy = SchedulePolicy.DeserializeSchedulePolicy(property.Value);
+                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))

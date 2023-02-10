@@ -9,19 +9,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup schedule.
-    /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="BackupSchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="LogSchedulePolicy"/>, <see cref="LongTermSchedulePolicy"/>, <see cref="SimpleSchedulePolicy"/> and <see cref="SimpleSchedulePolicyV2"/>.
     /// </summary>
-    public abstract partial class SchedulePolicy
+    public abstract partial class BackupSchedulePolicy
     {
-        /// <summary> Initializes a new instance of SchedulePolicy. </summary>
-        protected SchedulePolicy()
+        /// <summary> Initializes a new instance of BackupSchedulePolicy. </summary>
+        protected BackupSchedulePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of SchedulePolicy. </summary>
+        /// <summary> Initializes a new instance of BackupSchedulePolicy. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal SchedulePolicy(string schedulePolicyType)
+        internal BackupSchedulePolicy(string schedulePolicyType)
         {
             SchedulePolicyType = schedulePolicyType;
         }

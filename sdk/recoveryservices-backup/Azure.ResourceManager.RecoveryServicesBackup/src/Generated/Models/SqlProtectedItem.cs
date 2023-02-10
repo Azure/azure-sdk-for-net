@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure SQL workload-specific backup item. </summary>
-    public partial class SqlProtectedItem : BackupProtectedItemProperties
+    public partial class SqlProtectedItem : BackupGenericProtectedItem
     {
         /// <summary> Initializes a new instance of SqlProtectedItem. </summary>
         public SqlProtectedItem()

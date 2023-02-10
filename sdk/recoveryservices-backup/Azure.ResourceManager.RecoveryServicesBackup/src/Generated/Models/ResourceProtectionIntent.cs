@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM specific backup protection intent item. </summary>
-    public partial class ResourceProtectionIntent : BackupProtectionIntentProperties
+    public partial class ResourceProtectionIntent : BackupGenericProtectionIntent
     {
         /// <summary> Initializes a new instance of ResourceProtectionIntent. </summary>
         public ResourceProtectionIntent()

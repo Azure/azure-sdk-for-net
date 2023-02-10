@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure storage specific job. </summary>
-    public partial class StorageJob : BackupJobProperties
+    public partial class StorageJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of StorageJob. </summary>
         public StorageJob()

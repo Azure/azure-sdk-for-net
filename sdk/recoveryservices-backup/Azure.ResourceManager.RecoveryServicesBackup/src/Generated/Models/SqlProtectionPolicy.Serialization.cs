@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SqlProtectionPolicy DeserializeSqlProtectionPolicy(JsonElement element)
         {
-            Optional<RetentionPolicy> retentionPolicy = default;
+            Optional<BackupRetentionPolicy> retentionPolicy = default;
             Optional<int> protectedItemsCount = default;
             string backupManagementType = default;
             Optional<IList<string>> resourceGuardOperationRequests = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemsCount"u8))

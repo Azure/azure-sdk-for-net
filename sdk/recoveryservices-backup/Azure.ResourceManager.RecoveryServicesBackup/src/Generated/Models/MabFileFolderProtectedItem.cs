@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> MAB workload-specific backup item. </summary>
-    public partial class MabFileFolderProtectedItem : BackupProtectedItemProperties
+    public partial class MabFileFolderProtectedItem : BackupGenericProtectedItem
     {
         /// <summary> Initializes a new instance of MabFileFolderProtectedItem. </summary>
         public MabFileFolderProtectedItem()

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupJobProperties : IUtf8JsonSerializable
+    public partial class BackupGenericJob : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static BackupJobProperties DeserializeBackupJobProperties(JsonElement element)
+        internal static BackupGenericJob DeserializeBackupGenericJob(JsonElement element)
         {
             if (element.TryGetProperty("jobType", out JsonElement discriminator))
             {

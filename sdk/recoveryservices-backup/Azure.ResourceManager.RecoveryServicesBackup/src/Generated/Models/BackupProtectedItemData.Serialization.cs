@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         internal static BackupProtectedItemData DeserializeBackupProtectedItemData(JsonElement element)
         {
-            Optional<BackupProtectedItemProperties> properties = default;
+            Optional<BackupGenericProtectedItem> properties = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = BackupProtectedItemProperties.DeserializeBackupProtectedItemProperties(property.Value);
+                    properties = BackupGenericProtectedItem.DeserializeBackupGenericProtectedItem(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))

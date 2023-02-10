@@ -9,19 +9,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup copies. Workload-specific backup copies are derived from this class.
-    /// Please note <see cref="BackupRecoveryPointProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="BackupGenericRecoveryPoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/> and <see cref="IaasVmRecoveryPoint"/>.
     /// </summary>
-    public abstract partial class BackupRecoveryPointProperties
+    public abstract partial class BackupGenericRecoveryPoint
     {
-        /// <summary> Initializes a new instance of BackupRecoveryPointProperties. </summary>
-        protected BackupRecoveryPointProperties()
+        /// <summary> Initializes a new instance of BackupGenericRecoveryPoint. </summary>
+        protected BackupGenericRecoveryPoint()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of BackupGenericRecoveryPoint. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal BackupRecoveryPointProperties(string objectType)
+        internal BackupGenericRecoveryPoint(string objectType)
         {
             ObjectType = objectType;
         }

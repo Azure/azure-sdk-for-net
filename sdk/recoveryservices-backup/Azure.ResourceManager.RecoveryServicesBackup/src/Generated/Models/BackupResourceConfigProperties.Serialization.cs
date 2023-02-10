@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<BackupStorageType> storageModelType = default;
             Optional<BackupStorageType> storageType = default;
-            Optional<StorageTypeState> storageTypeState = default;
+            Optional<BackupStorageTypeState> storageTypeState = default;
             Optional<bool> crossRegionRestoreFlag = default;
             Optional<VaultDedupState> dedupState = default;
             Optional<VaultXcoolState> xcoolState = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    storageTypeState = new StorageTypeState(property.Value.GetString());
+                    storageTypeState = new BackupStorageTypeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("crossRegionRestoreFlag"u8))

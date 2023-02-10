@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="zones"> Target zone where the VM and its disks should be restored. </param>
         /// <param name="identityInfo"> Managed Identity information required to access customer storage account. </param>
         /// <param name="identityBasedRestoreDetails"> IaaS VM workload specific restore details for restores using managed identity. </param>
-        internal IaasVmRestoreContent(string objectType, string recoveryPointId, RecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, IdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails) : base(objectType)
+        internal IaasVmRestoreContent(string objectType, string recoveryPointId, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, IdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails) : base(objectType)
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> ID of the backup copy to be recovered. </summary>
         public string RecoveryPointId { get; set; }
         /// <summary> Type of this recovery. </summary>
-        public RecoveryType? RecoveryType { get; set; }
+        public FileShareRecoveryType? RecoveryType { get; set; }
         /// <summary> Fully qualified ARM ID of the VM which is being recovered. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary>

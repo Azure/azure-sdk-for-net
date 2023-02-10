@@ -17,10 +17,10 @@ modelerfour:
   flatten-payloads: false
 
 rename-mapping:
-  Job: BackupJobProperties
+  Job: BackupGenericJob
   JobResource: BackupJob
   JobResourceList: BackupJobListResult
-  BackupEngineBase: BackupEngineProperties
+  BackupEngineBase: BackupGenericEngine
   BackupEngineBaseResource: BackupEngine
   BackupResourceConfig: BackupResourceConfigProperties
   BackupResourceConfigResource: BackupResourceConfig
@@ -30,15 +30,15 @@ rename-mapping:
   BackupResourceVaultConfigResource: BackupResourceVaultConfig
   PrivateEndpointConnection: BackupPrivateEndpointConnectionProperties
   PrivateEndpointConnectionResource: BackupPrivateEndpointConnection
-  ProtectedItem: BackupProtectedItemProperties
+  ProtectedItem: BackupGenericProtectedItem
   ProtectedItemResource: BackupProtectedItem
   ProtectionContainer: BackupGenericProtectionContainer
   ProtectionContainerResource: BackupProtectionContainer
-  ProtectionIntent: BackupProtectionIntentProperties
+  ProtectionIntent: BackupGenericProtectionIntent
   ProtectionIntentResource: BackupProtectionIntent
-  ProtectionPolicy: BackupProtectionPolicyProperties
+  ProtectionPolicy: BackupGenericProtectionPolicy
   ProtectionPolicyResource: BackupProtectionPolicy
-  RecoveryPoint: BackupRecoveryPointProperties
+  RecoveryPoint: BackupGenericRecoveryPoint
   RecoveryPointResource: BackupRecoveryPoint
   ResourceGuardProxyBase: ResourceGuardProxyProperties
   ResourceGuardProxyBaseResource: ResourceGuardProxy
@@ -265,6 +265,14 @@ rename-mapping:
   AzureVmWorkloadProtectableItem.subinquireditemcount: SubInquiredItemCount
   AzureVmWorkloadProtectableItem.subprotectableitemcount: SubProtectableItemCount
   AzureVmWorkloadProtectableItem.prebackupvalidation: PreBackupValidation
+  StorageTypeState: BackupStorageTypeState
+  RetentionPolicy: BackupRetentionPolicy
+  SchedulePolicy: BackupSchedulePolicy
+  TieringPolicy: BackupTieringPolicy
+  CopyOptions: FileShareCopyOption
+  RecoveryType: FileShareRecoveryType
+  RestoreRequestType: FileShareRestoreType
+  SecurityPinBase: SecurityPinContent
 
 format-by-name-rules:
   'tenantId': 'uuid'

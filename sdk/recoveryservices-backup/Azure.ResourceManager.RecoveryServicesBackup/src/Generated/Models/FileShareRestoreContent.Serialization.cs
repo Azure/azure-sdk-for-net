@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileShareRestoreContent DeserializeFileShareRestoreContent(JsonElement element)
         {
-            Optional<RecoveryType> recoveryType = default;
+            Optional<FileShareRecoveryType> recoveryType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<CopyOption> copyOptions = default;
-            Optional<RestoreRequestType> restoreRequestType = default;
+            Optional<FileShareCopyOption> copyOptions = default;
+            Optional<FileShareRestoreType> restoreRequestType = default;
             Optional<IList<RestoreFileSpecs>> restoreFileSpecs = default;
             Optional<TargetAfsRestoreInfo> targetDetails = default;
             string objectType = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recoveryType = new RecoveryType(property.Value.GetString());
+                    recoveryType = new FileShareRecoveryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceResourceId"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    copyOptions = new CopyOption(property.Value.GetString());
+                    copyOptions = new FileShareCopyOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("restoreRequestType"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    restoreRequestType = new RestoreRequestType(property.Value.GetString());
+                    restoreRequestType = new FileShareRestoreType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("restoreFileSpecs"u8))

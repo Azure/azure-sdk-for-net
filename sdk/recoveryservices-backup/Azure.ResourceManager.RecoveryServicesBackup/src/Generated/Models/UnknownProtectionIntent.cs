@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownProtectionIntent. </summary>
-    internal partial class UnknownProtectionIntent : BackupProtectionIntentProperties
+    internal partial class UnknownProtectionIntent : BackupGenericProtectionIntent
     {
         /// <summary> Initializes a new instance of UnknownProtectionIntent. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>

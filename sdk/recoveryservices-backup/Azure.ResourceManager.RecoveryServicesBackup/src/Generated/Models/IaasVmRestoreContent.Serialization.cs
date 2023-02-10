@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             Optional<string> recoveryPointId = default;
-            Optional<RecoveryType> recoveryType = default;
+            Optional<FileShareRecoveryType> recoveryType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<ResourceIdentifier> targetVirtualMachineId = default;
             Optional<ResourceIdentifier> targetResourceGroupId = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recoveryType = new RecoveryType(property.Value.GetString());
+                    recoveryType = new FileShareRecoveryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceResourceId"u8))

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownSchedulePolicy. </summary>
-    internal partial class UnknownSchedulePolicy : SchedulePolicy
+    internal partial class UnknownSchedulePolicy : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of UnknownSchedulePolicy. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>

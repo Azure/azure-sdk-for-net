@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> shouldUseAlternateTargetLocation = default;
             Optional<bool> isNonRecoverable = default;
             Optional<IList<SqlDataDirectoryMapping>> alternateDirectoryPaths = default;
-            Optional<RecoveryType> recoveryType = default;
+            Optional<FileShareRecoveryType> recoveryType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<IDictionary<string, string>> propertyBag = default;
             Optional<TargetRestoreInfo> targetInfo = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recoveryType = new RecoveryType(property.Value.GetString());
+                    recoveryType = new FileShareRecoveryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceResourceId"u8))

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         internal static BackupJobData DeserializeBackupJobData(JsonElement element)
         {
-            Optional<BackupJobProperties> properties = default;
+            Optional<BackupGenericJob> properties = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = BackupJobProperties.DeserializeBackupJobProperties(property.Value);
+                    properties = BackupGenericJob.DeserializeBackupGenericJob(property.Value);
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))

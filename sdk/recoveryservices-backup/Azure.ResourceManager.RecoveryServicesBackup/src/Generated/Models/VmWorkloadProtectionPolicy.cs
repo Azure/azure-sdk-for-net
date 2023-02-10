@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure VM (Mercury) workload-specific backup policy. </summary>
-    public partial class VmWorkloadProtectionPolicy : BackupProtectionPolicyProperties
+    public partial class VmWorkloadProtectionPolicy : BackupGenericProtectionPolicy
     {
         /// <summary> Initializes a new instance of VmWorkloadProtectionPolicy. </summary>
         public VmWorkloadProtectionPolicy()

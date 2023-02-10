@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The V2 policy schedule for IaaS that supports hourly backups. </summary>
-    public partial class SimpleSchedulePolicyV2 : SchedulePolicy
+    public partial class SimpleSchedulePolicyV2 : BackupSchedulePolicy
     {
         /// <summary> Initializes a new instance of SimpleSchedulePolicyV2. </summary>
         public SimpleSchedulePolicyV2()

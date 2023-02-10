@@ -9,17 +9,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// The base backup engine class. All workload specific backup engines derive from this class.
-    /// Please note <see cref="BackupEngineProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="BackupGenericEngine"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
     /// </summary>
-    public abstract partial class BackupEngineProperties
+    public abstract partial class BackupGenericEngine
     {
-        /// <summary> Initializes a new instance of BackupEngineProperties. </summary>
-        protected BackupEngineProperties()
+        /// <summary> Initializes a new instance of BackupGenericEngine. </summary>
+        protected BackupGenericEngine()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupEngineProperties. </summary>
+        /// <summary> Initializes a new instance of BackupGenericEngine. </summary>
         /// <param name="friendlyName"> Friendly name of the backup engine. </param>
         /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
         /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
         /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
         /// <param name="extendedInfo"> Extended info of the backupengine. </param>
-        internal BackupEngineProperties(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo)
+        internal BackupGenericEngine(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;

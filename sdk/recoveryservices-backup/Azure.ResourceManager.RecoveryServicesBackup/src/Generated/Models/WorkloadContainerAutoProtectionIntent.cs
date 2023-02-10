@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure workload specific protection intent item. </summary>
-    public partial class WorkloadContainerAutoProtectionIntent : BackupProtectionIntentProperties
+    public partial class WorkloadContainerAutoProtectionIntent : BackupGenericProtectionIntent
     {
         /// <summary> Initializes a new instance of WorkloadContainerAutoProtectionIntent. </summary>
         public WorkloadContainerAutoProtectionIntent()

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure File Share workload specific backup copy. </summary>
-    public partial class FileShareRecoveryPoint : BackupRecoveryPointProperties
+    public partial class FileShareRecoveryPoint : BackupGenericRecoveryPoint
     {
         /// <summary> Initializes a new instance of FileShareRecoveryPoint. </summary>
         public FileShareRecoveryPoint()

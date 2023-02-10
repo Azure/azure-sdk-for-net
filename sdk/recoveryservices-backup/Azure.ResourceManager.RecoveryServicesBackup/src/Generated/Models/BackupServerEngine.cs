@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Backup engine type when Azure Backup Server is used to manage the backups. </summary>
-    public partial class BackupServerEngine : BackupEngineProperties
+    public partial class BackupServerEngine : BackupGenericEngine
     {
         /// <summary> Initializes a new instance of BackupServerEngine. </summary>
         public BackupServerEngine()

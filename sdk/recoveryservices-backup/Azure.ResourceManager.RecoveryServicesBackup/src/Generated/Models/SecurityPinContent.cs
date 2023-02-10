@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Base class for get security pin request body. </summary>
-    public partial class SecurityPinBase
+    public partial class SecurityPinContent
     {
-        /// <summary> Initializes a new instance of SecurityPinBase. </summary>
-        public SecurityPinBase()
+        /// <summary> Initializes a new instance of SecurityPinContent. </summary>
+        public SecurityPinContent()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
