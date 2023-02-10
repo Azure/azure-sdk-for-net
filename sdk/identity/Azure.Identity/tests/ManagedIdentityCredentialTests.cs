@@ -139,7 +139,7 @@ namespace Azure.Identity.Tests
             ManagedIdentityCredential credential = InstrumentClient(
                 new ManagedIdentityCredential("mock-client-id", pipeline, options));
 
-            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, tenantId: "mock-tenant-id"));
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
 
