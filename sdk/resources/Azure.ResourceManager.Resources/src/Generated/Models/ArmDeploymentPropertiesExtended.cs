@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmDeploymentPropertiesExtended. </summary>
         internal ArmDeploymentPropertiesExtended()
         {
-            Providers = new ChangeTrackingList<ResourceProviderData>();
+            Providers = new ChangeTrackingList<Provider>();
             Dependencies = new ChangeTrackingList<ArmDependency>();
             OutputResources = new ChangeTrackingList<SubResource>();
             ValidatedResources = new ChangeTrackingList<SubResource>();
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
-        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ResponseError error)
+        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<Provider> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ResponseError error)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         public BinaryData Outputs { get; }
         /// <summary> The list of resource providers needed for the deployment. </summary>
-        public IReadOnlyList<ResourceProviderData> Providers { get; }
+        public IReadOnlyList<Provider> Providers { get; }
         /// <summary> The list of deployment dependencies. </summary>
         public IReadOnlyList<ArmDependency> Dependencies { get; }
         /// <summary> The URI referencing the template. </summary>
