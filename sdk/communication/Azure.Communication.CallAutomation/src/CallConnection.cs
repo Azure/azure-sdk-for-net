@@ -189,6 +189,18 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Transfer this call to a participant. </summary>
+        /// <param name="callInvite"> The target to transfer the call to.</param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="callInvite"/> is null.</exception>
+        public virtual async Task<Response<TransferCallToParticipantResult>> TransferCallToParticipantAsync(CallInvite callInvite, CancellationToken cancellationToken = default)
+        {
+            TransferToParticipantOptions options = new TransferToParticipantOptions(callInvite);
+
+            return await TransferCallToParticipantAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Transfer this call to a participant. </summary>
         /// <param name="options"> Options for the Transfer Call To Participant operation. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -225,6 +237,18 @@ namespace Azure.Communication.CallAutomation
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary> Transfer this call to a participant. </summary>
+        /// <param name="callInvite"> The target to transfer the call to.</param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="callInvite"/> is null.</exception>
+        public virtual Response<TransferCallToParticipantResult> TransferCallToParticipant(CallInvite callInvite, CancellationToken cancellationToken = default)
+        {
+            TransferToParticipantOptions options = new TransferToParticipantOptions(callInvite);
+
+            return TransferCallToParticipant(options, cancellationToken);
         }
 
         /// <summary> Transfer the call. </summary>
@@ -268,15 +292,9 @@ namespace Azure.Communication.CallAutomation
 
         private static TransferToParticipantRequestInternal CreateTransferToParticipantRequest(TransferToParticipantOptions options)
         {
-            // when transfer to a PSTN participant, the SourceCallerId must be provided.
-            if (options.TargetParticipant is PhoneNumberIdentifier)
-            {
-                Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
-            }
+            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
 
-            TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
-
-            request.TransfereeCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
+            request.TransfereeCallerId = options.CallInvite.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.CallInvite.SourceCallerIdNumber.PhoneNumber);
             if (options.UserToUserInformation != null && options.UserToUserInformation.Length > CallAutomationConstants.InputValidation.StringMaxLength)
             {
                 throw new ArgumentException(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength);

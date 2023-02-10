@@ -288,7 +288,7 @@ namespace Azure.Communication.CallAutomation
 
         /// Redirect an incoming call to the target identities.
         /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="callInvite"> The target where the call is redirected to. </param>
+        /// <param name="callInvite"> The target where the call is redirected to.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>

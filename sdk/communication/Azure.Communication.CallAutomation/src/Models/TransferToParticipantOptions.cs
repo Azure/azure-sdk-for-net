@@ -13,21 +13,16 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="targetParticipant"></param>
-        public TransferToParticipantOptions(CommunicationIdentifier targetParticipant)
+        /// <param name="callInvite"></param>
+        public TransferToParticipantOptions(CallInvite callInvite)
         {
-            TargetParticipant = targetParticipant;
+            CallInvite = callInvite;
         }
 
         /// <summary>
-        /// The target participant to transfer the call to.
+        /// Call invitee information.
         /// </summary>
-        public CommunicationIdentifier TargetParticipant { get; }
-
-        /// <summary>
-        /// The caller id of the source.
-        /// </summary>
-        public PhoneNumberIdentifier SourceCallerId { get; set; }
+        public CallInvite CallInvite { get; }
 
         /// <summary>
         /// The UserToUserInformation.
