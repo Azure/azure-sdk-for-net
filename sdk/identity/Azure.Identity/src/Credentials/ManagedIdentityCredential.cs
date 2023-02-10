@@ -45,11 +45,8 @@ namespace Azure.Identity
         /// </param>
         /// <param name="options">Options to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
-            : this(
-                new ManagedIdentityClient(new ManagedIdentityClientOptions { ClientId = clientId, Pipeline = CredentialPipeline.GetInstance(options), Options = options }))
+            : this(clientId, CredentialPipeline.GetInstance(options), options)
         {
-            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            _clientId = clientId;
         }
 
         /// <summary>
@@ -61,23 +58,22 @@ namespace Azure.Identity
         /// </param>
         /// <param name="options">Options to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ManagedIdentityCredential(ResourceIdentifier resourceId, TokenCredentialOptions options = null)
-            : this(
-                new ManagedIdentityClient(new ManagedIdentityClientOptions { ResourceIdentifier = resourceId, Pipeline = CredentialPipeline.GetInstance(options), Options = options }))
+            : this(resourceId, CredentialPipeline.GetInstance(options), options)
         {
-            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            _clientId = resourceId.ToString();
         }
 
-        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, bool preserveTransport = false)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId, PreserveTransport = preserveTransport }))
+        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, TokenCredentialOptions options = null, bool preserveTransport = false)
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId, Options = options, PreserveTransport = preserveTransport }))
         {
             _clientId = clientId;
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
         }
 
-        internal ManagedIdentityCredential(ResourceIdentifier resourceId, CredentialPipeline pipeline, bool preserveTransport = false)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions{Pipeline = pipeline, ResourceIdentifier = resourceId, PreserveTransport = preserveTransport}))
+        internal ManagedIdentityCredential(ResourceIdentifier resourceId, CredentialPipeline pipeline, TokenCredentialOptions options = null, bool preserveTransport = false)
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ResourceIdentifier = resourceId, Options = options, PreserveTransport = preserveTransport }))
         {
             _clientId = resourceId.ToString();
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
         }
 
         internal ManagedIdentityCredential(ManagedIdentityClient client)

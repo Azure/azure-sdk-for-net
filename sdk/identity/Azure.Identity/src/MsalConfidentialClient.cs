@@ -58,7 +58,7 @@ namespace Azure.Identity
             : base(pipeline, tenantId, clientId, options)
         {
             _appTokenProviderCallback = appTokenProviderCallback;
-            _authority = options?.AuthorityHost ?? AzureAuthorityHosts.AzurePublicCloud;
+            _authority = options?.AuthorityHost ?? pipeline.AuthorityHost ?? AzureAuthorityHosts.AzurePublicCloud;
         }
 
         internal string RegionalAuthority { get; } = EnvironmentVariables.AzureRegionalAuthorityName;
@@ -146,7 +146,7 @@ namespace Azure.Identity
 
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(Pipeline.AuthorityHost.AbsoluteUri, tenantId);
+                builder.WithTenantId(tenantId);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)

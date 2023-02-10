@@ -137,9 +137,7 @@ namespace Azure.Identity.Tests
             var pipeline = new CredentialPipeline(authority, _pipeline, new ClientDiagnostics(options));
 
             ManagedIdentityCredential credential = InstrumentClient(
-                new ManagedIdentityCredential(
-                    new ManagedIdentityClient(
-                        new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = "mock-client-id", Options = options })));
+                new ManagedIdentityCredential("mock-client-id", pipeline, options));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
@@ -216,9 +214,9 @@ namespace Azure.Identity.Tests
 
             ManagedIdentityCredential credential = (clientId, includeResourceIdentifier) switch
             {
-                (Item1: null, Item2: true) => InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(_expectedResourceId), pipeline, true)),
-                (Item1: not null, Item2: false) => InstrumentClient(new ManagedIdentityCredential(clientId, pipeline, true)),
-                _ => InstrumentClient(new ManagedIdentityCredential(clientId: null, pipeline, true))
+                (Item1: null, Item2: true) => InstrumentClient(new ManagedIdentityCredential(new ResourceIdentifier(_expectedResourceId), pipeline, preserveTransport: true)),
+                (Item1: not null, Item2: false) => InstrumentClient(new ManagedIdentityCredential(clientId, pipeline, preserveTransport: true)),
+                _ => InstrumentClient(new ManagedIdentityCredential(clientId: null, pipeline, preserveTransport: true))
             };
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
@@ -605,7 +603,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyMsiUnavailableOnIMDSAggregateExcpetion()
+        public async Task VerifyMsiUnavailableOnIMDSAggregateException()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "http://169.254.169.001/" } });
 
@@ -623,7 +621,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyMsiUnavailableOnIMDSRequestFailedExcpetion()
+        public async Task VerifyMsiUnavailableOnIMDSRequestFailedException()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "http://169.254.169.001/" } });
 

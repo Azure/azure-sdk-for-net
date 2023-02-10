@@ -74,9 +74,7 @@ namespace Azure.Identity.Tests
         {
             options = InstrumentClientOptions(options ?? new TokenCredentialOptions());
 
-            var pipeline = CredentialPipeline.GetInstance(options);
-
-            var cred = new ManagedIdentityCredential(new ManagedIdentityClient(pipeline, clientId));
+            var cred = new ManagedIdentityCredential(clientId, options);
 
             return cred;
         }
