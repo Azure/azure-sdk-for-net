@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </param>
-        internal SubProtectionPolicy(PolicyType? policyType, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, IDictionary<string, TieringPolicy> tieringPolicy)
+        internal SubProtectionPolicy(SubProtectionPolicyType? policyType, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, IDictionary<string, TieringPolicy> tieringPolicy)
         {
             PolicyType = policyType;
             SchedulePolicy = schedulePolicy;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Type of backup policy type. </summary>
-        public PolicyType? PolicyType { get; set; }
+        public SubProtectionPolicyType? PolicyType { get; set; }
         /// <summary>
         /// Backup schedule specified as part of backup policy.
         /// Please note <see cref="SchedulePolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

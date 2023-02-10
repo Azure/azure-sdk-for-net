@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload-specific backup request. </summary>
-    public partial class IaasVmBackupRequest : BackupRequest
+    public partial class IaasVmBackupRequest : BackupRequestProperties
     {
         /// <summary> Initializes a new instance of IaasVmBackupRequest. </summary>
         public IaasVmBackupRequest()
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of IaasVmBackupRequest. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="recoveryPointExpiryTimeInUTC"> Backup copy will expire after the time specified (UTC). </param>
-        internal IaasVmBackupRequest(string objectType, DateTimeOffset? recoveryPointExpiryTimeInUTC) : base(objectType)
+        /// <param name="recoveryPointExpiryOn"> Backup copy will expire after the time specified (UTC). </param>
+        internal IaasVmBackupRequest(string objectType, DateTimeOffset? recoveryPointExpiryOn) : base(objectType)
         {
-            RecoveryPointExpiryTimeInUTC = recoveryPointExpiryTimeInUTC;
+            RecoveryPointExpiryOn = recoveryPointExpiryOn;
             ObjectType = objectType ?? "IaasVMBackupRequest";
         }
 
         /// <summary> Backup copy will expire after the time specified (UTC). </summary>
-        public DateTimeOffset? RecoveryPointExpiryTimeInUTC { get; set; }
+        public DateTimeOffset? RecoveryPointExpiryOn { get; set; }
     }
 }

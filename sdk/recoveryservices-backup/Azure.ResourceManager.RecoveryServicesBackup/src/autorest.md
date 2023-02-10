@@ -8,13 +8,232 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
-# default tag is a preview version
+# tag: package-2023-01
 require: https://github.com/Azure/azure-rest-api-specs/blob/2d9846d81852452cf10270b18329ac382a881bf7/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+rename-mapping:
+  Job: BackupJobProperties
+  JobResource: BackupJob
+  JobResourceList: BackupJobListResult
+  BackupEngineBase: BackupEngineProperties
+  BackupEngineBaseResource: BackupEngine
+  BackupResourceConfig: BackupResourceConfigProperties
+  BackupResourceConfigResource: BackupResourceConfig
+  BackupResourceEncryptionConfigExtended: BackupResourceEncryptionConfigExtendedProperties
+  BackupResourceEncryptionConfigExtendedResource: BackupResourceEncryptionConfigExtended
+  BackupResourceVaultConfig: BackupResourceVaultConfigProperties
+  BackupResourceVaultConfigResource: BackupResourceVaultConfig
+  PrivateEndpointConnection: BackupPrivateEndpointConnectionProperties
+  PrivateEndpointConnectionResource: BackupPrivateEndpointConnection
+  ProtectedItem: BackupProtectedItemProperties
+  ProtectedItemResource: BackupProtectedItem
+  ProtectionContainer: BackupProtectionContainerProperties
+  ProtectionContainerResource: BackupProtectionContainer
+  ProtectionIntent: BackupProtectionIntentProperties
+  ProtectionIntentResource: BackupProtectionIntent
+  ProtectionPolicy: BackupProtectionPolicyProperties
+  ProtectionPolicyResource: BackupProtectionPolicy
+  RecoveryPoint: BackupRecoveryPointProperties
+  RecoveryPointResource: BackupRecoveryPoint
+  ResourceGuardProxyBase: ResourceGuardProxyProperties
+  ResourceGuardProxyBaseResource: ResourceGuardProxy
+  AzureBackupGoalFeatureSupportRequest: BackupGoalFeatureSupportContent
+  AzureBackupServerContainer: BackupServerContainer
+  AzureBackupServerEngine: BackupServerEngine
+  AzureFileShareBackupRequest: FileShareBackupRequest
+  AzureFileShareProtectableItem: FileShareProtectableItem
+  AzureFileshareProtectedItem: FileshareProtectedItem
+  AzureFileshareProtectedItemExtendedInfo: FileshareProtectedItemExtendedInfo
+  AzureFileShareProtectionPolicy: FileShareProtectionPolicy
+  AzureFileShareProvisionILRRequest: FileShareProvisionIlrRequest
+  AzureFileShareRecoveryPoint: FileShareRecoveryPoint
+  AzureFileShareRestoreRequest: FileShareRestoreRequest
+  AzureFileShareType: BackupFileShareType
+  AzureIaaSClassicComputeVMContainer: IaasClassicComputeVmContainer
+  AzureIaaSClassicComputeVMProtectableItem: IaasClassicComputeVmProtectableItem
+  AzureIaaSClassicComputeVMProtectedItem: IaasClassicComputeVmProtectedItem
+  AzureIaaSComputeVMContainer: IaasComputeVmContainer
+  AzureIaaSComputeVMProtectableItem: IaasComputeVmProtectableItem
+  AzureIaaSComputeVMProtectedItem: IaasComputeVmProtectedItem
+  AzureIaaSVMErrorInfo: IaasVmErrorInfo
+  AzureIaaSVMHealthDetails: IaasVmHealthDetails
+  AzureIaaSVMJob: IaasVmJob
+  AzureIaaSVMJobExtendedInfo: IaasVmJobExtendedInfo
+  AzureIaaSVMJobTaskDetails: IaasVmJobTaskDetails
+  AzureIaaSVMJobV2: IaasVmJobV2
+  AzureIaaSVMProtectedItem: IaasVmProtectedItem
+  AzureIaaSVMProtectedItemExtendedInfo: IaasVmProtectedItemExtendedInfo
+  AzureIaaSVMProtectionPolicy: IaasVmProtectionPolicy
+  AzureRecoveryServiceVaultProtectionIntent: RecoveryServiceVaultProtectionIntent
+  AzureResourceProtectionIntent: ResourceProtectionIntent
+  AzureSqlagWorkloadContainerProtectionContainer: SqlAvailabilityGroupWorkloadProtectionContainer
+  AzureSqlContainer: SqlContainer
+  AzureSqlProtectedItem: SqlProtectedItem
+  AzureSqlProtectedItemExtendedInfo: SqlProtectedItemExtendedInfo
+  AzureSqlProtectionPolicy: SqlProtectionPolicy
+  AzureStorageContainer: StorageContainer
+  AzureStorageErrorInfo: StorageErrorInfo
+  AzureStorageJob: StorageJob
+  AzureStorageJobExtendedInfo: StorageJobExtendedInfo
+  AzureStorageJobTaskDetails: StorageJobTaskDetails
+  AzureStorageProtectableContainer: StorageProtectableContainer
+  AzureVMAppContainerProtectableContainer: VmAppContainerProtectableContainer
+  AzureVMAppContainerProtectionContainer: VmAppContainerProtectionContainer
+  AzureVMResourceFeatureSupportRequest: VmResourceFeatureSupportContent
+  AzureVMResourceFeatureSupportResponse: VmResourceFeatureSupportResult
+  AzureVmWorkloadItem: VmWorkloadItem
+  AzureVmWorkloadProtectableItem: VmWorkloadProtectableItem
+  AzureVmWorkloadProtectedItem: VmWorkloadProtectedItem
+  AzureVmWorkloadProtectedItemExtendedInfo: VmWorkloadProtectedItemExtendedInfo
+  AzureVmWorkloadProtectionPolicy: VmWorkloadProtectionPolicy
+  AzureVmWorkloadSAPAseDatabaseProtectedItem: VmWorkloadSapAseDatabaseProtectedItem
+  AzureVmWorkloadSAPAseDatabaseWorkloadItem: VmWorkloadSapAseDatabaseWorkloadItem
+  AzureVmWorkloadSAPAseSystemProtectableItem: VmWorkloadSapAseSystemProtectableItem
+  AzureVmWorkloadSAPAseSystemWorkloadItem: VmWorkloadSapAseSystemWorkloadItem
+  AzureVmWorkloadSAPHanaDatabaseProtectableItem: VmWorkloadSapHanaDatabaseProtectableItem
+  AzureVmWorkloadSAPHanaDatabaseProtectedItem: VmWorkloadSapHanaDatabaseProtectedItem
+  AzureVmWorkloadSAPHanaDatabaseWorkloadItem: VmWorkloadSapHanaDatabaseWorkloadItem
+  AzureVmWorkloadSAPHanaDBInstance: VmWorkloadSapHanaDBInstance
+  AzureVmWorkloadSAPHanaDBInstanceProtectedItem: VmWorkloadSapHanaDBInstanceProtectedItem
+  AzureVmWorkloadSAPHanaHSR: VmWorkloadSapHanaHsr
+  AzureVmWorkloadSAPHanaSystemProtectableItem: VmWorkloadSapHanaSystemProtectableItem
+  AzureVmWorkloadSAPHanaSystemWorkloadItem: VmWorkloadSapHanaSystemWorkloadItem
+  AzureVmWorkloadSQLAvailabilityGroupProtectableItem: VmWorkloadSqlAvailabilityGroupProtectableItem
+  AzureVmWorkloadSQLDatabaseProtectableItem: VmWorkloadSqlDatabaseProtectableItem
+  AzureVmWorkloadSQLDatabaseProtectedItem: VmWorkloadSqlDatabaseProtectedItem
+  AzureVmWorkloadSQLDatabaseWorkloadItem: VmWorkloadSqlDatabaseWorkloadItem
+  AzureVmWorkloadSQLInstanceProtectableItem: VmWorkloadSqlInstanceProtectableItem
+  AzureVmWorkloadSQLInstanceWorkloadItem: VmWorkloadSqlInstanceWorkloadItem
+  AzureWorkloadAutoProtectionIntent: WorkloadAutoProtectionIntent
+  AzureWorkloadBackupRequest: WorkloadBackupRequest
+  AzureWorkloadContainer: WorkloadContainer
+  AzureWorkloadContainerAutoProtectionIntent: WorkloadContainerAutoProtectionIntent
+  AzureWorkloadContainerExtendedInfo: WorkloadContainerExtendedInfo
+  AzureWorkloadErrorInfo: WorkloadErrorInfo
+  AzureWorkloadJob: WorkloadJob
+  AzureWorkloadJobExtendedInfo: WorkloadJobExtendedInfo
+  AzureWorkloadJobTaskDetails: WorkloadJobTaskDetails
+  AzureWorkloadPointInTimeRecoveryPoint: WorkloadPointInTimeRecoveryPoint
+  AzureWorkloadPointInTimeRestoreRequest: WorkloadPointInTimeRestoreRequest
+  AzureWorkloadSAPHanaPointInTimeRecoveryPoint: WorkloadSapHanaPointInTimeRecoveryPoint
+  AzureWorkloadRecoveryPoint: WorkloadRecoveryPoint
+  AzureWorkloadRestoreRequest: WorkloadRestoreRequest
+  AzureWorkloadSAPHanaPointInTimeRestoreRequest: WorkloadSapHanaPointInTimeRestoreRequest
+  AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest: WorkloadSapHanaPointInTimeRestoreWithRehydrateRequest
+  AzureWorkloadSAPHanaRecoveryPoint: WorkloadSapHanaRecoveryPoint
+  AzureWorkloadSAPHanaRestoreRequest: WorkloadSapHanaRestoreRequest
+  AzureWorkloadSAPHanaRestoreWithRehydrateRequest: WorkloadSapHanaRestoreWithRehydrateRequest
+  AzureWorkloadSQLAutoProtectionIntent: WorkloadSqlAutoProtectionIntent
+  AzureWorkloadSQLPointInTimeRecoveryPoint: WorkloadSqlPointInTimeRecoveryPoint
+  AzureWorkloadSQLPointInTimeRestoreRequest: WorkloadSqlPointInTimeRestoreRequest
+  AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest: WorkloadSqlPointInTimeRestoreWithRehydrateRequest
+  AzureWorkloadSQLRecoveryPoint: WorkloadSqlRecoveryPoint
+  AzureWorkloadSQLRecoveryPointExtendedInfo: WorkloadSqlRecoveryPointExtendedInfo
+  AzureWorkloadSQLRestoreRequest: WorkloadSqlRestoreRequest
+  AzureWorkloadSQLRestoreWithRehydrateRequest: WorkloadSqlRestoreWithRehydrateRequest
+  BackupRequest: BackupRequestProperties
+  BackupRequestResource: BackupRequestContent
+  BackupStatusResponse: BackupStatusResult
+  CreateMode: BackupCreateMode
+  DataSourceType: BackupDataSourceType
+  DailySchedule: BackupDailySchedule
+  Day: BackupDay
+  DayOfWeek: BackupDayOfWeek
+  DedupState: VaultDedupState
+  EncryptionAtRestType: BackupEncryptionAtRestType
+  EncryptionDetails: VmEncryptionDetails
+  ErrorDetail: BackupErrorDetail
+  ExtendedProperties: IaasVmBackupExtendedProperties
+  FabricName: BackupFabricName
+  HealthStatus: IaasVmProtectedItemHealthStatus
+  ProtectedItemHealthStatus: VmWorkloadProtectedItemHealthStatus
+  HourlySchedule: BackupHourlySchedule
+  ILRRequest: IlrRequestProperties
+  ILRRequestResource: ILRRequestContent
+  ListRecoveryPointsRecommendedForMoveRequest: RecoveryPointsRecommendedForMoveContent
+  MonthOfYear: BackupMonthOfYear
+  NameInfo: BackupNameInfo
+  OperationType: WorkloadOperationType
+  OverwriteOptions: RestoreOverwriteOptions
+  PolicyType: SubProtectionPolicyType
+  PreValidateEnableBackupResponse: PreValidateEnableBackupResult
+  Settings: BackupCommonSettings
+  SupportStatus: VmResourceFeatureSupportStatus
+  StorageType: BackupStorageType
+  UnlockDeleteResponse: UnlockDeleteResult
+  UsagesUnit: BackupUsagesUnit
+  ValidationStatus: BackupValidationStatus
+  WeekOfMonth: BackupWeekOfMonth
+  WeeklySchedule: BackupWeeklySchedule
+  WorkloadType: BackupWorkloadType
+  XcoolState: VaultXcoolState
+  BackupResourceConfig.crossRegionRestoreFlag: EnableCrossRegionRestore
+  DpmContainer.upgradeAvailable: IsUpgradeAvailable
+  DPMProtectedItemExtendedInfo.protected: IsProtected
+  AzureIaaSVMProtectedItemExtendedInfo.policyInconsistent: IsPolicyInconsistent
+  IaasVMRestoreRequest.createNewCloudService: DoesCreateNewCloudService
+  IaasVMRestoreRequest.restoreWithManagedDisks: DoesRestoreWithManagedDisks
+  EncryptionDetails.encryptionEnabled: IsEncryptionEnabled
+  AzureVmWorkloadProtectionPolicy.makePolicyConsistent: DoesMakePolicyConsistent
+  TriggerDataMoveRequest.pauseGC: DoesPauseGC
+  ProtectedItem.sourceResourceId: -|arm-id
+  ProtectedItem.policyId: -|arm-id
+  ProtectionIntent.sourceResourceId: -|arm-id
+  ProtectionIntent.itemId: -|arm-id
+  ProtectionIntent.policyId: -|arm-id
+  BackupStatusRequest.resourceId: -|arm-id
+  BackupStatusResponse.vaultId: -|arm-id
+  BEKDetails.secretVaultId: -|arm-id
+  ContainerIdentityInfo.aadTenantId: -|uuid
+  ProtectableContainer.containerId: -|arm-id
+  AzureFileShareBackupRequest.recoveryPointExpiryTimeInUTC: RecoveryPointExpiryOn
+  AzureFileShareRestoreRequest.sourceResourceId: -|arm-id
+  IaasVMBackupRequest.recoveryPointExpiryTimeInUTC: RecoveryPointExpiryOn
+  IaaSVMContainer.virtualMachineId: -|arm-id
+  IaasVmilrRegistrationRequest.virtualMachineId: -|arm-id
+  IaaSVMProtectableItem.virtualMachineId: -|arm-id
+  AzureIaaSVMProtectedItem.virtualMachineId: -|arm-id
+  IaasVMRestoreRequest.sourceResourceId: -|arm-id
+  IaasVMRestoreRequest.targetVirtualMachineId: -|arm-id
+  IaasVMRestoreRequest.targetResourceGroupId: -|arm-id
+  IaasVMRestoreRequest.storageAccountId: -|arm-id
+  IaasVMRestoreRequest.virtualNetworkId: -|arm-id
+  IaasVMRestoreRequest.subnetId: -|arm-id
+  IaasVMRestoreRequest.targetDomainNameId: -|arm-id
+  IaasVMRestoreRequest.region: -|azure-location
+  IdentityBasedRestoreDetails.targetStorageAccountId: -|arm-id
+  IdentityInfo.managedIdentityResourceId: -|arm-id
+  KEKDetails.keyVaultId: -|arm-id
+  PrepareDataMoveRequest.targetResourceId: -|arm-id
+  PreValidateEnableBackupRequest.resourceId: -|arm-id
+  PreValidateEnableBackupRequest.vaultId: -|arm-id
+  ResourceGuardProxyBase.resourceGuardResourceId: -|arm-id
+  ResourceGuardProxyBase.lastUpdatedTime: LastUpdatedOn|datetime
+  AzureStorageContainer.sourceResourceId: -|arm-id
+  TargetAFSRestoreInfo.targetResourceId: -|arm-id
+  TriggerDataMoveRequest.sourceResourceId: -|arm-id
+  TriggerDataMoveRequest.sourceContainerArmIds: -|arm-id
+  TriggerDataMoveRequest.sourceRegion: -|azure-location
+  EncryptionDetails.kekVaultId: -|arm-id
+  EncryptionDetails.secretKeyVaultId: -|arm-id
+  SupportStatus.DefaultOFF: DefaultOff
+  SupportStatus.DefaultON: DefaultOn
+  AzureWorkloadBackupRequest.recoveryPointExpiryTimeInUTC: RecoveryPointExpiryOn
+  AzureWorkloadContainer.sourceResourceId: -|arm-id
+  AzureWorkloadRecoveryPoint.recoveryPointTimeInUTC: RecoveryPointCreatedOn
+  AzureWorkloadRestoreRequest.sourceResourceId: -|arm-id
+  AzureWorkloadRestoreRequest.targetVirtualMachineId: -|arm-id
+  AzureWorkloadSQLRecoveryPointExtendedInfo.dataDirectoryTimeInUTC: DataDirectoryInfoCapturedOn
+  ProtectedItem.deferredDeleteTimeInUTC: DeferredDeletedOn
+  AzureFileShareProvisionILRRequest.sourceResourceId: -|arm-id
+  PrepareDataMoveRequest.sourceContainerArmIds: -|arm-id
+  UnlockDeleteResponse.unlockDeleteExpiryTime: UnlockDeleteExpiryOn|datetime
+  PrepareDataMoveRequest.targetRegion: -|azure-location
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -49,15 +268,30 @@ rename-rules:
   IaaSVM: IaasVm
   Iaasvm: IaasVm
   Sqldb: SqlDB
-  SQLAG: SqlAG
-  Sqlag: SqlAG
+  SQLAG: SqlAvailabilityGroup
+  Sqlag: SqlAvailabilityGroup
   MAB: Mab
   DPM: Dpm
   Issqlcompression: IsSqlCompression
+  ILR: Ilr
+  SQL: Sql
+  BEK: Bek
+  KEK: Kek
+  KPI: Kpi
+  AFS: Afs
+  SAP: Sap
+  SqlDb: SqlDB
+  BMS: Bms
+  PIN: Pin
 
 override-operation-name:
   BackupStatus_Get: GetBackupStatus
   DeletedProtectionContainers_List: GetSoftDeletedProtectionContainers
+  RecoveryPointsRecommendedForMove_List: GetRecoveryPointsRecommendedForMove
+  BackupProtectionIntent_List: GetBackupProtectionIntents
+  BackupProtectedItems_List: GetBackupProtectedItems
+  BackupProtectionContainers_List: GetBackupProtectionContainers
+  SecurityPINs_Get: GetSecurityPin
 
 list-exception:
   - /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
@@ -69,9 +303,23 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}
 
 directive:
+  - remove-operation: Operation_Validate
+  - remove-operation: ValidateOperation_Trigger
+  - remove-operation: PrivateEndpoint_GetOperationStatus
+  - remove-operation: GetOperationStatus
+  - remove-operation: BMSPrepareDataMoveOperationResult_Get
   - remove-operation: ProtectedItemOperationResults_Get
   - remove-operation: ProtectionPolicyOperationResults_Get
+  - remove-operation: JobOperationResults_Get
+  - remove-operation: ExportJobsOperationResults_Get
+  - remove-operation: ValidateOperationResults_Get
+  - remove-operation: ValidateOperationStatuses_Get
+  - remove-operation: ProtectionContainerRefreshOperationResults_Get
   - remove-operation: ProtectionContainerOperationResults_Get
+  - remove-operation: ProtectedItemOperationStatuses_Get
+  - remove-operation: BackupOperationResults_Get
+  - remove-operation: BackupOperationStatuses_Get
+  - remove-operation: ProtectionPolicyOperationStatuses_Get
   - from: bms.json
     where: $.definitions
     transform: >
@@ -157,6 +405,11 @@ directive:
               '$ref': '#/definitions/BackupResourceConfigResource'
             }
           };
+  # The operation group should of list method be same as other method
+  - from: bms.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies']
+    transform: >
+      $.get['operationId'] = 'ResourceGuardProxy_List';
   # Here the format date-time isn't specified in swagger, hence adding it explicitly 
   - from: bms.json
     where: $.definitions.RecoveryPointProperties.properties.expiryTime

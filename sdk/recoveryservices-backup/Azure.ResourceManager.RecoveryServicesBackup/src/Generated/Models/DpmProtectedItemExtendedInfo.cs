@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of DpmProtectedItemExtendedInfo. </summary>
         /// <param name="protectableObjectLoadPath"> Attribute to provide information on various DBs. </param>
-        /// <param name="protected"> To check if backup item is disk protected. </param>
+        /// <param name="isProtected"> To check if backup item is disk protected. </param>
         /// <param name="isPresentOnCloud"> To check if backup item is cloud protected. </param>
         /// <param name="lastBackupStatus"> Last backup status information on backup item. </param>
         /// <param name="lastRefreshedOn"> Last refresh time on backup item. </param>
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectionGroupName"> Protection group name of the backup item. </param>
         /// <param name="diskStorageUsedInBytes"> Used Disk storage in bytes. </param>
         /// <param name="totalDiskStorageSizeInBytes"> total Disk storage in bytes. </param>
-        internal DpmProtectedItemExtendedInfo(IDictionary<string, string> protectableObjectLoadPath, bool? @protected, bool? isPresentOnCloud, string lastBackupStatus, DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount, DateTimeOffset? onPremiseOldestRecoveryPoint, DateTimeOffset? onPremiseLatestRecoveryPoint, int? onPremiseRecoveryPointCount, bool? isCollocated, string protectionGroupName, string diskStorageUsedInBytes, string totalDiskStorageSizeInBytes)
+        internal DpmProtectedItemExtendedInfo(IDictionary<string, string> protectableObjectLoadPath, bool? isProtected, bool? isPresentOnCloud, string lastBackupStatus, DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount, DateTimeOffset? onPremiseOldestRecoveryPoint, DateTimeOffset? onPremiseLatestRecoveryPoint, int? onPremiseRecoveryPointCount, bool? isCollocated, string protectionGroupName, string diskStorageUsedInBytes, string totalDiskStorageSizeInBytes)
         {
             ProtectableObjectLoadPath = protectableObjectLoadPath;
-            Protected = @protected;
+            IsProtected = isProtected;
             IsPresentOnCloud = isPresentOnCloud;
             LastBackupStatus = lastBackupStatus;
             LastRefreshedOn = lastRefreshedOn;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Attribute to provide information on various DBs. </summary>
         public IDictionary<string, string> ProtectableObjectLoadPath { get; }
         /// <summary> To check if backup item is disk protected. </summary>
-        public bool? Protected { get; set; }
+        public bool? IsProtected { get; set; }
         /// <summary> To check if backup item is cloud protected. </summary>
         public bool? IsPresentOnCloud { get; set; }
         /// <summary> Last backup status information on backup item. </summary>

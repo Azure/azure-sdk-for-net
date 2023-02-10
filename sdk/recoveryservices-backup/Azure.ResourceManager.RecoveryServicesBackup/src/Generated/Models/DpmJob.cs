@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> DPM workload-specific job object. </summary>
-    public partial class DpmJob : Job
+    public partial class DpmJob : BackupJobProperties
     {
         /// <summary> Initializes a new instance of DpmJob. </summary>
         public DpmJob()

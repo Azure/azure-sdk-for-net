@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Protectable Container Class.
     /// Please note <see cref="ProtectableContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureStorageProtectableContainer"/> and <see cref="AzureVmAppContainerProtectableContainer"/>.
+    /// The available derived classes include <see cref="StorageProtectableContainer"/> and <see cref="VmAppContainerProtectableContainer"/>.
     /// </summary>
     public abstract partial class ProtectableContainer
     {
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
-        internal ProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId)
+        internal ProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, ResourceIdentifier containerId)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -51,6 +53,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Status of health of the container. </summary>
         public string HealthStatus { get; set; }
         /// <summary> Fabric Id of the container such as ARM Id. </summary>
-        public string ContainerId { get; set; }
+        public ResourceIdentifier ContainerId { get; set; }
     }
 }

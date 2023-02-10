@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<JobSupportedAction>> actionsInfo = default;
             Optional<string> mabServerName = default;
             Optional<MabServerType> mabServerType = default;
-            Optional<WorkloadType> workloadType = default;
+            Optional<BackupWorkloadType> workloadType = default;
             Optional<IList<MabErrorInfo>> errorDetails = default;
             Optional<MabJobExtendedInfo> extendedInfo = default;
             Optional<string> entityFriendlyName = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    workloadType = new WorkloadType(property.Value.GetString());
+                    workloadType = new BackupWorkloadType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorDetails"u8))

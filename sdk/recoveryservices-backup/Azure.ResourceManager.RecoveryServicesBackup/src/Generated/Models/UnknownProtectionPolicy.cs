@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownProtectionPolicy. </summary>
-    internal partial class UnknownProtectionPolicy : ProtectionPolicy
+    internal partial class UnknownProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of UnknownProtectionPolicy. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>

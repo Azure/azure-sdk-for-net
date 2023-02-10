@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             ProtectionIntentItemType protectionIntentItemType = "Unknown";
             Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> itemId = default;
-            Optional<string> policyId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> itemId = default;
+            Optional<ResourceIdentifier> policyId = default;
             Optional<ProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,17 +72,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("itemId"u8))
                 {
-                    itemId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    itemId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protectionState"u8))

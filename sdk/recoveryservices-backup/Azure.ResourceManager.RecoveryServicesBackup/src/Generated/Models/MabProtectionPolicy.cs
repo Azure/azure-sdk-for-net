@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Mab container-specific backup policy. </summary>
-    public partial class MabProtectionPolicy : ProtectionPolicy
+    public partial class MabProtectionPolicy : BackupProtectionPolicyProperties
     {
         /// <summary> Initializes a new instance of MabProtectionPolicy. </summary>
         public MabProtectionPolicy()

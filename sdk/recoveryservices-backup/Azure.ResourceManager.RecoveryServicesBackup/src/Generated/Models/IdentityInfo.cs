@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Encapsulates Managed Identity related information. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Managed Identity Resource Id
         /// Optional: Might not be required in the case of system assigned managed identity
         /// </param>
-        internal IdentityInfo(bool? isSystemAssignedIdentity, string managedIdentityResourceId)
+        internal IdentityInfo(bool? isSystemAssignedIdentity, ResourceIdentifier managedIdentityResourceId)
         {
             IsSystemAssignedIdentity = isSystemAssignedIdentity;
             ManagedIdentityResourceId = managedIdentityResourceId;
@@ -33,6 +35,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Managed Identity Resource Id
         /// Optional: Might not be required in the case of system assigned managed identity
         /// </summary>
-        public string ManagedIdentityResourceId { get; set; }
+        public ResourceIdentifier ManagedIdentityResourceId { get; set; }
     }
 }

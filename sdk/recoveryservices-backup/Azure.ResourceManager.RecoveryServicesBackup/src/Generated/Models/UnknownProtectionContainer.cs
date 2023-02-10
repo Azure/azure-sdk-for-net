@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownProtectionContainer. </summary>
-    internal partial class UnknownProtectionContainer : ProtectionContainer
+    internal partial class UnknownProtectionContainer : BackupProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of UnknownProtectionContainer. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>

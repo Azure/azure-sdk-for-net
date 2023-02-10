@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Restore files/folders from a backup copy of IaaS VM. </summary>
-    public partial class IaasVmilrRegistrationRequest : ILRRequest
+    public partial class IaasVmilrRegistrationRequest : IlrRequestProperties
     {
         /// <summary> Initializes a new instance of IaasVmilrRegistrationRequest. </summary>
         public IaasVmilrRegistrationRequest()
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine whose the files / folders have to be restored. </param>
         /// <param name="initiatorName"> iSCSI initiator name. </param>
         /// <param name="renewExistingRegistration"> Whether to renew existing registration with the iSCSI server. </param>
-        internal IaasVmilrRegistrationRequest(string objectType, string recoveryPointId, string virtualMachineId, string initiatorName, bool? renewExistingRegistration) : base(objectType)
+        internal IaasVmilrRegistrationRequest(string objectType, string recoveryPointId, ResourceIdentifier virtualMachineId, string initiatorName, bool? renewExistingRegistration) : base(objectType)
         {
             RecoveryPointId = recoveryPointId;
             VirtualMachineId = virtualMachineId;
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> ID of the IaaS VM backup copy from where the files/folders have to be restored. </summary>
         public string RecoveryPointId { get; set; }
         /// <summary> Fully qualified ARM ID of the virtual machine whose the files / folders have to be restored. </summary>
-        public string VirtualMachineId { get; set; }
+        public ResourceIdentifier VirtualMachineId { get; set; }
         /// <summary> iSCSI initiator name. </summary>
         public string InitiatorName { get; set; }
         /// <summary> Whether to renew existing registration with the iSCSI server. </summary>

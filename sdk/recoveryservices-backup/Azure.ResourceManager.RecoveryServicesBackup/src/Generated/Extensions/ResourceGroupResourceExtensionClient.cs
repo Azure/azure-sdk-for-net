@@ -23,30 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private BackupProtectionIntentRestOperations _backupProtectionIntentRestClient;
         private ClientDiagnostics _backupUsageSummariesClientDiagnostics;
         private BackupUsageSummariesRestOperations _backupUsageSummariesRestClient;
-        private ClientDiagnostics _exportJobsOperationResultsClientDiagnostics;
-        private ExportJobsOperationResultsRestOperations _exportJobsOperationResultsRestClient;
         private ClientDiagnostics _jobsClientDiagnostics;
         private JobsRestOperations _jobsRestClient;
         private ClientDiagnostics _backupProtectedItemsClientDiagnostics;
         private BackupProtectedItemsRestOperations _backupProtectedItemsRestClient;
-        private ClientDiagnostics _operationClientDiagnostics;
-        private OperationRestOperations _operationRestClient;
-        private ClientDiagnostics _validateOperationClientDiagnostics;
-        private ValidateOperationRestOperations _validateOperationRestClient;
-        private ClientDiagnostics _validateOperationResultsClientDiagnostics;
-        private ValidateOperationResultsRestOperations _validateOperationResultsRestClient;
-        private ClientDiagnostics _validateOperationStatusesClientDiagnostics;
-        private ValidateOperationStatusesRestOperations _validateOperationStatusesRestClient;
-        private ClientDiagnostics _protectionContainerRefreshOperationResultsClientDiagnostics;
-        private ProtectionContainerRefreshOperationResultsRestOperations _protectionContainerRefreshOperationResultsRestClient;
         private ClientDiagnostics _protectableContainersClientDiagnostics;
         private ProtectableContainersRestOperations _protectableContainersRestClient;
-        private ClientDiagnostics _protectionContainerResourceProtectionContainersClientDiagnostics;
-        private ProtectionContainersRestOperations _protectionContainerResourceProtectionContainersRestClient;
-        private ClientDiagnostics _backupOperationResultsClientDiagnostics;
-        private BackupOperationResultsRestOperations _backupOperationResultsRestClient;
-        private ClientDiagnostics _backupOperationStatusesClientDiagnostics;
-        private BackupOperationStatusesRestOperations _backupOperationStatusesRestClient;
+        private ClientDiagnostics _backupProtectionContainerProtectionContainersClientDiagnostics;
+        private ProtectionContainersRestOperations _backupProtectionContainerProtectionContainersRestClient;
         private ClientDiagnostics _backupProtectableItemsClientDiagnostics;
         private BackupProtectableItemsRestOperations _backupProtectableItemsRestClient;
         private ClientDiagnostics _backupProtectionContainersClientDiagnostics;
@@ -72,30 +56,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private BackupProtectionIntentRestOperations BackupProtectionIntentRestClient => _backupProtectionIntentRestClient ??= new BackupProtectionIntentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BackupUsageSummariesClientDiagnostics => _backupUsageSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BackupUsageSummariesRestOperations BackupUsageSummariesRestClient => _backupUsageSummariesRestClient ??= new BackupUsageSummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ExportJobsOperationResultsClientDiagnostics => _exportJobsOperationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ExportJobsOperationResultsRestOperations ExportJobsOperationResultsRestClient => _exportJobsOperationResultsRestClient ??= new ExportJobsOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics JobsClientDiagnostics => _jobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private JobsRestOperations JobsRestClient => _jobsRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BackupProtectedItemsClientDiagnostics => _backupProtectedItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BackupProtectedItemsRestOperations BackupProtectedItemsRestClient => _backupProtectedItemsRestClient ??= new BackupProtectedItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics OperationClientDiagnostics => _operationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationRestOperations OperationRestClient => _operationRestClient ??= new OperationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ValidateOperationClientDiagnostics => _validateOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ValidateOperationRestOperations ValidateOperationRestClient => _validateOperationRestClient ??= new ValidateOperationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ValidateOperationResultsClientDiagnostics => _validateOperationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ValidateOperationResultsRestOperations ValidateOperationResultsRestClient => _validateOperationResultsRestClient ??= new ValidateOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ValidateOperationStatusesClientDiagnostics => _validateOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ValidateOperationStatusesRestOperations ValidateOperationStatusesRestClient => _validateOperationStatusesRestClient ??= new ValidateOperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ProtectionContainerRefreshOperationResultsClientDiagnostics => _protectionContainerRefreshOperationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ProtectionContainerRefreshOperationResultsRestOperations ProtectionContainerRefreshOperationResultsRestClient => _protectionContainerRefreshOperationResultsRestClient ??= new ProtectionContainerRefreshOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ProtectableContainersClientDiagnostics => _protectableContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ProtectableContainersRestOperations ProtectableContainersRestClient => _protectableContainersRestClient ??= new ProtectableContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ProtectionContainerResourceProtectionContainersClientDiagnostics => _protectionContainerResourceProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProtectionContainerResource.ResourceType.Namespace, Diagnostics);
-        private ProtectionContainersRestOperations ProtectionContainerResourceProtectionContainersRestClient => _protectionContainerResourceProtectionContainersRestClient ??= new ProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProtectionContainerResource.ResourceType));
-        private ClientDiagnostics BackupOperationResultsClientDiagnostics => _backupOperationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BackupOperationResultsRestOperations BackupOperationResultsRestClient => _backupOperationResultsRestClient ??= new BackupOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BackupOperationStatusesClientDiagnostics => _backupOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BackupOperationStatusesRestOperations BackupOperationStatusesRestClient => _backupOperationStatusesRestClient ??= new BackupOperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BackupProtectionContainerProtectionContainersClientDiagnostics => _backupProtectionContainerProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
+        private ProtectionContainersRestOperations BackupProtectionContainerProtectionContainersRestClient => _backupProtectionContainerProtectionContainersRestClient ??= new ProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BackupProtectionContainerResource.ResourceType));
         private ClientDiagnostics BackupProtectableItemsClientDiagnostics => _backupProtectableItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BackupProtectableItemsRestOperations BackupProtectableItemsRestClient => _backupProtectableItemsRestClient ??= new BackupProtectableItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BackupProtectionContainersClientDiagnostics => _backupProtectionContainersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -113,76 +81,76 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         /// <summary> Gets a collection of BackupResourceConfigResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of BackupResourceConfigResources and their operations over a BackupResourceConfigResource. </returns>
-        public virtual BackupResourceConfigResourceCollection GetBackupResourceConfigResources()
+        public virtual BackupResourceConfigCollection GetBackupResourceConfigs()
         {
-            return GetCachedClient(Client => new BackupResourceConfigResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupResourceConfigCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ProtectionIntentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProtectionIntentResources and their operations over a ProtectionIntentResource. </returns>
-        public virtual ProtectionIntentResourceCollection GetProtectionIntentResources()
+        /// <summary> Gets a collection of BackupProtectionIntentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BackupProtectionIntentResources and their operations over a BackupProtectionIntentResource. </returns>
+        public virtual BackupProtectionIntentCollection GetBackupProtectionIntents()
         {
-            return GetCachedClient(Client => new ProtectionIntentResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupProtectionIntentCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of BackupResourceVaultConfigResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of BackupResourceVaultConfigResources and their operations over a BackupResourceVaultConfigResource. </returns>
-        public virtual BackupResourceVaultConfigResourceCollection GetBackupResourceVaultConfigResources()
+        public virtual BackupResourceVaultConfigCollection GetBackupResourceVaultConfigs()
         {
-            return GetCachedClient(Client => new BackupResourceVaultConfigResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupResourceVaultConfigCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of BackupResourceEncryptionConfigExtendedResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of BackupResourceEncryptionConfigExtendedResources and their operations over a BackupResourceEncryptionConfigExtendedResource. </returns>
-        public virtual BackupResourceEncryptionConfigExtendedResourceCollection GetBackupResourceEncryptionConfigExtendedResources()
+        public virtual BackupResourceEncryptionConfigExtendedCollection GetBackupResourceEncryptionConfigExtendeds()
         {
-            return GetCachedClient(Client => new BackupResourceEncryptionConfigExtendedResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupResourceEncryptionConfigExtendedCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionResourceCollection GetPrivateEndpointConnectionResources()
+        /// <summary> Gets a collection of BackupPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BackupPrivateEndpointConnectionResources and their operations over a BackupPrivateEndpointConnectionResource. </returns>
+        public virtual BackupPrivateEndpointConnectionCollection GetBackupPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupPrivateEndpointConnectionCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ProtectionPolicyResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of BackupProtectionPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of ProtectionPolicyResources and their operations over a ProtectionPolicyResource. </returns>
-        public virtual ProtectionPolicyResourceCollection GetProtectionPolicyResources(string vaultName)
+        /// <returns> An object representing collection of BackupProtectionPolicyResources and their operations over a BackupProtectionPolicyResource. </returns>
+        public virtual BackupProtectionPolicyCollection GetBackupProtectionPolicies(string vaultName)
         {
-            return new ProtectionPolicyResourceCollection(Client, Id, vaultName);
+            return new BackupProtectionPolicyCollection(Client, Id, vaultName);
         }
 
-        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of BackupJobResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
-        public virtual JobResourceCollection GetJobResources(string vaultName)
+        /// <returns> An object representing collection of BackupJobResources and their operations over a BackupJobResource. </returns>
+        public virtual BackupJobCollection GetBackupJobs(string vaultName)
         {
-            return new JobResourceCollection(Client, Id, vaultName);
+            return new BackupJobCollection(Client, Id, vaultName);
         }
 
-        /// <summary> Gets a collection of BackupEngineBaseResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of BackupEngineResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of BackupEngineBaseResources and their operations over a BackupEngineBaseResource. </returns>
-        public virtual BackupEngineBaseResourceCollection GetBackupEngineBaseResources(string vaultName)
+        /// <returns> An object representing collection of BackupEngineResources and their operations over a BackupEngineResource. </returns>
+        public virtual BackupEngineCollection GetBackupEngines(string vaultName)
         {
-            return new BackupEngineBaseResourceCollection(Client, Id, vaultName);
+            return new BackupEngineCollection(Client, Id, vaultName);
         }
 
-        /// <summary> Gets a collection of ProtectionContainerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProtectionContainerResources and their operations over a ProtectionContainerResource. </returns>
-        public virtual ProtectionContainerResourceCollection GetProtectionContainerResources()
+        /// <summary> Gets a collection of BackupProtectionContainerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BackupProtectionContainerResources and their operations over a BackupProtectionContainerResource. </returns>
+        public virtual BackupProtectionContainerCollection GetBackupProtectionContainers()
         {
-            return GetCachedClient(Client => new ProtectionContainerResourceCollection(Client, Id));
+            return GetCachedClient(Client => new BackupProtectionContainerCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ResourceGuardProxyBaseResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ResourceGuardProxyResources in the ResourceGroupResource. </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <returns> An object representing collection of ResourceGuardProxyBaseResources and their operations over a ResourceGuardProxyBaseResource. </returns>
-        public virtual ResourceGuardProxyBaseResourceCollection GetResourceGuardProxyBaseResources(string vaultName)
+        /// <returns> An object representing collection of ResourceGuardProxyResources and their operations over a ResourceGuardProxyResource. </returns>
+        public virtual ResourceGuardProxyCollection GetResourceGuardProxies(string vaultName)
         {
-            return new ResourceGuardProxyBaseResourceCollection(Client, Id, vaultName);
+            return new ResourceGuardProxyCollection(Client, Id, vaultName);
         }
 
         /// <summary>
@@ -202,12 +170,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectionIntentResource> GetProtectionIntentResourcesByBackupProtectionIntentAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BackupProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionIntentResource> GetBackupProtectionIntentsAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionIntentResource(Client, ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -227,12 +195,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectionIntentResource> GetProtectionIntentResourcesByBackupProtectionIntent(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectionIntentResource> GetBackupProtectionIntents(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionIntentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionIntentResource(Client, ProtectionIntentResourceData.DeserializeProtectionIntentResourceData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionIntentResourcesByBackupProtectionIntent", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionIntentResource(Client, BackupProtectionIntentData.DeserializeBackupProtectionIntentData(e)), BackupProtectionIntentClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionIntents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -281,72 +249,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupUsageSummariesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, BackupManagementUsage.DeserializeBackupManagementUsage, BackupUsageSummariesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupUsageSummaries", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the operation result of operation triggered by Export Jobs API. If the operation is successful, then it also
-        /// contains URL of a Blob and a SAS key to access the same. The blob contains exported jobs in JSON serialized format.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExportJobsOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the export job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationResultInfoBaseResource>> GetExportJobsOperationResultAsync(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ExportJobsOperationResultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetExportJobsOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await ExportJobsOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the operation result of operation triggered by Export Jobs API. If the operation is successful, then it also
-        /// contains URL of a Blob and a SAS key to access the same. The blob contains exported jobs in JSON serialized format.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupJobs/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExportJobsOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the export job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationResultInfoBaseResource> GetExportJobsOperationResult(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ExportJobsOperationResultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetExportJobsOperationResult");
-            scope.Start();
-            try
-            {
-                var response = ExportJobsOperationResultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -430,12 +332,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectedItemResource> GetProtectedItemResourcesByBackupProtectedItemAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BackupProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectedItemResource(Client, ProtectedItemResourceData.DeserializeProtectedItemResourceData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -455,346 +357,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectedItemResource> GetProtectedItemResourcesByBackupProtectedItem(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectedItemResource> GetBackupProtectedItems(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectedItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectedItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectedItemResource(Client, ProtectedItemResourceData.DeserializeProtectedItemResourceData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectedItemResourcesByBackupProtectedItem", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Validate operation for specified backed up item. This is a synchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Operation_Validate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="validateOperationRequest"> resource validate operation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidateOperationsResponse>> ValidateOperationAsync(string vaultName, ValidateOperationRequest validateOperationRequest, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOperation");
-            scope.Start();
-            try
-            {
-                var response = await OperationRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate operation for specified backed up item. This is a synchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Operation_Validate</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="validateOperationRequest"> resource validate operation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidateOperationsResponse> ValidateOperation(string vaultName, ValidateOperationRequest validateOperationRequest, CancellationToken cancellationToken = default)
-        {
-            using var scope = OperationClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.ValidateOperation");
-            scope.Start();
-            try
-            {
-                var response = OperationRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate operation for specified backed up item in the form of an asynchronous operation. Returns tracking headers which can be tracked using GetValidateOperationResult API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTriggerValidateOperation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidateOperation_Trigger</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="validateOperationRequest"> resource validate operation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> TriggerValidateOperationAsync(WaitUntil waitUntil, string vaultName, ValidateOperationRequest validateOperationRequest, CancellationToken cancellationToken = default)
-        {
-            using var scope = ValidateOperationClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.TriggerValidateOperation");
-            scope.Start();
-            try
-            {
-                var response = await ValidateOperationRestClient.TriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate operation for specified backed up item in the form of an asynchronous operation. Returns tracking headers which can be tracked using GetValidateOperationResult API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTriggerValidateOperation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidateOperation_Trigger</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="validateOperationRequest"> resource validate operation request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation TriggerValidateOperation(WaitUntil waitUntil, string vaultName, ValidateOperationRequest validateOperationRequest, CancellationToken cancellationToken = default)
-        {
-            using var scope = ValidateOperationClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.TriggerValidateOperation");
-            scope.Start();
-            try
-            {
-                var response = ValidateOperationRestClient.Trigger(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(ValidateOperationClientDiagnostics, Pipeline, ValidateOperationRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, validateOperationRequest).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the result of a triggered validate operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidateOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the operation whose result needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidateOperationsResponse>> GetValidateOperationResultAsync(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ValidateOperationResultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetValidateOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await ValidateOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the result of a triggered validate operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidateOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the operation whose result needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidateOperationsResponse> GetValidateOperationResult(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ValidateOperationResultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetValidateOperationResult");
-            scope.Start();
-            try
-            {
-                var response = ValidateOperationResultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the status of a triggered validate operation. The status can be in progress, completed
-        /// or failed. You can refer to the OperationStatus enum for all the possible states of the operation.
-        /// If operation has completed, this method returns the list of errors obtained while validating the operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperationsStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidateOperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID represents the operation whose status needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetValidateOperationStatusAsync(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ValidateOperationStatusesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetValidateOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await ValidateOperationStatusesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the status of a triggered validate operation. The status can be in progress, completed
-        /// or failed. You can refer to the OperationStatus enum for all the possible states of the operation.
-        /// If operation has completed, this method returns the list of errors obtained while validating the operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupValidateOperationsStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidateOperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID represents the operation whose status needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetValidateOperationStatus(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ValidateOperationStatusesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetValidateOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = ValidateOperationStatusesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provides the result of the refresh operation triggered by the BeginRefresh operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainerRefreshOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the container. </param>
-        /// <param name="operationId"> Operation ID associated with the operation whose result needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetProtectionContainerRefreshOperationResultAsync(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ProtectionContainerRefreshOperationResultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerRefreshOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await ProtectionContainerRefreshOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provides the result of the refresh operation triggered by the BeginRefresh operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/operationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainerRefreshOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the container. </param>
-        /// <param name="operationId"> Operation ID associated with the operation whose result needs to be fetched. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetProtectionContainerRefreshOperationResult(string vaultName, string fabricName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ProtectionContainerRefreshOperationResultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetProtectionContainerRefreshOperationResult");
-            scope.Start();
-            try
-            {
-                var response = ProtectionContainerRefreshOperationResultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectedItemResource(Client, BackupProtectedItemData.DeserializeBackupProtectedItemData(e)), BackupProtectedItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -867,11 +435,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RefreshProtectionContainerAsync(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ProtectionContainerResourceProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RefreshProtectionContainer");
+            using var scope = BackupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RefreshProtectionContainer");
             scope.Start();
             try
             {
-                var response = await ProtectionContainerResourceProtectionContainersRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken).ConfigureAwait(false);
+                var response = await BackupProtectionContainerProtectionContainersRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -901,149 +469,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RefreshProtectionContainer(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            using var scope = ProtectionContainerResourceProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RefreshProtectionContainer");
+            using var scope = BackupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.RefreshProtectionContainer");
             scope.Start();
             try
             {
-                var response = ProtectionContainerResourceProtectionContainersRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provides the status of the delete operations such as deleting backed up item. Once the operation has started, the
-        /// status code in the response would be Accepted. It will continue to be in this state till it reaches completion. On
-        /// successful completion, the status code will be OK. This method expects OperationID as an argument. OperationID is
-        /// part of the Location header of the operation response.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupOperationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetBackupOperationResultAsync(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = BackupOperationResultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await BackupOperationResultsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Provides the status of the delete operations such as deleting backed up item. Once the operation has started, the
-        /// status code in the response would be Accepted. It will continue to be in this state till it reaches completion. On
-        /// successful completion, the status code will be OK. This method expects OperationID as an argument. OperationID is
-        /// part of the Location header of the operation response.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupOperationResults/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupOperationResults_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetBackupOperationResult(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = BackupOperationResultsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupOperationResult");
-            scope.Start();
-            try
-            {
-                var response = BackupOperationResultsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the status of an operation such as triggering a backup, restore. The status can be in progress, completed
-        /// or failed. You can refer to the OperationStatus enum for all the possible states of an operation. Some operations
-        /// create jobs. This method returns the list of jobs when the operation is complete.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupOperations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupOperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetBackupOperationStatusAsync(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = BackupOperationStatusesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await BackupOperationStatusesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Fetches the status of an operation such as triggering a backup, restore. The status can be in progress, completed
-        /// or failed. You can refer to the OperationStatus enum for all the possible states of an operation. Some operations
-        /// create jobs. This method returns the list of jobs when the operation is complete.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupOperations/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BackupOperationStatuses_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> OperationID which represents the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetBackupOperationStatus(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = BackupOperationStatusesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetBackupOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = BackupOperationStatusesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken);
+                var response = BackupProtectionContainerProtectionContainersRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, filter, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1121,12 +551,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectionContainerResource> GetProtectionContainerResourcesByBackupProtectionContainerAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1145,12 +575,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectionContainerResource> GetProtectionContainerResourcesByBackupProtectionContainer(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectionContainerResource> GetBackupProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BackupProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BackupProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerResourcesByBackupProtectionContainer", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), BackupProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetBackupProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1169,12 +599,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1193,12 +623,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectionContainerResource> GetSoftDeletedProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, vaultName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerResourceData.DeserializeProtectionContainerResourceData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupProtectionContainerResource(Client, BackupProtectionContainerData.DeserializeBackupProtectionContainerData(e)), DeletedProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetSoftDeletedProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1217,9 +647,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="securityPinBase"> security pin request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TokenInformation>> GetSecurityPINAsync(string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TokenInformation>> GetSecurityPinAsync(string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SecurityPINsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityPIN");
+            using var scope = SecurityPINsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityPin");
             scope.Start();
             try
             {
@@ -1249,9 +679,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="securityPinBase"> security pin request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TokenInformation> GetSecurityPIN(string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
+        public virtual Response<TokenInformation> GetSecurityPin(string vaultName, SecurityPinBase securityPinBase = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SecurityPINsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityPIN");
+            using var scope = SecurityPINsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetSecurityPin");
             scope.Start();
             try
             {

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string InvalidValue = "Invalid";
         private const string VmValue = "VM";
         private const string FileFolderValue = "FileFolder";
-        private const string AzureSqlDbValue = "AzureSqlDb";
+        private const string AzureSqlDBValue = "AzureSqlDb";
         private const string SqlDBValue = "SQLDB";
         private const string ExchangeValue = "Exchange";
         private const string SharepointValue = "Sharepoint";
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SystemStateValue = "SystemState";
         private const string ClientValue = "Client";
         private const string GenericDataSourceValue = "GenericDataSource";
-        private const string SQLDataBaseValue = "SQLDataBase";
+        private const string SqlDataBaseValue = "SQLDataBase";
         private const string AzureFileShareValue = "AzureFileShare";
-        private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
-        private const string SAPAseDatabaseValue = "SAPAseDatabase";
-        private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
+        private const string SapHanaDatabaseValue = "SAPHanaDatabase";
+        private const string SapAseDatabaseValue = "SAPAseDatabase";
+        private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
         /// <summary> Invalid. </summary>
         public static BackupItemType Invalid { get; } = new BackupItemType(InvalidValue);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> FileFolder. </summary>
         public static BackupItemType FileFolder { get; } = new BackupItemType(FileFolderValue);
         /// <summary> AzureSqlDb. </summary>
-        public static BackupItemType AzureSqlDb { get; } = new BackupItemType(AzureSqlDbValue);
+        public static BackupItemType AzureSqlDB { get; } = new BackupItemType(AzureSqlDBValue);
         /// <summary> SQLDB. </summary>
         public static BackupItemType SqlDB { get; } = new BackupItemType(SqlDBValue);
         /// <summary> Exchange. </summary>
@@ -62,15 +62,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> GenericDataSource. </summary>
         public static BackupItemType GenericDataSource { get; } = new BackupItemType(GenericDataSourceValue);
         /// <summary> SQLDataBase. </summary>
-        public static BackupItemType SQLDataBase { get; } = new BackupItemType(SQLDataBaseValue);
+        public static BackupItemType SqlDataBase { get; } = new BackupItemType(SqlDataBaseValue);
         /// <summary> AzureFileShare. </summary>
         public static BackupItemType AzureFileShare { get; } = new BackupItemType(AzureFileShareValue);
         /// <summary> SAPHanaDatabase. </summary>
-        public static BackupItemType SAPHanaDatabase { get; } = new BackupItemType(SAPHanaDatabaseValue);
+        public static BackupItemType SapHanaDatabase { get; } = new BackupItemType(SapHanaDatabaseValue);
         /// <summary> SAPAseDatabase. </summary>
-        public static BackupItemType SAPAseDatabase { get; } = new BackupItemType(SAPAseDatabaseValue);
+        public static BackupItemType SapAseDatabase { get; } = new BackupItemType(SapAseDatabaseValue);
         /// <summary> SAPHanaDBInstance. </summary>
-        public static BackupItemType SAPHanaDBInstance { get; } = new BackupItemType(SAPHanaDBInstanceValue);
+        public static BackupItemType SapHanaDBInstance { get; } = new BackupItemType(SapHanaDBInstanceValue);
         /// <summary> Determines if two <see cref="BackupItemType"/> values are the same. </summary>
         public static bool operator ==(BackupItemType left, BackupItemType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupItemType"/> values are not the same. </summary>

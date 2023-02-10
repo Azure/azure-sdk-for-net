@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="region"> Region in which the virtual machine is restored. </param>
         /// <param name="affinityGroup"> Affinity group associated to VM to be restored. Used only for Classic Compute Virtual Machines. </param>
-        /// <param name="createNewCloudService">
+        /// <param name="doesCreateNewCloudService">
         /// Should a new cloud service be created while restoring the VM. If this is false, VM will be restored to the same
         /// cloud service as it was at the time of backup.
         /// </param>
         /// <param name="originalStorageAccountOption"> Original Storage Account Option. </param>
         /// <param name="encryptionDetails"> Details needed if the VM was encrypted at the time of backup. </param>
         /// <param name="restoreDiskLunList"> List of Disk LUNs for partial restore. </param>
-        /// <param name="restoreWithManagedDisks"> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </param>
+        /// <param name="doesRestoreWithManagedDisks"> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </param>
         /// <param name="diskEncryptionSetId"> DiskEncryptionSet&apos;s ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </param>
         /// <param name="zones"> Target zone where the VM and its disks should be restored. </param>
         /// <param name="identityInfo"> Managed Identity information required to access customer storage account. </param>
         /// <param name="identityBasedRestoreDetails"> IaaS VM workload specific restore details for restores using managed identity. </param>
-        internal IaasVmRestoreRequest(string objectType, string recoveryPointId, RecoveryType? recoveryType, string sourceResourceId, string targetVirtualMachineId, string targetResourceGroupId, string storageAccountId, string virtualNetworkId, string subnetId, string targetDomainNameId, string region, string affinityGroup, bool? createNewCloudService, bool? originalStorageAccountOption, EncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? restoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, IdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails) : base(objectType)
+        internal IaasVmRestoreRequest(string objectType, string recoveryPointId, RecoveryType? recoveryType, ResourceIdentifier sourceResourceId, ResourceIdentifier targetVirtualMachineId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier storageAccountId, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier targetDomainNameId, AzureLocation? region, string affinityGroup, bool? doesCreateNewCloudService, bool? originalStorageAccountOption, VmEncryptionDetails encryptionDetails, IList<int> restoreDiskLunList, bool? doesRestoreWithManagedDisks, string diskEncryptionSetId, IList<string> zones, IdentityInfo identityInfo, IdentityBasedRestoreDetails identityBasedRestoreDetails) : base(objectType)
         {
             RecoveryPointId = recoveryPointId;
             RecoveryType = recoveryType;
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             TargetDomainNameId = targetDomainNameId;
             Region = region;
             AffinityGroup = affinityGroup;
-            CreateNewCloudService = createNewCloudService;
+            DoesCreateNewCloudService = doesCreateNewCloudService;
             OriginalStorageAccountOption = originalStorageAccountOption;
             EncryptionDetails = encryptionDetails;
             RestoreDiskLunList = restoreDiskLunList;
-            RestoreWithManagedDisks = restoreWithManagedDisks;
+            DoesRestoreWithManagedDisks = doesRestoreWithManagedDisks;
             DiskEncryptionSetId = diskEncryptionSetId;
             Zones = zones;
             IdentityInfo = identityInfo;
@@ -96,52 +96,52 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Type of this recovery. </summary>
         public RecoveryType? RecoveryType { get; set; }
         /// <summary> Fully qualified ARM ID of the VM which is being recovered. </summary>
-        public string SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary>
         /// This is the complete ARM Id of the VM that will be created.
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
         /// </summary>
-        public string TargetVirtualMachineId { get; set; }
+        public ResourceIdentifier TargetVirtualMachineId { get; set; }
         /// <summary>
         /// This is the ARM Id of the resource group that you want to create for this Virtual machine and other artifacts.
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}
         /// </summary>
-        public string TargetResourceGroupId { get; set; }
+        public ResourceIdentifier TargetResourceGroupId { get; set; }
         /// <summary> Fully qualified ARM ID of the storage account to which the VM has to be restored. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
         /// <summary>
         /// This is the virtual network Id of the vnet that will be attached to the virtual machine.
         /// User will be validated for join action permissions in the linked access.
         /// </summary>
-        public string VirtualNetworkId { get; set; }
+        public ResourceIdentifier VirtualNetworkId { get; set; }
         /// <summary>
         /// Subnet ID, is the subnet ID associated with the to be restored VM. For Classic VMs it would be
         /// {VnetID}/Subnet/{SubnetName} and, for the Azure Resource Manager VMs it would be ARM resource ID used to represent
         /// the subnet.
         /// </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary>
         /// Fully qualified ARM ID of the domain name to be associated to the VM being restored. This applies only to Classic
         /// Virtual Machines.
         /// </summary>
-        public string TargetDomainNameId { get; set; }
+        public ResourceIdentifier TargetDomainNameId { get; set; }
         /// <summary> Region in which the virtual machine is restored. </summary>
-        public string Region { get; set; }
+        public AzureLocation? Region { get; set; }
         /// <summary> Affinity group associated to VM to be restored. Used only for Classic Compute Virtual Machines. </summary>
         public string AffinityGroup { get; set; }
         /// <summary>
         /// Should a new cloud service be created while restoring the VM. If this is false, VM will be restored to the same
         /// cloud service as it was at the time of backup.
         /// </summary>
-        public bool? CreateNewCloudService { get; set; }
+        public bool? DoesCreateNewCloudService { get; set; }
         /// <summary> Original Storage Account Option. </summary>
         public bool? OriginalStorageAccountOption { get; set; }
         /// <summary> Details needed if the VM was encrypted at the time of backup. </summary>
-        public EncryptionDetails EncryptionDetails { get; set; }
+        public VmEncryptionDetails EncryptionDetails { get; set; }
         /// <summary> List of Disk LUNs for partial restore. </summary>
         public IList<int> RestoreDiskLunList { get; }
         /// <summary> Flag to denote of an Unmanaged disk VM should be restored with Managed disks. </summary>
-        public bool? RestoreWithManagedDisks { get; set; }
+        public bool? DoesRestoreWithManagedDisks { get; set; }
         /// <summary> DiskEncryptionSet&apos;s ID - needed if the VM needs to be encrypted at rest during restore with customer managed key. </summary>
         public string DiskEncryptionSetId { get; set; }
         /// <summary> Target zone where the VM and its disks should be restored. </summary>

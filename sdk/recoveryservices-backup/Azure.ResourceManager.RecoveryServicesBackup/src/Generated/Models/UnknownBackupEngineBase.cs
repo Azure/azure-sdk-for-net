@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownBackupEngineBase. </summary>
-    internal partial class UnknownBackupEngineBase : BackupEngineBase
+    internal partial class UnknownBackupEngineBase : BackupEngineProperties
     {
         /// <summary> Initializes a new instance of UnknownBackupEngineBase. </summary>
         /// <param name="friendlyName"> Friendly name of the backup engine. </param>

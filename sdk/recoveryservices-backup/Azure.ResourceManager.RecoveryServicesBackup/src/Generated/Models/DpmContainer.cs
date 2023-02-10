@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary>
     /// DPM workload-specific protection container.
     /// Please note <see cref="DpmContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureBackupServerContainer"/>.
+    /// The available derived classes include <see cref="BackupServerContainer"/>.
     /// </summary>
-    public partial class DpmContainer : ProtectionContainer
+    public partial class DpmContainer : BackupProtectionContainerProperties
     {
         /// <summary> Initializes a new instance of DpmContainer. </summary>
         public DpmContainer()
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectedItemCount"> Number of protected items in the BackupEngine. </param>
         /// <param name="dpmAgentVersion"> Backup engine Agent version. </param>
         /// <param name="dpmServers"> List of BackupEngines protecting the container. </param>
-        /// <param name="upgradeAvailable"> To check if upgrade available. </param>
+        /// <param name="isUpgradeAvailable"> To check if upgrade available. </param>
         /// <param name="protectionStatus"> Protection status of the container. </param>
         /// <param name="extendedInfo"> Extended Info of the container. </param>
-        internal DpmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? upgradeAvailable, string protectionStatus, DpmContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
+        internal DpmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? isUpgradeAvailable, string protectionStatus, DpmContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             CanReRegister = canReRegister;
             ContainerId = containerId;
             ProtectedItemCount = protectedItemCount;
             DpmAgentVersion = dpmAgentVersion;
             DpmServers = dpmServers;
-            UpgradeAvailable = upgradeAvailable;
+            IsUpgradeAvailable = isUpgradeAvailable;
             ProtectionStatus = protectionStatus;
             ExtendedInfo = extendedInfo;
             ContainerType = containerType;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> List of BackupEngines protecting the container. </summary>
         public IList<string> DpmServers { get; }
         /// <summary> To check if upgrade available. </summary>
-        public bool? UpgradeAvailable { get; set; }
+        public bool? IsUpgradeAvailable { get; set; }
         /// <summary> Protection status of the container. </summary>
         public string ProtectionStatus { get; set; }
         /// <summary> Extended Info of the container. </summary>

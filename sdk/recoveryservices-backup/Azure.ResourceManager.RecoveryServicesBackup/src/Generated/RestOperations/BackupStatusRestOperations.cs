@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupStatusResponse>> GetAsync(string subscriptionId, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<BackupStatusResult>> GetAsync(string subscriptionId, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        BackupStatusResponse value = default;
+                        BackupStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupStatusResponse.DeserializeBackupStatusResponse(document.RootElement);
+                        value = BackupStatusResult.DeserializeBackupStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupStatusResponse> Get(string subscriptionId, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public Response<BackupStatusResult> Get(string subscriptionId, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case 200:
                     {
-                        BackupStatusResponse value = default;
+                        BackupStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupStatusResponse.DeserializeBackupStatusResponse(document.RootElement);
+                        value = BackupStatusResult.DeserializeBackupStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

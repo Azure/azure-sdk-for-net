@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Vault level Job. </summary>
-    public partial class VaultJob : Job
+    public partial class VaultJob : BackupJobProperties
     {
         /// <summary> Initializes a new instance of VaultJob. </summary>
         public VaultJob()

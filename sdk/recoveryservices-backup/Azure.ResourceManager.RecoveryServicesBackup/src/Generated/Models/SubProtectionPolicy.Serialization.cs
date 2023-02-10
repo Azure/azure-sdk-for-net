@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SubProtectionPolicy DeserializeSubProtectionPolicy(JsonElement element)
         {
-            Optional<PolicyType> policyType = default;
+            Optional<SubProtectionPolicyType> policyType = default;
             Optional<SchedulePolicy> schedulePolicy = default;
             Optional<RetentionPolicy> retentionPolicy = default;
             Optional<IDictionary<string, TieringPolicy>> tieringPolicy = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    policyType = new PolicyType(property.Value.GetString());
+                    policyType = new SubProtectionPolicyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schedulePolicy"u8))
