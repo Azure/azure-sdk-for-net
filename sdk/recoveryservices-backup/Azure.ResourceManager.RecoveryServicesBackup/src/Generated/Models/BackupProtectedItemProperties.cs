@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="containerName"> Unique name of container. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
-        /// <param name="lastRecoveryPoint"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
+        /// <param name="lastRecoverOn"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
         /// <param name="backupSetName"> Name of the backup set the backup item belongs to. </param>
         /// <param name="createMode"> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </param>
         /// <param name="deferredDeletedOn"> Time for deferred deletion in UTC. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriod"> Soft delete retention period in days. </param>
-        internal BackupProtectedItemProperties(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod)
+        internal BackupProtectedItemProperties(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod)
         {
             ProtectedItemType = protectedItemType;
             BackupManagementType = backupManagementType;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerName = containerName;
             SourceResourceId = sourceResourceId;
             PolicyId = policyId;
-            LastRecoveryPoint = lastRecoveryPoint;
+            LastRecoverOn = lastRecoverOn;
             BackupSetName = backupSetName;
             CreateMode = createMode;
             DeferredDeletedOn = deferredDeletedOn;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> ID of the backup policy with which this item is backed up. </summary>
         public ResourceIdentifier PolicyId { get; set; }
         /// <summary> Timestamp when the last (latest) backup copy was created for this backup item. </summary>
-        public DateTimeOffset? LastRecoveryPoint { get; set; }
+        public DateTimeOffset? LastRecoverOn { get; set; }
         /// <summary> Name of the backup set the backup item belongs to. </summary>
         public string BackupSetName { get; set; }
         /// <summary> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </summary>

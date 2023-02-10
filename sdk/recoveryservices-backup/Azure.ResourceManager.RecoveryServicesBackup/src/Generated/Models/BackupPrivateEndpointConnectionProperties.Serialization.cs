@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupPrivateEndpointConnectionProperties DeserializeBackupPrivateEndpointConnectionProperties(JsonElement element)
         {
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<BackupPrivateEndpointConnectionProvisioningState> provisioningState = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<RecoveryServicesBackupPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new BackupPrivateEndpointConnectionProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpoint"u8))

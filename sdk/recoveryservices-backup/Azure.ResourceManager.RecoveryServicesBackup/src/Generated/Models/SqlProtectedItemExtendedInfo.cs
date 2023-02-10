@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of SqlProtectedItemExtendedInfo. </summary>
-        /// <param name="oldestRecoveryPoint"> The oldest backup copy available for this item in the service. </param>
+        /// <param name="oldestRecoverOn"> The oldest backup copy available for this item in the service. </param>
         /// <param name="recoveryPointCount"> Number of available backup copies associated with this backup item. </param>
         /// <param name="policyState"> State of the backup policy associated with this backup item. </param>
-        internal SqlProtectedItemExtendedInfo(DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount, string policyState)
+        internal SqlProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, int? recoveryPointCount, string policyState)
         {
-            OldestRecoveryPoint = oldestRecoveryPoint;
+            OldestRecoverOn = oldestRecoverOn;
             RecoveryPointCount = recoveryPointCount;
             PolicyState = policyState;
         }
 
         /// <summary> The oldest backup copy available for this item in the service. </summary>
-        public DateTimeOffset? OldestRecoveryPoint { get; set; }
+        public DateTimeOffset? OldestRecoverOn { get; set; }
         /// <summary> Number of available backup copies associated with this backup item. </summary>
         public int? RecoveryPointCount { get; set; }
         /// <summary> State of the backup policy associated with this backup item. </summary>

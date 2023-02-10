@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(LastRecoveryPoint))
+            if (Optional.IsDefined(LastRecoverOn))
             {
                 writer.WritePropertyName("lastRecoveryPoint"u8);
-                writer.WriteStringValue(LastRecoveryPoint.Value, "O");
+                writer.WriteStringValue(LastRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(BackupSetName))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             Optional<string> friendlyName = default;
             Optional<string> policyState = default;
-            Optional<ProtectionState> protectionState = default;
+            Optional<BackupProtectionState> protectionState = default;
             Optional<long> protectedItemId = default;
             Optional<IDictionary<string, string>> sourceAssociations = default;
             Optional<string> fabricName = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionState = new ProtectionState(property.Value.GetString());
+                    protectionState = new BackupProtectionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protectedItemId"u8))

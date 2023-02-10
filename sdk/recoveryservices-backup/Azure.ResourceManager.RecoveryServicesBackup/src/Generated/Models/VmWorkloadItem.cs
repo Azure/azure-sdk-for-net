@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="parentName"> Name for instance or AG. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
-        /// <param name="subinquireditemcount"> For instance or AG, indicates number of DB&apos;s present. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB&apos;s present. </param>
         /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB&apos;s to be protected. </param>
-        internal VmWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, ProtectionStatus? protectionState, string parentName, string serverName, bool? isAutoProtectable, int? subinquireditemcount, int? subWorkloadItemCount) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState)
+        internal VmWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string serverName, bool? isAutoProtectable, int? subInquiredItemCount, int? subWorkloadItemCount) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState)
         {
             ParentName = parentName;
             ServerName = serverName;
             IsAutoProtectable = isAutoProtectable;
-            Subinquireditemcount = subinquireditemcount;
+            SubInquiredItemCount = subInquiredItemCount;
             SubWorkloadItemCount = subWorkloadItemCount;
             WorkloadItemType = workloadItemType ?? "AzureVmWorkloadItem";
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Indicates if workload item is auto-protectable. </summary>
         public bool? IsAutoProtectable { get; set; }
         /// <summary> For instance or AG, indicates number of DB&apos;s present. </summary>
-        public int? Subinquireditemcount { get; set; }
+        public int? SubInquiredItemCount { get; set; }
         /// <summary> For instance or AG, indicates number of DB&apos;s to be protected. </summary>
         public int? SubWorkloadItemCount { get; set; }
     }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateBmsPrepareDataMoveRequest(string subscriptionId, string resourceGroupName, string vaultName, PrepareDataMoveContent content)
+        internal HttpMessage CreateBMSPrepareDataMoveRequest(string subscriptionId, string resourceGroupName, string vaultName, PrepareDataMoveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BmsPrepareDataMoveAsync(string subscriptionId, string resourceGroupName, string vaultName, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> BMSPrepareDataMoveAsync(string subscriptionId, string resourceGroupName, string vaultName, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateBmsPrepareDataMoveRequest(subscriptionId, resourceGroupName, vaultName, content);
+            using var message = CreateBMSPrepareDataMoveRequest(subscriptionId, resourceGroupName, vaultName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response BmsPrepareDataMove(string subscriptionId, string resourceGroupName, string vaultName, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
+        public Response BMSPrepareDataMove(string subscriptionId, string resourceGroupName, string vaultName, PrepareDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateBmsPrepareDataMoveRequest(subscriptionId, resourceGroupName, vaultName, content);
+            using var message = CreateBMSPrepareDataMoveRequest(subscriptionId, resourceGroupName, vaultName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
-        internal HttpMessage CreateBmsTriggerDataMoveRequest(string subscriptionId, string resourceGroupName, string vaultName, TriggerDataMoveContent content)
+        internal HttpMessage CreateBMSTriggerDataMoveRequest(string subscriptionId, string resourceGroupName, string vaultName, TriggerDataMoveContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BmsTriggerDataMoveAsync(string subscriptionId, string resourceGroupName, string vaultName, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> BMSTriggerDataMoveAsync(string subscriptionId, string resourceGroupName, string vaultName, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateBmsTriggerDataMoveRequest(subscriptionId, resourceGroupName, vaultName, content);
+            using var message = CreateBMSTriggerDataMoveRequest(subscriptionId, resourceGroupName, vaultName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response BmsTriggerDataMove(string subscriptionId, string resourceGroupName, string vaultName, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
+        public Response BMSTriggerDataMove(string subscriptionId, string resourceGroupName, string vaultName, TriggerDataMoveContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateBmsTriggerDataMoveRequest(subscriptionId, resourceGroupName, vaultName, content);
+            using var message = CreateBMSTriggerDataMoveRequest(subscriptionId, resourceGroupName, vaultName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="hostServerName"> Host Os Name in case of Stand Alone and Cluster Name in case of distributed container. </param>
         /// <param name="inquiryInfo"> Inquiry Status for the container. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
-        internal WorkloadContainerExtendedInfo(string hostServerName, InquiryInfo inquiryInfo, IList<DistributedNodesInfo> nodesList)
+        internal WorkloadContainerExtendedInfo(string hostServerName, WorkloadContainerInquiryInfo inquiryInfo, IList<DistributedNodesInfo> nodesList)
         {
             HostServerName = hostServerName;
             InquiryInfo = inquiryInfo;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Host Os Name in case of Stand Alone and Cluster Name in case of distributed container. </summary>
         public string HostServerName { get; set; }
         /// <summary> Inquiry Status for the container. </summary>
-        public InquiryInfo InquiryInfo { get; set; }
+        public WorkloadContainerInquiryInfo InquiryInfo { get; set; }
         /// <summary> List of the nodes in case of distributed container. </summary>
         public IList<DistributedNodesInfo> NodesList { get; }
     }

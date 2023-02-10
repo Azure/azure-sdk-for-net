@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(InstantRpRetentionRangeInDays))
+            if (Optional.IsDefined(InstantRPRetentionRangeInDays))
             {
                 writer.WritePropertyName("instantRpRetentionRangeInDays"u8);
-                writer.WriteNumberValue(InstantRpRetentionRangeInDays.Value);
+                writer.WriteNumberValue(InstantRPRetentionRangeInDays.Value);
             }
             if (Optional.IsDefined(TimeZone))
             {

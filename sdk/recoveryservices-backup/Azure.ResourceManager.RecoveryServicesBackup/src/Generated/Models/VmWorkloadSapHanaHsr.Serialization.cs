@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isAutoProtected"u8);
                 writer.WriteBooleanValue(IsAutoProtected.Value);
             }
-            if (Optional.IsDefined(Subinquireditemcount))
+            if (Optional.IsDefined(SubInquiredItemCount))
             {
                 writer.WritePropertyName("subinquireditemcount"u8);
-                writer.WriteNumberValue(Subinquireditemcount.Value);
+                writer.WriteNumberValue(SubInquiredItemCount.Value);
             }
-            if (Optional.IsDefined(Subprotectableitemcount))
+            if (Optional.IsDefined(SubProtectableItemCount))
             {
                 writer.WritePropertyName("subprotectableitemcount"u8);
-                writer.WriteNumberValue(Subprotectableitemcount.Value);
+                writer.WriteNumberValue(SubProtectableItemCount.Value);
             }
-            if (Optional.IsDefined(Prebackupvalidation))
+            if (Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(Prebackupvalidation);
+                writer.WriteObjectValue(PreBackupValidation);
             }
             if (Optional.IsDefined(BackupManagementType))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> workloadType = default;
             string protectableItemType = default;
             Optional<string> friendlyName = default;
-            Optional<ProtectionStatus> protectionState = default;
+            Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentName"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionState = new ProtectionStatus(property.Value.GetString());
+                    protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
             }

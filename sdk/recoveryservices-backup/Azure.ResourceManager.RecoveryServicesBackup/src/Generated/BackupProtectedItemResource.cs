@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> resource backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> TriggerBackupAsync(BackupRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> TriggerBackupAsync(TriggerBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> resource backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response TriggerBackup(BackupRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response TriggerBackup(TriggerBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

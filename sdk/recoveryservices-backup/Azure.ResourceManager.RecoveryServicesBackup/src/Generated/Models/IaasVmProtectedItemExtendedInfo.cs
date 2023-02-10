@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of IaasVmProtectedItemExtendedInfo. </summary>
-        /// <param name="oldestRecoveryPoint"> The oldest backup copy available for this backup item across all tiers. </param>
+        /// <param name="oldestRecoverOn"> The oldest backup copy available for this backup item across all tiers. </param>
         /// <param name="oldestRecoveryPointInVault"> The oldest backup copy available for this backup item in vault tier. </param>
         /// <param name="oldestRecoveryPointInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
         /// <param name="newestRecoveryPointInArchive"> The latest backup copy available for this backup item in archive tier. </param>
         /// <param name="recoveryPointCount"> Number of backup copies available for this backup item. </param>
         /// <param name="isPolicyInconsistent"> Specifies if backup policy associated with the backup item is inconsistent. </param>
-        internal IaasVmProtectedItemExtendedInfo(DateTimeOffset? oldestRecoveryPoint, DateTimeOffset? oldestRecoveryPointInVault, DateTimeOffset? oldestRecoveryPointInArchive, DateTimeOffset? newestRecoveryPointInArchive, int? recoveryPointCount, bool? isPolicyInconsistent)
+        internal IaasVmProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, DateTimeOffset? oldestRecoveryPointInVault, DateTimeOffset? oldestRecoveryPointInArchive, DateTimeOffset? newestRecoveryPointInArchive, int? recoveryPointCount, bool? isPolicyInconsistent)
         {
-            OldestRecoveryPoint = oldestRecoveryPoint;
+            OldestRecoverOn = oldestRecoverOn;
             OldestRecoveryPointInVault = oldestRecoveryPointInVault;
             OldestRecoveryPointInArchive = oldestRecoveryPointInArchive;
             NewestRecoveryPointInArchive = newestRecoveryPointInArchive;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> The oldest backup copy available for this backup item across all tiers. </summary>
-        public DateTimeOffset? OldestRecoveryPoint { get; set; }
+        public DateTimeOffset? OldestRecoverOn { get; set; }
         /// <summary> The oldest backup copy available for this backup item in vault tier. </summary>
         public DateTimeOffset? OldestRecoveryPointInVault { get; set; }
         /// <summary> The oldest backup copy available for this backup item in archive tier. </summary>

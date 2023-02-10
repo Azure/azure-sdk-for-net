@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static WorkloadContainerExtendedInfo DeserializeWorkloadContainerExtendedInfo(JsonElement element)
         {
             Optional<string> hostServerName = default;
-            Optional<InquiryInfo> inquiryInfo = default;
+            Optional<WorkloadContainerInquiryInfo> inquiryInfo = default;
             Optional<IList<DistributedNodesInfo>> nodesList = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    inquiryInfo = InquiryInfo.DeserializeInquiryInfo(property.Value);
+                    inquiryInfo = WorkloadContainerInquiryInfo.DeserializeWorkloadContainerInquiryInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nodesList"u8))

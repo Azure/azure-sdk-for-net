@@ -40,16 +40,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Key is Target Tier, defined in RecoveryPointTierType enum.
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </param>
-        /// <param name="instantRpRetentionRangeInDays"> Instant RP retention policy range in days. </param>
+        /// <param name="instantRPRetentionRangeInDays"> Instant RP retention policy range in days. </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </param>
         /// <param name="policyType"></param>
-        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, InstantRPAdditionalDetails instantRPDetails, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, IDictionary<string, TieringPolicy> tieringPolicy, int? instantRpRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, InstantRPAdditionalDetails instantRPDetails, SchedulePolicy schedulePolicy, RetentionPolicy retentionPolicy, IDictionary<string, TieringPolicy> tieringPolicy, int? instantRPRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
         {
             InstantRPDetails = instantRPDetails;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
             TieringPolicy = tieringPolicy;
-            InstantRpRetentionRangeInDays = instantRpRetentionRangeInDays;
+            InstantRPRetentionRangeInDays = instantRPRetentionRangeInDays;
             TimeZone = timeZone;
             PolicyType = policyType;
             BackupManagementType = backupManagementType ?? "AzureIaasVM";
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </summary>
         public IDictionary<string, TieringPolicy> TieringPolicy { get; }
         /// <summary> Instant RP retention policy range in days. </summary>
-        public int? InstantRpRetentionRangeInDays { get; set; }
+        public int? InstantRPRetentionRangeInDays { get; set; }
         /// <summary> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </summary>
         public string TimeZone { get; set; }
         /// <summary> Gets or sets the policy type. </summary>

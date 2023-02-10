@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> Gets or sets private endpoint associated with the private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Gets or sets private link service connection state. </param>
-        internal BackupPrivateEndpointConnectionProperties(ProvisioningState? provisioningState, WritableSubResource privateEndpoint, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        internal BackupPrivateEndpointConnectionProperties(BackupPrivateEndpointConnectionProvisioningState? provisioningState, WritableSubResource privateEndpoint, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Gets or sets provisioning state of the private endpoint connection. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public BackupPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets private endpoint associated with the private endpoint connection. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>

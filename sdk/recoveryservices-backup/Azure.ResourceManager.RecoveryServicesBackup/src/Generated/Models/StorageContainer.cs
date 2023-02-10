@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure Storage Account workload-specific container. </summary>
-    public partial class StorageContainer : BackupProtectionContainerProperties
+    public partial class StorageContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of StorageContainer. </summary>
         public StorageContainer()

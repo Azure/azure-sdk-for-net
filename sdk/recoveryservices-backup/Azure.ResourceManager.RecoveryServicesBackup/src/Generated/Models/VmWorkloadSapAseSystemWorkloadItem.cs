@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="parentName"> Name for instance or AG. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
-        /// <param name="subinquireditemcount"> For instance or AG, indicates number of DB&apos;s present. </param>
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB&apos;s present. </param>
         /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB&apos;s to be protected. </param>
-        internal VmWorkloadSapAseSystemWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, ProtectionStatus? protectionState, string parentName, string serverName, bool? isAutoProtectable, int? subinquireditemcount, int? subWorkloadItemCount) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, parentName, serverName, isAutoProtectable, subinquireditemcount, subWorkloadItemCount)
+        internal VmWorkloadSapAseSystemWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string serverName, bool? isAutoProtectable, int? subInquiredItemCount, int? subWorkloadItemCount) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, parentName, serverName, isAutoProtectable, subInquiredItemCount, subWorkloadItemCount)
         {
             WorkloadItemType = workloadItemType ?? "SAPAseSystem";
         }

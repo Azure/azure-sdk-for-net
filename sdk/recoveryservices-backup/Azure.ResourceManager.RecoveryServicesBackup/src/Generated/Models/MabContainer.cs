@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Container with items backed up using MAB backup engine. </summary>
-    public partial class MabContainer : BackupProtectionContainerProperties
+    public partial class MabContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of MabContainer. </summary>
         public MabContainer()

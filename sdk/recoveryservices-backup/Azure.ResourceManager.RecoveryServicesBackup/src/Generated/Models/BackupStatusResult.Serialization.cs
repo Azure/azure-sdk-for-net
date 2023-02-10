@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         internal static BackupStatusResult DeserializeBackupStatusResult(JsonElement element)
         {
-            Optional<ProtectionStatus> protectionStatus = default;
+            Optional<BackupProtectionStatus> protectionStatus = default;
             Optional<ResourceIdentifier> vaultId = default;
             Optional<BackupFabricName> fabricName = default;
             Optional<string> containerName = default;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionStatus = new ProtectionStatus(property.Value.GetString());
+                    protectionStatus = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vaultId"u8))

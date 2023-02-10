@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -25,14 +26,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="infrastructureEncryptionState"></param>
         /// <param name="userAssignedIdentity"> User Assigned Identity Id. </param>
         /// <param name="useSystemAssignedIdentity"> bool to indicate whether to use system Assigned Identity or not. </param>
-        internal BackupResourceEncryptionConfigExtendedProperties(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, string userAssignedIdentity, bool? useSystemAssignedIdentity) : base(encryptionAtRestType, keyUri, subscriptionId, lastUpdateStatus, infrastructureEncryptionState)
+        internal BackupResourceEncryptionConfigExtendedProperties(BackupEncryptionAtRestType? encryptionAtRestType, Uri keyUri, string subscriptionId, LastUpdateStatus? lastUpdateStatus, InfrastructureEncryptionState? infrastructureEncryptionState, ResourceIdentifier userAssignedIdentity, bool? useSystemAssignedIdentity) : base(encryptionAtRestType, keyUri, subscriptionId, lastUpdateStatus, infrastructureEncryptionState)
         {
             UserAssignedIdentity = userAssignedIdentity;
             UseSystemAssignedIdentity = useSystemAssignedIdentity;
         }
 
         /// <summary> User Assigned Identity Id. </summary>
-        public string UserAssignedIdentity { get; set; }
+        public ResourceIdentifier UserAssignedIdentity { get; set; }
         /// <summary> bool to indicate whether to use system Assigned Identity or not. </summary>
         public bool? UseSystemAssignedIdentity { get; set; }
     }

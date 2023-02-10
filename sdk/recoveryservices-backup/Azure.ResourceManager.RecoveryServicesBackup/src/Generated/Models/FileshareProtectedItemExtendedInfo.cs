@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of FileshareProtectedItemExtendedInfo. </summary>
-        /// <param name="oldestRecoveryPoint"> The oldest backup copy available for this item in the service. </param>
+        /// <param name="oldestRecoverOn"> The oldest backup copy available for this item in the service. </param>
         /// <param name="recoveryPointCount"> Number of available backup copies associated with this backup item. </param>
         /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
         /// <param name="resourceState"> Indicates the state of this resource. Possible values are from enum ResourceState {Invalid, Active, SoftDeleted, Deleted}. </param>
         /// <param name="resourceStateSyncOn"> The resource state sync time for this backup item. </param>
-        internal FileshareProtectedItemExtendedInfo(DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount, string policyState, string resourceState, DateTimeOffset? resourceStateSyncOn)
+        internal FileshareProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, int? recoveryPointCount, string policyState, string resourceState, DateTimeOffset? resourceStateSyncOn)
         {
-            OldestRecoveryPoint = oldestRecoveryPoint;
+            OldestRecoverOn = oldestRecoverOn;
             RecoveryPointCount = recoveryPointCount;
             PolicyState = policyState;
             ResourceState = resourceState;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> The oldest backup copy available for this item in the service. </summary>
-        public DateTimeOffset? OldestRecoveryPoint { get; set; }
+        public DateTimeOffset? OldestRecoverOn { get; set; }
         /// <summary> Number of available backup copies associated with this backup item. </summary>
         public int? RecoveryPointCount { get; set; }
         /// <summary> Indicates consistency of policy object and policy applied to this backup item. </summary>

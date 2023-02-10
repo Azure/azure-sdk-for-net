@@ -256,19 +256,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="restoreRequestResource"> resource restore request. </param>
+        /// <param name="content"> resource restore request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restoreRequestResource"/> is null. </exception>
-        public virtual async Task<ArmOperation> TriggerRestoreAsync(WaitUntil waitUntil, RestoreRequestResource restoreRequestResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> TriggerRestoreAsync(WaitUntil waitUntil, TriggerRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(restoreRequestResource, nameof(restoreRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _restoresClientDiagnostics.CreateScope("BackupRecoveryPointResource.TriggerRestore");
             scope.Start();
             try
             {
-                var response = await _restoresRestClient.TriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restoreRequestResource, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation(_restoresClientDiagnostics, Pipeline, _restoresRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restoreRequestResource).Request, response, OperationFinalStateVia.Location);
+                var response = await _restoresRestClient.TriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesBackupArmOperation(_restoresClientDiagnostics, Pipeline, _restoresRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -295,19 +295,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="restoreRequestResource"> resource restore request. </param>
+        /// <param name="content"> resource restore request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restoreRequestResource"/> is null. </exception>
-        public virtual ArmOperation TriggerRestore(WaitUntil waitUntil, RestoreRequestResource restoreRequestResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation TriggerRestore(WaitUntil waitUntil, TriggerRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(restoreRequestResource, nameof(restoreRequestResource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _restoresClientDiagnostics.CreateScope("BackupRecoveryPointResource.TriggerRestore");
             scope.Start();
             try
             {
-                var response = _restoresRestClient.Trigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restoreRequestResource, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation(_restoresClientDiagnostics, Pipeline, _restoresRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, restoreRequestResource).Request, response, OperationFinalStateVia.Location);
+                var response = _restoresRestClient.Trigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new RecoveryServicesBackupArmOperation(_restoresClientDiagnostics, Pipeline, _restoresRestClient.CreateTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> resource ILR request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> ProvisionItemLevelRecoveryConnectionAsync(IlrRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ProvisionItemLevelRecoveryConnectionAsync(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> resource ILR request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response ProvisionItemLevelRecoveryConnection(IlrRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response ProvisionItemLevelRecoveryConnection(ProvisionIlrConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

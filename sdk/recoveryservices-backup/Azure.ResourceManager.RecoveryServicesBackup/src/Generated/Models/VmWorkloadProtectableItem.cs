@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="isAutoProtectable"> Indicates if protectable item is auto-protectable. </param>
         /// <param name="isAutoProtected"> Indicates if protectable item is auto-protected. </param>
-        /// <param name="subinquireditemcount"> For instance or AG, indicates number of DB&apos;s present. </param>
-        /// <param name="subprotectableitemcount"> For instance or AG, indicates number of DB&apos;s to be protected. </param>
-        /// <param name="prebackupvalidation"> Pre-backup validation for protectable objects. </param>
-        internal VmWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, ProtectionStatus? protectionState, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subinquireditemcount, int? subprotectableitemcount, PreBackupValidation prebackupvalidation) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
+        /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB&apos;s present. </param>
+        /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB&apos;s to be protected. </param>
+        /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
+        internal VmWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState)
         {
             ParentName = parentName;
             ParentUniqueName = parentUniqueName;
             ServerName = serverName;
             IsAutoProtectable = isAutoProtectable;
             IsAutoProtected = isAutoProtected;
-            Subinquireditemcount = subinquireditemcount;
-            Subprotectableitemcount = subprotectableitemcount;
-            Prebackupvalidation = prebackupvalidation;
+            SubInquiredItemCount = subInquiredItemCount;
+            SubProtectableItemCount = subProtectableItemCount;
+            PreBackupValidation = preBackupValidation;
             ProtectableItemType = protectableItemType ?? "AzureVmWorkloadProtectableItem";
         }
 
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Indicates if protectable item is auto-protected. </summary>
         public bool? IsAutoProtected { get; set; }
         /// <summary> For instance or AG, indicates number of DB&apos;s present. </summary>
-        public int? Subinquireditemcount { get; set; }
+        public int? SubInquiredItemCount { get; set; }
         /// <summary> For instance or AG, indicates number of DB&apos;s to be protected. </summary>
-        public int? Subprotectableitemcount { get; set; }
+        public int? SubProtectableItemCount { get; set; }
         /// <summary> Pre-backup validation for protectable objects. </summary>
-        public PreBackupValidation Prebackupvalidation { get; set; }
+        public PreBackupValidation PreBackupValidation { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="errorMessage"> ErrorMessage in case of intent failed. </param>
         /// <param name="policyName"> Specifies the policy name which is used for protection. </param>
         /// <param name="registrationStatus"> Container registration status. </param>
-        internal BackupStatusResult(ProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus)
+        internal BackupStatusResult(BackupProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus)
         {
             ProtectionStatus = protectionStatus;
             VaultId = vaultId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Specifies whether the container is registered or not. </summary>
-        public ProtectionStatus? ProtectionStatus { get; }
+        public BackupProtectionStatus? ProtectionStatus { get; }
         /// <summary> Specifies the arm resource id of the vault. </summary>
         public ResourceIdentifier VaultId { get; }
         /// <summary> Specifies the fabric name - Azure or AD. </summary>

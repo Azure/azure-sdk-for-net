@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of UnlockDeleteResult. </summary>
-        /// <param name="unlockDeleteExpiryOn"> This is the time when unlock delete privileges will get expired. </param>
-        internal UnlockDeleteResult(DateTimeOffset? unlockDeleteExpiryOn)
+        /// <param name="unlockDeleteExpireOn"> This is the time when unlock delete privileges will get expired. </param>
+        internal UnlockDeleteResult(DateTimeOffset? unlockDeleteExpireOn)
         {
-            UnlockDeleteExpiryOn = unlockDeleteExpiryOn;
+            UnlockDeleteExpireOn = unlockDeleteExpireOn;
         }
 
         /// <summary> This is the time when unlock delete privileges will get expired. </summary>
-        public DateTimeOffset? UnlockDeleteExpiryOn { get; }
+        public DateTimeOffset? UnlockDeleteExpireOn { get; }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupResourceEncryptionConfigExtendedProperties DeserializeBackupResourceEncryptionConfigExtendedProperties(JsonElement element)
         {
-            Optional<string> userAssignedIdentity = default;
+            Optional<ResourceIdentifier> userAssignedIdentity = default;
             Optional<bool> useSystemAssignedIdentity = default;
             Optional<BackupEncryptionAtRestType> encryptionAtRestType = default;
             Optional<Uri> keyUri = default;
@@ -67,7 +67,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 if (property.NameEquals("userAssignedIdentity"u8))
                 {
-                    userAssignedIdentity = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("useSystemAssignedIdentity"u8))

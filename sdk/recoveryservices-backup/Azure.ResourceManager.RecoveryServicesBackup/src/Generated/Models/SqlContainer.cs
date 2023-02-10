@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure Sql workload-specific container. </summary>
-    public partial class SqlContainer : BackupProtectionContainerProperties
+    public partial class SqlContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of SqlContainer. </summary>
         public SqlContainer()

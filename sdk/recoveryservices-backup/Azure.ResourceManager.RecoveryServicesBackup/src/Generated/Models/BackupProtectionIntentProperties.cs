@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
-        internal BackupProtectionIntentProperties(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, ProtectionStatus? protectionState)
+        internal BackupProtectionIntentProperties(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState)
         {
             ProtectionIntentItemType = protectionIntentItemType;
             BackupManagementType = backupManagementType;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> ID of the backup policy with which this item is backed up. </summary>
         public ResourceIdentifier PolicyId { get; set; }
         /// <summary> Backup state of this backup item. </summary>
-        public ProtectionStatus? ProtectionState { get; set; }
+        public BackupProtectionStatus? ProtectionState { get; set; }
     }
 }

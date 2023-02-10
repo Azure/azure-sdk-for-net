@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(LastRecoveryPoint))
+            if (Optional.IsDefined(LastRecoverOn))
             {
                 writer.WritePropertyName("lastRecoveryPoint"u8);
-                writer.WriteStringValue(LastRecoveryPoint.Value, "O");
+                writer.WriteStringValue(LastRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(BackupSetName))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> friendlyName = default;
             Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<string> protectionStatus = default;
-            Optional<ProtectionState> protectionState = default;
+            Optional<BackupProtectionState> protectionState = default;
             Optional<IaasVmProtectedItemHealthStatus> healthStatus = default;
             Optional<IList<IaasVmHealthDetails>> healthDetails = default;
             Optional<IDictionary<string, KpiResourceHealthDetails>> kpisHealths = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionState = new ProtectionState(property.Value.GetString());
+                    protectionState = new BackupProtectionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("healthStatus"u8))

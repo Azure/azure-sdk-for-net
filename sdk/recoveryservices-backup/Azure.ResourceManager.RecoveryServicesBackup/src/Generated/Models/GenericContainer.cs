@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Base class for generic container of backup items. </summary>
-    public partial class GenericContainer : BackupProtectionContainerProperties
+    public partial class GenericContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of GenericContainer. </summary>
         public GenericContainer()
