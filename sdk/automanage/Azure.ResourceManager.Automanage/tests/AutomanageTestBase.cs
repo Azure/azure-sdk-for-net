@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
@@ -26,11 +27,13 @@ namespace Azure.ResourceManager.Automanage.Tests
         protected AutomanageTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreApiVersionInResourcesOperations();
         }
 
         protected AutomanageTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreApiVersionInResourcesOperations();
         }
 
         [SetUp]
@@ -140,6 +143,17 @@ namespace Azure.ResourceManager.Automanage.Tests
             var vmId = deployment.Properties.OutputResources.Select(sub => sub.Id).First(id => id.ResourceType == VirtualMachineResource.ResourceType);
 
             return vmId;
+        }
+
+        private void IgnoreApiVersionInResourcesOperations()
+        {
+            // Ignore the api-version of deployment operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers/Microsoft.Resources/deployments/[^/]*api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
     }
 }
