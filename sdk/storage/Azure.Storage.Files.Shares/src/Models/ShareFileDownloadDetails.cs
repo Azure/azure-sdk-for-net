@@ -40,6 +40,11 @@ namespace Azure.Storage.Files.Shares.Models
         public ETag ETag { get; internal set; }
 
         /// <summary>
+        /// CreatedOn.
+        /// </summary>
+        public DateTimeOffset? CreatedOn { get; internal set; }
+
+        /// <summary>
         /// Returns the value that was specified for the Content-Encoding request header.
         /// </summary>
         public IEnumerable<string> ContentEncoding { get; internal set; }
