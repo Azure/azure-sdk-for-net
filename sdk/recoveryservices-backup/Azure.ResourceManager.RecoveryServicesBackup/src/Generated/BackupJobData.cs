@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="properties">
         /// JobResource properties
         /// Please note <see cref="BackupGenericJob"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="IaasVmJob"/>, <see cref="IaasVmJobV2"/>, <see cref="StorageJob"/>, <see cref="WorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
+        /// The available derived classes include <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/> and <see cref="VaultBackupJob"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         internal BackupJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericJob properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// JobResource properties
         /// Please note <see cref="BackupGenericJob"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="IaasVmJob"/>, <see cref="IaasVmJobV2"/>, <see cref="StorageJob"/>, <see cref="WorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
+        /// The available derived classes include <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/> and <see cref="VaultBackupJob"/>.
         /// </summary>
         public BackupGenericJob Properties { get; set; }
         /// <summary> Optional ETag. </summary>

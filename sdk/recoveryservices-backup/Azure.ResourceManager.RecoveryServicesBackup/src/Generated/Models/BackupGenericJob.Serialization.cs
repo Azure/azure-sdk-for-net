@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureIaaSVMJob": return IaasVmJob.DeserializeIaasVmJob(element);
-                    case "AzureIaaSVMJobV2": return IaasVmJobV2.DeserializeIaasVmJobV2(element);
-                    case "AzureStorageJob": return StorageJob.DeserializeStorageJob(element);
-                    case "AzureWorkloadJob": return WorkloadJob.DeserializeWorkloadJob(element);
-                    case "DpmJob": return DpmJob.DeserializeDpmJob(element);
-                    case "MabJob": return MabJob.DeserializeMabJob(element);
-                    case "VaultJob": return VaultJob.DeserializeVaultJob(element);
+                    case "AzureIaaSVMJob": return IaasVmBackupJob.DeserializeIaasVmBackupJob(element);
+                    case "AzureIaaSVMJobV2": return IaasVmBackupJobV2.DeserializeIaasVmBackupJobV2(element);
+                    case "AzureStorageJob": return StorageBackupJob.DeserializeStorageBackupJob(element);
+                    case "AzureWorkloadJob": return WorkloadBackupJob.DeserializeWorkloadBackupJob(element);
+                    case "DpmJob": return DpmBackupJob.DeserializeDpmBackupJob(element);
+                    case "MabJob": return MabBackupJob.DeserializeMabBackupJob(element);
+                    case "VaultJob": return VaultBackupJob.DeserializeVaultBackupJob(element);
                 }
             }
             return UnknownJob.DeserializeUnknownJob(element);

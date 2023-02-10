@@ -62,10 +62,10 @@ rename-mapping:
   AzureIaaSComputeVMProtectedItem: IaasComputeVmProtectedItem
   AzureIaaSVMErrorInfo: IaasVmErrorInfo
   AzureIaaSVMHealthDetails: IaasVmHealthDetails
-  AzureIaaSVMJob: IaasVmJob
-  AzureIaaSVMJobExtendedInfo: IaasVmJobExtendedInfo
-  AzureIaaSVMJobTaskDetails: IaasVmJobTaskDetails
-  AzureIaaSVMJobV2: IaasVmJobV2
+  AzureIaaSVMJob: IaasVmBackupJob
+  AzureIaaSVMJobExtendedInfo: IaasVmBackupJobExtendedInfo
+  AzureIaaSVMJobTaskDetails: IaasVmBakupJobTaskDetails
+  AzureIaaSVMJobV2: IaasVmBackupJobV2
   AzureIaaSVMProtectedItem: IaasVmProtectedItem
   AzureIaaSVMProtectedItemExtendedInfo: IaasVmProtectedItemExtendedInfo
   AzureIaaSVMProtectionPolicy: IaasVmProtectionPolicy
@@ -78,9 +78,9 @@ rename-mapping:
   AzureSqlProtectionPolicy: SqlProtectionPolicy
   AzureStorageContainer: StorageContainer
   AzureStorageErrorInfo: StorageErrorInfo
-  AzureStorageJob: StorageJob
-  AzureStorageJobExtendedInfo: StorageJobExtendedInfo
-  AzureStorageJobTaskDetails: StorageJobTaskDetails
+  AzureStorageJob: StorageBackupJob
+  AzureStorageJobExtendedInfo: StorageBackupJobExtendedInfo
+  AzureStorageJobTaskDetails: StorageBackupJobTaskDetails
   AzureStorageProtectableContainer: StorageProtectableContainer
   AzureVMAppContainerProtectableContainer: VmAppContainerProtectableContainer
   AzureVMAppContainerProtectionContainer: VmAppContainerProtectionContainer
@@ -115,9 +115,9 @@ rename-mapping:
   AzureWorkloadContainerAutoProtectionIntent: WorkloadContainerAutoProtectionIntent
   AzureWorkloadContainerExtendedInfo: WorkloadContainerExtendedInfo
   AzureWorkloadErrorInfo: WorkloadErrorInfo
-  AzureWorkloadJob: WorkloadJob
-  AzureWorkloadJobExtendedInfo: WorkloadJobExtendedInfo
-  AzureWorkloadJobTaskDetails: WorkloadJobTaskDetails
+  AzureWorkloadJob: WorkloadBackupJob
+  AzureWorkloadJobExtendedInfo: WorkloadBackupJobExtendedInfo
+  AzureWorkloadJobTaskDetails: WorkloadBackupJobTaskDetails
   AzureWorkloadPointInTimeRecoveryPoint: WorkloadPointInTimeRecoveryPoint
   AzureWorkloadPointInTimeRestoreRequest: WorkloadPointInTimeRestoreContent
   AzureWorkloadSAPHanaPointInTimeRecoveryPoint: WorkloadSapHanaPointInTimeRecoveryPoint
@@ -273,6 +273,15 @@ rename-mapping:
   RecoveryType: FileShareRecoveryType
   RestoreRequestType: FileShareRestoreType
   SecurityPinBase: SecurityPinContent
+  VaultJob: VaultBackupJob
+  VaultJobErrorInfo: VaultBackupJobErrorInfo
+  VaultJobExtendedInfo: VaultBackupJobExtendedInfo
+  MabJob: MabBackupJob
+  MabJobExtendedInfo: MabBackupJobExtendedInfo
+  MabJobTaskDetails: MabBackupJobTaskDetails
+  DpmJob: DpmBackupJob
+  DpmJobExtendedInfo: DpmBackupJobExtendedInfo
+  DpmJobTaskDetails: DpmBackupJobTaskDetails
 
 format-by-name-rules:
   'tenantId': 'uuid'
