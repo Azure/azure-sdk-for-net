@@ -124,61 +124,51 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
-        public async Task TransferCallToParticipantAsync_202Accepted(CommunicationIdentifier targetParticipant)
+        public async Task TransferCallToParticipantAsync_202Accepted(CallInvite callInvite)
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(targetParticipant)).ConfigureAwait(false);
+            var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
-        public void TransferCallToParticipant_202Accepted(CommunicationIdentifier targetParticipant)
+        public void TransferCallToParticipant_202Accepted(CallInvite callInvite)
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(targetParticipant));
+            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite));
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
-        public void TransferCallToParticipantAsync_404NotFound(CommunicationIdentifier targetParticipant)
+        public void TransferCallToParticipantAsync_404NotFound(CallInvite callInvite)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(targetParticipant)).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite)).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
-        public void TransferCallToParticipant_404NotFound(CommunicationIdentifier targetParticipant)
+        public void TransferCallToParticipant_404NotFound(CallInvite callInvite)
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(targetParticipant)));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
 
-        [TestCaseSource(nameof(TestData_TransferCallToParticipant_NoCallerId))]
-        public void TransferCallToParticipant_NoCallerIdValidation(CommunicationIdentifier targetParticipant)
-        {
-            var callConnection = CreateMockCallConnection(202);
-
-            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(targetParticipant)));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains("Value cannot be null."));
-        }
-
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
-        public void TransferCallToParticipant_ExceedsMaxOperationContextLength(CommunicationIdentifier targetParticipant)
+        public void TransferCallToParticipant_ExceedsMaxOperationContextLength(CallInvite callInvite)
         {
             var callConnection = CreateMockCallConnection(202);
 
-            var options = new TransferToParticipantOptions(targetParticipant) {
+            var options = new TransferToParticipantOptions(callInvite) {
                 OperationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
             };
             ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));
@@ -187,11 +177,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
-        public void TransferCallToParticipant_ExceedsMaxUserToUserInformationLengthLength(CommunicationIdentifier targetParticipant)
+        public void TransferCallToParticipant_ExceedsMaxUserToUserInformationLengthLength(CallInvite callInvite)
         {
             var callConnection = CreateMockCallConnection(202);
 
-            var options = new TransferToParticipantOptions(targetParticipant)
+            var options = new TransferToParticipantOptions(callInvite)
             {
                 UserToUserInformation = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
             };
@@ -585,18 +575,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             {
                 new object?[]
                 {
-                    new CommunicationUserIdentifier("userId")
-                },
-            };
-        }
-
-        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_NoCallerId()
-        {
-            return new[]
-            {
-                new object?[]
-                {
-                    new PhoneNumberIdentifier("+123456")
+                    new CallInvite(new CommunicationUserIdentifier("userId"))
                 },
             };
         }
