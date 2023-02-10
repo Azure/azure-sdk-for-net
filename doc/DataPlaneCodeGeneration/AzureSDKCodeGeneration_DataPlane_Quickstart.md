@@ -12,10 +12,10 @@ This tutorial has following sections:
   - [Prerequisites](#prerequisites)
   - [Setup your repository](#setup-your-repository)
   - [Create starter package](#create-starter-package)
-    - [Use Cadl as Input](#use-cadl-as-input)
+    - [Use Cadl as Input API spec](#use-cadl-as-input-api-spec)
       - [Create Cadl project](#create-cadl-project)
       - [Create sdk starter package](#create-sdk-starter-package)
-    - [Use swagger as Input](#use-swagger-as-input)
+    - [Use swagger as Input API spec](#use-swagger-as-input-api-spec)
   - [Add package ship requirements](#add-package-ship-requirements)
     - [Tests](#tests)
     - [Samples](#samples)
@@ -58,10 +58,10 @@ sdk\<service name>\<package name>\CHANGELOG.md
 sdk\<service name>\<package name>\<package name>.sln
 ```
 
-- `<service name>` - Should be the short name for the azure service. e.g. deviceupdate
+- `<service name>` - Should be the short name for the azure service. e.g. deviceupdate. It is usually your service name in REST API specifications. For instance, if the API spec is under `specification/storage`, the service would normally be `storage`.
 - `<package name>` -  Should be the name of the shipping package, or an abbreviation that distinguishes the given shipping artifact for the given service. It will be `Azure.<group>.<service>`, e.g. Azure.IoT.DeviceUpdate
 
-### Use Cadl as Input
+### Use Cadl as Input API spec
 
 #### Create Cadl project
   
@@ -73,40 +73,34 @@ sdk\<service name>\<package name>\<package name>.sln
 
   Make sure `npx cadl compile .` runs correctly.
 
-  ***Add cadl-csharp emitter***
-
-  Modify package.json, add one line under dependencies:
-
-```diff
-        "dependencies": {
-          "@cadl-lang/compiler": "^0.37.0",
-          "@cadl-lang/rest": "^0.19.0",
-          "@azure-tools/cadl-azure-core": "^0.9.0",
-+         "@azure-tools/cadl-csharp": "0.1.8"
-        },
-```
-
-        Run `npm install` again to install @azure-tools/cadl-csharp.
-
-  **Notes**: @azure-tools/cadl-csharp: "0.1.8" only works with @cadl-lang/compiler: "0.37.0" and @cadl-lang/rest: "0.19.0"
-  
-
-  ***Modify (or create) cadl-project.yaml, add one line under emitters:***
-
-  ```diff
-  emitters:
-+  "@azure-tools/cadl-csharp": true
-  ```
+  **Note**: It is recommended to configure Cadl Specs on [REST API specifications](https://github.com/Azure/azure-rest-api-specs). Please refer to the [Guidelines](https://github.com/Azure/azure-rest-api-specs/blob/main/documentation/cadl-structure-guidelines.md).
 
   ***Configuration (optional)***
 
   One can further configure the SDK generated, using the emitter options on @azure-tools/cadl-csharp.
 
-```
-emitters:
+  Modify (or create) cadl-project.yaml, add emitter options under options/@azure-tools/cadl-csharp.
+
+```diff
+parameters:
+  "python-sdk-folder":
+    default: "{cwd}/azure-sdk-for-python/"
+  "java-sdk-folder":
+    default: "{cwd}/azure-sdk-for-java/"
+  "js-sdk-folder":
+    default: "{cwd}/azure-sdk-for-js/"
+  "chsarp-sdk-folder":
+    default: "{cwd}/azure-sdk-for-chsarp/"
+  "openapi-folder":
+    default: "{project-root}/../dataplane/"
+  "service-directory-name":
+    default: mycadlproject
+emit:
+  - "@azure-tools/cadl-autorest"
+options:
   "@azure-tools/cadl-csharp":
-    namespace: "Azure.IoT.DeviceUpdate"
-    clear-output-folder: true
++    namespace: Azure.Template.MyCadlProject
++    "emitter-output-dir": "{csharp-sdk-folder}/sdk/{service-directory-name}/{namespace}/src"
 ```
 
   **Notes**:
@@ -114,9 +108,14 @@ emitters:
   @azure-tools/cadl-csharp emitter options:  
 
 - `namespace` define the client library namespace. e.g. Azure.IoT.DeviceUpdate.
-- `new-project` indicate if it is a new sdk project and need to generate a project file (.csproj).
-- `model-namespace` Indicate if we want to put the models in their own namespace which is a sub namespace of the client library namespace plus ".Models". if it is set `false`, the models will be put in the same namespace of the client. The default value is `true`.
+- `emitter-output-dir` define the output dire path which will store the generated code.
+- `generate-protocol-methods` indicate if you want to generate **protocol method** for each operation. By default is true.
+- `generate-convenience-methods` indicate if you want to generate **convenience method** for each operation. By default is true.
+- `unreferenced-types-handling` define the strategy how to handle the unreferenced types. It can be `removeOrInternalize`, `internalize` or `keepAll`
+- `model-namespace` indicate if we want to put the models in their own namespace which is a sub namespace of the client library namespace plus ".Models". if it is set `false`, the models will be put in the same namespace of the client. The default value is `true`.
 - `clear-output-folder` indicate if you want to clear up the output folder.
+- `package-name` define the package folder name which will be used as service directory name under `sdk/` in azure-sdk-for-net repo.
+- `save-inputs` indicate if you want to keep the intermediate files for debug purpose, e.g. the model json file (cadl.json) parsed from cadl file.
 
 
 #### Create sdk starter package
@@ -143,15 +142,15 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerate
 ```
 **Note**:
 
-- `-service` takes Azure client service directory name. ie. purview. It equals to the name of the directory in the specification folder of the azure-rest-api-specs repo that contains the REST API definition file.
-- For `- namespace`, please use one of the pre-approved namespace groups on the [.NET Azure SDK Guidelines Approved Namespaces list](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list). This value will also provide the name for the shipped package, and should be of the form `Azure.<group>.<service>`.
-- `-sdkPath` takes the address of the root directory of sdk repo. e.g. /home/azure-sdk-for-net
-- `cadlRelativeFolder` takes the relative path of the cadl project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector
-- `-additionalSubDirectories` takes the relative paths of the additional directories needed by the cadl project, such as share library folder, separated by semicolon if there is more than one folder.
+- `-service` takes Azure client service directory name. ie. purview. It equals to the name of the directory in the specification folder of the azure-rest-api-specs repo that contains the REST API definition file. [Required]
+- For `-namespace`, please use one of the pre-approved namespace groups on the [.NET Azure SDK Guidelines Approved Namespaces list](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list). This value will also provide the name for the shipped package, and should be of the form `Azure.<group>.<service>`. [Required]
+- `-sdkPath` takes the address of the root directory of sdk repo. e.g. /home/azure-sdk-for-net [Required]
+- `-cadlRelativeFolder` takes the relative path of the cadl project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector [Required]
+- `-additionalSubDirectories` takes the relative paths of the additional directories needed by the cadl project, such as share library folder, separated by semicolon if there is more than one folder. [Optional]
 - `-commit` takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90)
 - `-repo` takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs)
 - `-specRoot` takes the file system path of the spec repo. e.g. /home/azure-rest-api-specs
-- You need to provide one of (`-commit`, `-repo`) pair to refer to an URL path of the cadl project and `-specRoot` parameters. If you provide both, `-specRoot` will be ignored.
+- You need to provide the cadl project path, either (`-commit`, `-repo`) pair to refer to an URL path of the cadl project or `-specRoot` to refer to local file system path. If you provide both, `-specRoot` will be ignored.
 
 When you run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1`, it will:
 
@@ -164,7 +163,7 @@ When you run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1`
 - Export the library's public API to the directory `<sdkPath>/sdk/<service>/<namespace>/api`
 
 
-### Use swagger as Input
+### Use swagger as Input API spec
 
 See QuickStart with [Autorest DataPlan QuickStart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Autorest_DataPlane_Quickstart.md)
 

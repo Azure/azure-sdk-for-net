@@ -52,8 +52,37 @@ param (
   [string]$specRoot = "",
   [string]$repo="",
   [string]$commit="",
-  [string]$additionalSubDirectories="" #additional directories needed, separated by semicolon if more than one
+  [string]$additionalSubDirectories="", #additional directories needed, separated by semicolon if more than one
+  [switch]$help
 )
+if ($help) {
+  Write-Host("Usage:
+Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> -cadlRelativeFolder <relativeCadlProjectFolderPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>] [-additionalSubDirectories <relativeFolders>]
+
+Options:
+-service  [Required] takes Azure client service directory name in sdk repo. e.g. AnomalyDetector
+-namespace  [Required] takes the namespace of the Azure client library.
+-sdkPath  [Required] takes the address of the root directory of sdk repo. e.g. /home/azure-sdk-for-net
+-cadlRelativeFolder [Required] takes the relative path of the cadl project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector
+-additionalSubDirectories [Optional] takes the relative paths of the additional directories needed by the cadl project
+-commit takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90)
+-repo takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs)
+-specRoot takes the file system path of the spec repo. e.g. /home/azure-rest-api-specs
+
+hint: You need to provide the cadl project path either (`-commit`, `-repo`) pair to refer to an URL path of the cadl project or `-specRoot` to refer to local file system path. If you provide both, `-specRoot` will be ignored.
+"
+)
+  exit 0;
+}
+
+# validate input parameter
+if (!$service -or !$namespace -or !$sdkPath -or !$cadlRelativeFolder) {
+  Throw "One of required parameters (service, namespace, sdkPath cadlRelativeFolder) is missing. Please use -help to see the usage."
+}
+
+if ((!$commit -or !$repo) -And !$specRoot) {
+  Throw "The cadl project path is not provided. You need to provide either (-commit, -repo) pair to refer to URL path or -specRoot to refer to local file system path."
+}
 . (Join-Path $PSScriptRoot GenerateAndBuildLib.ps1)
 $sdkPath = Resolve-Path $sdkPath
 # Generate dataplane library
